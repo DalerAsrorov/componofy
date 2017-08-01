@@ -9,3 +9,8 @@ This document describes the high level description of what the architecture of t
 * Routes
 * Components
 * Notes on Redux
+
+## Documentation
+
+### App Flow
+TBD.
