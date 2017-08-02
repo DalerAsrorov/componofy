@@ -6,3 +6,4 @@ Links to APIs, plugins, and others
 * http://www.material-ui.com/ - Material UI for React
 * https://developer.spotify.com/web-api/ - Official Spotify API 
 * https://github.com/mzabriskie/axios - great and testable HTTP client 
+* https://developer.spotify.com/web-api/tutorial/ - Spotify API tutorial
