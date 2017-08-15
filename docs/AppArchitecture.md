@@ -3,6 +3,9 @@
 ## Overview 
 This document describes the high level description of what the architecture of the web application is going to be. 
 
+## Name origin 
+"Compono" translates "to put together" in [Latin](http://www.translate-latin.com/en/dictionary-english-latin/together). The ending "fy" is added nowadays just to make any noun a cooler verb. 
+
 ## Listing
 * App flow
     * General 

@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/styled-components/*
+
+[include]
+
+[libs]
+styled-components
+
+[lints]
+
+[options]
