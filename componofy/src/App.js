@@ -1,23 +1,22 @@
 // @flow
 
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Login from './views/Login';
+// import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-    render() {
-        return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
-                </div>
-                <p className="App-intro">
-                    To daler get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-            </div>
-        );
-    }
-}
+injectTapEventPlugin();
+
+const App = () =>
+    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <div className="app">
+            <Route exact path="/" component={(props: any) => <Login props={props} />} />
+        </div>
+    </MuiThemeProvider>;
 
 export default App;
