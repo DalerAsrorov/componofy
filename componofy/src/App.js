@@ -4,6 +4,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import mainTheme from './themes/main.theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Login from './views/Login';
