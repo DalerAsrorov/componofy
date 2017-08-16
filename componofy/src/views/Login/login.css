@@ -1,5 +1,3 @@
-div#loginView {
-  border: 1px solid #425c73;
-  width: 100px;
-  height: 100px;
-  background: #fff; }
+.login {
+  width: 100%;
+  height: 100%; }
