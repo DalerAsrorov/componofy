@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "flow-bin": "^0.52.0",
-        "material-ui": "^0.18.7",
+        "material-ui": "next",
         "node-sass-chokidar": "^0.0.3",
         "npm-run-all": "^4.0.2",
         "prettier": "^1.5.3",
@@ -17,11 +17,14 @@
     "scripts": {
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-        "start-js": "react-scripts start",
+        "start-js": "cross-env NODE_PATH=src react-scripts start",
         "start": "npm-run-all -p watch-css start-js",
         "build": "npm run build-css && react-scripts build",
-        "test": "react-scripts test --env=jsdom",
+        "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
         "flow": "flow",
         "eject": "react-scripts eject"
+    },
+    "devDependencies": {
+        "cross-env": "^5.0.5"
     }
 }
