@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { cyan500 } from 'material-ui/colors';
+import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
-import FaSpotify from 'react-icons/lib/fa/spotify';
 import './landing.css';
 
 const styles = theme => ({
@@ -18,7 +18,15 @@ const styles = theme => ({
 
     authBtn: {
         marginTop: '25px'
-    }
+    },
+
+    icon: {
+        color: '#7fc37f',
+        fontSize: '2em',
+        marginRight: '5px'
+    },
+
+    iconText: {}
 });
 
 class Landing extends Component {
@@ -28,11 +36,14 @@ class Landing extends Component {
         subTitle: String,
         iconText: String,
         width: Number,
+        children: Object,
         classes: any
     };
 
     render() {
         const classes = this.props.classes;
+
+        console.log('this.props.children', this.props.children);
 
         return (
             <Paper elevation={8} style={{ width: this.props.width }}>
@@ -48,8 +59,12 @@ class Landing extends Component {
                     </Grid>
                     <Grid item xs={12} className={classes.authBtn}>
                         <Button raised color="primary">
-                            <FaSpotify />
-                            {this.props.iconText}
+                            <span className={classes.icon}>
+                                {this.props.children}
+                            </span>
+                            <Typography type="button" className={classes.iconText}>
+                                {this.props.iconText}
+                            </Typography>
                         </Button>
                     </Grid>
                 </Grid>

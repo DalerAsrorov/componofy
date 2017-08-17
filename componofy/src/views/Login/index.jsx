@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import FaSpotify from 'react-icons/lib/fa/spotify';
 import Landing from 'components/Landing';
 import './login.css';
 
@@ -24,13 +25,9 @@ class Login extends Component {
 
         return (
             <Grid className={classes.root}>
-                <Landing
-                    icon="someIcon"
-                    iconText="Authorize"
-                    title="Componofy"
-                    subTitle="by Daler Asrorov"
-                    width={600}
-                />
+                <Landing iconText="Authorize" title="Componofy" subTitle="by Daler Asrorov" width={600}>
+                    <FaSpotify />
+                </Landing>
             </Grid>
         );
     }
