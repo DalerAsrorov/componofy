@@ -14,19 +14,19 @@ class Landing extends Component {
 
     render() {
         return (
-            <Grid container spacing="2" className="landing" justify="center">
-                <Grid item xs="12">
+            <Grid container spacing={0} className="landing" justify="center">
+                <Grid item xs={12}>
                     <h1>
                         {this.props.title}
                     </h1>
                 </Grid>
-                <Grid item xs="12">
+                <Grid item xs={12}>
                     <h5>
                         {this.props.subTitle}
                     </h5>
-                    <Divider item light />
+                    <Divider light />
                 </Grid>
-                <Grid item xs="12">
+                <Grid item xs={12}>
                     <h1>
                         {this.props.icon}
                     </h1>
