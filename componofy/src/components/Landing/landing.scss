@@ -1,3 +1,10 @@
+$hr-color: #3a4958;
+
 .landing {
     width: 350px;
+    text-align: center;
+}
+
+.subhead-div-hr {
+    background-color: $hr-color;
 }
