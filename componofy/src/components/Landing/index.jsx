@@ -33,23 +33,25 @@ class Landing extends Component {
         const classes = this.props.classes;
 
         return (
-            <Grid container className={classes.root}>
-                <Grid item xs={12}>
-                    <Typography type="display3" color="accent" component="h1">
-                        {this.props.title}
-                    </Typography>
-                    <Typography className="sub-header" type="body1" color="secondary" component="p">
-                        {this.props.subTitle}
-                    </Typography>
-                    <Divider default className="subhead-div-hr" />
+            <Paper elevation={8}>
+                <Grid container className={classes.root}>
+                    <Grid item xs={12}>
+                        <Typography type="display3" color="accent" component="h1">
+                            {this.props.title}
+                        </Typography>
+                        <Typography className="sub-header" type="body1" color="secondary" component="p">
+                            {this.props.subTitle}
+                        </Typography>
+                        <Divider default className="subhead-div-hr" />
+                    </Grid>
+                    <Grid item xs={12} className={classes.authBtn}>
+                        <Button raised color="primary">
+                            <FaSpotify />
+                            {this.props.iconText}
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} className={classes.authBtn}>
-                    <Button raised color="primary">
-                        <FaSpotify />
-                        {this.props.iconText}
-                    </Button>
-                </Grid>
-            </Grid>
+            </Paper>
         );
     }
 }
