@@ -12,11 +12,12 @@ const styles = theme => ({
     root: {
         margin: 0,
         width: '100%',
+        padding: '3.5em',
         textAlign: 'center'
     },
 
     authBtn: {
-        marginTop: '10px'
+        marginTop: '25px'
     }
 });
 
@@ -26,6 +27,7 @@ class Landing extends Component {
         title: String,
         subTitle: String,
         iconText: String,
+        width: Number,
         classes: any
     };
 
@@ -33,7 +35,7 @@ class Landing extends Component {
         const classes = this.props.classes;
 
         return (
-            <Paper elevation={8}>
+            <Paper elevation={8} style={{ width: this.props.width }}>
                 <Grid container className={classes.root}>
                     <Grid item xs={12}>
                         <Typography type="display3" color="accent" component="h1">
