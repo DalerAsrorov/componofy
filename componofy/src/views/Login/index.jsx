@@ -25,7 +25,12 @@ class Login extends Component {
 
         return (
             <Grid className={classes.root}>
-                <Landing iconText="Authorize" title="Componofy" subTitle="by Daler Asrorov" width={600}>
+                <Landing
+                    iconText="Authorize"
+                    title="Componofy"
+                    subTitle="Make a perfect playlist from a bunch of playlists"
+                    width={600}
+                >
                     <FaSpotify />
                 </Landing>
             </Grid>
