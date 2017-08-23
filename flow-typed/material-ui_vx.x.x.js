@@ -21,7 +21,3 @@ declare module 'material-ui/styles/theme' {
 declare module 'material-ui/styles' {
     declare module.exports: any;
 }
-
-declare module 'components/Landing' {
-    declare module.exports: any;
-}
