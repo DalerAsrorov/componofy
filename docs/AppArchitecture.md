@@ -21,7 +21,7 @@ This document describes the high level description of what the architecture of t
 ## Content
 
 ### App Flow
-<img src="./flow/AppFlow.png" alt="App flow diagram image" width="600" height="450" />
+<img src="./AppFlow/AppFlow.png" alt="App flow diagram image" width="600" height="450" />
 
 #### General 
 The app architecture will follow the Authentication Code flow described in the official Spotify API. 
