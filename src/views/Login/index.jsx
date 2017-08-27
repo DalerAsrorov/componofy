@@ -20,6 +20,10 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+    _handleAuth = () => {
+        console.log('Should send request here');
+    };
+
     render() {
         const classes = this.props.classes;
 
@@ -30,6 +34,7 @@ class Login extends Component {
                     title="Componofy"
                     subTitle="Make a perfect playlist from a bunch of playlists"
                     width={600}
+                    onAuth={this._handleAuth}
                 >
                     <FaSpotify />
                 </Landing>

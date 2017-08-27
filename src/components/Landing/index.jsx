@@ -31,13 +31,22 @@ const styles = theme => ({
 
 class Landing extends Component {
     props: {
+        onAuth: Function,
+        children: Object,
         icon: String,
         title: String,
         subTitle: String,
         iconText: String,
         width: Number,
-        children: Object,
-        classes: any
+        classes: mixed
+    };
+
+    _handleAuthentication = (event: SyntheticInputEvent) => {
+        const { onAuth } = this.props;
+
+        if (onAuth) {
+            onAuth();
+        }
     };
 
     render() {
@@ -58,7 +67,7 @@ class Landing extends Component {
                         <Divider default className="subhead-div-hr" />
                     </Grid>
                     <Grid item xs={12} className={classes.authBtn}>
-                        <Button raised color="primary">
+                        <Button onClick={this._handleAuthentication.bind(this)} raised color="primary">
                             <span className={classes.icon}>
                                 {this.props.children}
                             </span>
