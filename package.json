@@ -5,6 +5,7 @@
     "dependencies": {
         "dotenv": "^4.0.0",
         "flow-bin": "^0.52.0",
+        "hapi": "^16.5.2",
         "material-ui": "next",
         "node-sass-chokidar": "^0.0.3",
         "npm-run-all": "^4.0.2",
