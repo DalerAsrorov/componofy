@@ -6,7 +6,8 @@ import Grid from 'material-ui/Grid';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import './landing.css';
+
+import './Landing.css';
 
 const styles = theme => ({
     root: {
@@ -52,8 +53,6 @@ class Landing extends Component {
     render() {
         const classes = this.props.classes;
 
-        console.log('this.props.children', this.props.children);
-
         return (
             <Paper elevation={8} style={{ width: this.props.width }}>
                 <Grid container className={classes.root}>
@@ -67,7 +66,7 @@ class Landing extends Component {
                         <Divider default className="subhead-div-hr" />
                     </Grid>
                     <Grid item xs={12} className={classes.authBtn}>
-                        <Button onClick={this._handleAuthentication.bind(this)} raised color="primary">
+                        <Button onClick={this._handleAuthentication} raised color="primary">
                             <span className={classes.icon}>
                                 {this.props.children}
                             </span>

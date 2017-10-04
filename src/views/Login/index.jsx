@@ -1,12 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
+import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
 import FaSpotify from 'react-icons/lib/fa/spotify';
+import { replaceTo } from 'utils/helpers';
 import Landing from 'components/Landing';
-import './login.css';
+
+import './Login.css';
 
 const styles = theme => ({
     root: {
@@ -20,8 +22,20 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+    // componentDidMount() {
+    // fetch('/userstatus', {
+    //     method: 'GET'
+    // })
+    //     .then(response => response.json())
+    //     .then(({ isAuthenticated }) => {
+    //         if (isAuthenticated) {
+    //             window.location
+    //         }
+    //     });
+    // }
+
     _handleAuth = () => {
-        console.log('Should send request here');
+        replaceTo('/auth');
     };
 
     render() {
