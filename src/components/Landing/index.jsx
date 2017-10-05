@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
-import { cyan500 } from 'material-ui/colors';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import React, { Component } from "react";
+import { cyan500 } from "material-ui/colors";
+import { withStyles } from "material-ui/styles";
+import Paper from "material-ui/Paper";
+import Grid from "material-ui/Grid";
+import Divider from "material-ui/Divider";
+import Typography from "material-ui/Typography";
+import Button from "material-ui/Button";
 
-import './Landing.css';
+import "./Landing.css";
+
+const ELEVATION = 8;
+const XS = 12;
 
 const styles = theme => ({
     root: {
         margin: 0,
-        width: '100%',
-        padding: '3.5em',
-        textAlign: 'center'
+        width: "100%",
+        padding: "3.5em",
+        textAlign: "center"
     },
 
     authBtn: {
-        marginTop: '25px'
+        marginTop: "25px"
     },
 
     icon: {
-        color: '#7fc37f',
-        fontSize: '2em',
-        marginRight: '5px'
+        color: "#7fc37f",
+        fontSize: "2em",
+        marginRight: "5px"
     },
 
     iconText: {}
@@ -54,9 +57,9 @@ class Landing extends Component {
         const classes = this.props.classes;
 
         return (
-            <Paper elevation={8} style={{ width: this.props.width }}>
+            <Paper elevation={ELEVATION} style={{ width: this.props.width }}>
                 <Grid container className={classes.root}>
-                    <Grid item xs={12}>
+                    <Grid item xs={XS}>
                         <Typography type="display3" color="accent" component="h1">
                             {this.props.title}
                         </Typography>
@@ -65,11 +68,9 @@ class Landing extends Component {
                         </Typography>
                         <Divider default className="subhead-div-hr" />
                     </Grid>
-                    <Grid item xs={12} className={classes.authBtn}>
+                    <Grid item xs={XS} className={classes.authBtn}>
                         <Button onClick={this._handleAuthentication} raised color="primary">
-                            <span className={classes.icon}>
-                                {this.props.children}
-                            </span>
+                            <span className={classes.icon}>{this.props.children}</span>
                             <Typography type="button" className={classes.iconText}>
                                 {this.props.iconText}
                             </Typography>
