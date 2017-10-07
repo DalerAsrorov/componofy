@@ -1,5 +1,3 @@
-// @flow
-
 export default {
     palette: {
         primary1Color: '#2c3038',

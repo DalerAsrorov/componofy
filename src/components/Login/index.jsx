@@ -1,6 +1,5 @@
-// @flow
-
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -21,7 +20,7 @@ const styles = theme => ({
     }
 });
 
-class Login extends Component {
+class Login extends PureComponent {
     // componentDidMount() {
     // fetch('/userstatus', {
     //     method: 'GET'
@@ -56,5 +55,9 @@ class Login extends Component {
         );
     }
 }
+
+Login.propTypes = {
+    classes: PropTypes.object
+};
 
 export default withStyles(styles)(Login);

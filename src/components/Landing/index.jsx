@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { cyan500 } from "material-ui/colors";
-import { withStyles } from "material-ui/styles";
-import Paper from "material-ui/Paper";
-import Grid from "material-ui/Grid";
-import Divider from "material-ui/Divider";
-import Typography from "material-ui/Typography";
-import Button from "material-ui/Button";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { cyan500 } from 'material-ui/colors';
+import { withStyles } from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
-import "./Landing.css";
+import './Landing.css';
 
 const ELEVATION = 8;
 const XS = 12;
@@ -15,19 +16,19 @@ const XS = 12;
 const styles = theme => ({
     root: {
         margin: 0,
-        width: "100%",
-        padding: "3.5em",
-        textAlign: "center"
+        width: '100%',
+        padding: '3.5em',
+        textAlign: 'center'
     },
 
     authBtn: {
-        marginTop: "25px"
+        marginTop: '25px'
     },
 
     icon: {
-        color: "#7fc37f",
-        fontSize: "2em",
-        marginRight: "5px"
+        color: '#7fc37f',
+        fontSize: '2em',
+        marginRight: '5px'
     },
 
     iconText: {}
@@ -81,5 +82,16 @@ class Landing extends Component {
         );
     }
 }
+
+Landing.propTypes = {
+    onAuth: PropTypes.func.isRequired,
+    children: PropTypes.object,
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    subTitle: PropTypes.string,
+    iconText: PropTypes.string,
+    width: PropTypes.number,
+    classes: PropTypes.object
+};
 
 export default withStyles(styles)(Landing);

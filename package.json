@@ -10,17 +10,16 @@
         "start:api": "babel-node server.js --presets es2015,stage-2",
         "build": "npm run build-css && react-scripts build",
         "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
-        "flow": "flow",
         "eject": "react-scripts eject"
     },
     "dependencies": {
         "dotenv": "^4.0.0",
-        "flow-bin": "^0.52.0",
         "hapi": "^16.5.2",
         "hapi-cors-headers": "^1.0.0",
         "material-ui": "next",
         "node-sass-chokidar": "^0.0.3",
         "npm-run-all": "^4.0.2",
+        "prop-types": "^15.6.0",
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
         "react-icons": "^2.2.5",

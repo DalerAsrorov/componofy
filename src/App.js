@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { Route } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -18,7 +16,7 @@ const theme = createMuiTheme();
 const App = () => (
     <MuiThemeProvider theme={theme}>
         <div className="app">
-            <Route exact path="/" component={(props: any) => <Login props={props} />} />
+            <Route exact path="/" component={Login} />
             <Route path="/myplaylists" component={MyPlaylists} />
         </div>
     </MuiThemeProvider>
