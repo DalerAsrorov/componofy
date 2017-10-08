@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 export default class Playlist extends PureComponent {
     render() {
-        const { playlist } = this.props;
         const {
             name,
             images,
             external_urls: { spotify: playlistURL }
-        } = playlist;
+        } = this.props.playlist;
 
         return (
             <div>
