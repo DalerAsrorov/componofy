@@ -33,6 +33,10 @@ class Login extends PureComponent {
     //     });
     // }
 
+    static propTypes = {
+        classes: PropTypes.object
+    };
+
     _handleAuth = () => {
         replaceTo('/auth');
     };
@@ -55,9 +59,5 @@ class Login extends PureComponent {
         );
     }
 }
-
-Login.propTypes = {
-    classes: PropTypes.object
-};
 
 export default withStyles(styles)(Login);

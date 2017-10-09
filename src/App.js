@@ -5,7 +5,7 @@ import mainTheme from './themes/main.theme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/theme';
 import Login from './components/Login';
-import MyPlaylists from './components/MyPlaylists';
+import MyPlaylists from './containers/MyPlaylists';
 
 import './App.css';
 

@@ -16,6 +16,7 @@
         "dotenv": "^4.0.0",
         "hapi": "^16.5.2",
         "hapi-cors-headers": "^1.0.0",
+        "history": "^4.7.2",
         "material-ui": "next",
         "material-ui-icons": "^1.0.0-beta.15",
         "node-sass-chokidar": "^0.0.3",
@@ -24,10 +25,15 @@
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
         "react-icons": "^2.2.5",
+        "react-redux": "^5.0.6",
         "react-router": "^4.2.0",
         "react-router-dom": "^4.1.2",
+        "react-router-redux": "next",
         "react-scripts": "1.0.11",
         "react-tap-event-plugin": "^2.0.1",
+        "redux": "^3.7.2",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.2.0",
         "spotify-web-api-node": "^2.4.0"
     },
     "devDependencies": {

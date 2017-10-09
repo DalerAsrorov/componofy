@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { cyan500 } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
@@ -34,16 +34,16 @@ const styles = theme => ({
     iconText: {}
 });
 
-class Landing extends Component {
-    props: {
-        onAuth: Function,
-        children: Object,
-        icon: String,
-        title: String,
-        subTitle: String,
-        iconText: String,
-        width: Number,
-        classes: mixed
+class Landing extends PureComponent {
+    static propTypes = {
+        onAuth: PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        subTitle: PropTypes.string.isRequired,
+        children: PropTypes.object,
+        icon: PropTypes.string,
+        iconText: PropTypes.string,
+        width: PropTypes.number,
+        classes: PropTypes.object
     };
 
     _handleAuthentication = (event: SyntheticInputEvent) => {
@@ -61,18 +61,36 @@ class Landing extends Component {
             <Paper elevation={ELEVATION} style={{ width: this.props.width }}>
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
-                        <Typography type="display3" color="accent" component="h1">
+                        <Typography
+                            type="display3"
+                            color="accent"
+                            component="h1"
+                        >
                             {this.props.title}
                         </Typography>
-                        <Typography className="sub-header" type="body1" color="secondary" component="p">
+                        <Typography
+                            className="sub-header"
+                            type="body1"
+                            color="secondary"
+                            component="p"
+                        >
                             {this.props.subTitle}
                         </Typography>
                         <Divider default className="subhead-div-hr" />
                     </Grid>
                     <Grid item xs={XS} className={classes.authBtn}>
-                        <Button onClick={this._handleAuthentication} raised color="primary">
-                            <span className={classes.icon}>{this.props.children}</span>
-                            <Typography type="button" className={classes.iconText}>
+                        <Button
+                            onClick={this._handleAuthentication}
+                            raised
+                            color="primary"
+                        >
+                            <span className={classes.icon}>
+                                {this.props.children}
+                            </span>
+                            <Typography
+                                type="button"
+                                className={classes.iconText}
+                            >
                                 {this.props.iconText}
                             </Typography>
                         </Button>
@@ -82,16 +100,5 @@ class Landing extends Component {
         );
     }
 }
-
-Landing.propTypes = {
-    onAuth: PropTypes.func.isRequired,
-    children: PropTypes.object,
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    subTitle: PropTypes.string,
-    iconText: PropTypes.string,
-    width: PropTypes.number,
-    classes: PropTypes.object
-};
 
 export default withStyles(styles)(Landing);
