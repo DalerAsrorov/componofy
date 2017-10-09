@@ -18,7 +18,7 @@ import {
 const styles = theme => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        minWidth: 500,
         background: theme.palette.background.paper
     },
     nested: {
