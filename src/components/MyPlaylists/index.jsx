@@ -30,9 +30,7 @@ class MyPlaylists extends PureComponent {
 
     render() {
         const { myPlaylists } = this.state;
-        const ListOfMyPlaylists = (
-            <List items={myPlaylists} subheader="MyPlaylists" />
-        );
+        const ListOfMyPlaylists = <List items={myPlaylists} />;
 
         return <div id="myPlaylists">{ListOfMyPlaylists}</div>;
     }

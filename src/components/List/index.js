@@ -52,7 +52,7 @@ const List = props => {
 
 List.propTypes = {
     items: PropTypes.array.isRequired,
-    subheader: PropTypes.string.isRequired,
+    subheader: PropTypes.string,
     classes: PropTypes.object
 };
 
