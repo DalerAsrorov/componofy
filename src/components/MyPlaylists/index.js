@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { getMyPlaylists } from '../../api';
 import List from '../List';
 
 class MyPlaylists extends PureComponent {

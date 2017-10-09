@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // Routing modules
-import { Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 import {
     ConnectedRouter,
     routerReducer,
-    routerMiddleware,
-    push
+    routerMiddleware
 } from 'react-router-redux';
 // Redux modules
 import { Provider } from 'react-redux';

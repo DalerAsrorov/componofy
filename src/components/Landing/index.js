@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { cyan500 } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -40,7 +39,6 @@ class Landing extends PureComponent {
         title: PropTypes.string.isRequired,
         subTitle: PropTypes.string.isRequired,
         children: PropTypes.object,
-        icon: PropTypes.string,
         iconText: PropTypes.string,
         width: PropTypes.number,
         classes: PropTypes.object
@@ -55,10 +53,17 @@ class Landing extends PureComponent {
     };
 
     render() {
-        const classes = this.props.classes;
+        const {
+            title,
+            subTitle,
+            children,
+            iconText,
+            width,
+            classes
+        } = this.props;
 
         return (
-            <Paper elevation={ELEVATION} style={{ width: this.props.width }}>
+            <Paper elevation={ELEVATION} style={{ width }}>
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
                         <Typography
@@ -66,7 +71,7 @@ class Landing extends PureComponent {
                             color="accent"
                             component="h1"
                         >
-                            {this.props.title}
+                            {title}
                         </Typography>
                         <Typography
                             className="sub-header"
@@ -74,7 +79,7 @@ class Landing extends PureComponent {
                             color="secondary"
                             component="p"
                         >
-                            {this.props.subTitle}
+                            {subTitle}
                         </Typography>
                         <Divider default className="subhead-div-hr" />
                     </Grid>
@@ -84,14 +89,12 @@ class Landing extends PureComponent {
                             raised
                             color="primary"
                         >
-                            <span className={classes.icon}>
-                                {this.props.children}
-                            </span>
+                            <span className={classes.icon}>{children}</span>
                             <Typography
                                 type="button"
                                 className={classes.iconText}
                             >
-                                {this.props.iconText}
+                                {iconText}
                             </Typography>
                         </Button>
                     </Grid>

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, {
     ListItem,
@@ -8,12 +7,7 @@ import MaterialList, {
     ListItemText,
     ListSubheader
 } from 'material-ui/List';
-import {
-    ExpandLess,
-    ExpandMore,
-    StarBorder,
-    PlaylistPlay
-} from 'material-ui-icons';
+import { PlaylistPlay } from 'material-ui-icons';
 
 const styles = theme => ({
     root: {
