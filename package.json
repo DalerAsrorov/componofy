@@ -17,6 +17,7 @@
         "hapi": "^16.5.2",
         "hapi-cors-headers": "^1.0.0",
         "material-ui": "next",
+        "material-ui-icons": "^1.0.0-beta.15",
         "node-sass-chokidar": "^0.0.3",
         "npm-run-all": "^4.0.2",
         "prop-types": "^15.6.0",

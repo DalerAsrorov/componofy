@@ -1,12 +1,12 @@
-import SpotifyWebApi from "spotify-web-api-node";
-import dotenv from "dotenv";
+import SpotifyWebApi from 'spotify-web-api-node';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const SCOPES_STR =
-    "user-read-email playlist-read-private playlist-read-collaborative playlist-modif" +
-    "y-public playlist-modify-private user-library-read";
-const SCOPE_LIST = SCOPES_STR.split(" ");
+    'user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
+    'y-public playlist-modify-private user-library-read';
+const SCOPE_LIST = SCOPES_STR.split(' ');
 const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
@@ -14,7 +14,10 @@ const spotifyApi = new SpotifyWebApi({
 });
 const { APP_CLIENT_URL } = process.env;
 
-export const createAuthorizeURL = (scopes = SCOPE_LIST, state = "spotify-auth") => {
+export const createAuthorizeURL = (
+    scopes = SCOPE_LIST,
+    state = 'spotify-auth'
+) => {
     const authUrl = spotifyApi.createAuthorizeURL(scopes, state);
 
     return {

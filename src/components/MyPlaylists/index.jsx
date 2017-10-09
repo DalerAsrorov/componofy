@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import Playlist from '../Playlist';
 import { getMyPlaylists } from '../../api';
+import List from '../List';
 
-export default class MyPlaylists extends PureComponent {
+class MyPlaylists extends PureComponent {
     state = {
         // TODO: make this a global state in Redux
         // Structure this data structure well for easy access
@@ -30,10 +30,12 @@ export default class MyPlaylists extends PureComponent {
 
     render() {
         const { myPlaylists } = this.state;
-        const MyPlaylistsComponents = myPlaylists.map(playlist => (
-            <Playlist key={playlist.id} playlist={playlist} />
-        ));
+        const ListOfMyPlaylists = (
+            <List items={myPlaylists} subheader="MyPlaylists" />
+        );
 
-        return <div>{MyPlaylistsComponents}</div>;
+        return <div id="myPlaylists">{ListOfMyPlaylists}</div>;
     }
 }
+
+export default MyPlaylists;
