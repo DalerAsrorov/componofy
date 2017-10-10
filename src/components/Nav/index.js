@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import PhoneIcon from 'material-ui-icons/Phone';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-import PersonPinIcon from 'material-ui-icons/PersonPin';
-import HelpIcon from 'material-ui-icons/Help';
-import ShoppingBasket from 'material-ui-icons/ShoppingBasket';
-import ThumbDown from 'material-ui-icons/ThumbDown';
-import ThumbUp from 'material-ui-icons/ThumbUp';
+import PersonPin from 'material-ui-icons/PersonPin';
+import Public from 'material-ui-icons/Public';
+import FlashOn from 'material-ui-icons/FlashOn';
 
 const styles = theme => ({
     root: {
@@ -40,13 +36,9 @@ class Nav extends PureComponent {
                         scrollable
                         scrollButtons="off"
                     >
-                        <Tab icon={<PhoneIcon />} />
-                        <Tab icon={<FavoriteIcon />} />
-                        <Tab icon={<PersonPinIcon />} />
-                        <Tab icon={<HelpIcon />} />
-                        <Tab icon={<ShoppingBasket />} />
-                        <Tab icon={<ThumbDown />} />
-                        <Tab icon={<ThumbUp />} />
+                        <Tab icon={<PersonPin />} />
+                        <Tab icon={<Public />} />
+                        <Tab icon={<FlashOn />} />
                     </Tabs>
                 </AppBar>
             </div>
