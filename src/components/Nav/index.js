@@ -33,11 +33,11 @@ class Nav extends PureComponent {
             <Paper className={classes.root}>
                 <Tabs
                     className={classes.tabContainer}
+                    onChange={this._handleChange}
+                    indicatorColor="accent"
                     value={0}
                     fullWidth
                     centered
-                    indicatorColor="accent"
-                    onChange={this._handleChange}
                 >
                     <Tab icon={<PersonPin />} label="My" />
                     <Tab icon={<Public />} label="Public" />
