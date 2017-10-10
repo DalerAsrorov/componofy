@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import PersonPin from 'material-ui-icons/PersonPin';
 import Public from 'material-ui-icons/Public';
@@ -11,7 +11,9 @@ const styles = theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper
-    }
+    },
+
+    tabContainer: {}
 });
 
 class Nav extends PureComponent {
@@ -28,20 +30,20 @@ class Nav extends PureComponent {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Tabs
-                        value={1}
-                        onChange={this._handleChange}
-                        scrollable
-                        scrollButtons="off"
-                    >
-                        <Tab icon={<PersonPin />} />
-                        <Tab icon={<Public />} />
-                        <Tab icon={<FlashOn />} />
-                    </Tabs>
-                </AppBar>
-            </div>
+            <Paper className={classes.root}>
+                <Tabs
+                    className={classes.tabContainer}
+                    value={0}
+                    fullWidth
+                    centered
+                    indicatorColor="accent"
+                    onChange={this._handleChange}
+                >
+                    <Tab icon={<PersonPin />} label="My" />
+                    <Tab icon={<Public />} label="Public" />
+                    <Tab icon={<FlashOn />} label="Componofy" />
+                </Tabs>
+            </Paper>
         );
     }
 }
