@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/theme';
 import Login from './components/Login';
+import Nav from './components/Nav';
 import MyPlaylists from './containers/MyPlaylists';
 
 import './App.css';
@@ -17,7 +18,11 @@ const App = () => (
     <MuiThemeProvider theme={theme}>
         <div className="app">
             <Route exact path="/" component={Login} />
-            <Route path="/myplaylists" component={MyPlaylists} />
+
+            <div id="main">
+                <Nav />
+                <Route path="/myplaylists" component={MyPlaylists} />
+            </div>
         </div>
     </MuiThemeProvider>
 );
