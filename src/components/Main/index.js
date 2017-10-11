@@ -10,7 +10,7 @@ const Main = ({ match: { url } }) => {
     return (
         <div>
             <Nav />
-            <Route path={`${url}/myplaylists`} component={MyPlaylists} />
+            <Route exact path={`${url}`} component={MyPlaylists} />
             <Route path={`${url}/public`} component={PublicPlaylists} />
         </div>
     );
