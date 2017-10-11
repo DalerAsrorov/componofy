@@ -8,6 +8,7 @@ import MaterialList, {
     ListSubheader
 } from 'material-ui/List';
 import { PlaylistPlay } from 'material-ui-icons';
+import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 
 const styles = theme => ({
     root: {
@@ -45,7 +46,7 @@ const List = props => {
 };
 
 List.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
     subheader: PropTypes.string,
     classes: PropTypes.object
 };
