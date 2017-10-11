@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import Nav from '../Nav';
+import PublicPlaylists from '../PublicPlaylists';
 import MyPlaylists from '../../containers/MyPlaylists';
 
 const Main = ({ match: { url } }) => {
@@ -10,6 +11,7 @@ const Main = ({ match: { url } }) => {
         <div>
             <Nav />
             <Route path={`${url}/myplaylists`} component={MyPlaylists} />
+            <Route path={`${url}/public`} component={PublicPlaylists} />
         </div>
     );
 };
