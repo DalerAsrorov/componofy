@@ -38,7 +38,7 @@ export async function authorizationCodeGrant(code, state) {
         return error;
     }
 
-    return APP_CLIENT_URL;
+    return `${APP_CLIENT_URL}/myplaylists`;
 }
 
 export async function getMyPlaylists(options = {}) {
