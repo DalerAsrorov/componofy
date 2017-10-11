@@ -13,7 +13,6 @@ import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 const styles = theme => ({
     root: {
         width: '100%',
-        minWidth: 500,
         background: theme.palette.background.paper
     },
     nested: {
