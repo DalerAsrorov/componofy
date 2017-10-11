@@ -22,8 +22,6 @@ class MyPlaylists extends PureComponent {
         const { myPlaylists: { playlists } } = this.props;
         const ListOfMyPlaylists = <List items={playlists} />;
 
-        console.log('playlists', playlists);
-
         return <div id="myPlaylists">{ListOfMyPlaylists}</div>;
     }
 }
