@@ -36,10 +36,29 @@ server.register({ register: Yar, options }, error => {
 
     server.route({
         method: 'GET',
+        path: '/',
+        handler: (request, reply) => {
+            reply({
+                time: new Date().getTime(),
+                app: 'Componofy',
+                isOn: true
+            });
+        },
+        config: {
+            description: 'Starting end point.',
+            notes:
+                'Can be used for checking if server connection still exists.',
+            tags: ['api', 'index']
+        }
+    });
+
+    server.route({
+        method: 'GET',
         path: '/userstatus',
         handler: (request, reply) => {
-            const { id: sessionID } = request.yar;
-            const session = request.yar.get('session');
+            const { yar } = request;
+            let { id: sessionID } = yar;
+            let session = yar.get('session');
 
             reply({
                 sessionID,
@@ -58,19 +77,22 @@ server.register({ register: Yar, options }, error => {
 
     server.route({
         method: 'GET',
-        path: '/',
+        path: '/logout',
         handler: (request, reply) => {
+            const { yar } = request;
+
+            yar.reset();
+
             reply({
-                time: new Date().getTime(),
-                app: 'Componofy',
-                isOn: true
+                isAuthenticated: !!yar.get('session'),
+                offlineAt: Date.now()
             });
         },
         config: {
-            description: 'Starting end point.',
+            description: 'Logs out user from the app and clears the session.',
             notes:
-                'Can be used for checking if server connection still exists.',
-            tags: ['api', 'index']
+                'Session object will not be available if this request is made.',
+            tags: ['api', 'auth']
         }
     });
 
