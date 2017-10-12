@@ -27,18 +27,27 @@ export const createAuthorizeURL = (
 };
 
 // eslint-disable-next-line
-export async function authorizationCodeGrant(code, state) {
+export async function authorizationCodeGrant(code) {
+    let params = {
+        clientAppURL: `${APP_CLIENT_URL}/app`
+    };
+
     try {
         const payload = await spotifyApi.authorizationCodeGrant(code);
         const { body: { expires_in, access_token, refresh_token } } = payload;
 
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
+
+        params['accessToken'] = access_token;
+        params['refreshToken'] = refresh_token;
+
+        return params;
     } catch (error) {
         return error;
     }
 
-    return `${APP_CLIENT_URL}/app`;
+    return params;
 }
 
 export async function getMyPlaylists(options = {}) {
