@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { fetchMyPlaylists } from './actions';
 
 const mapStateToProps = state => ({
@@ -8,6 +9,10 @@ const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
     fetchMyPlaylists() {
         dispatch(fetchMyPlaylists());
+    },
+
+    navigateTo(path) {
+        dispatch(push(path));
     }
 });
 

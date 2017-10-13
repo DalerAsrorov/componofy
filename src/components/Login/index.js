@@ -20,18 +20,6 @@ const styles = theme => ({
 });
 
 class Login extends PureComponent {
-    // componentDidMount() {
-    // fetch('/userstatus', {
-    //     method: 'GET'
-    // })
-    //     .then(response => response.json())
-    //     .then(({ isAuthenticated }) => {
-    //         if (isAuthenticated) {
-    //             window.location
-    //         }
-    //     });
-    // }
-
     static propTypes = {
         classes: PropTypes.object
     };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Nav from '../Nav';
 import PublicPlaylists from '../PublicPlaylists';
+import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 
 const Main = ({ match: { url } }) => {

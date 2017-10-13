@@ -7,6 +7,11 @@ import PersonPin from 'material-ui-icons/PersonPin';
 import Public from 'material-ui-icons/Public';
 import FlashOn from 'material-ui-icons/FlashOn';
 
+const ROUTE_INDEX_MAP = {
+    0: '/app',
+    1: '/app/public'
+};
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -18,12 +23,13 @@ const styles = theme => ({
 
 class Nav extends PureComponent {
     static propTypes = {
-        classes: PropTypes.object
+        classes: PropTypes.object,
+        navigateTo: PropTypes.func.isRequired
     };
 
     _handleChange = (event, value) => {
         event.preventDefault();
-        console.log(event, value);
+        this.props.navigateTo(ROUTE_INDEX_MAP[value]);
     };
 
     render() {
