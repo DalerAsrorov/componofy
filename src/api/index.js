@@ -10,3 +10,18 @@ export const getMyPlaylists = (offset = 1, limit = 10) => {
         error => console.error('Error fetching my playlists', error)
     );
 };
+
+export const getMyStatus = () => {
+    const URL = `${API_BASE_URL}/userstatus`;
+
+    return fetch(URL, {
+        mode: 'cors',
+        // allow client to access server data
+        // Note: without this parameter session
+        // variables would not be shared from the server
+        credentials: 'include'
+    }).then(
+        response => response.json(),
+        error => console.error('Error fetching my status')
+    );
+};

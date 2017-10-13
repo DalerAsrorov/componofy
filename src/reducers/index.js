@@ -1,4 +1,8 @@
-import { REQUEST_PLAYLISTS, RECEIVE_PLAYLISTS } from '../actions';
+import {
+    REQUEST_PLAYLISTS,
+    RECEIVE_PLAYLISTS,
+    RECEIVED_AUTH_STATE
+} from '../actions';
 
 export function myPlaylists(
     state = { isFetching: false, playlists: [] },
@@ -15,6 +19,15 @@ export function myPlaylists(
                 playlists: action.playlists,
                 lastUpdated: action.receivedAt
             });
+        default:
+            return state;
+    }
+}
+
+export function isAuthenticated(state = false, action) {
+    switch (action.type) {
+        case RECEIVED_AUTH_STATE:
+            return action.isAuthenticated;
         default:
             return state;
     }

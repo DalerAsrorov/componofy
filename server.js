@@ -27,12 +27,20 @@ server.connection({
     host: 'localhost'
 });
 
-server.ext('onPreResponse', corsHeaders);
-
 server.register({ register: Yar, options }, error => {
     if (error) {
         throw error;
     }
+
+    server.start(err => {
+        if (err) {
+            throw err;
+        }
+
+        console.log(`Componofy server running at: ${server.info.uri}`);
+    });
+
+    server.ext('onPreResponse', corsHeaders);
 
     server.route({
         method: 'GET',
@@ -54,7 +62,7 @@ server.register({ register: Yar, options }, error => {
 
     server.route({
         method: 'GET',
-        path: '/userstatus',
+        path: '/api/userstatus',
         handler: (request, reply) => {
             const { yar } = request;
             let { id: sessionID } = yar;
@@ -116,7 +124,7 @@ server.register({ register: Yar, options }, error => {
         handler: (request, reply) => {
             const { query: { code } } = request;
 
-            authorizationCodeGrant(code)
+            authorizationCodeGrant(code, request)
                 .then(({ clientAppURL, accessToken, refreshToken }) => {
                     const sessionState = {
                         lastVisit: Date.now(),
@@ -125,6 +133,7 @@ server.register({ register: Yar, options }, error => {
                     };
 
                     request.yar.set('session', sessionState);
+
                     reply.redirect(clientAppURL);
                 })
                 .catch(error => console.error(error));
@@ -162,12 +171,4 @@ server.register({ register: Yar, options }, error => {
             tags: ['api', 'user-info']
         }
     });
-});
-
-server.start(err => {
-    if (err) {
-        throw err;
-    }
-
-    console.log(`Componofy server running at: ${server.info.uri}`);
 });

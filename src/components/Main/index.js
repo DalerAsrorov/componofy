@@ -5,8 +5,6 @@ import PublicPlaylists from '../PublicPlaylists';
 import MyPlaylists from '../../containers/MyPlaylists';
 
 const Main = ({ match: { url } }) => {
-    console.log(url);
-
     return (
         <div>
             <Nav />
