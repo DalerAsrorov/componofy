@@ -12,6 +12,11 @@ const ROUTE_INDEX_MAP = {
     1: '/app/public'
 };
 
+const ROUTE_INDEX_REVERSE_MAP = {
+    '/app': 0,
+    '/app/public': 1
+};
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -27,13 +32,28 @@ class Nav extends PureComponent {
         navigateTo: PropTypes.func.isRequired
     };
 
+    state = {
+        currentTabIndex: 0
+    };
+
+    componentDidMount() {
+        const { location: { pathname } } = this.props;
+
+        this.setState({
+            currentTabIndex: ROUTE_INDEX_REVERSE_MAP[pathname]
+        });
+    }
+
     _handleChange = (event, value) => {
         event.preventDefault();
+
         this.props.navigateTo(ROUTE_INDEX_MAP[value]);
+        this.setState({ currentTabIndex: value });
     };
 
     render() {
         const { classes } = this.props;
+        const { currentTabIndex } = this.state;
 
         return (
             <Paper className={classes.root}>
@@ -41,7 +61,7 @@ class Nav extends PureComponent {
                     className={classes.tabContainer}
                     onChange={this._handleChange}
                     indicatorColor="accent"
-                    value={0}
+                    value={currentTabIndex}
                     fullWidth
                     centered
                 >
