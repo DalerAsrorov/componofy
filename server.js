@@ -124,7 +124,7 @@ server.register({ register: Yar, options }, error => {
         handler: (request, reply) => {
             const { query: { code } } = request;
 
-            authorizationCodeGrant(code, request)
+            authorizationCodeGrant(code)
                 .then(({ clientAppURL, accessToken, refreshToken }) => {
                     const sessionState = {
                         lastVisit: Date.now(),
