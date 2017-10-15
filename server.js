@@ -80,7 +80,7 @@ server.register({ register: Yar, options }, error => {
                 'Lets client know whether the user has already been authenticated.',
             notes:
                 'Can be used for checking if server connection still exists.',
-            tags: ['api', 'index']
+            tags: ['api', 'index', 'user']
         }
     });
 
@@ -115,7 +115,7 @@ server.register({ register: Yar, options }, error => {
         config: {
             description: 'Receives confirmation to start authentication.',
             notes: 'Authentication process will redirect',
-            tags: ['api', 'auth']
+            tags: ['api', 'auth', 'user']
         }
     });
 
@@ -143,7 +143,7 @@ server.register({ register: Yar, options }, error => {
             description:
                 'Given code from Spotify authentication server, generates token and `re`directs back to client app.',
             notes: 'Accepts the code value',
-            tags: ['api', 'auth']
+            tags: ['api', 'auth', 'user']
         }
     });
 
@@ -169,7 +169,7 @@ server.register({ register: Yar, options }, error => {
             description: 'Return the authenticated user playlist.',
             notes:
                 'Should be authenticated first to have access to this information',
-            tags: ['api', 'user-info']
+            tags: ['api', 'playlists', 'user']
         }
     });
 
@@ -196,7 +196,7 @@ server.register({ register: Yar, options }, error => {
             description:
                 'Returns the list of playlists based on the given search parameters.',
             notes: 'This endpoint does not require authentication.',
-            tags: ['api', 'user-info']
+            tags: ['api', 'playlsits', 'search']
         }
     });
 });
