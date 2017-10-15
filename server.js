@@ -4,7 +4,8 @@ import corsHeaders from 'hapi-cors-headers';
 import {
     createAuthorizeURL,
     authorizationCodeGrant,
-    getMyPlaylists
+    getMyPlaylists,
+    searchPlaylists
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -158,7 +159,7 @@ server.register({ register: Yar, options }, error => {
             })
                 .then(data => {
                     reply({
-                        time: new Date().getTime(),
+                        date: Date.now(),
                         data
                     });
                 })
@@ -168,6 +169,33 @@ server.register({ register: Yar, options }, error => {
             description: 'Return the authenticated user playlist.',
             notes:
                 'Should be authenticated first to have access to this information',
+            tags: ['api', 'user-info']
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/searchplaylist/{query}/{offset}/{limit}',
+        handler: (request, reply) => {
+            const { query, offset, limit } = request.params;
+
+            searchPlaylists(query, {
+                offset,
+                limit
+            })
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        query,
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description:
+                'Returns the list of playlists based on the given search parameters.',
+            notes: 'This endpoint does not require authentication.',
             tags: ['api', 'user-info']
         }
     });

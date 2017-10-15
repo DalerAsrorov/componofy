@@ -1,16 +1,5 @@
 const API_BASE_URL = 'http://localhost:3001/api';
 
-export const getMyPlaylists = (offset = 1, limit = 10) => {
-    const OFFSET = offset;
-    const LIMIT = limit;
-    const URL = `${API_BASE_URL}/myplaylists/${OFFSET}/${LIMIT}`;
-
-    return fetch(URL).then(
-        response => response.json(),
-        error => console.error('Error fetching my playlists', error)
-    );
-};
-
 export const getMyStatus = () => {
     const URL = `${API_BASE_URL}/userstatus`;
 
@@ -23,5 +12,23 @@ export const getMyStatus = () => {
     }).then(
         response => response.json(),
         error => console.error('Error fetching my status')
+    );
+};
+
+export const getMyPlaylists = (offset = 1, limit = 10) => {
+    const URL = `${API_BASE_URL}/myplaylists/${offset}/${limit}`;
+
+    return fetch(URL).then(
+        response => response.json(),
+        error => console.error('Error fetching my playlists', error)
+    );
+};
+
+export const searchPlaylists = (query = '', offset = 1, limit = 10) => {
+    const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
+
+    return fetch(URL).then(
+        response => response.json(),
+        error => console.error('Error fetching searched playlists', error)
     );
 };

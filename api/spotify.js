@@ -69,6 +69,14 @@ export const getPlaylists = () => {
     return [];
 };
 
+export async function searchPlaylists(query, options = {}) {
+    try {
+        return await spotifyApi.searchPlaylists(query, options);
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
