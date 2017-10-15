@@ -28,3 +28,13 @@ it('Nav navigateTo prop is not being called on render', () => {
 
     expect(navigateTo.mock.calls.length).toBe(0);
 });
+
+it('Nav has correct classes for styling', () => {
+    let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
+    let classNames = nav.prop('classes');
+
+    expect(classNames).toMatchObject({
+        root: expect.any(String),
+        tabContainer: expect.any(String)
+    });
+});
