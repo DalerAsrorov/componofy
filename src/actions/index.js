@@ -12,7 +12,7 @@ export const RECEIVE_PLAYLISTS = 'RECEIVE_PLAYLISTS';
 const receivePlaylists = json => {
     return {
         type: RECEIVE_PLAYLISTS,
-        playlists: json.data.body.items,
+        playlists: json.data.body ? json.data.body.items : [],
         receivedAt: Date.now()
     };
 };
