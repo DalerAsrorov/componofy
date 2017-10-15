@@ -10,8 +10,9 @@ import './Login.css';
 
 const styles = theme => ({
     root: {
-        width: '40%',
-        margin: '0 auto'
+        width: '100%',
+        position: 'relative',
+        transform: 'translateY(50%)'
     }
 });
 
@@ -34,7 +35,7 @@ class Login extends PureComponent {
                 align="center"
                 justify="center"
             >
-                <Grid item xs={12}>
+                <Grid item>
                     <Landing
                         iconText="Authorize"
                         title="Componofy"
