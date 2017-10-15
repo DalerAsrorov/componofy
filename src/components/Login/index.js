@@ -29,19 +29,21 @@ class Login extends PureComponent {
     };
 
     render() {
-        const classes = this.props.classes;
+        const { classes } = this.props;
 
         return (
-            <Grid className={classes.root}>
-                <Landing
-                    iconText="Authorize"
-                    title="Componofy"
-                    subTitle="Make a perfect playlist from a bunch of playlists"
-                    width={600}
-                    onAuth={this._handleAuth}
-                >
-                    <FaSpotify />
-                </Landing>
+            <Grid container align="center" justify="center">
+                <Grid item xs={12}>
+                    <Landing
+                        iconText="Authorize"
+                        title="Componofy"
+                        subTitle="Make a perfect playlist from a bunch of playlists"
+                        width={600}
+                        onAuth={this._handleAuth}
+                    >
+                        <FaSpotify />
+                    </Landing>
+                </Grid>
             </Grid>
         );
     }
