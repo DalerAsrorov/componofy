@@ -28,8 +28,8 @@ const styles = theme => ({
 
 class Nav extends PureComponent {
     static propTypes = {
-        classes: PropTypes.object,
-        navigateTo: PropTypes.func.isRequired
+        navigateTo: PropTypes.func.isRequired,
+        classes: PropTypes.object
     };
 
     state = {
