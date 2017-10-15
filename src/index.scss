@@ -1,15 +1,5 @@
 $baseColor: #2c3038;
 
-html,
-body,
-#root,
-.app {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-}
-
 body {
     background-color: $baseColor;
 }

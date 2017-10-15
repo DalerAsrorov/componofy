@@ -1,17 +1,37 @@
 import React from 'react';
 import { Route } from 'react-router';
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 import PublicPlaylists from '../PublicPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 
-const Main = ({ match: { url } }) => {
+const styles = theme => ({
+    root: {}
+});
+
+const Main = ({ classes, match: { url } }) => {
     return (
-        <div>
-            <Nav />
-            <Route exact path={`${url}`} component={MyPlaylists} />
-            <Route path={`${url}/public`} component={PublicPlaylists} />
-        </div>
+        <Grid
+            container
+            direction="column"
+            justify="center"
+            className={classes.root}
+        >
+            <Grid item xs={12}>
+                <Nav />
+            </Grid>
+            <Grid item xs={12}>
+                <Route exact path={`${url}`} component={MyPlaylists} />
+                <Route path={`${url}/public`} component={PublicPlaylists} />
+            </Grid>
+        </Grid>
     );
 };
 
-export default Main;
+Main.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Main);
