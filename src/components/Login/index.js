@@ -10,12 +10,8 @@ import './Login.css';
 
 const styles = theme => ({
     root: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%'
+        width: '40%',
+        margin: '0 auto'
     }
 });
 
@@ -32,13 +28,17 @@ class Login extends PureComponent {
         const { classes } = this.props;
 
         return (
-            <Grid container align="center" justify="center">
+            <Grid
+                className={classes.root}
+                container
+                align="center"
+                justify="center"
+            >
                 <Grid item xs={12}>
                     <Landing
                         iconText="Authorize"
                         title="Componofy"
                         subTitle="Make a perfect playlist from a bunch of playlists"
-                        width={600}
                         onAuth={this._handleAuth}
                     >
                         <FaSpotify />

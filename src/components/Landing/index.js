@@ -40,7 +40,6 @@ class Landing extends PureComponent {
         subTitle: PropTypes.string.isRequired,
         children: PropTypes.object,
         iconText: PropTypes.string,
-        width: PropTypes.number,
         classes: PropTypes.object
     };
 
@@ -53,17 +52,10 @@ class Landing extends PureComponent {
     };
 
     render() {
-        const {
-            title,
-            subTitle,
-            children,
-            iconText,
-            width,
-            classes
-        } = this.props;
+        const { title, subTitle, children, iconText, classes } = this.props;
 
         return (
-            <Paper elevation={ELEVATION} style={{ width }}>
+            <Paper elevation={ELEVATION}>
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
                         <Typography
