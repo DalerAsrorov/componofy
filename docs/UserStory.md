@@ -7,7 +7,7 @@ This document provides information on available actions for the user that exist 
 * The user should authenticate through Spotify by clicking the button 'Authenticate' to access the app.
 * The user should see his playlists after successful authentication.
 * The user should be able to switch between public and user playlist pages.
-* The user should be able to go to `/componofy` route only after the user added at least one playlist or *at least 10 tracks* to the list.
+* The user should be able to go to `/componofy` page only after the user added at least one playlist or *at least 10 tracks* to the list.
 
 ## Can (not)
 
