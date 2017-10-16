@@ -77,8 +77,25 @@ export async function searchPlaylists(query, options = {}) {
     }
 }
 
+export async function getPlaylistTracks(userID, playlistID, options = {}) {
+    try {
+        return await spotifyApi.getPlaylistTracks(userID, playlistID, options);
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getMe() {
+    try {
+        return await spotifyApi.getMe();
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
-    getPlaylists
+    getPlaylists,
+    getPlaylistTracks
 };

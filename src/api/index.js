@@ -32,3 +32,20 @@ export const searchPlaylists = (query = '', offset = 1, limit = 10) => {
         error => console.error('Error fetching searched playlists', error)
     );
 };
+
+export const getPlaylistTracks = (
+    userID,
+    playlistID,
+    offset = 0,
+    limit = 10
+) => {
+    const URL = `${API_BASE_URL}/playlist-tracks/${userID}/${playlistID}/${offset}/${limit}`;
+
+    return fetch(URL).then(
+        response => response.json(),
+        error =>
+            console.error(
+                `Error fetching ${userID}'s traks from ${playlistID}.`
+            )
+    );
+};

@@ -4,8 +4,10 @@ import corsHeaders from 'hapi-cors-headers';
 import {
     createAuthorizeURL,
     authorizationCodeGrant,
+    getMe,
     getMyPlaylists,
-    searchPlaylists
+    searchPlaylists,
+    getPlaylistTracks
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -127,15 +129,18 @@ server.register({ register: Yar, options }, error => {
 
             authorizationCodeGrant(code)
                 .then(({ clientAppURL, accessToken, refreshToken }) => {
-                    const sessionState = {
-                        lastVisit: Date.now(),
-                        accessToken,
-                        refreshToken
-                    };
+                    getMe().then(({ body: { id, email } }) => {
+                        const sessionState = {
+                            lastVisit: Date.now(),
+                            accessToken,
+                            refreshToken,
+                            email,
+                            id
+                        };
 
-                    request.yar.set('session', sessionState);
-
-                    reply.redirect(clientAppURL);
+                        request.yar.set('session', sessionState);
+                        reply.redirect(clientAppURL);
+                    });
                 })
                 .catch(error => console.error(error));
         },
@@ -197,6 +202,29 @@ server.register({ register: Yar, options }, error => {
                 'Returns the list of playlists based on the given search parameters.',
             notes: 'This endpoint does not require authentication.',
             tags: ['api', 'playlsits', 'search']
+        }
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/playlist-tracks/{userID}/{playlistID}/{offset}/{limit}',
+        handler: (request, reply) => {
+            const { offset, limit, userID, playlistID } = request.params;
+
+            getPlaylistTracks(userID, playlistID, { offset, limit })
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description:
+                'Returns playlist tracks given the user and playlist IDs.',
+            notes: 'Both UserID and PlaylistID are required to fetch teh data.',
+            tags: ['api', 'playlists']
         }
     });
 });

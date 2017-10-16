@@ -25,19 +25,19 @@ export const fetchMyPlaylists = () => {
 };
 
 export const RECEIVED_AUTH_STATE = 'RECEIVED_AUTH_STATE';
-const receivedAuthState = isAuthenticated => {
+const receivedAuthState = userInfo => {
     return {
         type: RECEIVED_AUTH_STATE,
-        isAuthenticated
+        userInfo
     };
 };
 
 export const checkIfAuthenticated = () => {
     return dispatch => {
         return getMyStatus()
-            .then(data => {
-                const { isAuthenticated } = data;
-                dispatch(receivedAuthState(isAuthenticated));
+            .then(userInfo => {
+                const { isAuthenticated } = userInfo;
+                dispatch(receivedAuthState(userInfo));
 
                 if (!isAuthenticated) {
                     dispatch(push('/'));

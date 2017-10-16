@@ -1,17 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { Route } from 'react-router';
 import { connect } from 'react-redux';
+import { connectStream } from '../connectPage';
 import { checkIfAuthenticated } from '../actions';
 
 class PrivateRoute extends PureComponent {
     static propTypes = {
-        isAuthenticated: PropTypes.bool.isRequired,
         checkIfAuthenticated: PropTypes.func.isRequired
     };
 
     componentWillMount() {
-        const { isAuthenticated, checkIfAuthenticated } = this.props;
+        const { checkIfAuthenticated } = this.props;
 
         checkIfAuthenticated();
     }
@@ -30,14 +31,4 @@ class PrivateRoute extends PureComponent {
     }
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.isAuthenticated
-});
-
-const mapDispatchToProps = dispatch => ({
-    checkIfAuthenticated() {
-        dispatch(checkIfAuthenticated());
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default connectStream(withRouter(PrivateRoute));

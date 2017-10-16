@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { fetchMyPlaylists } from './actions';
+import { fetchMyPlaylists, checkIfAuthenticated } from './actions';
 
 const mapStateToProps = state => ({
-    myPlaylists: state.myPlaylists
+    myPlaylists: state.myPlaylists,
+    user: state.user
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -13,6 +14,10 @@ export const mapDispatchToProps = dispatch => ({
 
     navigateTo(path) {
         dispatch(push(path));
+    },
+
+    checkIfAuthenticated() {
+        dispatch(checkIfAuthenticated());
     }
 });
 

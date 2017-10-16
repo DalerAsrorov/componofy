@@ -24,10 +24,10 @@ export function myPlaylists(
     }
 }
 
-export function isAuthenticated(state = false, action) {
+export function user(state = {}, action) {
     switch (action.type) {
         case RECEIVED_AUTH_STATE:
-            return action.isAuthenticated;
+            return Object.assign({}, state, action.userInfo);
         default:
             return state;
     }
