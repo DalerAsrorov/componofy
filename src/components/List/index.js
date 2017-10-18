@@ -1,14 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import MaterialList, {
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    ListSubheader
-} from 'material-ui/List';
-import { PlaylistPlay } from 'material-ui-icons';
+import MaterialList, { ListSubheader } from 'material-ui/List';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import Playlist from '../Playlist';
 
 const styles = theme => ({
     root: {
@@ -30,17 +25,9 @@ class List extends PureComponent {
 
     render() {
         const { items, subheader, classes } = this.props;
-
-        const ListOfItems = items.map(item => {
-            return (
-                <ListItem button divider key={item.id}>
-                    <ListItemIcon>
-                        <PlaylistPlay />
-                    </ListItemIcon>
-                    <ListItemText inset primary={item.name} />
-                </ListItem>
-            );
-        });
+        const ListOfItems = items.map(item => (
+            <Playlist key={item.id} playlist={item} />
+        ));
 
         return (
             <MaterialList

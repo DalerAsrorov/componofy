@@ -1,5 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MaterialList, {
+    ListItem,
+    ListItemIcon,
+    ListItemText
+} from 'material-ui/List';
+import { PlaylistPlay } from 'material-ui-icons';
+import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 
 export default class Playlist extends PureComponent {
     state = {
@@ -13,23 +20,19 @@ export default class Playlist extends PureComponent {
     };
 
     render() {
-        const {
-            playlist: { name, images, external_urls: { spotify: playlistURL } },
-            classes
-        } = this.props;
+        const { playlist } = this.props;
 
-        return <div />;
-
-        // return (
-        //     <div>
-        //         <a target="__blank" href={playlistURL}>
-        //             {name}
-        //         </a>
-        //     </div>
-        // );
+        return (
+            <ListItem button divider>
+                <ListItemIcon>
+                    <PlaylistPlay />
+                </ListItemIcon>
+                <ListItemText inset primary={playlist.name} />
+            </ListItem>
+        );
     }
 }
 
 Playlist.propTypes = {
-    playlist: PropTypes.object
+    playlist: PLAYLIST_PROPTYPE
 };
