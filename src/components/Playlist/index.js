@@ -10,10 +10,10 @@ import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 
 export default class Playlist extends PureComponent {
     state = {
-        isOpen: true
+        isOpen: false
     };
 
-    _handleToggle = () => {
+    _handleClick = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -21,9 +21,10 @@ export default class Playlist extends PureComponent {
 
     render() {
         const { playlist } = this.props;
+        const { isOpen } = this.state;
 
         return (
-            <ListItem button divider>
+            <ListItem button divider onClick={this._handleClick}>
                 <ListItemIcon>
                     <PlaylistPlay />
                 </ListItemIcon>
