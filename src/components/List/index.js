@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, {
@@ -13,6 +13,7 @@ import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 const styles = theme => ({
     root: {
         width: '100%',
+        padding: '0',
         background: theme.palette.background.paper
     },
     nested: {
@@ -20,34 +21,36 @@ const styles = theme => ({
     }
 });
 
-const List = props => {
-    const { items } = props;
+class List extends PureComponent {
+    static propTypes = {
+        items: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
+        subheader: PropTypes.string,
+        classes: PropTypes.object
+    };
 
-    const ListOfItems = items.map(item => {
+    render() {
+        const { items, subheader, classes } = this.props;
+
+        const ListOfItems = items.map(item => {
+            return (
+                <ListItem button divider key={item.id}>
+                    <ListItemIcon>
+                        <PlaylistPlay />
+                    </ListItemIcon>
+                    <ListItemText inset primary={item.name} />
+                </ListItem>
+            );
+        });
+
         return (
-            <ListItem button key={item.id}>
-                <ListItemIcon>
-                    <PlaylistPlay />
-                </ListItemIcon>
-                <ListItemText inset primary={item.name} />
-            </ListItem>
+            <MaterialList
+                className={classes.root}
+                subheader={<ListSubheader>{subheader}</ListSubheader>}
+            >
+                {ListOfItems}
+            </MaterialList>
         );
-    });
-
-    return (
-        <MaterialList
-            className={props.classes.root}
-            subheader={<ListSubheader>{props.subheader}</ListSubheader>}
-        >
-            {ListOfItems}
-        </MaterialList>
-    );
-};
-
-List.propTypes = {
-    items: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
-    subheader: PropTypes.string,
-    classes: PropTypes.object
-};
+    }
+}
 
 export default withStyles(styles)(List);
