@@ -1,14 +1,27 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Collapse from 'material-ui/transitions/Collapse';
 import MaterialList, {
     ListItem,
     ListItemIcon,
     ListItemText
 } from 'material-ui/List';
+import { withStyles } from 'material-ui/styles';
 import { PlaylistPlay } from 'material-ui-icons';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 
-export default class Playlist extends PureComponent {
+const styles = theme => ({
+    nested: {
+        paddingLeft: theme.spacing.unit * 4
+    }
+});
+
+class Playlist extends PureComponent {
+    static propTypes = {
+        playlist: PLAYLIST_PROPTYPE,
+        classes: PropTypes.object
+    };
+
     state = {
         isOpen: false
     };
@@ -20,20 +33,28 @@ export default class Playlist extends PureComponent {
     };
 
     render() {
-        const { playlist } = this.props;
+        const { playlist, classes } = this.props;
         const { isOpen } = this.state;
 
         return (
-            <ListItem button divider onClick={this._handleClick}>
-                <ListItemIcon>
-                    <PlaylistPlay />
-                </ListItemIcon>
-                <ListItemText inset primary={playlist.name} />
-            </ListItem>
+            <div>
+                <ListItem button divider onClick={this._handleClick}>
+                    <ListItemIcon>
+                        <PlaylistPlay />
+                    </ListItemIcon>
+                    <ListItemText inset primary={playlist.name} />
+                </ListItem>
+                <Collapse in={isOpen} transitionDuration="auto" unmountOnExit>
+                    <ListItem className={classes.nested}>
+                        <ListItemIcon>
+                            <PlaylistPlay />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Starred" />
+                    </ListItem>
+                </Collapse>
+            </div>
         );
     }
 }
 
-Playlist.propTypes = {
-    playlist: PLAYLIST_PROPTYPE
-};
+export default withStyles(styles)(Playlist);

@@ -10,9 +10,6 @@ const styles = theme => ({
         width: '100%',
         padding: '0',
         background: theme.palette.background.paper
-    },
-    nested: {
-        paddingLeft: theme.spacing.unit * 4
     }
 });
 
