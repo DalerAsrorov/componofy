@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, { ListSubheader } from 'material-ui/List';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
-import Playlist from '../Playlist';
+import Playlist from '../../containers/Playlist';
+import Track from '../Track';
 
 const styles = theme => ({
     root: {
@@ -15,23 +16,37 @@ const styles = theme => ({
 
 class List extends PureComponent {
     static propTypes = {
-        items: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
+        items: PropTypes.oneOfType([
+            PropTypes.arrayOf(PLAYLIST_PROPTYPE),
+            PropTypes.arrayOf(
+                // TODO: https://github.com/DalerAsrorov/componofy/issues/18
+                PropTypes.shape({ id: PropTypes.number.isRequired })
+            )
+        ]).isRequired,
         subheader: PropTypes.string,
         classes: PropTypes.object
     };
 
     render() {
-        const { items, subheader, classes } = this.props;
-        const ListOfItems = items.map(item => (
-            <Playlist key={item.id} playlist={item} />
-        ));
+        const { items, subheader, classes, isPlaylist } = this.props;
+        let listOfItems;
+
+        if (isPlaylist) {
+            listOfItems = items.map(item => (
+                <Playlist key={item.id} playlist={item} />
+            ));
+        } else {
+            listOfItems = items.map(item => (
+                <Track key={item.id} track={item} />
+            ));
+        }
 
         return (
             <MaterialList
                 className={classes.root}
                 subheader={<ListSubheader>{subheader}</ListSubheader>}
             >
-                {ListOfItems}
+                {listOfItems}
             </MaterialList>
         );
     }
