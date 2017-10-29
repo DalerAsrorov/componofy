@@ -20,7 +20,7 @@ class List extends PureComponent {
             PropTypes.arrayOf(PLAYLIST_PROPTYPE),
             PropTypes.arrayOf(
                 // TODO: https://github.com/DalerAsrorov/componofy/issues/18
-                PropTypes.shape({ id: PropTypes.number.isRequired })
+                PropTypes.object
             )
         ]).isRequired,
         subheader: PropTypes.string,
@@ -36,8 +36,8 @@ class List extends PureComponent {
                 <Playlist key={item.id} playlist={item} />
             ));
         } else {
-            listOfItems = items.map(item => (
-                <Track key={item.id} track={item} />
+            listOfItems = items.map(({ track }) => (
+                <Track key={track.id} track={track} />
             ));
         }
 

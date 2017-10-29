@@ -13,14 +13,15 @@ class Track extends PureComponent {
     };
 
     render() {
-        const { track } = this.props;
+        const { track: { album, artists } } = this.props;
+        console.log('track', album, artists);
 
         return (
             <ListItem>
                 <ListItemIcon>
                     <span>Some</span>
                 </ListItemIcon>
-                <ListItemText inset primary={track.name} />
+                <ListItemText inset primary={'name'} />
             </ListItem>
         );
     }
