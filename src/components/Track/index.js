@@ -6,6 +6,7 @@ import MaterialList, {
     ListItemText
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
+import { head } from 'ramda';
 
 class Track extends PureComponent {
     static propType = {
@@ -16,7 +17,7 @@ class Track extends PureComponent {
         const { track } = this.props;
         const { artists, album, name: trackName } = track;
 
-        const { name: artistName, href: artistUrl } = artists[0];
+        const { name: artistName, href: artistUrl } = head(artists);
 
         console.log('track', track);
 
