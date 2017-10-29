@@ -32,8 +32,8 @@ class List extends PureComponent {
         let listOfItems;
 
         if (isPlaylist) {
-            listOfItems = items.map(item => (
-                <Playlist key={item.id} playlist={item} />
+            listOfItems = items.map(playlist => (
+                <Playlist key={playlist.id} playlist={playlist} />
             ));
         } else {
             listOfItems = items.map(({ track }) => (
