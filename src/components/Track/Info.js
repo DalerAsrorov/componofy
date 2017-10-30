@@ -12,10 +12,6 @@ const styles = theme => ({
         paddingBottom: 6
     }),
 
-    link: {
-        'text-decoration': 'none'
-    },
-
     popolarity: {}
 });
 

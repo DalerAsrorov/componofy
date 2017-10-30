@@ -8,6 +8,7 @@ import MaterialList, {
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
+import { TRACK_PROPTYPE } from '../../utils/constants';
 
 import Info from './Info';
 
@@ -19,7 +20,7 @@ const styles = theme => ({
 
 class Track extends PureComponent {
     static propType = {
-        track: PropTypes.object
+        track: TRACK_PROPTYPE.isRequired
     };
 
     state = {
@@ -56,8 +57,6 @@ class Track extends PureComponent {
             name: artistName,
             external_urls: { spotify: artistUrl }
         } = head(artists);
-
-        console.log('popularity', popularity);
 
         return (
             <ListItem divider>
