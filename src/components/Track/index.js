@@ -9,20 +9,13 @@ import MaterialList, {
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 
-const styles = theme => {
-    console.log('theme props', theme);
+import Info from './Info';
 
-    return {
-        checkmark: {
-            color: theme.palette.grey[600]
-        }
-    };
-};
-// const styles = theme => ({
-//     checkmark: {
-//         color: 'red'
-//     }
-// });
+const styles = theme => ({
+    checkmark: {
+        color: theme.palette.grey[600]
+    }
+});
 
 class Track extends PureComponent {
     static propType = {
@@ -50,11 +43,23 @@ class Track extends PureComponent {
         const { isAdded } = this.state;
         const { track, classes } = this.props;
 
-        const { id: trackID, artists, album, name: trackName } = track;
-        const { name: artistName, href: artistUrl } = head(artists);
+        const {
+            id: trackID,
+            artists,
+            name: trackName,
+            album: { name: albumName, external_urls: { spotify: albumUrl } },
+            external_urls: { spotify: trackUrl }
+        } = track;
+
+        const {
+            name: artistName,
+            external_urls: { spotify: artistUrl }
+        } = head(artists);
+
+        const tempComp = () => <p>Hello</p>;
 
         return (
-            <ListItem>
+            <ListItem divider>
                 <ListItemIcon>
                     <Checkbox
                         className={classes.checkmark}
@@ -62,7 +67,18 @@ class Track extends PureComponent {
                         checked={isAdded}
                     />
                 </ListItemIcon>
-                <ListItemText inset primary={artistName} />
+                <ListItemText
+                    primary={
+                        <Info
+                            trackName={trackName}
+                            trackUrl={trackUrl}
+                            artistName={artistName}
+                            artistUrl={artistUrl}
+                            albumName={albumName}
+                            albumUrl={albumUrl}
+                        />
+                    }
+                />
             </ListItem>
         );
     }
