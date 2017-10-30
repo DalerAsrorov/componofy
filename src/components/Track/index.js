@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from 'material-ui/Checkbox';
 import MaterialList, {
     ListItem,
     ListItemIcon,
@@ -13,18 +14,39 @@ class Track extends PureComponent {
         track: PropTypes.object
     };
 
-    render() {
+    state = {
+        // TODO: use mapStateToProps from redux
+        // to check if track is in the queue of
+        // added tracks. If it is, then mark
+        // the prop "isAdded" as true, otherwise
+        // false. Once that is done, this should
+        // be moved to props of boolean type.
+        isAdded: false
+    };
+
+    _handleChecked = event => {
+        event.preventDefault();
+        const { isAdded } = this.state;
         const { track } = this.props;
-        const { artists, album, name: trackName } = track;
 
+        this.setState({ isAdded: !isAdded });
+    };
+
+    render() {
+        const { isAdded } = this.state;
+        const { track } = this.props;
+
+        const { id: trackID, artists, album, name: trackName } = track;
         const { name: artistName, href: artistUrl } = head(artists);
-
-        console.log('track', track);
 
         return (
             <ListItem>
                 <ListItemIcon>
-                    <span>{trackName}</span>
+                    <Checkbox
+                        onClick={this._handleChecked}
+                        checked={isAdded}
+                        disableRipple
+                    />
                 </ListItemIcon>
                 <ListItemText inset primary={artistName} />
             </ListItem>

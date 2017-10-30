@@ -47,7 +47,9 @@ class Playlist extends PureComponent {
             });
     };
 
-    _handleClick = () => {
+    _handleClick = event => {
+        event.preventDefault();
+
         this.setState({
             isOpen: !this.state.isOpen
         });
