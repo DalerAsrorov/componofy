@@ -8,7 +8,7 @@ import MaterialList, {
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistPlay } from 'material-ui-icons';
-import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
 import { getPlaylistTracks } from '../../api';
 import List from '../List';
 
@@ -21,8 +21,7 @@ const styles = theme => ({
 class Playlist extends PureComponent {
     static propTypes = {
         playlist: PLAYLIST_PROPTYPE.isRequired,
-        // TODO: Create a custom prop object for each state
-        user: PropTypes.object.isRequired,
+        user: USER_PROPTYPE.isRequired,
         classes: PropTypes.object
     };
 

@@ -49,3 +49,26 @@ export const PLAYLIST_PROPTYPE = PropTypes.shape({
     type: PropTypes.string,
     public: PropTypes.bool
 });
+
+export const USER_PROPTYPE = PropTypes.shape({
+    isAuthenticated: PropTypes.bool.isRequired,
+    refreshToken: PropTypes.string.isRequired,
+    accessToken: PropTypes.string.isRequired,
+    sessionID: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+});
+
+export const MY_PLAYLISTS_PROPTYPE = PropTypes.shape({
+    playlists: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    lastUpdated: PropTypes.number
+});
+
+export const ROUTER_PROPTYPE = PropTypes.shape({
+    location: PropTypes.shape({
+        pathname: PropTypes.string.isRequired,
+        search: PropTypes.string,
+        hash: PropTypes.string
+    })
+});

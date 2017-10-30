@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import List from '../List';
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
-        myPlaylists: PropTypes.object.isRequired,
+        myPlaylists: MY_PLAYLISTS_PROPTYPE,
         fetchMyPlaylists: PropTypes.func.isRequired
     };
 
