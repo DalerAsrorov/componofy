@@ -25,7 +25,6 @@ class Track extends PureComponent {
     };
 
     _handleChecked = event => {
-        event.preventDefault();
         const { isAdded } = this.state;
         const { track } = this.props;
 
@@ -42,11 +41,7 @@ class Track extends PureComponent {
         return (
             <ListItem>
                 <ListItemIcon>
-                    <Checkbox
-                        onClick={this._handleChecked}
-                        checked={isAdded}
-                        disableRipple
-                    />
+                    <Checkbox onClick={this._handleChecked} checked={isAdded} />
                 </ListItemIcon>
                 <ListItemText inset primary={artistName} />
             </ListItem>
