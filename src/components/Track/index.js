@@ -9,6 +9,21 @@ import MaterialList, {
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 
+const styles = theme => {
+    console.log('theme props', theme);
+
+    return {
+        checkmark: {
+            color: theme.palette.grey[600]
+        }
+    };
+};
+// const styles = theme => ({
+//     checkmark: {
+//         color: 'red'
+//     }
+// });
+
 class Track extends PureComponent {
     static propType = {
         track: PropTypes.object
@@ -33,7 +48,7 @@ class Track extends PureComponent {
 
     render() {
         const { isAdded } = this.state;
-        const { track } = this.props;
+        const { track, classes } = this.props;
 
         const { id: trackID, artists, album, name: trackName } = track;
         const { name: artistName, href: artistUrl } = head(artists);
@@ -41,7 +56,11 @@ class Track extends PureComponent {
         return (
             <ListItem>
                 <ListItemIcon>
-                    <Checkbox onClick={this._handleChecked} checked={isAdded} />
+                    <Checkbox
+                        className={classes.checkmark}
+                        onClick={this._handleChecked}
+                        checked={isAdded}
+                    />
                 </ListItemIcon>
                 <ListItemText inset primary={artistName} />
             </ListItem>
@@ -49,4 +68,4 @@ class Track extends PureComponent {
     }
 }
 
-export default Track;
+export default withStyles(styles)(Track);
