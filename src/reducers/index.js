@@ -14,10 +14,12 @@ export function myPlaylists(
                 isFetching: true
             });
         case RECEIVE_PLAYLISTS:
+            const playlists = [...state.playlists, ...action.playlists];
+
             return Object.assign({}, state, {
+                lastUpdated: action.receivedAt,
                 isFetching: false,
-                playlists: action.playlists,
-                lastUpdated: action.receivedAt
+                playlists
             });
         default:
             return state;
