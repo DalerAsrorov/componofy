@@ -30,9 +30,9 @@ class MyPlaylists extends PureComponent {
         let { currentOffset } = this.state;
         const { fetchMyPlaylists } = this.props;
 
+        currentOffset += LIMIT;
         fetchMyPlaylists(currentOffset);
 
-        currentOffset += LIMIT;
         this.setState({ currentOffset });
     };
 
