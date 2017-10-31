@@ -24,8 +24,20 @@ class MyPlaylists extends PureComponent {
         currentOffset: 1
     };
 
+    _handleLoadMore = event => {
+        event.preventDefault();
+
+        let { currentOffset } = this.state;
+        const { fetchMyPlaylists } = this.props;
+
+        fetchMyPlaylists(currentOffset);
+
+        currentOffset += LIMIT;
+        this.setState({ currentOffset });
+    };
+
     componentDidMount() {
-        const { currentOffset } = this.state;
+        let { currentOffset } = this.state;
         const { fetchMyPlaylists } = this.props;
 
         fetchMyPlaylists(currentOffset);
@@ -38,7 +50,12 @@ class MyPlaylists extends PureComponent {
         return (
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
-                <Button raised color="accent" className={classes.loadmore}>
+                <Button
+                    onClick={this._handleLoadMore}
+                    raised
+                    color="accent"
+                    className={classes.loadmore}
+                >
                     Load more
                 </Button>
             </div>

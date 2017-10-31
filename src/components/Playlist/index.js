@@ -42,7 +42,6 @@ class Playlist extends PureComponent {
                 this.setState({ tracks: playlistTracks });
             })
             .catch(error => {
-                debugger;
                 console.error(error);
             });
     };
