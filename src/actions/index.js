@@ -17,10 +17,12 @@ const receivePlaylists = json => {
     };
 };
 
-export const fetchMyPlaylists = () => {
+export const fetchMyPlaylists = offset => {
     return dispatch => {
         dispatch(requestPlaylists());
-        return getMyPlaylists().then(json => dispatch(receivePlaylists(json)));
+        return getMyPlaylists(offset).then(json =>
+            dispatch(receivePlaylists(json))
+        );
     };
 };
 

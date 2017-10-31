@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-    fetchMyPlaylists() {
-        dispatch(fetchMyPlaylists());
+    fetchMyPlaylists(offset) {
+        dispatch(fetchMyPlaylists(offset));
     },
 
     navigateTo(path) {
