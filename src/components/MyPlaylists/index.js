@@ -21,19 +21,35 @@ class MyPlaylists extends PureComponent {
     };
 
     state = {
-        currentOffset: 1
+        currentOffset: 0,
+        playlistsRemaining: 0
     };
 
     _handleLoadMore = event => {
         event.preventDefault();
 
-        let { currentOffset } = this.state;
-        const { fetchMyPlaylists } = this.props;
+        const {
+            fetchMyPlaylists,
+            myPlaylists: { numberOfTracks }
+        } = this.props;
+        let { currentOffset, playlistsRemaining } = this.state;
 
-        currentOffset += LIMIT;
-        fetchMyPlaylists(currentOffset);
+        if (currentOffset !== numberOfTracks) {
+            fetchMyPlaylists(currentOffset);
 
-        this.setState({ currentOffset });
+            if (playlistsRemaining < LIMIT) {
+                currentOffset += playlistsRemaining;
+            } else {
+                currentOffset += LIMIT;
+            }
+
+            playlistsRemaining = numberOfTracks - currentOffset;
+
+            this.setState({
+                playlistsRemaining,
+                currentOffset
+            });
+        }
     };
 
     componentDidMount() {
@@ -43,8 +59,35 @@ class MyPlaylists extends PureComponent {
         fetchMyPlaylists(currentOffset);
     }
 
+    componentWillReceiveProps(nextProps) {
+        let { playlistsRemaining, currentOffset } = this.state;
+        let { myPlaylists: { numberOfTracks, isFetching } } = nextProps;
+
+        if (
+            numberOfTracks > 0 &&
+            !isFetching &&
+            currentOffset === 0 &&
+            playlistsRemaining === 0
+        ) {
+            if (numberOfTracks < LIMIT) {
+                currentOffset = numberOfTracks;
+            } else {
+                currentOffset = LIMIT;
+            }
+
+            playlistsRemaining = numberOfTracks - currentOffset;
+
+            this.setState({
+                playlistsRemaining,
+                currentOffset
+            });
+        }
+    }
+
     render() {
+        const { playlistsRemaining } = this.state;
         const { myPlaylists: { playlists }, classes } = this.props;
+
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
 
         return (
@@ -57,6 +100,8 @@ class MyPlaylists extends PureComponent {
                     className={classes.loadmore}
                 >
                     Load more
+                    {/* To do: Replace span with Material UI component */}
+                    <span>{playlistsRemaining}</span>
                 </Button>
             </div>
         );

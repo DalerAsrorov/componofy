@@ -5,7 +5,7 @@ import {
 } from '../actions';
 
 export function myPlaylists(
-    state = { isFetching: false, playlists: [] },
+    state = { isFetching: false, playlists: [], numberOfTracks: 0 },
     action
 ) {
     switch (action.type) {
@@ -17,6 +17,7 @@ export function myPlaylists(
             const playlists = [...state.playlists, ...action.playlists];
 
             return Object.assign({}, state, {
+                numberOfTracks: action.numberOfTracks,
                 lastUpdated: action.receivedAt,
                 isFetching: false,
                 playlists

@@ -58,8 +58,6 @@ class Playlist extends PureComponent {
         const { playlist, classes } = this.props;
         const { isOpen, tracks } = this.state;
 
-        console.log('tracks', tracks);
-
         return (
             <div>
                 <ListItem button divider onClick={this._handleClick}>

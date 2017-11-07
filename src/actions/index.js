@@ -13,6 +13,7 @@ const receivePlaylists = json => {
     return {
         type: RECEIVE_PLAYLISTS,
         playlists: json.data.body ? json.data.body.items : [],
+        numberOfTracks: json.data.body ? json.data.body.total : 0,
         receivedAt: Date.now()
     };
 };
