@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
+import FooterPanel from '../FooterPanel';
 import List from '../List';
 
 const LIMIT = 10;
@@ -110,16 +111,12 @@ class MyPlaylists extends PureComponent {
         return (
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
-                <Button
+                <FooterPanel
                     onClick={this._handleLoadMore}
-                    raised
-                    color="accent"
-                    className={classes.loadmore}
-                >
-                    {/* To do: Replace span with Material UI component */}
-                    {status}
-                    <span>{playlistsRemaining}</span>
-                </Button>
+                    mainText={status}
+                    circleText={playlistsRemaining}
+                    shouldShowCircle={status !== STATUS['STOP']}
+                />
             </div>
         );
     }
