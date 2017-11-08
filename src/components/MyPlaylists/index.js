@@ -1,5 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import IconButton from 'material-ui/IconButton';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
+import SettingsApplications from 'material-ui-icons/SettingsApplications';
 import Button from 'material-ui/Button';
 import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
@@ -70,6 +74,10 @@ class MyPlaylists extends PureComponent {
         }
     };
 
+    _handleClickOptions = arg => {
+        console.log('_handleClickOptions arg', arg);
+    };
+
     componentDidMount() {
         let { currentOffset } = this.state;
         const { fetchMyPlaylists } = this.props;
@@ -116,6 +124,26 @@ class MyPlaylists extends PureComponent {
         return (
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
+                <Paper>
+                    <IconButton
+                        aria-label="Options"
+                        aria-haspopup="true"
+                        onClick={this._handleClickOptions}
+                    >
+                        <SettingsApplications />
+                    </IconButton>
+                    <Menu anchorEl={this.state.anchorEl} open={false}>
+                        {options.map(option => (
+                            <MenuItem
+                                key={option}
+                                selected={option === 'Pyxis'}
+                                onClick={this.handleRequestClose}
+                            >
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </Paper>
                 <FooterPanel
                     onClick={this._handleLoadMore}
                     mainText={status}
