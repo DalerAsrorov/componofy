@@ -45,6 +45,7 @@ export const FooterPanel = props => {
     return (
         <Button
             onClick={props.onClick}
+            disabled={!props.shouldShowCircle}
             raised
             color="accent"
             className={props.classes.loadmore}
