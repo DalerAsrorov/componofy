@@ -21,30 +21,45 @@ const styles = theme => ({
     }
 });
 
-export const FooterPanel = props => (
-    <Button
-        onClick={props.onClick}
-        raised
-        color="accent"
-        className={props.classes.loadmore}
-    >
-        <Badge
-            className={props.classes.badge + ' footer-panel-badge'}
-            color="primary"
-            badgeContent={props.circleText ? props.circleText : ''}
+export const FooterPanel = props => {
+    let footerContent = (
+        <Typography type="subheading" className={props.classes.root}>
+            {props.mainText}
+        </Typography>
+    );
+
+    if (props.shouldShowCircle) {
+        footerContent = (
+            <Badge
+                className={props.classes.badge + ' footer-panel-badge'}
+                color="primary"
+                badgeContent={props.circleText ? props.circleText : ''}
+            >
+                <Typography type="subheading" className={props.classes.root}>
+                    {props.mainText}
+                </Typography>
+            </Badge>
+        );
+    }
+
+    return (
+        <Button
+            onClick={props.onClick}
+            raised
+            color="accent"
+            className={props.classes.loadmore}
         >
-            <Typography type="subheading" className={props.classes.root}>
-                {props.mainText}
-            </Typography>
-        </Badge>
-    </Button>
-);
+            {footerContent}
+        </Button>
+    );
+};
 
 FooterPanel.propTypes = {
     mainText: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
-    circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    shouldShowCircle: PropTypes.bool
 };
 
 export default withStyles(styles)(FooterPanel);

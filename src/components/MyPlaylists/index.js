@@ -115,6 +115,7 @@ class MyPlaylists extends PureComponent {
                     onClick={this._handleLoadMore}
                     mainText={status}
                     circleText={playlistsRemaining}
+                    shouldShowCircle={status !== STATUS['STOP']}
                 />
             </div>
         );
