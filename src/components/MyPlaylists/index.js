@@ -5,7 +5,6 @@ import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
-import Settings from '../Settings';
 import List from '../List';
 
 const LIMIT = 10;
@@ -34,7 +33,8 @@ class MyPlaylists extends PureComponent {
         currentOffset: 0,
         playlistsRemaining: 0,
         settingsIsOpen: false,
-        status: STATUS['CONTINUE']
+        status: STATUS['CONTINUE'],
+        anchorEl: null
     };
 
     _handleLoadMore = event => {
@@ -72,17 +72,14 @@ class MyPlaylists extends PureComponent {
         }
     };
 
-    _handleClickOptions = arg => {
-        console.log('_handleClickOptions arg', arg);
-
+    _handleClickOptions = event => {
         this.setState({
-            settingsIsOpen: true
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
         });
     };
 
-    _handleClickOption = arg => {
-        console.log('arg', arg);
-
+    _handleClickOption = event => {
         this.setState({
             settingsIsOpen: false
         });
@@ -134,16 +131,14 @@ class MyPlaylists extends PureComponent {
         return (
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
-                <Settings
-                    onClickOptions={this._handleClickOptions}
-                    onSelectItem={this._handleClickOption}
-                    isOpen={settingsIsOpen}
-                />
                 <FooterPanel
                     onClick={this._handleLoadMore}
                     mainText={status}
                     circleText={playlistsRemaining}
                     shouldShowCircle={status !== STATUS['STOP']}
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    isOpen={settingsIsOpen}
                 />
             </div>
         );

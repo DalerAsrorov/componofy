@@ -9,16 +9,7 @@ import { withStyles } from 'material-ui/styles';
 const rightSpace = '30px';
 
 const styles = theme => ({
-    root: {
-        width: '60px',
-        textAlign: 'center',
-        background: 'transparent',
-        margin: '0'
-        // position: 'fixed',
-        // right: rightSpace,
-        // bottom: '70px',
-        // zIndex: '100'
-    },
+    root: {},
 
     menu: {}
 });
@@ -68,31 +59,22 @@ class Settings extends PureComponent {
         } = this.props;
 
         return (
-            <div className={classes.root}>
+            <div>
                 <Button
-                    fab={true}
-                    color="accent"
-                    aria-label="Options"
+                    aria-owns={isOpen ? 'simple-menu' : null}
                     aria-haspopup="true"
                     onClick={onClickOptions}
                 >
-                    <SettingsIcon />
+                    Open Menu
                 </Button>
                 <Menu
+                    open={isOpen}
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}
-                    open={isOpen}
-                    className={classes.menu}
                 >
-                    {options.map(option => (
-                        <MenuItem
-                            className={classes.menu}
-                            key={option}
-                            onClick={onSelectItem}
-                        >
-                            {option}
-                        </MenuItem>
-                    ))}
+                    <MenuItem onClick={onSelectItem}>Profile</MenuItem>
+                    <MenuItem onClick={onSelectItem}>My account</MenuItem>
+                    <MenuItem onClick={onSelectItem}>Logout</MenuItem>
                 </Menu>
             </div>
         );
