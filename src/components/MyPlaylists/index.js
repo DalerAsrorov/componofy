@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
@@ -18,6 +19,8 @@ const STATUS = {
     CONTINUE: 'Load more',
     STOP: 'All playlists loaded'
 };
+
+let scroll = Scroll.animateScroll;
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
@@ -57,6 +60,8 @@ class MyPlaylists extends PureComponent {
             }
 
             playlistsRemaining = numberOfTracks - currentOffset;
+
+            scroll.scrollToBottom();
 
             this.setState({
                 playlistsRemaining,
