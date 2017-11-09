@@ -2,11 +2,22 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import SettingsApplications from 'material-ui-icons/SettingsApplications';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({});
+const styles = theme => ({
+    root: {
+        width: '60px',
+        textAlign: 'center',
+        background: 'transparent',
+        margin: '0',
+        position: 'fixed',
+        right: '30px',
+        bottom: '70px',
+        zIndex: '100'
+    }
+});
 
 // text-align: right; */
 // /* background: transparent; */
@@ -44,17 +55,25 @@ class Settings extends PureComponent {
     };
 
     render() {
-        const { onClickOptions, onSelectItem, anchorEl, isOpen } = this.props;
+        const {
+            onClickOptions,
+            onSelectItem,
+            anchorEl,
+            isOpen,
+            classes
+        } = this.props;
 
         return (
-            <Paper>
-                <IconButton
+            <div className={classes.root}>
+                <Button
+                    fab={true}
+                    color="accent"
                     aria-label="Options"
                     aria-haspopup="true"
                     onClick={onClickOptions}
                 >
                     <SettingsApplications />
-                </IconButton>
+                </Button>
                 <Menu
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}
@@ -70,7 +89,7 @@ class Settings extends PureComponent {
                         </MenuItem>
                     ))}
                 </Menu>
-            </Paper>
+            </div>
         );
     }
 }
