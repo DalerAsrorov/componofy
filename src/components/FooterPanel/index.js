@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import Toolbar, {
+    ToolbarGroup,
+    ToolbarSeparator,
+    ToolbarTitle
+} from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import Typography from 'material-ui/Typography';
@@ -14,11 +19,13 @@ const styles = theme => ({
         margin: `0 ${theme.spacing.unit * 2}px`
     },
 
+    root: {
+        background: lightBlue[600]
+    },
+
     maintext: {},
 
-    loadmore: {
-        width: '100%'
-    }
+    loadmore: {}
 });
 
 export const FooterPanel = props => {
@@ -35,23 +42,23 @@ export const FooterPanel = props => {
                 color="primary"
                 badgeContent={props.circleText ? props.circleText : ''}
             >
-                <Typography type="subheading" className={props.classes.root}>
-                    {props.mainText}
-                </Typography>
+                <Typography type="subheading">{props.mainText}</Typography>
             </Badge>
         );
     }
 
     return (
-        <Button
-            onClick={props.onClick}
-            disabled={!props.shouldShowCircle}
-            raised
-            color="accent"
-            className={props.classes.loadmore}
-        >
-            {footerContent}
-        </Button>
+        <Toolbar className={props.classes.root}>
+            <Button
+                onClick={props.onClick}
+                disabled={!props.shouldShowCircle}
+                raised
+                color="accent"
+                className={props.classes.loadmore}
+            >
+                {footerContent}
+            </Button>
+        </Toolbar>
     );
 };
 

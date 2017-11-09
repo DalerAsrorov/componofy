@@ -21,11 +21,8 @@ const STATUS = {
     STOP: 'All playlists loaded'
 };
 
-<<<<<<< 255ee9a8c5245e5e4eba756d63cc7da55eea18f6
 let scroll = Scroll.animateScroll;
 
-=======
->>>>>>> Created a separate component for Settings
 class MyPlaylists extends PureComponent {
     static propTypes = {
         fetchMyPlaylists: PropTypes.func.isRequired,
