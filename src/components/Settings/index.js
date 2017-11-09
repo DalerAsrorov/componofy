@@ -1,22 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import SettingsApplications from 'material-ui-icons/SettingsApplications';
+import SettingsIcon from 'material-ui-icons/Settings';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
+
+const rightSpace = '30px';
 
 const styles = theme => ({
     root: {
         width: '60px',
         textAlign: 'center',
         background: 'transparent',
-        margin: '0',
-        position: 'fixed',
-        right: '30px',
-        bottom: '70px',
-        zIndex: '100'
-    }
+        margin: '0'
+        // position: 'fixed',
+        // right: rightSpace,
+        // bottom: '70px',
+        // zIndex: '100'
+    },
+
+    menu: {}
 });
 
 // text-align: right; */
@@ -72,17 +76,18 @@ class Settings extends PureComponent {
                     aria-haspopup="true"
                     onClick={onClickOptions}
                 >
-                    <SettingsApplications />
+                    <SettingsIcon />
                 </Button>
                 <Menu
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}
                     open={isOpen}
+                    className={classes.menu}
                 >
                     {options.map(option => (
                         <MenuItem
+                            className={classes.menu}
                             key={option}
-                            selected={option === 'Pyxis'}
                             onClick={onSelectItem}
                         >
                             {option}
