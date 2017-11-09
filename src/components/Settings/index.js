@@ -14,33 +14,6 @@ const styles = theme => ({
     menu: {}
 });
 
-// text-align: right; */
-// /* background: transparent; */
-// width: 50px;
-// margin: 0;
-// position: fixed;
-// /* left: 10px; */
-// z-index: 100;
-// right: 10px;
-// bottom: 150px;
-
-const options = [
-    'None',
-    'Atria',
-    'Callisto',
-    'Dione',
-    'Ganymede',
-    'Hangouts Call',
-    'Luna',
-    'Oberon',
-    'Phobos',
-    'Pyxis',
-    'Sedna',
-    'Titania',
-    'Triton',
-    'Umbriel'
-];
-
 class Settings extends PureComponent {
     static propTypes = {
         onClickOptions: PropTypes.func.isRequired,
@@ -58,16 +31,19 @@ class Settings extends PureComponent {
             classes
         } = this.props;
 
+        console.log(anchorEl);
+
         return (
             <div>
                 <Button
-                    aria-owns={isOpen ? 'simple-menu' : null}
+                    aria-owns={isOpen ? 'settingsMenu' : null}
                     aria-haspopup="true"
                     onClick={onClickOptions}
                 >
                     Open Menu
                 </Button>
                 <Menu
+                    id="settingsMenu"
                     open={isOpen}
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}

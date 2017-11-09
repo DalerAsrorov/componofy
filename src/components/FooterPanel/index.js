@@ -13,10 +13,6 @@ import Settings from '../Settings';
 import './FooterPanel.css';
 
 const styles = theme => ({
-    badge: {
-        margin: `0 ${theme.spacing.unit * 2}px`
-    },
-
     root: {
         background: lightBlue[600]
     },

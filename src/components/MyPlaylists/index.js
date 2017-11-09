@@ -73,6 +73,7 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleClickOptions = event => {
+        debugger;
         this.setState({
             settingsIsOpen: true,
             anchorEl: event.currentTarget
@@ -122,7 +123,12 @@ class MyPlaylists extends PureComponent {
     render() {
         const { myPlaylists: { playlists }, classes } = this.props;
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
-        let { playlistsRemaining, status, settingsIsOpen } = this.state;
+        let {
+            playlistsRemaining,
+            status,
+            settingsIsOpen,
+            anchorEl
+        } = this.state;
 
         if (playlistsRemaining === 0) {
             playlistsRemaining = null;
@@ -132,13 +138,14 @@ class MyPlaylists extends PureComponent {
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
                 <FooterPanel
-                    onClick={this._handleLoadMore}
-                    mainText={status}
-                    circleText={playlistsRemaining}
                     shouldShowCircle={status !== STATUS['STOP']}
                     onClickOptions={this._handleClickOptions}
                     onSelectItem={this._handleClickOption}
+                    circleText={playlistsRemaining}
+                    onClick={this._handleLoadMore}
                     isOpen={settingsIsOpen}
+                    mainText={status}
+                    anchorEl={anchorEl}
                 />
             </div>
         );
