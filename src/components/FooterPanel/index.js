@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import Toolbar, {
-    ToolbarGroup,
-    ToolbarSeparator,
-    ToolbarTitle
-} from 'material-ui/Toolbar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import Typography from 'material-ui/Typography';
@@ -35,17 +32,17 @@ export const FooterPanel = props => {
         </Typography>
     );
 
-    if (props.shouldShowCircle) {
-        footerContent = (
-            <Badge
-                className={props.classes.badge + ' footer-panel-badge'}
-                color="primary"
-                badgeContent={props.circleText ? props.circleText : ''}
-            >
-                <Typography type="subheading">{props.mainText}</Typography>
-            </Badge>
-        );
-    }
+    // if (props.shouldShowCircle) {
+    //     footerContent = (
+    //         {/* <Badge
+    //             className={props.classes.badge + ' footer-panel-badge'}
+    //             color="primary"
+    //             badgeContent={props.circleText ? props.circleText : ''}
+    //         > */}
+    //             <Typography type="subheading">{props.mainText}</Typography>
+    //         // </Badge>
+    //     );
+    // }
 
     return (
         <Toolbar className={props.classes.root}>
@@ -56,8 +53,15 @@ export const FooterPanel = props => {
                 color="accent"
                 className={props.classes.loadmore}
             >
-                {footerContent}
+                <Typography type="subheading">{props.mainText}</Typography>
             </Button>
+            <IconButton
+                color="primary"
+                disabled
+                aria-label="Playlists remaining"
+            >
+                {props.circleText}
+            </IconButton>
         </Toolbar>
     );
 };
