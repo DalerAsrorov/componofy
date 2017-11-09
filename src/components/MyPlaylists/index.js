@@ -32,7 +32,9 @@ class MyPlaylists extends PureComponent {
     state = {
         currentOffset: 0,
         playlistsRemaining: 0,
-        status: STATUS['CONTINUE']
+        settingsIsOpen: false,
+        status: STATUS['CONTINUE'],
+        anchorEl: null
     };
 
     _handleLoadMore = event => {
@@ -68,6 +70,20 @@ class MyPlaylists extends PureComponent {
                 currentOffset
             });
         }
+    };
+
+    _handleClickOptions = event => {
+        debugger;
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleClickOption = event => {
+        this.setState({
+            settingsIsOpen: false
+        });
     };
 
     componentDidMount() {
@@ -107,7 +123,12 @@ class MyPlaylists extends PureComponent {
     render() {
         const { myPlaylists: { playlists }, classes } = this.props;
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
-        let { playlistsRemaining, status } = this.state;
+        let {
+            playlistsRemaining,
+            status,
+            settingsIsOpen,
+            anchorEl
+        } = this.state;
 
         if (playlistsRemaining === 0) {
             playlistsRemaining = null;
@@ -117,10 +138,14 @@ class MyPlaylists extends PureComponent {
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
                 <FooterPanel
-                    onClick={this._handleLoadMore}
-                    mainText={status}
-                    circleText={playlistsRemaining}
                     shouldShowCircle={status !== STATUS['STOP']}
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    circleText={playlistsRemaining}
+                    onClick={this._handleLoadMore}
+                    isOpen={settingsIsOpen}
+                    mainText={status}
+                    anchorEl={anchorEl}
                 />
             </div>
         );
