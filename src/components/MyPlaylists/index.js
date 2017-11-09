@@ -1,14 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Paper from 'material-ui/Paper';
-import SettingsApplications from 'material-ui-icons/SettingsApplications';
 import Button from 'material-ui/Button';
 import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
+import Settings from '../Settings';
 import List from '../List';
 
 const LIMIT = 10;
@@ -24,8 +21,11 @@ const STATUS = {
     STOP: 'All playlists loaded'
 };
 
+<<<<<<< 255ee9a8c5245e5e4eba756d63cc7da55eea18f6
 let scroll = Scroll.animateScroll;
 
+=======
+>>>>>>> Created a separate component for Settings
 class MyPlaylists extends PureComponent {
     static propTypes = {
         fetchMyPlaylists: PropTypes.func.isRequired,
@@ -36,6 +36,7 @@ class MyPlaylists extends PureComponent {
     state = {
         currentOffset: 0,
         playlistsRemaining: 0,
+        settingsIsOpen: false,
         status: STATUS['CONTINUE']
     };
 
@@ -76,6 +77,18 @@ class MyPlaylists extends PureComponent {
 
     _handleClickOptions = arg => {
         console.log('_handleClickOptions arg', arg);
+
+        this.setState({
+            settingsIsOpen: true
+        });
+    };
+
+    _handleClickOption = arg => {
+        console.log('arg', arg);
+
+        this.setState({
+            settingsIsOpen: false
+        });
     };
 
     componentDidMount() {
@@ -115,7 +128,7 @@ class MyPlaylists extends PureComponent {
     render() {
         const { myPlaylists: { playlists }, classes } = this.props;
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
-        let { playlistsRemaining, status } = this.state;
+        let { playlistsRemaining, status, settingsIsOpen } = this.state;
 
         if (playlistsRemaining === 0) {
             playlistsRemaining = null;
@@ -124,26 +137,11 @@ class MyPlaylists extends PureComponent {
         return (
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
-                <Paper>
-                    <IconButton
-                        aria-label="Options"
-                        aria-haspopup="true"
-                        onClick={this._handleClickOptions}
-                    >
-                        <SettingsApplications />
-                    </IconButton>
-                    <Menu anchorEl={this.state.anchorEl} open={false}>
-                        {options.map(option => (
-                            <MenuItem
-                                key={option}
-                                selected={option === 'Pyxis'}
-                                onClick={this.handleRequestClose}
-                            >
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Menu>
-                </Paper>
+                <Settings
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    isOpen={settingsIsOpen}
+                />
                 <FooterPanel
                     onClick={this._handleLoadMore}
                     mainText={status}
