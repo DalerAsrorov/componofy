@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const SCOPES_STR =
-    'user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
+    'user-library-read user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
     'y-public playlist-modify-private user-library-read';
 const SCOPE_LIST = SCOPES_STR.split(' ');
 const spotifyApi = new SpotifyWebApi({
