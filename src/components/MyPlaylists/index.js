@@ -93,28 +93,6 @@ class MyPlaylists extends PureComponent {
                 status: STATUS[1]
             });
         }
-
-        // if (
-        //     numberOfTracks > 0 &&
-        //     !isFetching &&
-        //     currentOffset === 0 &&
-        //     playlistsRemaining === 0
-        // ) {
-        //     if (numberOfTracks < LIMIT) {
-        //         currentOffset = numberOfTracks;
-        //         status = STATUS['STOP'];
-        //     } else {
-        //         currentOffset = LIMIT;
-        //     }
-
-        //     playlistsRemaining = numberOfTracks - currentOffset;
-
-        //     this.setState({
-        //         playlistsRemaining,
-        //         currentOffset,
-        //         status
-        //     });
-        // }
     }
 
     render() {

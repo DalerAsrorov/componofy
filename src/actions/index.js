@@ -27,13 +27,6 @@ export const fetchMyPlaylists = offset => {
     };
 };
 
-export const LOAD_MORE_MY_PLAYLISTS = 'LOAD_MORE_MY_PLAYLISTS';
-export const loadMoreMyPlaylists = offset => {
-    return dispatch => {
-        dispatch(fetchMyPlaylists(offset));
-    };
-};
-
 export const RECEIVED_AUTH_STATE = 'RECEIVED_AUTH_STATE';
 const receivedAuthState = userInfo => {
     return {
