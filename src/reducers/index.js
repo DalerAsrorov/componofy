@@ -13,7 +13,8 @@ export function myPlaylists(
         playlists: [],
         numberOfTracks: 0,
         currentOffset: 0,
-        playlistsRemaining: 0
+        playlistsRemaining: 0,
+        canLoadMore: true
     },
     action
 ) {
@@ -24,7 +25,12 @@ export function myPlaylists(
             });
         case RECEIVE_PLAYLISTS:
             const playlists = [...state.playlists, ...action.playlists];
-            let { currentOffset, playlistsRemaining, numberOfTracks } = state;
+            let {
+                currentOffset,
+                playlistsRemaining,
+                numberOfTracks,
+                canLoadMore
+            } = state;
             numberOfTracks = action.numberOfTracks;
 
             if (numberOfTracks < OFFSET_LIMIT) {
@@ -37,9 +43,11 @@ export function myPlaylists(
                 }
             }
 
-            playlistsRemaining = numberOfTracks - currentOffset;
+            if (currentOffset === numberOfTracks) {
+                canLoadMore = false;
+            }
 
-            console.log(numberOfTracks, playlistsRemaining, currentOffset);
+            playlistsRemaining = numberOfTracks - currentOffset;
 
             return Object.assign({}, state, {
                 numberOfTracks: action.numberOfTracks,
@@ -47,6 +55,7 @@ export function myPlaylists(
                 isFetching: false,
                 playlistsRemaining,
                 currentOffset,
+                canLoadMore,
                 playlists
             });
         default:

@@ -45,12 +45,6 @@ class MyPlaylists extends PureComponent {
             myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
         } = this.props;
 
-        if (currentOffset + LIMIT >= numberOfTracks) {
-            this.setState({
-                status: STATUS[0]
-            });
-        }
-
         if (currentOffset !== numberOfTracks) {
             fetchMyPlaylists(currentOffset);
             scroll.scrollToBottom();
@@ -78,19 +72,11 @@ class MyPlaylists extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        let { status } = this.state;
-        let {
-            myPlaylists: { numberOfTracks, isFetching, currentOffset }
-        } = nextProps;
+        const { myPlaylists: { canLoadMore } } = nextProps;
 
-        if (
-            numberOfTracks > 0 &&
-            numberOfTracks < LIMIT &&
-            !isFetching &&
-            currentOffset === 0
-        ) {
+        if (!canLoadMore) {
             this.setState({
-                status: STATUS[1]
+                status: STATUS[0]
             });
         }
     }
