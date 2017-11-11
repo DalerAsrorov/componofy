@@ -16,8 +16,10 @@ const styles = theme => ({
 });
 
 const STATUS = {
-    CONTINUE: 'Load more',
-    STOP: 'All playlists loaded'
+    // There is no tracks to load
+    0: 'All playlists loaded',
+    // There is more tracks to load
+    1: 'Load more'
 };
 
 let scroll = Scroll.animateScroll;
@@ -30,10 +32,8 @@ class MyPlaylists extends PureComponent {
     };
 
     state = {
-        currentOffset: 0,
-        playlistsRemaining: 0,
         settingsIsOpen: false,
-        status: STATUS['CONTINUE'],
+        status: STATUS[1],
         anchorEl: null
     };
 
@@ -42,38 +42,16 @@ class MyPlaylists extends PureComponent {
 
         const {
             fetchMyPlaylists,
-            myPlaylists: { numberOfTracks }
+            myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
         } = this.props;
-        let { currentOffset, playlistsRemaining } = this.state;
-
-        if (currentOffset + LIMIT >= numberOfTracks) {
-            this.setState({
-                status: STATUS['STOP']
-            });
-        }
 
         if (currentOffset !== numberOfTracks) {
             fetchMyPlaylists(currentOffset);
-
-            if (playlistsRemaining < LIMIT) {
-                currentOffset += playlistsRemaining;
-            } else {
-                currentOffset += LIMIT;
-            }
-
-            playlistsRemaining = numberOfTracks - currentOffset;
-
             scroll.scrollToBottom();
-
-            this.setState({
-                playlistsRemaining,
-                currentOffset
-            });
         }
     };
 
     _handleClickOptions = event => {
-        debugger;
         this.setState({
             settingsIsOpen: true,
             anchorEl: event.currentTarget
@@ -94,41 +72,23 @@ class MyPlaylists extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        let { playlistsRemaining, currentOffset, status } = this.state;
-        let { myPlaylists: { numberOfTracks, isFetching } } = nextProps;
+        const { myPlaylists: { canLoadMore } } = nextProps;
 
-        if (
-            numberOfTracks > 0 &&
-            !isFetching &&
-            currentOffset === 0 &&
-            playlistsRemaining === 0
-        ) {
-            if (numberOfTracks < LIMIT) {
-                currentOffset = numberOfTracks;
-                status = STATUS['STOP'];
-            } else {
-                currentOffset = LIMIT;
-            }
-
-            playlistsRemaining = numberOfTracks - currentOffset;
-
+        if (!canLoadMore) {
             this.setState({
-                playlistsRemaining,
-                currentOffset,
-                status
+                status: STATUS[0]
             });
         }
     }
 
     render() {
-        const { myPlaylists: { playlists }, classes } = this.props;
-        const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
         let {
-            playlistsRemaining,
-            status,
-            settingsIsOpen,
-            anchorEl
-        } = this.state;
+            myPlaylists: { playlists, playlistsRemaining },
+            classes
+        } = this.props;
+        let { status, settingsIsOpen, anchorEl } = this.state;
+
+        const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
 
         if (playlistsRemaining === 0) {
             playlistsRemaining = null;
