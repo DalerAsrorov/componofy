@@ -52,11 +52,12 @@ class Track extends PureComponent {
             external_urls: { spotify: trackUrl },
             popularity
         } = track;
-
         const {
             name: artistName,
             external_urls: { spotify: artistUrl }
         } = head(artists);
+
+        const isPopular = popularity >= 70;
 
         return (
             <ListItem divider>
@@ -76,7 +77,7 @@ class Track extends PureComponent {
                             artistUrl={artistUrl}
                             albumName={albumName}
                             albumUrl={albumUrl}
-                            isPopular={popularity >= 70}
+                            isPopular={isPopular}
                         />
                     }
                 />

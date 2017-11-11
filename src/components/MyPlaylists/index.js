@@ -86,7 +86,7 @@ class MyPlaylists extends PureComponent {
             myPlaylists: { playlists, playlistsRemaining, canLoadMore },
             classes
         } = this.props;
-        let { status, settingsIsOpen, anchorEl } = this.state;
+        const { status, settingsIsOpen, anchorEl } = this.state;
 
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
 

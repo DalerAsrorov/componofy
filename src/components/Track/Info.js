@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Chip from 'material-ui/Chip';
+import { purple, red } from 'material-ui/colors';
 
 import './Track.css';
 
@@ -12,7 +13,14 @@ const styles = theme => ({
         paddingBottom: 6
     }),
 
-    popolarity: {}
+    popularity: {
+        padding: `${theme.spacing.unit}px 0`
+    },
+
+    chip: {
+        color: red[50],
+        backgroundColor: purple['A200']
+    }
 });
 
 const createTypographyLink = (content, type, href) => (
@@ -32,7 +40,9 @@ const Info = props => {
 
     if (props.isPopular) {
         popularityChip = (
-            <Chip label="Popular" className={props.classes.popularity} />
+            <div className={props.classes.popularity}>
+                <Chip label="Popular" className={props.classes.chip} />
+            </div>
         );
     }
 
