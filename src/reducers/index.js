@@ -2,7 +2,8 @@ import {
     REQUEST_PLAYLISTS,
     RECEIVE_PLAYLISTS,
     RECEIVED_AUTH_STATE,
-    LOAD_MORE_MY_PLAYLISTS
+    LOAD_MORE_MY_PLAYLISTS,
+    SET_PLAYLIST_OPEN
 } from '../actions';
 
 const OFFSET_LIMIT = 10;
@@ -58,6 +59,22 @@ export function myPlaylists(
                 canLoadMore,
                 playlists
             });
+        case SET_PLAYLIST_OPEN:
+            const { playlistID, isOpen } = action;
+            let myPlaylists = Array.from(state.playlists);
+
+            myPlaylists = myPlaylists.map(playlist => {
+                if (playlist.id === playlistID) {
+                    playlist.isOpen = isOpen;
+                }
+
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists: myPlaylists
+            });
+
         default:
             return state;
     }

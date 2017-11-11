@@ -36,9 +36,12 @@ class List extends PureComponent {
                 <Playlist key={playlist.id} playlist={playlist} />
             ));
         } else {
-            listOfItems = items.map(({ track }) => (
-                <Track key={track.id} track={track} />
-            ));
+            listOfItems =
+                items.constructor === Array
+                    ? items.map(({ track }) => (
+                          <Track key={track.id} track={track} />
+                      ))
+                    : [];
         }
 
         return (
