@@ -83,7 +83,7 @@ class MyPlaylists extends PureComponent {
 
     render() {
         let {
-            myPlaylists: { playlists, playlistsRemaining },
+            myPlaylists: { playlists, playlistsRemaining, canLoadMore },
             classes
         } = this.props;
         let { status, settingsIsOpen, anchorEl } = this.state;
@@ -98,7 +98,7 @@ class MyPlaylists extends PureComponent {
             <div id="myPlaylists">
                 {ListOfMyPlaylists}
                 <FooterPanel
-                    shouldShowCircle={status !== STATUS['STOP']}
+                    shouldShowCircle={canLoadMore}
                     onClickOptions={this._handleClickOptions}
                     onSelectItem={this._handleClickOption}
                     circleText={playlistsRemaining}
