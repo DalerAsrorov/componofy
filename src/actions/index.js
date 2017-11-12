@@ -60,3 +60,11 @@ export const setPlaylistOpen = (playlistID, isOpen) => {
         isOpen
     };
 };
+
+export const SET_MY_PLAYLIST_VISITED = 'SET_MY_PLAYLIST_VISITED';
+export const setMyPlaylistVisited = isVisited => {
+    return {
+        type: SET_MY_PLAYLIST_VISITED,
+        isVisited
+    };
+};

@@ -35,8 +35,6 @@ class Playlist extends PureComponent {
             playlist: { id: playlistID }
         } = this.props;
 
-        console.log('Did mounted');
-
         getPlaylistTracks(userID, playlistID)
             .then(payload => {
                 if (payload.data.body) {

@@ -33,6 +33,10 @@ class List extends PureComponent {
         let listOfItems;
 
         if (isPlaylist) {
+            // debugger;
+            // NOTE: when I come back from
+            // another route, items contains
+            // duplicate items.
             listOfItems =
                 items.constructor === Array
                     ? items.map(playlist => (

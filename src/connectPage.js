@@ -3,7 +3,8 @@ import { push } from 'react-router-redux';
 import {
     fetchMyPlaylists,
     checkIfAuthenticated,
-    setPlaylistOpen
+    setPlaylistOpen,
+    setMyPlaylistVisited
 } from './actions';
 
 const mapStateToProps = state => ({
@@ -26,6 +27,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setPlaylistOpen(playlistID, isOpen) {
         dispatch(setPlaylistOpen(playlistID, isOpen));
+    },
+
+    setMyPlaylistVisited(isVisited) {
+        dispatch(setMyPlaylistVisited(isVisited));
     }
 });
 
