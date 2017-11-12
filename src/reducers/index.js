@@ -54,8 +54,6 @@ export function myPlaylists(
             playlistsRemaining = numberOfTracks - currentOffset;
             playlists = removeDuplicates(playlists, 'id');
 
-            console.log('after removing duplicates', playlists);
-
             return Object.assign({}, state, {
                 numberOfTracks: action.numberOfTracks,
                 lastUpdated: action.receivedAt,
