@@ -15,6 +15,7 @@ export function myPlaylists(
         isFetching: false,
         playlists: [],
         numberOfTracks: 0,
+        lastUpdated: 0,
         currentOffset: 0,
         playlistsRemaining: 0,
         canLoadMore: true,

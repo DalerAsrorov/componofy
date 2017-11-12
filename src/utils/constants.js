@@ -63,6 +63,10 @@ export const MY_PLAYLISTS_PROPTYPE = PropTypes.shape({
     playlists: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
     isFetching: PropTypes.bool.isRequired,
     numberOfTracks: PropTypes.number.isRequired,
+    currentOffset: PropTypes.number.isRequired,
+    playlistsRemaining: PropTypes.number.isRequired,
+    canLoadMore: PropTypes.bool.isRequired,
+    isVisited: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number
 });
 
