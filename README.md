@@ -1,2 +1,5 @@
 # componofy
-A web app that allows a user to merge multiple playlists into a new one and make various changes. 
+A web app that allows a user to merge multiple playlists into a new one and make various changes.
+
+## License
+* [MIT](LICENSE)
