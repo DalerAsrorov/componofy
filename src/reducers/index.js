@@ -1,8 +1,11 @@
+import { removeDuplicates } from '../utils/helpers';
 import {
     REQUEST_PLAYLISTS,
     RECEIVE_PLAYLISTS,
     RECEIVED_AUTH_STATE,
-    LOAD_MORE_MY_PLAYLISTS
+    LOAD_MORE_MY_PLAYLISTS,
+    SET_PLAYLIST_OPEN,
+    SET_MY_PLAYLIST_VISITED
 } from '../actions';
 
 const OFFSET_LIMIT = 10;
@@ -14,7 +17,8 @@ export function myPlaylists(
         numberOfTracks: 0,
         currentOffset: 0,
         playlistsRemaining: 0,
-        canLoadMore: true
+        canLoadMore: true,
+        isVisited: false
     },
     action
 ) {
@@ -24,7 +28,7 @@ export function myPlaylists(
                 isFetching: true
             });
         case RECEIVE_PLAYLISTS:
-            const playlists = [...state.playlists, ...action.playlists];
+            let playlists = [...state.playlists, ...action.playlists];
             let {
                 currentOffset,
                 playlistsRemaining,
@@ -48,6 +52,7 @@ export function myPlaylists(
             }
 
             playlistsRemaining = numberOfTracks - currentOffset;
+            playlists = removeDuplicates(playlists, 'id');
 
             return Object.assign({}, state, {
                 numberOfTracks: action.numberOfTracks,
@@ -57,6 +62,25 @@ export function myPlaylists(
                 currentOffset,
                 canLoadMore,
                 playlists
+            });
+        case SET_PLAYLIST_OPEN:
+            const { playlistID, isOpen } = action;
+            let myPlaylists = Array.from(state.playlists);
+
+            myPlaylists = myPlaylists.map(playlist => {
+                if (playlist.id === playlistID) {
+                    playlist.isOpen = isOpen;
+                }
+
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists: myPlaylists
+            });
+        case SET_MY_PLAYLIST_VISITED:
+            return Object.assign({}, state, {
+                isVisited: action.isVisited
             });
         default:
             return state;

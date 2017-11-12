@@ -26,7 +26,6 @@ class Playlist extends PureComponent {
     };
 
     state = {
-        isOpen: false,
         tracks: PropTypes.array
     };
 
@@ -38,8 +37,12 @@ class Playlist extends PureComponent {
 
         getPlaylistTracks(userID, playlistID)
             .then(payload => {
-                const { data: { body: { items: playlistTracks } } } = payload;
-                this.setState({ tracks: playlistTracks });
+                if (payload.data.body) {
+                    const {
+                        data: { body: { items: playlistTracks } }
+                    } = payload;
+                    this.setState({ tracks: playlistTracks });
+                }
             })
             .catch(error => {
                 console.error(error);
@@ -49,14 +52,14 @@ class Playlist extends PureComponent {
     _handleClick = event => {
         event.preventDefault();
 
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
+        const { setPlaylistOpen, playlist: { id, isOpen } } = this.props;
+
+        setPlaylistOpen(id, !isOpen);
     };
 
     render() {
         const { playlist, classes } = this.props;
-        const { isOpen, tracks } = this.state;
+        const { tracks } = this.state;
 
         return (
             <div>
@@ -66,7 +69,11 @@ class Playlist extends PureComponent {
                     </ListItemIcon>
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse in={isOpen} transitionDuration="auto" unmountOnExit>
+                <Collapse
+                    in={playlist.isOpen}
+                    transitionDuration="auto"
+                    unmountOnExit
+                >
                     <List items={tracks} />
                 </Collapse>
             </div>

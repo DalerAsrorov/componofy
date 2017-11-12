@@ -51,3 +51,20 @@ export const checkIfAuthenticated = () => {
             });
     };
 };
+
+export const SET_PLAYLIST_OPEN = 'SET_PLAYLIST_OPEN';
+export const setPlaylistOpen = (playlistID, isOpen) => {
+    return {
+        type: SET_PLAYLIST_OPEN,
+        playlistID,
+        isOpen
+    };
+};
+
+export const SET_MY_PLAYLIST_VISITED = 'SET_MY_PLAYLIST_VISITED';
+export const setMyPlaylistVisited = isVisited => {
+    return {
+        type: SET_MY_PLAYLIST_VISITED,
+        isVisited
+    };
+};

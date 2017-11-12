@@ -17,6 +17,7 @@ const styles = theme => ({
 class List extends PureComponent {
     static propTypes = {
         items: PropTypes.oneOfType([
+            PropTypes.func,
             PropTypes.arrayOf(PLAYLIST_PROPTYPE),
             PropTypes.arrayOf(
                 // TODO: https://github.com/DalerAsrorov/componofy/issues/18
@@ -32,13 +33,23 @@ class List extends PureComponent {
         let listOfItems;
 
         if (isPlaylist) {
-            listOfItems = items.map(playlist => (
-                <Playlist key={playlist.id} playlist={playlist} />
-            ));
+            // debugger;
+            // NOTE: when I come back from
+            // another route, items contains
+            // duplicate items.
+            listOfItems =
+                items.constructor === Array
+                    ? items.map(playlist => (
+                          <Playlist key={playlist.id} playlist={playlist} />
+                      ))
+                    : [];
         } else {
-            listOfItems = items.map(({ track }) => (
-                <Track key={track.id} track={track} />
-            ));
+            listOfItems =
+                items.constructor === Array
+                    ? items.map(({ track }) => (
+                          <Track key={track.id} track={track} />
+                      ))
+                    : [];
         }
 
         return (

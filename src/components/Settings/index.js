@@ -31,8 +31,6 @@ class Settings extends PureComponent {
             classes
         } = this.props;
 
-        console.log(anchorEl);
-
         return (
             <div>
                 <Button

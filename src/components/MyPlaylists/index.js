@@ -45,10 +45,8 @@ class MyPlaylists extends PureComponent {
             myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
         } = this.props;
 
-        if (currentOffset !== numberOfTracks) {
-            fetchMyPlaylists(currentOffset);
-            scroll.scrollToBottom();
-        }
+        fetchMyPlaylists(currentOffset);
+        scroll.scrollToBottom();
     };
 
     _handleClickOptions = event => {
@@ -66,9 +64,16 @@ class MyPlaylists extends PureComponent {
 
     componentDidMount() {
         let { currentOffset } = this.state;
-        const { fetchMyPlaylists } = this.props;
+        const {
+            fetchMyPlaylists,
+            setMyPlaylistVisited,
+            myPlaylists: { isVisited }
+        } = this.props;
 
-        fetchMyPlaylists(currentOffset);
+        if (!isVisited) {
+            fetchMyPlaylists(currentOffset);
+            setMyPlaylistVisited(true);
+        }
     }
 
     componentWillReceiveProps(nextProps) {

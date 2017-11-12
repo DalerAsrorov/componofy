@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 const SERVER_URL = 'http://localhost:3001';
 
 export const replaceTo = path => {
@@ -9,3 +11,11 @@ export const formatPlaylist = unformattedPlaylist => {
 
     return formatted;
 };
+
+export const removeDuplicates = R.curry((data, prop) => {
+    return R.pipe(
+        R.groupBy(R.prop(prop)),
+        R.values,
+        R.pipe(R.map(R.take(1)), R.flatten)
+    )(data);
+});
