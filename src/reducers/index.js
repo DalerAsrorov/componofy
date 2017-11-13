@@ -106,7 +106,6 @@ export function myPlaylists(
         case SET_OPEN_STATUS_MY_PLAYLISTS:
             myPlaylists = Array.from(state.playlists);
 
-            debugger;
             myPlaylists = myPlaylists.map(playlist => {
                 playlist.isOpen = action.isOpen;
                 return playlist;
