@@ -92,9 +92,12 @@ export const fetchPlaylistTracks = (userID, playlistID) => {
 
         return getPlaylistTracks(userID, playlistID).then(response => {
             const { data: { body: payload } } = response;
+            let tracks = [];
+
             if (payload) {
-                dispatch(receivedPlaylistTracks(playlistID, payload.items));
+                tracks = payload.items;
             }
+            dispatch(receivedPlaylistTracks(playlistID, tracks));
         });
     };
 };
