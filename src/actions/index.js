@@ -101,3 +101,11 @@ export const fetchPlaylistTracks = (userID, playlistID) => {
         });
     };
 };
+
+export const SET_OPEN_STATUS_MY_PLAYLISTS = 'SET_OPEN_STATUS_MY_PLAYLISTS';
+export const setOpenStatusMyPlaylists = isOpen => {
+    return {
+        type: SET_OPEN_STATUS_MY_PLAYLISTS,
+        isOpen
+    };
+};

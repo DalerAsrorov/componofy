@@ -7,7 +7,8 @@ import {
     SET_PLAYLIST_OPEN,
     SET_MY_PLAYLIST_VISITED,
     REQUEST_PLAYLIST_TRACKS,
-    RECEIVED_PLAYLIST_TRACKS
+    RECEIVED_PLAYLIST_TRACKS,
+    SET_OPEN_STATUS_MY_PLAYLISTS
 } from '../actions';
 
 const OFFSET_LIMIT = 10;
@@ -101,6 +102,17 @@ export function myPlaylists(
         case REQUEST_PLAYLIST_TRACKS:
             return Object.assign({}, state, {
                 tracksFetching: true
+            });
+        case SET_OPEN_STATUS_MY_PLAYLISTS:
+            myPlaylists = Array.from(state.playlists);
+
+            myPlaylists = myPlaylists.map(playlist => {
+                playlist.isOpen = action.isOpen;
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists: myPlaylists
             });
         default:
             return state;

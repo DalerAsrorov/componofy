@@ -47,7 +47,10 @@ export const PLAYLIST_PROPTYPE = PropTypes.shape({
         type: PropTypes.string.isRequired
     }).isRequired,
     type: PropTypes.string,
-    public: PropTypes.bool
+    public: PropTypes.bool,
+    // If true, shows playlist tracks
+    // Default: false
+    isOpen: PropTypes.bool
 });
 
 export const USER_PROPTYPE = PropTypes.shape({

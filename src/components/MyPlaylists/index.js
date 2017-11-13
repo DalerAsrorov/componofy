@@ -42,6 +42,7 @@ class MyPlaylists extends PureComponent {
 
         const {
             fetchMyPlaylists,
+            setOpenStatusMyPlaylists,
             myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
         } = this.props;
 
@@ -56,7 +57,7 @@ class MyPlaylists extends PureComponent {
         });
     };
 
-    _handleClickOption = event => {
+    _handleClickOption = () => {
         this.setState({
             settingsIsOpen: false
         });
