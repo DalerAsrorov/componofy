@@ -14,6 +14,9 @@ const styles = theme => ({
     menu: {}
 });
 
+const SCROLL_DURATION = 500;
+const SCROLL_TIMEOUT_DELAY = 1000;
+
 let scroll = Scroll.animateScroll;
 
 class Settings extends PureComponent {
@@ -21,13 +24,24 @@ class Settings extends PureComponent {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         onClickOptions: PropTypes.func.isRequired,
         onSelectItem: PropTypes.func.isRequired,
+        canScrollUp: PropTypes.bool.isRequired,
         anchorEl: PropTypes.object,
         isOpen: PropTypes.bool
     };
 
     _handleClickUp = () => {
-        scroll.scrollToTop();
         this.props.onSelectItem();
+
+        // When scrollToTop action is
+        // triggered instantly, the transition
+        // non-scrollable item and scrollable
+        // becomes aparent, hence, some delay
+        // in scrolling was needed
+        setTimeout(() => {
+            scroll.scrollToTop({
+                duration: SCROLL_DURATION
+            });
+        }, SCROLL_TIMEOUT_DELAY);
     };
 
     _handleClickPlaylistCollapse = () => {
@@ -39,6 +53,7 @@ class Settings extends PureComponent {
         const {
             onClickOptions,
             onSelectItem,
+            canScrollUp,
             anchorEl,
             isOpen,
             classes
@@ -59,7 +74,12 @@ class Settings extends PureComponent {
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}
                 >
-                    <MenuItem onClick={this._handleClickUp}>Up</MenuItem>
+                    <MenuItem
+                        disabled={!canScrollUp}
+                        onClick={this._handleClickUp}
+                    >
+                        Up
+                    </MenuItem>
                     <MenuItem onClick={this._handleClickPlaylistCollapse}>
                         Collapse
                     </MenuItem>

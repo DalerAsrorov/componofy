@@ -46,6 +46,7 @@ export const FooterPanel = props => {
                 onSelectItem={props.onSelectItem}
                 anchorEl={props.anchorEl}
                 isOpen={props.isOpen}
+                canScrollUp={props.canScrollUp}
             />
         </Toolbar>
     );
@@ -58,6 +59,7 @@ FooterPanel.propTypes = {
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    canScrollUp: PropTypes.bool,
     anchorEl: PropTypes.object,
     circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     shouldShowCircle: PropTypes.bool

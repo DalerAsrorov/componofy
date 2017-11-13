@@ -115,8 +115,6 @@ class MyPlaylists extends PureComponent {
             playlistsRemaining = null;
         }
 
-        console.log('canScrollup', canScrollUp);
-
         return (
             <div id="myPlaylists">
                 <Waypoint
@@ -139,6 +137,7 @@ class MyPlaylists extends PureComponent {
                     isOpen={settingsIsOpen}
                     mainText={status}
                     anchorEl={anchorEl}
+                    canScrollUp={canScrollUp}
                 />
             </div>
         );
