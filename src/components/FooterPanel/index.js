@@ -14,7 +14,9 @@ import './FooterPanel.css';
 
 const styles = theme => ({
     root: {
-        background: lightBlue[600]
+        background: lightBlue[600],
+        position: 'sticky',
+        bottom: '0'
     },
 
     maintext: {},
