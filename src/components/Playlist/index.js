@@ -8,6 +8,7 @@ import MaterialList, {
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistPlay } from 'material-ui-icons';
+import { isEmpty } from 'ramda';
 import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
 import { getPlaylistTracks } from '../../api';
 import List from '../List';
@@ -45,10 +46,16 @@ class Playlist extends PureComponent {
 
     render() {
         const { playlist, classes } = this.props;
+        const { tracks: { list: tracks } } = playlist;
 
         return (
             <div>
-                <ListItem button divider onClick={this._handleClick}>
+                <ListItem
+                    disabled={isEmpty(tracks)}
+                    button
+                    divider
+                    onClick={this._handleClick}
+                >
                     <ListItemIcon>
                         <PlaylistPlay />
                     </ListItemIcon>
@@ -59,7 +66,7 @@ class Playlist extends PureComponent {
                     transitionDuration="auto"
                     unmountOnExit
                 >
-                    <List items={playlist.tracks.list} />
+                    <List items={tracks} />
                 </Collapse>
             </div>
         );
