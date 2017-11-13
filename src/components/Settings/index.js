@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Scroll from 'react-scroll';
 import SettingsIcon from 'material-ui-icons/Settings';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
@@ -7,12 +8,13 @@ import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
 const rightSpace = '30px';
-
 const styles = theme => ({
     root: {},
 
     menu: {}
 });
+
+let scroll = Scroll.animateScroll;
 
 class Settings extends PureComponent {
     static propTypes = {
@@ -23,7 +25,12 @@ class Settings extends PureComponent {
         isOpen: PropTypes.bool
     };
 
-    _handlePlaylistCollapse = () => {
+    _handleClickUp = () => {
+        scroll.scrollToTop();
+        this.props.onSelectItem();
+    };
+
+    _handleClickPlaylistCollapse = () => {
         this.props.setOpenStatusMyPlaylists();
         this.props.onSelectItem();
     };
@@ -52,11 +59,10 @@ class Settings extends PureComponent {
                     onRequestClose={onSelectItem}
                     anchorEl={anchorEl}
                 >
-                    <MenuItem onClick={onSelectItem}>Profile</MenuItem>
-                    <MenuItem onClick={this._handlePlaylistCollapse}>
+                    <MenuItem onClick={this._handleClickUp}>Up</MenuItem>
+                    <MenuItem onClick={this._handleClickPlaylistCollapse}>
                         Collapse
                     </MenuItem>
-                    <MenuItem onClick={onSelectItem}>Logout</MenuItem>
                 </Menu>
             </div>
         );
