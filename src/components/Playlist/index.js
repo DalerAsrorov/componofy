@@ -25,10 +25,6 @@ class Playlist extends PureComponent {
         classes: PropTypes.object
     };
 
-    state = {
-        tracks: PropTypes.array
-    };
-
     componentDidMount = () => {
         const {
             user: { id: userID },
@@ -37,18 +33,6 @@ class Playlist extends PureComponent {
         } = this.props;
 
         fetchPlaylistTracks(userID, playlistID);
-        // getPlaylistTracks(userID, playlistID)
-        //     .then(payload => {
-        //         if (payload.data.body) {
-        //             const {
-        //                 data: { body: { items: playlistTracks } }
-        //             } = payload;
-        //             this.setState({ tracks: playlistTracks });
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
     };
 
     _handleClick = event => {
