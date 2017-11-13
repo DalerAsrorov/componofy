@@ -5,7 +5,8 @@ import {
     fetchPlaylistTracks,
     checkIfAuthenticated,
     setPlaylistOpen,
-    setMyPlaylistVisited
+    setMyPlaylistVisited,
+    setOpenStatusMyPlaylists
 } from './actions';
 
 const mapStateToProps = state => ({
@@ -36,6 +37,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setMyPlaylistVisited(isVisited) {
         dispatch(setMyPlaylistVisited(isVisited));
+    },
+
+    setOpenStatusMyPlaylists(isOpen = false) {
+        dispatch(setOpenStatusMyPlaylists(isOpen));
     }
 });
 

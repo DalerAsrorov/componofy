@@ -16,10 +16,16 @@ const styles = theme => ({
 
 class Settings extends PureComponent {
     static propTypes = {
+        setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         onClickOptions: PropTypes.func.isRequired,
         onSelectItem: PropTypes.func.isRequired,
         anchorEl: PropTypes.object,
         isOpen: PropTypes.bool
+    };
+
+    _handlePlaylistCollapse = () => {
+        this.props.setOpenStatusMyPlaylists();
+        this.props.onSelectItem();
     };
 
     render() {
@@ -47,7 +53,9 @@ class Settings extends PureComponent {
                     anchorEl={anchorEl}
                 >
                     <MenuItem onClick={onSelectItem}>Profile</MenuItem>
-                    <MenuItem onClick={onSelectItem}>My account</MenuItem>
+                    <MenuItem onClick={this._handlePlaylistCollapse}>
+                        Collapse
+                    </MenuItem>
                     <MenuItem onClick={onSelectItem}>Logout</MenuItem>
                 </Menu>
             </div>

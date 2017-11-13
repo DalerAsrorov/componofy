@@ -8,7 +8,7 @@ import { lightBlue } from 'material-ui/colors';
 import Typography from 'material-ui/Typography';
 import ArrowDropDownCircle from 'material-ui-icons/ArrowDropDownCircle';
 import Badge from 'material-ui/Badge';
-import Settings from '../Settings';
+import Settings from '../../containers/Settings';
 
 import './FooterPanel.css';
 
