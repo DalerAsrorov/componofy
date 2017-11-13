@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Waypoint from 'react-waypoint';
 import Button from 'material-ui/Button';
 import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
@@ -34,6 +35,7 @@ class MyPlaylists extends PureComponent {
     state = {
         settingsIsOpen: false,
         status: STATUS[1],
+        canScrollUp: false,
         anchorEl: null
     };
 
@@ -60,6 +62,19 @@ class MyPlaylists extends PureComponent {
     _handleClickOption = () => {
         this.setState({
             settingsIsOpen: false
+        });
+    };
+
+    _handleCanScrollUp = canScrollUp => {
+        const { myPlaylists: { playlists } } = this.props;
+        const nTracks = playlists.length;
+
+        if (canScrollUp && nTracks < LIMIT) {
+            canScrollUp = false;
+        }
+
+        this.setState({
+            canScrollUp
         });
     };
 
@@ -92,7 +107,7 @@ class MyPlaylists extends PureComponent {
             myPlaylists: { playlists, playlistsRemaining, canLoadMore },
             classes
         } = this.props;
-        const { status, settingsIsOpen, anchorEl } = this.state;
+        const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
 
         const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
 
@@ -102,7 +117,17 @@ class MyPlaylists extends PureComponent {
 
         return (
             <div id="myPlaylists">
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(false);
+                    }}
+                />
                 {ListOfMyPlaylists}
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(true);
+                    }}
+                />
                 <FooterPanel
                     shouldShowCircle={canLoadMore}
                     onClickOptions={this._handleClickOptions}
@@ -112,6 +137,7 @@ class MyPlaylists extends PureComponent {
                     isOpen={settingsIsOpen}
                     mainText={status}
                     anchorEl={anchorEl}
+                    canScrollUp={canScrollUp}
                 />
             </div>
         );
