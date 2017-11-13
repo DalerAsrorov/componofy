@@ -66,7 +66,7 @@ class Playlist extends PureComponent {
                     transitionDuration="auto"
                     unmountOnExit
                 >
-                    <List items={playlist.tracks.list} />
+                    <List items={tracks} />
                 </Collapse>
             </div>
         );
