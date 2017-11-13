@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {
     fetchMyPlaylists,
+    fetchPlaylistTracks,
     checkIfAuthenticated,
     setPlaylistOpen,
     setMyPlaylistVisited
@@ -15,6 +16,10 @@ const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
     fetchMyPlaylists(offset) {
         dispatch(fetchMyPlaylists(offset));
+    },
+
+    fetchPlaylistTracks(playlistID, tracks) {
+        dispatch(fetchPlaylistTracks(playlistID, tracks));
     },
 
     navigateTo(path) {

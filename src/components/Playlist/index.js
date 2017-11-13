@@ -32,21 +32,23 @@ class Playlist extends PureComponent {
     componentDidMount = () => {
         const {
             user: { id: userID },
-            playlist: { id: playlistID }
+            playlist: { id: playlistID },
+            fetchPlaylistTracks
         } = this.props;
 
-        getPlaylistTracks(userID, playlistID)
-            .then(payload => {
-                if (payload.data.body) {
-                    const {
-                        data: { body: { items: playlistTracks } }
-                    } = payload;
-                    this.setState({ tracks: playlistTracks });
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        fetchPlaylistTracks(userID, playlistID);
+        // getPlaylistTracks(userID, playlistID)
+        //     .then(payload => {
+        //         if (payload.data.body) {
+        //             const {
+        //                 data: { body: { items: playlistTracks } }
+        //             } = payload;
+        //             this.setState({ tracks: playlistTracks });
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
     };
 
     _handleClick = event => {
@@ -59,7 +61,6 @@ class Playlist extends PureComponent {
 
     render() {
         const { playlist, classes } = this.props;
-        const { tracks } = this.state;
 
         return (
             <div>
@@ -74,7 +75,7 @@ class Playlist extends PureComponent {
                     transitionDuration="auto"
                     unmountOnExit
                 >
-                    <List items={tracks} />
+                    <List items={playlist.tracks.list} />
                 </Collapse>
             </div>
         );
