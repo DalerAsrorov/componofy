@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { getMyPlaylists, getMyStatus } from '../api';
+import { getMyPlaylists, getMyStatus, getPlaylistTracks } from '../api';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -66,5 +66,38 @@ export const setMyPlaylistVisited = isVisited => {
     return {
         type: SET_MY_PLAYLIST_VISITED,
         isVisited
+    };
+};
+
+export const REQUEST_PLAYLIST_TRACKS = 'REQUEST_PLAYLIST_TRACKS';
+export const requestPlaylistTracks = () => {
+    return {
+        type: REQUEST_PLAYLIST_TRACKS
+    };
+};
+
+export const RECEIVED_PLAYLIST_TRACKS = 'RECEIVED_PLAYLIST_TRACKS';
+export const receivedPlaylistTracks = (playlistID, tracks) => {
+    return {
+        type: RECEIVED_PLAYLIST_TRACKS,
+        receivedTracksAt: Date.now(),
+        playlistID,
+        tracks
+    };
+};
+
+export const fetchPlaylistTracks = (userID, playlistID) => {
+    return dispatch => {
+        dispatch(requestPlaylistTracks());
+
+        return getPlaylistTracks(userID, playlistID).then(response => {
+            const { data: { body: payload } } = response;
+            let tracks = [];
+
+            if (payload) {
+                tracks = payload.items;
+            }
+            dispatch(receivedPlaylistTracks(playlistID, tracks));
+        });
     };
 };

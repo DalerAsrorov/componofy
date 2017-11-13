@@ -41,7 +41,7 @@ export const PLAYLIST_PROPTYPE = PropTypes.shape({
     href: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(IMAGE_PROPTYPE),
     name: PropTypes.string.isRequired,
-    tracks: PropTypes.object.isRequired,
+    tracks: PropTypes.shape({ list: PropTypes.array }).isRequired,
     owner: PropTypes.shape({
         id: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired

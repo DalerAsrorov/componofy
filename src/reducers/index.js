@@ -5,7 +5,9 @@ import {
     RECEIVED_AUTH_STATE,
     LOAD_MORE_MY_PLAYLISTS,
     SET_PLAYLIST_OPEN,
-    SET_MY_PLAYLIST_VISITED
+    SET_MY_PLAYLIST_VISITED,
+    REQUEST_PLAYLIST_TRACKS,
+    RECEIVED_PLAYLIST_TRACKS
 } from '../actions';
 
 const OFFSET_LIMIT = 10;
@@ -13,6 +15,7 @@ const OFFSET_LIMIT = 10;
 export function myPlaylists(
     state = {
         isFetching: false,
+        tracksFetching: false,
         playlists: [],
         numberOfTracks: 0,
         lastUpdated: 0,
@@ -64,6 +67,18 @@ export function myPlaylists(
                 canLoadMore,
                 playlists
             });
+        case RECEIVED_PLAYLIST_TRACKS:
+            const updatedPlaylists = state.playlists.map(playlist => {
+                if (playlist.id === action.playlistID) {
+                    playlist.tracks.list = action.tracks;
+                }
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists: updatedPlaylists,
+                tracksFetching: false
+            });
         case SET_PLAYLIST_OPEN:
             const { playlistID, isOpen } = action;
             let myPlaylists = Array.from(state.playlists);
@@ -82,6 +97,10 @@ export function myPlaylists(
         case SET_MY_PLAYLIST_VISITED:
             return Object.assign({}, state, {
                 isVisited: action.isVisited
+            });
+        case REQUEST_PLAYLIST_TRACKS:
+            return Object.assign({}, state, {
+                tracksFetching: true
             });
         default:
             return state;
