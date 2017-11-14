@@ -19,60 +19,56 @@ const styles = theme => ({
         position: 'sticky',
         bottom: '0',
         paddingTop: `${theme.spacing.unit}px`,
-        paddingBottom: `${theme.spacing.unit}px`
+        paddingBottom: `${theme.spacing.unit}px`,
+        display: 'flex'
     },
 
     maintext: {},
 
     loadmore: {},
 
-    settings: {
-        float: 'right'
+    settings: {},
+
+    loaderSection: {
+        flex: '1 300px'
     },
 
-    settingsWrapper: {}
+    settingsSection: {
+        flex: '1'
+    }
 });
 
 export const FooterPanel = props => {
     return (
         <Toolbar className={props.classes.root}>
-            <Grid container>
-                <Grid item sm={4} xs={7}>
-                    <Button
-                        onClick={props.onClick}
-                        disabled={!props.shouldShowCircle}
-                        raised
-                        color="accent"
-                        className={props.classes.loadmore}
-                    >
-                        <Typography type="subheading">
-                            {props.mainText}
-                        </Typography>
-                    </Button>
-                    <IconButton
-                        color="primary"
-                        disabled
-                        aria-label="Playlists remaining"
-                    >
-                        {props.circleText}
-                    </IconButton>
-                </Grid>
-                <Grid
-                    className={props.classes.settingsWrapper}
-                    item
-                    sm={8}
-                    xs={5}
+            <section className={props.classes.loaderSection}>
+                <Button
+                    onClick={props.onClick}
+                    disabled={!props.shouldShowCircle}
+                    raised
+                    color="accent"
+                    className={props.classes.loadmore}
                 >
-                    <Settings
-                        onClickOptions={props.onClickOptions}
-                        onSelectItem={props.onSelectItem}
-                        anchorEl={props.anchorEl}
-                        isOpen={props.isOpen}
-                        canScrollUp={props.canScrollUp}
-                        className={props.classes.settings}
-                    />
-                </Grid>
-            </Grid>
+                    <Typography type="subheading">{props.mainText}</Typography>
+                </Button>
+                <IconButton
+                    color="primary"
+                    disabled
+                    aria-label="Playlists remaining"
+                >
+                    {props.circleText}
+                </IconButton>
+            </section>
+            <section className={props.classes.settingsSection}>
+                <Settings
+                    onClickOptions={props.onClickOptions}
+                    onSelectItem={props.onSelectItem}
+                    anchorEl={props.anchorEl}
+                    isOpen={props.isOpen}
+                    canScrollUp={props.canScrollUp}
+                    className={props.classes.settings}
+                />
+            </section>
         </Toolbar>
     );
 };
