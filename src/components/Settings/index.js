@@ -4,8 +4,8 @@ import Scroll from 'react-scroll';
 import SettingsIcon from 'material-ui-icons/Settings';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
+import CustomMenu from '../CustomMenu';
 
 const rightSpace = '30px';
 const styles = theme => ({
@@ -60,31 +60,15 @@ class Settings extends PureComponent {
         } = this.props;
 
         return (
-            <div>
-                <Button
-                    aria-owns={isOpen ? 'settingsMenu' : null}
-                    aria-haspopup="true"
-                    onClick={onClickOptions}
-                >
-                    Open Menu
-                </Button>
-                <Menu
-                    id="settingsMenu"
-                    open={isOpen}
-                    onRequestClose={onSelectItem}
-                    anchorEl={anchorEl}
-                >
-                    <MenuItem
-                        disabled={!canScrollUp}
-                        onClick={this._handleClickUp}
-                    >
-                        Up
-                    </MenuItem>
-                    <MenuItem onClick={this._handleClickPlaylistCollapse}>
-                        Collapse
-                    </MenuItem>
-                </Menu>
-            </div>
+            <CustomMenu
+                onClickCollapse={this._handleClickPlaylistCollapse}
+                onClickUp={this._handleClickUp}
+                onClickOptions={onClickOptions}
+                anchorEl={anchorEl}
+                onSelectItem={onSelectItem}
+                canScrollUp={canScrollUp}
+                isOpen={isOpen}
+            />
         );
     }
 }

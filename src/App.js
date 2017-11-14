@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+// TODO: craete a custom theme in this file
 // import mainTheme from './themes/main.theme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import createMuiTheme from 'material-ui/styles/theme';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import PrivateRoute from './containers/PrivateRoute';
 import Main from './components/Main';
 import Login from './components/Login';
