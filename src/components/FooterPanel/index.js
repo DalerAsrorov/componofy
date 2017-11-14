@@ -16,7 +16,9 @@ const styles = theme => ({
     root: {
         background: lightBlue[600],
         position: 'sticky',
-        bottom: '0'
+        bottom: '0',
+        paddingTop: `${theme.spacing.unit}px`,
+        paddingBottom: `${theme.spacing.unit}px`
     },
 
     maintext: {},

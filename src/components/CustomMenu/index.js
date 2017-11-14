@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import { MenuItem, MenuList } from 'material-ui/Menu';
 import Grow from 'material-ui/transitions/Grow';
 import Paper from 'material-ui/Paper';
+import tealColor from 'material-ui/colors/teal';
 import { Manager, Target, Popper } from 'react-popper';
 import classNames from 'classnames';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
@@ -12,24 +13,30 @@ import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
 const styles = {
     popperClose: {
         pointerEvents: 'none'
-    }
+    },
+
+    settingsButton: {}
 };
 
 const CustomMenu = props => {
+    const IconComponent = props.iconComponent;
+
     return (
         <div>
             <Manager>
                 <Target>
                     <Button
                         aria-owns={props.isOpen ? 'menu-list' : null}
+                        color="primary"
+                        className={props.classes.settingsButton}
                         aria-haspopup="true"
                         onClick={props.onClickOptions}
+                        fab
                     >
-                        Open Menu
+                        <IconComponent />
                     </Button>
                 </Target>
                 <Popper
-                    anchorEl={props.anchorEl}
                     eventsEnabled={props.isOpen}
                     className={classNames({
                         [props.classes.popperClose]: !props.isOpen
@@ -64,9 +71,9 @@ const CustomMenu = props => {
 
 CustomMenu.propTypes = {
     onClickCollapse: PropTypes.func.isRequired,
+    iconComponent: PropTypes.func.isRequired,
     onClickOptions: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
-    anchorEl: PropTypes.object.isRequired,
     onClickUp: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
     onClickUp: PropTypes.func.isRequired,

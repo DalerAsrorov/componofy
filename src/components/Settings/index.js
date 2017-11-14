@@ -6,6 +6,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import CustomMenu from '../CustomMenu';
+import { FlashOn } from 'material-ui-icons';
 
 const rightSpace = '30px';
 const styles = theme => ({
@@ -60,6 +61,7 @@ class Settings extends PureComponent {
                 anchorEl={anchorEl}
                 onSelectItem={onSelectItem}
                 canScrollUp={canScrollUp}
+                iconComponent={FlashOn}
                 isOpen={isOpen}
             />
         );
