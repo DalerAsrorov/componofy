@@ -29,12 +29,7 @@ class Login extends PureComponent {
         const { classes } = this.props;
 
         return (
-            <Grid
-                className={classes.root}
-                container
-                align="center"
-                justify="center"
-            >
+            <Grid className={classes.root} container justify="center">
                 <Grid item>
                     <Landing
                         iconText="Authorize"
