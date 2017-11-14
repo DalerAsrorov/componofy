@@ -32,16 +32,9 @@ class Settings extends PureComponent {
     _handleClickUp = () => {
         this.props.onSelectItem();
 
-        // When scrollToTop action is
-        // triggered instantly, the transition
-        // non-scrollable item and scrollable
-        // becomes aparent, hence, some delay
-        // in scrolling was needed
-        setTimeout(() => {
-            scroll.scrollToTop({
-                duration: SCROLL_DURATION
-            });
-        }, SCROLL_TIMEOUT_DELAY);
+        scroll.scrollToTop({
+            duration: SCROLL_DURATION
+        });
     };
 
     _handleClickPlaylistCollapse = () => {
