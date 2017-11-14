@@ -39,6 +39,20 @@ const styles = theme => ({
 });
 
 export const FooterPanel = props => {
+    let circleTextIcon;
+
+    if (props.shouldShowCircle) {
+        circleTextIcon = (
+            <IconButton
+                color="primary"
+                disabled
+                aria-label="Playlists remaining"
+            >
+                {props.circleText}
+            </IconButton>
+        );
+    }
+
     return (
         <Toolbar className={props.classes.root}>
             <section className={props.classes.loaderSection}>
@@ -51,13 +65,7 @@ export const FooterPanel = props => {
                 >
                     <Typography type="subheading">{props.mainText}</Typography>
                 </Button>
-                <IconButton
-                    color="primary"
-                    disabled
-                    aria-label="Playlists remaining"
-                >
-                    {props.circleText}
-                </IconButton>
+                {circleTextIcon}
             </section>
             <section className={props.classes.settingsSection}>
                 <Settings
