@@ -13,12 +13,13 @@
         "eject": "react-scripts eject"
     },
     "dependencies": {
+        "classnames": "^2.2.5",
         "dotenv": "^4.0.0",
         "enzyme-adapter-react-15": "^1.0.5",
         "hapi": "^16.5.2",
         "hapi-cors-headers": "^1.0.0",
         "history": "^4.7.2",
-        "material-ui": "next",
+        "material-ui": "^1.0.0-beta.21",
         "material-ui-icons": "^1.0.0-beta.15",
         "node-sass-chokidar": "^0.0.3",
         "npm-run-all": "^4.0.2",
@@ -27,6 +28,7 @@
         "react": "^15.6.1",
         "react-dom": "^15.6.1",
         "react-icons": "^2.2.5",
+        "react-popper": "^0.7.4",
         "react-redux": "^5.0.6",
         "react-router": "^4.2.0",
         "react-router-dom": "^4.1.2",
