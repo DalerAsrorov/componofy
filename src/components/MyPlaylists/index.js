@@ -27,6 +27,7 @@ let scroll = Scroll.animateScroll;
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
+        setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         classes: PropTypes.object.isRequired
@@ -44,7 +45,6 @@ class MyPlaylists extends PureComponent {
 
         const {
             fetchMyPlaylists,
-            setOpenStatusMyPlaylists,
             myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
         } = this.props;
 
@@ -76,6 +76,10 @@ class MyPlaylists extends PureComponent {
         this.setState({
             canScrollUp
         });
+    };
+
+    _handleClickCollapse = () => {
+        this.props.setOpenStatusMyPlaylists();
     };
 
     componentDidMount() {
@@ -138,6 +142,7 @@ class MyPlaylists extends PureComponent {
                     mainText={status}
                     anchorEl={anchorEl}
                     canScrollUp={canScrollUp}
+                    onCollapse={this._handleClickCollapse}
                 />
             </div>
         );
