@@ -22,10 +22,10 @@ let scroll = Scroll.animateScroll;
 
 class Settings extends PureComponent {
     static propTypes = {
-        setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         onClickOptions: PropTypes.func.isRequired,
         onSelectItem: PropTypes.func.isRequired,
         canScrollUp: PropTypes.bool.isRequired,
+        onCollapse: PropTypes.func.isRequired,
         anchorEl: PropTypes.object,
         isOpen: PropTypes.bool
     };
@@ -39,7 +39,7 @@ class Settings extends PureComponent {
     };
 
     _handleClickPlaylistCollapse = () => {
-        this.props.setOpenStatusMyPlaylists();
+        this.props.onCollapse();
         this.props.onSelectItem();
     };
 
