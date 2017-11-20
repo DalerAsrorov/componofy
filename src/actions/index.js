@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux';
 import { getMyPlaylists, getMyStatus, getPlaylistTracks } from '../api';
+import { formatTracks } from '../utils/helpers';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -81,8 +82,8 @@ export const receivedPlaylistTracks = (playlistID, tracks) => {
     return {
         type: RECEIVED_PLAYLIST_TRACKS,
         receivedTracksAt: Date.now(),
-        playlistID,
-        tracks
+        tracks: formatTracks(tracks),
+        playlistID
     };
 };
 
@@ -107,5 +108,14 @@ export const setOpenStatusMyPlaylists = isOpen => {
     return {
         type: SET_OPEN_STATUS_MY_PLAYLISTS,
         isOpen
+    };
+};
+
+export const ADD_PLAYLIST_TO_FINAL = 'ADD_PLAYLIST_TO_FINAL';
+export const addPlaylistToFinal = playlist => {
+    return {
+        type: ADD_PLAYLIST_TO_FINAL,
+        receivedAt: Date.now(),
+        playlist
     };
 };

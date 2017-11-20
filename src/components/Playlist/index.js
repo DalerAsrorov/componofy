@@ -22,6 +22,7 @@ const styles = theme => ({
 class Playlist extends PureComponent {
     static propTypes = {
         playlist: PLAYLIST_PROPTYPE.isRequired,
+        onClickIcon: PropTypes.func.isRequired,
         user: USER_PROPTYPE.isRequired,
         classes: PropTypes.object
     };
@@ -44,8 +45,15 @@ class Playlist extends PureComponent {
         setPlaylistOpen(id, !isOpen);
     };
 
+    _handleIconClick = event => {
+        event.stopPropagation();
+
+        const { playlist, onClickIcon } = this.props;
+        onClickIcon(playlist);
+    };
+
     render() {
-        const { playlist, classes } = this.props;
+        const { playlist, classes, onClickIcon } = this.props;
         const { tracks: { list: tracks } } = playlist;
 
         return (
@@ -56,7 +64,7 @@ class Playlist extends PureComponent {
                     divider
                     onClick={this._handleClick}
                 >
-                    <ListItemIcon>
+                    <ListItemIcon onClick={this._handleIconClick}>
                         <PlaylistPlay />
                     </ListItemIcon>
                     <ListItemText inset primary={playlist.name} />
