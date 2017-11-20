@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import MaterialList, { ListSubheader } from 'material-ui/List';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
-import Track from '../Track';
+import Track from '../../containers/Track';
 
 const styles = theme => ({
     root: {
@@ -24,9 +24,11 @@ class List extends PureComponent {
                 PropTypes.object
             )
         ]).isRequired,
+        onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
         subheader: PropTypes.string,
-        classes: PropTypes.object
+        classes: PropTypes.object,
+        keyItem: PropTypes.object
     };
 
     render() {
@@ -35,7 +37,9 @@ class List extends PureComponent {
             subheader,
             classes,
             isPlaylist,
-            onClickMain
+            onClickMain,
+            keyItem,
+            onCheckboxActive
         } = this.props;
         let listOfItems;
 
@@ -53,7 +57,13 @@ class List extends PureComponent {
         } else {
             listOfItems =
                 items.constructor === Array
-                    ? items.map(track => <Track key={track.id} track={track} />)
+                    ? items.map(track => (
+                          <Track
+                              key={track.id}
+                              track={track}
+                              playlist={keyItem}
+                          />
+                      ))
                     : [];
         }
 
