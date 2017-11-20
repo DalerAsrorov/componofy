@@ -80,7 +80,6 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleAddPlaylist = playlist => {
-        console.log('reached root handler...');
         this.props.addPlaylistToFinal(playlist);
     };
 
