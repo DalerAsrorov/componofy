@@ -75,6 +75,7 @@ export const FooterPanel = props => {
                     isOpen={props.isOpen}
                     canScrollUp={props.canScrollUp}
                     className={props.classes.settings}
+                    onCollapse={props.onCollapse}
                 />
             </section>
         </Toolbar>
@@ -84,6 +85,7 @@ export const FooterPanel = props => {
 FooterPanel.propTypes = {
     onClickOptions: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
+    onCollapse: PropTypes.func.isRequired,
     mainText: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
