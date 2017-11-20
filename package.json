@@ -3,8 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-        "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+        "build-css":
+            "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+        "watch-css":
+            "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "start-js": "cross-env NODE_PATH=src react-scripts start",
         "start": "npm-run-all -p watch-css start-js",
         "start:api": "babel-node server.js --presets es2015,stage-2",
@@ -22,6 +24,7 @@
         "material-ui": "^1.0.0-beta.21",
         "material-ui-icons": "^1.0.0-beta.15",
         "node-sass-chokidar": "^0.0.3",
+        "normalizr": "^3.2.4",
         "npm-run-all": "^4.0.2",
         "prop-types": "^15.6.0",
         "ramda": "^0.25.0",

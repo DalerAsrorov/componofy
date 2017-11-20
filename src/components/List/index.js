@@ -24,27 +24,36 @@ class List extends PureComponent {
                 PropTypes.object
             )
         ]).isRequired,
+        onClickMain: PropTypes.func,
         subheader: PropTypes.string,
         classes: PropTypes.object
     };
 
     render() {
-        const { items, subheader, classes, isPlaylist } = this.props;
+        const {
+            items,
+            subheader,
+            classes,
+            isPlaylist,
+            onClickMain
+        } = this.props;
         let listOfItems;
 
         if (isPlaylist) {
             listOfItems =
                 items.constructor === Array
                     ? items.map(playlist => (
-                          <Playlist key={playlist.id} playlist={playlist} />
+                          <Playlist
+                              onClickIcon={onClickMain}
+                              key={playlist.id}
+                              playlist={playlist}
+                          />
                       ))
                     : [];
         } else {
             listOfItems =
                 items.constructor === Array
-                    ? items.map(({ track }) => (
-                          <Track key={track.id} track={track} />
-                      ))
+                    ? items.map(track => <Track key={track.id} track={track} />)
                     : [];
         }
 

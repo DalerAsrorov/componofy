@@ -12,6 +12,17 @@ export const formatPlaylist = unformattedPlaylist => {
     return formatted;
 };
 
+export const formatTracks = tracks => {
+    return tracks.map(trackObject => {
+        const { track, ...rest } = trackObject;
+
+        return {
+            ...track,
+            ...rest
+        };
+    });
+};
+
 export const removeDuplicates = R.curry((data, prop) => {
     return R.pipe(
         R.groupBy(R.prop(prop)),

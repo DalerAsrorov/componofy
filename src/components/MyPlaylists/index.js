@@ -28,8 +28,9 @@ let scroll = Scroll.animateScroll;
 class MyPlaylists extends PureComponent {
     static propTypes = {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
-        fetchMyPlaylists: PropTypes.func.isRequired,
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
+        addPlaylistToFinal: PropTypes.func.isRequired,
+        fetchMyPlaylists: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired
     };
 
@@ -78,6 +79,12 @@ class MyPlaylists extends PureComponent {
         });
     };
 
+    _handleAddPlaylist = playlist => {
+        this.props.addPlaylistToFinal(playlist);
+    };
+
+    _handleAdd = () => {};
+
     _handleClickCollapse = () => {
         this.props.setOpenStatusMyPlaylists();
     };
@@ -113,7 +120,13 @@ class MyPlaylists extends PureComponent {
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
 
-        const ListOfMyPlaylists = <List items={playlists} isPlaylist={true} />;
+        const ListOfMyPlaylists = (
+            <List
+                onClickMain={this._handleAddPlaylist}
+                items={playlists}
+                isPlaylist={true}
+            />
+        );
 
         if (playlistsRemaining === 0) {
             playlistsRemaining = null;

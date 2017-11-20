@@ -6,7 +6,8 @@ import {
     checkIfAuthenticated,
     setPlaylistOpen,
     setMyPlaylistVisited,
-    setOpenStatusMyPlaylists
+    setOpenStatusMyPlaylists,
+    addPlaylistToFinal
 } from './actions';
 
 const mapStateToProps = state => ({
@@ -41,6 +42,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setOpenStatusMyPlaylists(isOpen = false) {
         dispatch(setOpenStatusMyPlaylists(isOpen));
+    },
+
+    addPlaylistToFinal(playlist = {}) {
+        dispatch(addPlaylistToFinal(playlist));
     }
 });
 
