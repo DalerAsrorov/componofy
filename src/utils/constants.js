@@ -17,7 +17,7 @@ export const ARTIST_PROPTYPE = PropTypes.shape({
 });
 
 export const ALBUM_PROPTYPE = PropTypes.shape({
-    artist: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
+    artists: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
     name: PropTypes.string.isRequired,
     external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     album_type: PropTypes.string,
@@ -25,7 +25,7 @@ export const ALBUM_PROPTYPE = PropTypes.shape({
 });
 
 export const TRACK_PROPTYPE = PropTypes.shape({
-    artist: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
+    artists: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
     external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     track_number: PropTypes.number.isRequired,
     duration_ms: PropTypes.number.isRequired,
