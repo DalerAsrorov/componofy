@@ -29,6 +29,7 @@ export const finalPlaylists = (
             playlist = clone(action.playlist);
             let trackToAdd = action.track;
             let { tracks: { list: playlistTracks } } = playlist;
+            let newPlaylists;
 
             if (state.playlists[playlist.id]) {
                 let {
@@ -37,18 +38,21 @@ export const finalPlaylists = (
                 statePlaylists[playlist.id].tracks.list.push(trackToAdd.id);
                 stateTracks[trackToAdd.id] = trackToAdd;
             } else {
+                debugger;
                 playlist.tracks.list = playlistTracks.filter(
                     track => track.id === trackToAdd.id
                 );
+                let normalizedPlaylist = normalize(playlist, playlistSchema);
+                newPlaylists = mergeDeepLeft(
+                    normalizedPlaylist,
+                    state.playlists
+                );
             }
-            normalizedPlaylist = normalize(playlist, playlistSchema);
-            debugger;
-        // playlists = mergeDeepLeft(normalizedPlaylist, playlists);
 
-        // return {
-        //     lastUpdated: receivedAt,
-        //     playlists
-        // };
+            return {
+                lastUpdated: receivedAt,
+                playlists: newPlaylists
+            };
         default:
             return state;
     }
