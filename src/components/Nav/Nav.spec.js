@@ -16,24 +16,26 @@ const classes = {
     tabContainer: {}
 };
 
-it('Nav renders properly', () => {
-    let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
+describe('When Nav component is initialized', () => {
+    it('Nav renders properly', () => {
+        let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
 
-    return expect(nav).toMatchSnapshot();
-});
+        return expect(nav).toMatchSnapshot();
+    });
 
-it('Nav navigateTo prop is not being called on render', () => {
-    let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
+    it('Nav navigateTo prop is not being called on render', () => {
+        let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
 
-    return expect(navigateTo.mock.calls.length).toBe(0);
-});
+        return expect(navigateTo.mock.calls.length).toBe(0);
+    });
 
-it('Nav has correct classes for styling', () => {
-    let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
-    let classNames = nav.prop('classes');
+    it('Nav has correct classes for styling', () => {
+        let nav = shallow(<Nav classes={classes} navigateTo={navigateTo} />);
+        let classNames = nav.prop('classes');
 
-    return expect(classNames).toMatchObject({
-        root: expect.any(String),
-        tabContainer: expect.any(String)
+        return expect(classNames).toMatchObject({
+            root: expect.any(String),
+            tabContainer: expect.any(String)
+        });
     });
 });
