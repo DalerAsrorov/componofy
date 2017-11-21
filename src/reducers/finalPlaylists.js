@@ -3,10 +3,6 @@ import { mergeDeepLeft, clone, isEmpty } from 'ramda';
 import { ADD_PLAYLIST_TO_FINAL, ADD_PLAYLIST_TRACK_TO_FINAL } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
-// const hasPlaylist = (playlists, playlistID) => (
-//     playlists.entities &&
-// )
-
 export const finalPlaylists = (
     state = {
         isFetching: false,
