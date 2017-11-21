@@ -1,7 +1,11 @@
 import { normalize } from 'normalizr';
-import { mergeDeepLeft, clone } from 'ramda';
+import { mergeDeepLeft, clone, isEmpty } from 'ramda';
 import { ADD_PLAYLIST_TO_FINAL, ADD_PLAYLIST_TRACK_TO_FINAL } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
+
+// const hasPlaylist = (playlists, playlistID) => (
+//     playlists.entities &&
+// )
 
 export const finalPlaylists = (
     state = {
@@ -27,31 +31,30 @@ export const finalPlaylists = (
         case ADD_PLAYLIST_TRACK_TO_FINAL:
             receivedAt = action.receivedAt;
             playlist = clone(action.playlist);
-            let trackToAdd = action.track;
+            playlists = clone(state.playlists);
+            let playlistsCopy = clone(state.playlists);
+            let trackToAdd = clone(action.track);
             let { tracks: { list: playlistTracks } } = playlist;
             let newPlaylists;
 
-            if (state.playlists[playlist.id]) {
-                let {
-                    entities: { playlists: statePlaylists, tracks: stateTracks }
-                } = state.playlists;
-                statePlaylists[playlist.id].tracks.list.push(trackToAdd.id);
-                stateTracks[trackToAdd.id] = trackToAdd;
+            if (
+                playlists.entities &&
+                playlists.entities.playlists[playlist.id]
+            ) {
+                playlist = playlists.entities.playlists[playlist.id];
+                playlist.tracks.list.push(trackToAdd.id);
+                playlists.entities.tracks[trackToAdd.id] = trackToAdd;
             } else {
-                debugger;
-                playlist.tracks.list = playlistTracks.filter(
+                playlist.tracks.list = playlist.tracks.list.filter(
                     track => track.id === trackToAdd.id
                 );
-                let normalizedPlaylist = normalize(playlist, playlistSchema);
-                newPlaylists = mergeDeepLeft(
-                    normalizedPlaylist,
-                    state.playlists
-                );
+                normalizedPlaylist = normalize(playlist, playlistSchema);
+                playlists = mergeDeepLeft(state.playlists, normalizedPlaylist);
             }
 
             return {
                 lastUpdated: receivedAt,
-                playlists: newPlaylists
+                playlists
             };
         default:
             return state;
