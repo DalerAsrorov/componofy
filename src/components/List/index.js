@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, { ListSubheader } from 'material-ui/List';
+import { is } from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
 import Track from '../../containers/Track';
@@ -44,27 +45,21 @@ class List extends PureComponent {
         let listOfItems;
 
         if (isPlaylist) {
-            listOfItems =
-                items.constructor === Array
-                    ? items.map(playlist => (
-                          <Playlist
-                              onClickIcon={onClickMain}
-                              key={playlist.id}
-                              playlist={playlist}
-                          />
-                      ))
-                    : [];
+            listOfItems = is(Array, items)
+                ? items.map(playlist => (
+                      <Playlist
+                          onClickIcon={onClickMain}
+                          key={playlist.id}
+                          playlist={playlist}
+                      />
+                  ))
+                : [];
         } else {
-            listOfItems =
-                items.constructor === Array
-                    ? items.map(track => (
-                          <Track
-                              key={track.id}
-                              track={track}
-                              playlist={keyItem}
-                          />
-                      ))
-                    : [];
+            listOfItems = is(Array, items)
+                ? items.map(track => (
+                      <Track key={track.id} track={track} playlist={keyItem} />
+                  ))
+                : [];
         }
 
         return (
