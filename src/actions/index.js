@@ -119,3 +119,13 @@ export const addPlaylistToFinal = playlist => {
         playlist
     };
 };
+
+export const ADD_PLAYLIST_TRACK_TO_FINAL = 'ADD_PLAYLIST_TRACK_TO_FINAL';
+export const addPlaylistTrackToFinal = (track, playlist) => {
+    return {
+        type: ADD_PLAYLIST_TRACK_TO_FINAL,
+        receivedAt: Date.now(),
+        playlist,
+        track
+    };
+};

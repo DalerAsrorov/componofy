@@ -8,7 +8,7 @@ import MaterialList, {
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
-import { TRACK_PROPTYPE } from '../../utils/constants';
+import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
 
 import Info from './Info';
 
@@ -19,8 +19,10 @@ const styles = theme => ({
 });
 
 class Track extends PureComponent {
-    static propType = {
-        track: TRACK_PROPTYPE.isRequired
+    static propTypes = {
+        addPlaylistTrackToFinal: PropTypes.func.isRequired,
+        track: TRACK_PROPTYPE.isRequired,
+        playlist: PLAYLIST_PROPTYPE
     };
 
     state = {
@@ -35,7 +37,11 @@ class Track extends PureComponent {
 
     _handleChecked = event => {
         const { isAdded } = this.state;
-        const { track } = this.props;
+        const { track, playlist, addPlaylistTrackToFinal } = this.props;
+
+        if (playlist) {
+            addPlaylistTrackToFinal(track, playlist);
+        }
 
         this.setState({ isAdded: !isAdded });
     };

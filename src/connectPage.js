@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {
-    fetchMyPlaylists,
-    fetchPlaylistTracks,
-    checkIfAuthenticated,
-    setPlaylistOpen,
-    setMyPlaylistVisited,
     setOpenStatusMyPlaylists,
-    addPlaylistToFinal
+    addPlaylistTrackToFinal,
+    checkIfAuthenticated,
+    setMyPlaylistVisited,
+    fetchPlaylistTracks,
+    addPlaylistToFinal,
+    fetchMyPlaylists,
+    setPlaylistOpen
 } from './actions';
 
 const mapStateToProps = state => ({
@@ -46,6 +47,10 @@ export const mapDispatchToProps = dispatch => ({
 
     addPlaylistToFinal(playlist = {}) {
         dispatch(addPlaylistToFinal(playlist));
+    },
+
+    addPlaylistTrackToFinal(track, playlist) {
+        dispatch(addPlaylistTrackToFinal(track, playlist));
     }
 });
 
