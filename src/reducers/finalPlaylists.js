@@ -32,8 +32,8 @@ export const finalPlaylists = (
             receivedAt = action.receivedAt;
             playlist = clone(action.playlist);
             playlists = clone(state.playlists);
-            let playlistsCopy = clone(state.playlists);
             let trackToAdd = clone(action.track);
+            let playlistsCopy = clone(state.playlists);
             let { tracks: { list: playlistTracks } } = playlist;
             let newPlaylists;
 
@@ -57,7 +57,16 @@ export const finalPlaylists = (
                 playlists
             };
         case REMOVE_PLAYLIST_FROM_FINAL:
+            receivedAt = action.receivedAt;
+            let statePlaylists = clone(state.playlists);
+            playlists = statePlaylists.entities.playlists;
 
+            delete playlists[action.playlist.id];
+
+            return {
+                playlists: statePlaylists,
+                lastUpdated: receivedAt
+            };
         default:
             return state;
     }

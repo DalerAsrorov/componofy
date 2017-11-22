@@ -28,6 +28,7 @@ let scroll = Scroll.animateScroll;
 class MyPlaylists extends PureComponent {
     static propTypes = {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
+        removePlaylistFromFinal: PropTypes.func.isRequired,
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
@@ -81,10 +82,10 @@ class MyPlaylists extends PureComponent {
 
     _handleAddPlaylist = (playlist, containsPlaylist) => {
         if (!containsPlaylist) {
-            this.props.addPlaylistToFinal(playlist);
-        } else {
-            console.log('Should remove now');
+            return this.props.addPlaylistToFinal(playlist);
         }
+
+        return this.props.removePlaylistFromFinal(playlist);
     };
 
     _handleAdd = () => {};
