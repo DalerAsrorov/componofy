@@ -1,6 +1,10 @@
 import { normalize } from 'normalizr';
 import { mergeDeepLeft, clone, isEmpty } from 'ramda';
-import { ADD_PLAYLIST_TO_FINAL, ADD_PLAYLIST_TRACK_TO_FINAL } from '../actions';
+import {
+    ADD_PLAYLIST_TO_FINAL,
+    ADD_PLAYLIST_TRACK_TO_FINAL,
+    REMOVE_PLAYLIST_FROM_FINAL
+} from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
 export const finalPlaylists = (
@@ -52,6 +56,8 @@ export const finalPlaylists = (
                 lastUpdated: receivedAt,
                 playlists
             };
+        case REMOVE_PLAYLIST_FROM_FINAL:
+
         default:
             return state;
     }
