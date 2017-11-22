@@ -79,8 +79,12 @@ class MyPlaylists extends PureComponent {
         });
     };
 
-    _handleAddPlaylist = playlist => {
-        this.props.addPlaylistToFinal(playlist);
+    _handleAddPlaylist = (playlist, containsPlaylist) => {
+        if (!containsPlaylist) {
+            this.props.addPlaylistToFinal(playlist);
+        } else {
+            console.log('Should remove now');
+        }
     };
 
     _handleAdd = () => {};

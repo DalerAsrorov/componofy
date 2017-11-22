@@ -50,9 +50,10 @@ class Playlist extends PureComponent {
         event.stopPropagation();
 
         const { playlist, onClickIcon, containsThisPlaylist } = this.props;
-        onClickIcon(playlist);
 
-        console.log(containsThisPlaylist);
+        if (onClickIcon) {
+            onClickIcon(playlist, containsThisPlaylist);
+        }
     };
 
     render() {
