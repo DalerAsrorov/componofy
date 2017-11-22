@@ -7,11 +7,13 @@ import MaterialList, {
     ListItemText
 } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
-import { PlaylistPlay } from 'material-ui-icons';
+import { PlaylistAdd, PlaylistAddCheck } from 'material-ui-icons';
 import { isEmpty } from 'ramda';
 import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
 import { getPlaylistTracks } from '../../api';
 import List from '../List';
+
+import './Playlist.css';
 
 const styles = theme => ({
     nested: {
@@ -57,19 +59,32 @@ class Playlist extends PureComponent {
     };
 
     render() {
-        const { playlist, classes, onClickIcon } = this.props;
+        const {
+            playlist,
+            classes,
+            onClickIcon,
+            containsThisPlaylist
+        } = this.props;
         const { tracks: { list: tracks } } = playlist;
+        let playlistIconComponent = containsThisPlaylist ? (
+            <PlaylistAddCheck />
+        ) : (
+            <PlaylistAdd />
+        );
 
         return (
             <div>
                 <ListItem
+                    onClick={this._handleClick}
                     disabled={isEmpty(tracks)}
                     button
                     divider
-                    onClick={this._handleClick}
                 >
-                    <ListItemIcon onClick={this._handleIconClick}>
-                        <PlaylistPlay />
+                    <ListItemIcon
+                        className="playlist-icon"
+                        onClick={this._handleIconClick}
+                    >
+                        {playlistIconComponent}
                     </ListItemIcon>
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>

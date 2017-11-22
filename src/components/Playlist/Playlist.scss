@@ -1,1 +1,10 @@
+$enter-opacity: 0.55;
 
+.playlist-icon {
+    &:hover {
+        opacity: $enter-opacity;
+        transition: opacity .2s ease-out;
+        -moz-transition: opacity .2s ease-out;
+        -webkit-transition: opacity .2s ease-out;
+    }
+}
