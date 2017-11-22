@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import {
     setOpenStatusMyPlaylists,
     addPlaylistTrackToFinal,
+    removePlaylistFromFinal,
     checkIfAuthenticated,
     setMyPlaylistVisited,
     fetchPlaylistTracks,
@@ -11,8 +12,25 @@ import {
     setPlaylistOpen
 } from './actions';
 
-const mapStateToProps = state => ({
+const isIn = (data, ownProps, key) => {
+    let containsData = false;
+    const { entities } = data;
+
+    if (entities && ownProps[key]) {
+        const value = ownProps[key];
+        containsData = !!entities[`${key}s`][value.id];
+    }
+
+    return containsData;
+};
+
+const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
+    containsThisPlaylist: isIn(
+        state.finalPlaylists.playlists,
+        ownProps,
+        'playlist'
+    ),
     user: state.user
 });
 
@@ -51,6 +69,10 @@ export const mapDispatchToProps = dispatch => ({
 
     addPlaylistTrackToFinal(track, playlist) {
         dispatch(addPlaylistTrackToFinal(track, playlist));
+    },
+
+    removePlaylistFromFinal(playlist) {
+        dispatch(removePlaylistFromFinal(playlist));
     }
 });
 

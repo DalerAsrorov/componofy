@@ -120,6 +120,15 @@ export const addPlaylistToFinal = playlist => {
     };
 };
 
+export const REMOVE_PLAYLIST_FROM_FINAL = 'REMOVE_PLAYLIST_FROM_FINAL';
+export const removePlaylistFromFinal = playlist => {
+    return {
+        type: REMOVE_PLAYLIST_FROM_FINAL,
+        receivedAt: Date.now(),
+        playlist
+    };
+};
+
 export const ADD_PLAYLIST_TRACK_TO_FINAL = 'ADD_PLAYLIST_TRACK_TO_FINAL';
 export const addPlaylistTrackToFinal = (track, playlist) => {
     return {

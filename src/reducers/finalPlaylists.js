@@ -1,6 +1,10 @@
 import { normalize } from 'normalizr';
 import { mergeDeepLeft, clone, isEmpty } from 'ramda';
-import { ADD_PLAYLIST_TO_FINAL, ADD_PLAYLIST_TRACK_TO_FINAL } from '../actions';
+import {
+    ADD_PLAYLIST_TO_FINAL,
+    ADD_PLAYLIST_TRACK_TO_FINAL,
+    REMOVE_PLAYLIST_FROM_FINAL
+} from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
 export const finalPlaylists = (
@@ -28,8 +32,8 @@ export const finalPlaylists = (
             receivedAt = action.receivedAt;
             playlist = clone(action.playlist);
             playlists = clone(state.playlists);
-            let playlistsCopy = clone(state.playlists);
             let trackToAdd = clone(action.track);
+            let playlistsCopy = clone(state.playlists);
             let { tracks: { list: playlistTracks } } = playlist;
             let newPlaylists;
 
@@ -51,6 +55,17 @@ export const finalPlaylists = (
             return {
                 lastUpdated: receivedAt,
                 playlists
+            };
+        case REMOVE_PLAYLIST_FROM_FINAL:
+            receivedAt = action.receivedAt;
+            let statePlaylists = clone(state.playlists);
+            playlists = statePlaylists.entities.playlists;
+
+            delete playlists[action.playlist.id];
+
+            return {
+                playlists: statePlaylists,
+                lastUpdated: receivedAt
             };
         default:
             return state;
