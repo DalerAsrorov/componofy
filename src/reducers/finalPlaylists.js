@@ -1,5 +1,5 @@
 import { normalize } from 'normalizr';
-import { mergeDeepLeft, clone, isEmpty } from 'ramda';
+import { mergeDeepLeft, clone, isEmpty, reject, equals } from 'ramda';
 import {
     ADD_PLAYLIST_TO_FINAL,
     ADD_PLAYLIST_TRACK_TO_FINAL,
@@ -72,8 +72,19 @@ export const finalPlaylists = (
             receivedAt = action.receivedAt;
             statePlaylists = clone(state.playlists);
             playlists = statePlaylists.entities.playlists;
+            let playlistTracklist = playlists[action.playlist.id].tracks.list;
 
-            debugger;
+            playlistTracklist = reject(
+                equals(action.track.id),
+                playlistTracklist
+            );
+
+            playlists[action.playlist.id].tracks.list = playlistTracklist;
+
+            return {
+                lastUpdated: receivedAt,
+                playlists: statePlaylists
+            };
 
         default:
             return state;
