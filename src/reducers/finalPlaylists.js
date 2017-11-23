@@ -85,7 +85,6 @@ export const finalPlaylists = (
                 lastUpdated: receivedAt,
                 playlists: statePlaylists
             };
-
         default:
             return state;
     }
