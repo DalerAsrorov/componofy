@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {
+    removePlaylistTrackFromFinal,
     setOpenStatusMyPlaylists,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
@@ -30,6 +31,11 @@ const mapStateToProps = (state, ownProps) => ({
         state.finalPlaylists.playlists,
         ownProps,
         'playlist'
+    ),
+    playlistContainsThisTrack: isIn(
+        state.finalPlaylists.playlists,
+        ownProps,
+        'track'
     ),
     user: state.user
 });
@@ -73,6 +79,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removePlaylistFromFinal(playlist) {
         dispatch(removePlaylistFromFinal(playlist));
+    },
+
+    removePlaylistTrackFromFinal(track, playlist) {
+        dispatch(removePlaylistTrackFromFinal(track, playlist));
     }
 });
 

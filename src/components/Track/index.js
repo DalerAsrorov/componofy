@@ -20,6 +20,8 @@ const styles = theme => ({
 
 class Track extends PureComponent {
     static propTypes = {
+        removePlaylistTrackFromFinal: PropTypes.func.isRequired,
+        playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
         track: TRACK_PROPTYPE.isRequired,
         playlist: PLAYLIST_PROPTYPE
@@ -37,10 +39,20 @@ class Track extends PureComponent {
 
     _handleChecked = event => {
         const { isAdded } = this.state;
-        const { track, playlist, addPlaylistTrackToFinal } = this.props;
+        const {
+            track,
+            playlist,
+            addPlaylistTrackToFinal,
+            removePlaylistTrackFromFinal,
+            playlistContainsThisTrack
+        } = this.props;
 
         if (playlist) {
-            addPlaylistTrackToFinal(track, playlist);
+            if (playlistContainsThisTrack) {
+                removePlaylistTrackFromFinal(track, playlist);
+            } else {
+                addPlaylistTrackToFinal(track, playlist);
+            }
         }
 
         this.setState({ isAdded: !isAdded });
@@ -48,7 +60,7 @@ class Track extends PureComponent {
 
     render() {
         const { isAdded } = this.state;
-        const { track, classes } = this.props;
+        const { track, classes, playlistContainsThisTrack } = this.props;
 
         const {
             id: trackID,
@@ -71,7 +83,7 @@ class Track extends PureComponent {
                     <Checkbox
                         className={classes.checkmark}
                         onClick={this._handleChecked}
-                        checked={isAdded}
+                        checked={playlistContainsThisTrack}
                     />
                 </ListItemIcon>
                 <ListItemText
