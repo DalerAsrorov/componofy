@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { contains } from 'ramda';
 import {
+    removePlaylistTrackFromFinal,
     setOpenStatusMyPlaylists,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
@@ -24,12 +26,32 @@ const isIn = (data, ownProps, key) => {
     return containsData;
 };
 
+const trackIsIn = (data, ownProps, key) => {
+    if (!isIn(data, ownProps, 'playlist') || !isIn(data, ownProps, key)) {
+        return false;
+    }
+
+    const { entities } = data;
+    const [propsPlaylistID, propsTrackID] = [
+        ownProps.playlist.id,
+        ownProps.track.id
+    ];
+    let playlist = entities.playlists[propsPlaylistID];
+
+    return contains(propsTrackID, playlist.tracks.list);
+};
+
 const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
     containsThisPlaylist: isIn(
         state.finalPlaylists.playlists,
         ownProps,
         'playlist'
+    ),
+    playlistContainsThisTrack: trackIsIn(
+        state.finalPlaylists.playlists,
+        ownProps,
+        'track'
     ),
     user: state.user
 });
@@ -73,6 +95,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removePlaylistFromFinal(playlist) {
         dispatch(removePlaylistFromFinal(playlist));
+    },
+
+    removePlaylistTrackFromFinal(track, playlist) {
+        dispatch(removePlaylistTrackFromFinal(track, playlist));
     }
 });
 

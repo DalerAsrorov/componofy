@@ -138,3 +138,14 @@ export const addPlaylistTrackToFinal = (track, playlist) => {
         track
     };
 };
+
+export const REMOVE_PLAYLIST_TRACK_FROM_FINAL =
+    'REMOVE_PLAYLIST_TRACK_FROM_FINAL';
+export const removePlaylistTrackFromFinal = (track, playlist) => {
+    return {
+        type: REMOVE_PLAYLIST_TRACK_FROM_FINAL,
+        receivedAt: Date.now(),
+        playlist,
+        track
+    };
+};

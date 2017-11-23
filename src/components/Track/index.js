@@ -20,35 +20,33 @@ const styles = theme => ({
 
 class Track extends PureComponent {
     static propTypes = {
+        removePlaylistTrackFromFinal: PropTypes.func.isRequired,
+        playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
         track: TRACK_PROPTYPE.isRequired,
         playlist: PLAYLIST_PROPTYPE
     };
 
-    state = {
-        // TODO: use mapStateToProps from redux
-        // to check if track is in the queue of
-        // added tracks. If it is, then mark
-        // the prop "isAdded" as true, otherwise
-        // false. Once that is done, this should
-        // be moved to props of boolean type.
-        isAdded: false
-    };
-
     _handleChecked = event => {
-        const { isAdded } = this.state;
-        const { track, playlist, addPlaylistTrackToFinal } = this.props;
+        const {
+            track,
+            playlist,
+            addPlaylistTrackToFinal,
+            removePlaylistTrackFromFinal,
+            playlistContainsThisTrack
+        } = this.props;
 
         if (playlist) {
-            addPlaylistTrackToFinal(track, playlist);
+            if (playlistContainsThisTrack) {
+                removePlaylistTrackFromFinal(track, playlist);
+            } else {
+                addPlaylistTrackToFinal(track, playlist);
+            }
         }
-
-        this.setState({ isAdded: !isAdded });
     };
 
     render() {
-        const { isAdded } = this.state;
-        const { track, classes } = this.props;
+        const { track, classes, playlistContainsThisTrack } = this.props;
 
         const {
             id: trackID,
@@ -71,7 +69,7 @@ class Track extends PureComponent {
                     <Checkbox
                         className={classes.checkmark}
                         onClick={this._handleChecked}
-                        checked={isAdded}
+                        checked={playlistContainsThisTrack}
                     />
                 </ListItemIcon>
                 <ListItemText

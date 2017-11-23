@@ -1,9 +1,10 @@
 import { normalize } from 'normalizr';
-import { mergeDeepLeft, clone, isEmpty } from 'ramda';
+import { mergeDeepLeft, clone, isEmpty, reject, equals } from 'ramda';
 import {
     ADD_PLAYLIST_TO_FINAL,
     ADD_PLAYLIST_TRACK_TO_FINAL,
-    REMOVE_PLAYLIST_FROM_FINAL
+    REMOVE_PLAYLIST_FROM_FINAL,
+    REMOVE_PLAYLIST_TRACK_FROM_FINAL
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -66,6 +67,23 @@ export const finalPlaylists = (
             return {
                 playlists: statePlaylists,
                 lastUpdated: receivedAt
+            };
+        case REMOVE_PLAYLIST_TRACK_FROM_FINAL:
+            receivedAt = action.receivedAt;
+            statePlaylists = clone(state.playlists);
+            playlists = statePlaylists.entities.playlists;
+            let playlistTracklist = playlists[action.playlist.id].tracks.list;
+
+            playlistTracklist = reject(
+                equals(action.track.id),
+                playlistTracklist
+            );
+
+            playlists[action.playlist.id].tracks.list = playlistTracklist;
+
+            return {
+                lastUpdated: receivedAt,
+                playlists: statePlaylists
             };
         default:
             return state;
