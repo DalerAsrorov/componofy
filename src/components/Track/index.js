@@ -9,12 +9,25 @@ import MaterialList, {
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
-
 import Info from './Info';
 
 const styles = theme => ({
     checkmark: {
         color: theme.palette.grey[600]
+    },
+
+    trackInfoContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
+    trackInfo: {
+        flex: '1'
+    },
+
+    preview: {
+        flex: '1'
     }
 });
 
@@ -74,15 +87,20 @@ class Track extends PureComponent {
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <Info
-                            trackName={trackName}
-                            trackUrl={trackUrl}
-                            artistName={artistName}
-                            artistUrl={artistUrl}
-                            albumName={albumName}
-                            albumUrl={albumUrl}
-                            isPopular={isPopular}
-                        />
+                        <div className={classes.trackInfoContainer}>
+                            <div className={classes.trackInfo}>
+                                <Info
+                                    trackName={trackName}
+                                    trackUrl={trackUrl}
+                                    artistName={artistName}
+                                    artistUrl={artistUrl}
+                                    albumName={albumName}
+                                    albumUrl={albumUrl}
+                                    isPopular={isPopular}
+                                />
+                            </div>
+                            <div className={classes.preview}>Play button</div>
+                        </div>
                     }
                 />
             </ListItem>
