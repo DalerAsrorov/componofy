@@ -11,7 +11,8 @@ import {
     fetchPlaylistTracks,
     addPlaylistToFinal,
     fetchMyPlaylists,
-    setPlaylistOpen
+    setPlaylistOpen,
+    setNavIndex
 } from './actions';
 
 const isIn = (data, ownProps, key) => {
@@ -66,8 +67,17 @@ const playlistIsIn = (data, ownProps, key) => {
     return hasPlaylist;
 };
 
+const PAGE_MAPPING = {
+    '/app': '/app/public',
+    '/app/public': '/app/componofy'
+};
+
 const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
+    navigation: state.navigation,
+    nextPage: ownProps.history
+        ? PAGE_MAPPING[ownProps.history.location.pathname]
+        : '',
     numberOfFinalPlaylists: length(
         keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
     ),
@@ -127,6 +137,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removePlaylistTrackFromFinal(track, playlist) {
         dispatch(removePlaylistTrackFromFinal(track, playlist));
+    },
+
+    setNavIndex(index) {
+        dispatch(setNavIndex(index));
     }
 });
 
