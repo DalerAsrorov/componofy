@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import PublicPlaylists from '../PublicPlaylists';
-import ComponofyPlaylists from '../ComponofyPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
+import ComponofyPlaylists from '../../containers/ComponofyPlaylists';
 
 const styles = theme => ({
     root: {

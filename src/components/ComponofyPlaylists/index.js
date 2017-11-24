@@ -14,6 +14,15 @@ const styles = theme => ({
 });
 
 class ComponofyPlaylists extends PureComponent {
+    static propTypes = {
+        navigateTo: PropTypes.func.isRequired,
+        numberOfFinalPlaylists: PropTypes.number.isRequired
+    };
+
+    componentDidMount() {
+        const { numberOfFinalPlaylists, navigateTo } = this.props;
+    }
+
     render() {
         return <h3>Hello World</h3>;
     }
