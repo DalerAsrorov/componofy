@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { contains, isEmpty } from 'ramda';
+import { contains, isEmpty, keys, length } from 'ramda';
 import {
     removePlaylistTrackFromFinal,
     setOpenStatusMyPlaylists,
@@ -41,6 +41,16 @@ const trackIsIn = (data, ownProps, key) => {
     return contains(propsTrackID, playlist.tracks.list);
 };
 
+const getPlaylistsData = (playlistsData, key) => {
+    let data = {};
+
+    if (playlistsData.entities) {
+        data = playlistsData.entities[key];
+    }
+
+    return data;
+};
+
 const playlistIsIn = (data, ownProps, key) => {
     let hasPlaylist = false;
 
@@ -58,6 +68,9 @@ const playlistIsIn = (data, ownProps, key) => {
 
 const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
+    numberOfFinalPlaylists: length(
+        keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
+    ),
     containsThisPlaylist: playlistIsIn(
         state.finalPlaylists.playlists,
         ownProps,

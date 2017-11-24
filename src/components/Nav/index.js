@@ -2,19 +2,24 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
+import Badge from 'material-ui/Badge';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import PersonPin from 'material-ui-icons/PersonPin';
 import Public from 'material-ui-icons/Public';
 import FlashOn from 'material-ui-icons/FlashOn';
 
+import './Nav.css';
+
 const ROUTE_INDEX_MAP = {
     0: '/app',
-    1: '/app/public'
+    1: '/app/public',
+    2: '/app/componofy'
 };
 
 const ROUTE_INDEX_REVERSE_MAP = {
     '/app': 0,
-    '/app/public': 1
+    '/app/public': 1,
+    '/app/componofy': 2
 };
 
 const styles = theme => ({
@@ -28,6 +33,7 @@ const styles = theme => ({
 
 class Nav extends PureComponent {
     static propTypes = {
+        numberOfFinalPlaylists: PropTypes.number.isRequired,
         navigateTo: PropTypes.func.isRequired,
         classes: PropTypes.object
     };
@@ -52,8 +58,23 @@ class Nav extends PureComponent {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, numberOfFinalPlaylists } = this.props;
         const { currentTabIndex } = this.state;
+        const userAddedPlaylist = numberOfFinalPlaylists !== 0;
+
+        let componofyIcon = <FlashOn />;
+
+        if (userAddedPlaylist) {
+            componofyIcon = (
+                <Badge
+                    className="number-badge"
+                    badgeContent={numberOfFinalPlaylists}
+                    color="accent"
+                >
+                    <FlashOn />
+                </Badge>
+            );
+        }
 
         return (
             <Paper className={classes.root}>
@@ -67,7 +88,11 @@ class Nav extends PureComponent {
                 >
                     <Tab icon={<PersonPin />} label="My" />
                     <Tab icon={<Public />} label="Public" />
-                    <Tab icon={<FlashOn />} label="Componofy" />
+                    <Tab
+                        disabled={!userAddedPlaylist}
+                        icon={componofyIcon}
+                        label="Componofy"
+                    />
                 </Tabs>
             </Paper>
         );

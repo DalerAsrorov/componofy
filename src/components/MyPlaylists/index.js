@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
-import Button from 'material-ui/Button';
 import Scroll from 'react-scroll';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';

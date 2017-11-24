@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import PublicPlaylists from '../PublicPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
+import ComponofyPlaylists from '../../containers/ComponofyPlaylists';
 
 const styles = theme => ({
     root: {
@@ -30,6 +31,10 @@ const Main = ({ classes, match: { url } }) => {
             <Grid item xs={12}>
                 <Route exact path={`${url}`} component={MyPlaylists} />
                 <Route path={`${url}/public`} component={PublicPlaylists} />
+                <Route
+                    path={`${url}/componofy`}
+                    component={ComponofyPlaylists}
+                />
             </Grid>
         </Grid>
     );
