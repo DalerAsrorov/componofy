@@ -9,12 +9,14 @@ import FlashOn from 'material-ui-icons/FlashOn';
 
 const ROUTE_INDEX_MAP = {
     0: '/app',
-    1: '/app/public'
+    1: '/app/public',
+    2: '/app/componofy'
 };
 
 const ROUTE_INDEX_REVERSE_MAP = {
     '/app': 0,
-    '/app/public': 1
+    '/app/public': 1,
+    '/app/componofy': 2
 };
 
 const styles = theme => ({

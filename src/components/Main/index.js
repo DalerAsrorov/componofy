@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import PublicPlaylists from '../PublicPlaylists';
+import ComponofyPlaylists from '../ComponofyPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 
@@ -30,6 +31,10 @@ const Main = ({ classes, match: { url } }) => {
             <Grid item xs={12}>
                 <Route exact path={`${url}`} component={MyPlaylists} />
                 <Route path={`${url}/public`} component={PublicPlaylists} />
+                <Route
+                    path={`${url}/componofy`}
+                    component={ComponofyPlaylists}
+                />
             </Grid>
         </Grid>
     );
