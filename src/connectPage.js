@@ -67,17 +67,9 @@ const playlistIsIn = (data, ownProps, key) => {
     return hasPlaylist;
 };
 
-const PAGE_MAPPING = {
-    '/app': '/app/public',
-    '/app/public': '/app/componofy'
-};
-
 const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
     navigation: state.navigation,
-    nextPage: ownProps.history
-        ? PAGE_MAPPING[ownProps.history.location.pathname]
-        : '',
     numberOfFinalPlaylists: length(
         keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
     ),
