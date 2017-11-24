@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { IconButton } from 'material-ui';
+import { PlayArrow, Pause } from 'material-ui-icons';
 import { withMediaProps } from 'react-media-player';
 
 class PlayPause extends PureComponent {
     static propTypes = {
-        media: PropTypes.object.isRequired
+        media: PropTypes.object.isRequired,
+        color: PropTypes.string
     };
 
     _handlePlayPause = () => {
@@ -12,12 +15,13 @@ class PlayPause extends PureComponent {
     };
 
     render() {
-        const { media } = this.props;
+        const { media, color } = this.props;
+        let playPauseIcon;
 
         return (
-            <button type="button" onClick={this._handlePlayPause}>
-                {media.isPlaying ? 'Pause' : 'Play'}
-            </button>
+            <IconButton color={color || ''} onClick={this._handlePlayPause}>
+                {media.isPlaying ? <Pause /> : <PlayArrow />}
+            </IconButton>
         );
     }
 }

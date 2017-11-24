@@ -7,16 +7,20 @@ import { Media, Player } from 'react-media-player';
 const styles = theme => ({
     mediaPlayer: {
         display: 'none'
+    },
+
+    media: {
+        textAlign: 'center'
     }
 });
 
 const Preview = props => (
-    <Media className={props.classes.media}>
+    <Media>
         <div className={props.classes.media}>
             <div className={props.classes.mediaPlayer}>
                 <Player src={props.url} />
             </div>
-            <PlayPause />
+            <PlayPause color="accent" />
         </div>
     </Media>
 );
