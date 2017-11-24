@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
+import Badge from 'material-ui/Badge';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import PersonPin from 'material-ui-icons/PersonPin';
 import Public from 'material-ui-icons/Public';
@@ -25,11 +26,14 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper
     },
 
+    badge: {},
+
     tabContainer: {}
 });
 
 class Nav extends PureComponent {
     static propTypes = {
+        numberOfFinalPlaylists: PropTypes.number.isRequired,
         navigateTo: PropTypes.func.isRequired,
         classes: PropTypes.object
     };
@@ -54,8 +58,18 @@ class Nav extends PureComponent {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, numberOfFinalPlaylists } = this.props;
         const { currentTabIndex } = this.state;
+
+        const componofyIcon = (
+            <Badge
+                className={classes.badge}
+                badgeContent={numberOfFinalPlaylists}
+                color="primary"
+            >
+                <FlashOn />
+            </Badge>
+        );
 
         return (
             <Paper className={classes.root}>
@@ -69,7 +83,7 @@ class Nav extends PureComponent {
                 >
                     <Tab icon={<PersonPin />} label="My" />
                     <Tab icon={<Public />} label="Public" />
-                    <Tab icon={<FlashOn />} label="Componofy" />
+                    <Tab icon={componofyIcon} label="Componofy" />
                 </Tabs>
             </Paper>
         );
