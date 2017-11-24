@@ -69,13 +69,12 @@ export const FooterPanel = props => {
             </section>
             <section className={props.classes.settingsSection}>
                 <Settings
-                    onClickOptions={props.onClickOptions}
                     onSelectItem={props.onSelectItem}
+                    onClickOptions={props.onClickOptions}
+                    menuItems={props.menuItems}
                     anchorEl={props.anchorEl}
                     isOpen={props.isOpen}
-                    canScrollUp={props.canScrollUp}
                     className={props.classes.settings}
-                    onCollapse={props.onCollapse}
                 />
             </section>
         </Toolbar>
@@ -85,12 +84,11 @@ export const FooterPanel = props => {
 FooterPanel.propTypes = {
     onClickOptions: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
-    onCollapse: PropTypes.func.isRequired,
+    menuItems: PropTypes.object.isRequired,
     mainText: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    canScrollUp: PropTypes.bool,
     anchorEl: PropTypes.object,
     circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     shouldShowCircle: PropTypes.bool

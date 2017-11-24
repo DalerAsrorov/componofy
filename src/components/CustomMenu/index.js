@@ -57,19 +57,7 @@ const CustomMenu = props => {
                         id="menu-list"
                         style={{ transformOrigin: '0 0 0' }}
                     >
-                        <Paper>
-                            <MenuList role="menu">
-                                <MenuItem
-                                    disabled={!props.canScrollUp}
-                                    onClick={props.onClickUp}
-                                >
-                                    Up
-                                </MenuItem>
-                                <MenuItem onClick={props.onClickCollapse}>
-                                    Collapse
-                                </MenuItem>
-                            </MenuList>
-                        </Paper>
+                        <Paper>{props.menuItems}</Paper>
                     </Grow>
                 </ClickAwayListener>
             </Popper>
@@ -78,15 +66,13 @@ const CustomMenu = props => {
 };
 
 CustomMenu.propTypes = {
-    onClickCollapse: PropTypes.func.isRequired,
-    iconComponent: PropTypes.func.isRequired,
     onClickOptions: PropTypes.func.isRequired,
+    iconComponent: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
-    onClickUp: PropTypes.bool.isRequired,
+    menuItems: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    onClickUp: PropTypes.func.isRequired,
-    anchorEl: PropTypes.object,
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    anchorEl: PropTypes.object
 };
 
 export default withStyles(styles)(CustomMenu);

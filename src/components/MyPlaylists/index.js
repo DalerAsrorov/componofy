@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
+import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
@@ -15,6 +16,7 @@ const styles = theme => ({
     }
 });
 
+const SCROLL_DURATION = 500;
 const STATUS = {
     // There is no tracks to load
     0: 'All playlists loaded',
@@ -87,9 +89,18 @@ class MyPlaylists extends PureComponent {
         return this.props.removePlaylistFromFinal(playlist);
     };
 
+    _handleClickUp = () => {
+        this._handleClickOption();
+
+        scroll.scrollToTop({
+            duration: SCROLL_DURATION
+        });
+    };
+
     _handleAdd = () => {};
 
     _handleClickCollapse = () => {
+        this._handleClickOption();
         this.props.setOpenStatusMyPlaylists();
     };
 
@@ -123,6 +134,17 @@ class MyPlaylists extends PureComponent {
             classes
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
+
+        const menuItems = (
+            <div>
+                <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                    Up
+                </MenuItem>
+                <MenuItem onClick={this._handleClickCollapse}>
+                    Collapse
+                </MenuItem>
+            </div>
+        );
 
         const ListOfMyPlaylists = (
             <List
@@ -158,8 +180,7 @@ class MyPlaylists extends PureComponent {
                     isOpen={settingsIsOpen}
                     mainText={status}
                     anchorEl={anchorEl}
-                    canScrollUp={canScrollUp}
-                    onCollapse={this._handleClickCollapse}
+                    menuItems={menuItems}
                 />
             </div>
         );
