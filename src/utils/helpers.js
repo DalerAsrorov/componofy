@@ -32,5 +32,5 @@ export const removeDuplicates = R.curry((data, prop) => {
 });
 
 export const swapKeysAndValues = (map, fn = toString) => {
-    return R.zipObj(R.values(map), R.map(parseInt, R.keys(map)));
+    return R.zipObj(R.values(map), R.map(fn, R.keys(map)));
 };
