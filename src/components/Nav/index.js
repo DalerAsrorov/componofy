@@ -8,6 +8,8 @@ import PersonPin from 'material-ui-icons/PersonPin';
 import Public from 'material-ui-icons/Public';
 import FlashOn from 'material-ui-icons/FlashOn';
 
+import './Nav.css';
+
 const ROUTE_INDEX_MAP = {
     0: '/app',
     1: '/app/public',
@@ -25,8 +27,6 @@ const styles = theme => ({
         width: '100%',
         backgroundColor: theme.palette.background.paper
     },
-
-    badge: {},
 
     tabContainer: {}
 });
@@ -67,7 +67,7 @@ class Nav extends PureComponent {
         if (userAddedPlaylist) {
             componofyIcon = (
                 <Badge
-                    className={classes.badge}
+                    className="number-badge"
                     badgeContent={numberOfFinalPlaylists}
                     color="primary"
                 >
