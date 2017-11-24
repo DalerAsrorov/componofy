@@ -16,11 +16,15 @@ class PlayPause extends PureComponent {
 
     render() {
         const { media, color } = this.props;
-        let playPauseIcon;
+        let playPauseIcon = <Pause />;
+
+        if (!media.isPlaying) {
+            playPauseIcon = <PlayArrow />;
+        }
 
         return (
             <IconButton color={color || ''} onClick={this._handlePlayPause}>
-                {media.isPlaying ? <Pause /> : <PlayArrow />}
+                {playPauseIcon}
             </IconButton>
         );
     }

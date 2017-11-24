@@ -25,4 +25,10 @@ const Preview = props => (
     </Media>
 );
 
+Preview.propTypes = {
+    classes: PropTypes.object.isRequired,
+    url: PropTypes.string.isRequired,
+    playButtonColor: PropTypes.string
+};
+
 export default withStyles(styles)(Preview);
