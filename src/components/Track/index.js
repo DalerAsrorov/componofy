@@ -10,7 +10,7 @@ import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Info from './Info';
-import PlayPause from './PlayPause';
+import Preview from './Preview';
 
 const styles = theme => ({
     checkmark: {
@@ -85,7 +85,7 @@ class Track extends PureComponent {
         if (preview_url) {
             previewComponent = (
                 <div className={classes.preview}>
-                    <PlayPause url={preview_url} />
+                    <Preview url={preview_url} />
                 </div>
             );
         }

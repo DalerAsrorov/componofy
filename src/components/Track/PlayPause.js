@@ -1,34 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { Media, Player, controls, withMediaProps } from 'react-media-player';
+import { withMediaProps } from 'react-media-player';
 
-const { PlayPause: PlayPauseComponent } = controls;
+class PlayPause extends PureComponent {
+    static propTypes = {
+        media: PropTypes.object.isRequired
+    };
 
-const styles = theme => ({
-    mediaPlayer: {
-        display: 'none'
+    _handlePlayPause = () => {
+        this.props.media.playPause();
+    };
+
+    render() {
+        const { media } = this.props;
+
+        return (
+            <button type="button" onClick={this._handlePlayPause}>
+                {media.isPlaying ? 'Pause' : 'Play'}
+            </button>
+        );
     }
-});
+}
 
-const PlayPause = props => {
-    return (
-        <div>
-            <Media>
-                <div className="media">
-                    <div className={props.classes.mediaPlayer}>
-                        <Player src={props.url} />
-                    </div>
-                    <PlayPauseComponent />
-                </div>
-            </Media>
-        </div>
-    );
-};
-
-PlayPause.propTypes = {
-    classes: PropTypes.object.isRequired,
-    url: PropTypes.string.isRequired
-};
-
-export default withMediaProps(withStyles(styles)(PlayPause));
+export default withMediaProps(PlayPause);
