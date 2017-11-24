@@ -60,16 +60,21 @@ class Nav extends PureComponent {
     render() {
         const { classes, numberOfFinalPlaylists } = this.props;
         const { currentTabIndex } = this.state;
+        const userAddedPlaylist = numberOfFinalPlaylists !== 0;
 
-        const componofyIcon = (
-            <Badge
-                className={classes.badge}
-                badgeContent={numberOfFinalPlaylists}
-                color="primary"
-            >
-                <FlashOn />
-            </Badge>
-        );
+        let componofyIcon = <FlashOn />;
+
+        if (userAddedPlaylist) {
+            componofyIcon = (
+                <Badge
+                    className={classes.badge}
+                    badgeContent={numberOfFinalPlaylists}
+                    color="primary"
+                >
+                    <FlashOn />
+                </Badge>
+            );
+        }
 
         return (
             <Paper className={classes.root}>
@@ -83,7 +88,11 @@ class Nav extends PureComponent {
                 >
                     <Tab icon={<PersonPin />} label="My" />
                     <Tab icon={<Public />} label="Public" />
-                    <Tab icon={componofyIcon} label="Componofy" />
+                    <Tab
+                        disabled={!userAddedPlaylist}
+                        icon={componofyIcon}
+                        label="Componofy"
+                    />
                 </Tabs>
             </Paper>
         );
