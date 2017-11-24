@@ -134,7 +134,7 @@ class MyPlaylists extends PureComponent {
             classes
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
-        let playlistRemainingValue =
+        playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
 
         const menuItems = (
@@ -173,7 +173,7 @@ class MyPlaylists extends PureComponent {
                     shouldShowCircle={canLoadMore}
                     onClickOptions={this._handleClickOptions}
                     onSelectItem={this._handleClickOption}
-                    circleText={playlistRemainingValue}
+                    circleText={playlistsRemaining}
                     onClick={this._handleLoadMore}
                     isOpen={settingsIsOpen}
                     mainText={status}
