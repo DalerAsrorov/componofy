@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
-import { MenuItem, MenuList } from 'material-ui/Menu';
 import Grow from 'material-ui/transitions/Grow';
 import Paper from 'material-ui/Paper';
-import tealColor from 'material-ui/colors/teal';
 import { Manager, Target, Popper } from 'react-popper';
 import classNames from 'classnames';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
@@ -45,7 +43,6 @@ const CustomMenu = props => {
             </Target>
             <Popper
                 eventsEnabled={props.isOpen}
-                className={props.classes.grow}
                 className={classNames({
                     [props.classes.popperClose]: !props.isOpen
                 })}

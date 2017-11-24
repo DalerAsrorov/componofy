@@ -39,8 +39,7 @@ class List extends PureComponent {
             classes,
             isPlaylist,
             onClickMain,
-            keyItem,
-            onCheckboxActive
+            keyItem
         } = this.props;
         let listOfItems;
 

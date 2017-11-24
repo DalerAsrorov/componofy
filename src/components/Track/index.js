@@ -1,11 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
-import MaterialList, {
-    ListItem,
-    ListItemIcon,
-    ListItemText
-} from 'material-ui/List';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
@@ -66,7 +62,6 @@ class Track extends PureComponent {
     render() {
         const { track, classes, playlistContainsThisTrack } = this.props;
         const {
-            id: trackID,
             artists,
             name: trackName,
             album: { name: albumName, external_urls: { spotify: albumUrl } },

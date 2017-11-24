@@ -1,16 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
-import MaterialList, {
-    ListItem,
-    ListItemIcon,
-    ListItemText
-} from 'material-ui/List';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistAdd, PlaylistAddCheck } from 'material-ui-icons';
 import { isEmpty } from 'ramda';
 import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
-import { getPlaylistTracks } from '../../api';
 import List from '../List';
 
 import './Playlist.css';
@@ -59,12 +54,7 @@ class Playlist extends PureComponent {
     };
 
     render() {
-        const {
-            playlist,
-            classes,
-            onClickIcon,
-            containsThisPlaylist
-        } = this.props;
+        const { playlist, containsThisPlaylist } = this.props;
         const { tracks: { list: tracks } } = playlist;
         let playlistIconComponent = containsThisPlaylist ? (
             <PlaylistAddCheck />

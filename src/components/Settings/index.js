@@ -1,19 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Scroll from 'react-scroll';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import CustomMenu from '../CustomMenu';
 import { FlashOn } from 'material-ui-icons';
 
-const rightSpace = '30px';
 const styles = theme => ({
     root: {},
 
     menu: {}
 });
-
-let scroll = Scroll.animateScroll;
 
 class Settings extends PureComponent {
     static propTypes = {
@@ -21,8 +16,7 @@ class Settings extends PureComponent {
         onSelectItem: PropTypes.func.isRequired,
         menuItems: PropTypes.object.isRequired,
         isOpen: PropTypes.bool.isRequired,
-        anchorEl: PropTypes.object,
-        isOpen: PropTypes.bool
+        anchorEl: PropTypes.object
     };
 
     render() {
@@ -31,8 +25,7 @@ class Settings extends PureComponent {
             onSelectItem,
             menuItems,
             anchorEl,
-            isOpen,
-            classes
+            isOpen
         } = this.props;
 
         return (

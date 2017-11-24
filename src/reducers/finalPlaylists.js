@@ -1,5 +1,5 @@
 import { normalize } from 'normalizr';
-import { mergeDeepLeft, clone, isEmpty, reject, equals } from 'ramda';
+import { mergeDeepLeft, clone, reject, equals } from 'ramda';
 import {
     ADD_PLAYLIST_TO_FINAL,
     ADD_PLAYLIST_TRACK_TO_FINAL,
@@ -34,9 +34,6 @@ export const finalPlaylists = (
             playlist = clone(action.playlist);
             playlists = clone(state.playlists);
             let trackToAdd = clone(action.track);
-            let playlistsCopy = clone(state.playlists);
-            let { tracks: { list: playlistTracks } } = playlist;
-            let newPlaylists;
 
             if (
                 playlists.entities &&

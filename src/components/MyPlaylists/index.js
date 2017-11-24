@@ -46,10 +46,7 @@ class MyPlaylists extends PureComponent {
     _handleLoadMore = event => {
         event.preventDefault();
 
-        const {
-            fetchMyPlaylists,
-            myPlaylists: { numberOfTracks, currentOffset, playlistsRemaining }
-        } = this.props;
+        const { fetchMyPlaylists, myPlaylists: { currentOffset } } = this.props;
 
         fetchMyPlaylists(currentOffset);
         scroll.scrollToBottom();
@@ -130,8 +127,7 @@ class MyPlaylists extends PureComponent {
 
     render() {
         let {
-            myPlaylists: { playlists, playlistsRemaining, canLoadMore },
-            classes
+            myPlaylists: { playlists, playlistsRemaining, canLoadMore }
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
         playlistsRemaining =
