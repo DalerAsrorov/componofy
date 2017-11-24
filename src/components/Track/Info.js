@@ -14,12 +14,16 @@ const styles = theme => ({
     }),
 
     popularity: {
-        padding: `${theme.spacing.unit}px 0`
+        // padding: `${theme.spacing.unit}px 0`
+        padding: '0'
     },
 
     chip: {
         color: red[50],
-        backgroundColor: purple['A200']
+        backgroundColor: purple['A200'],
+        height: '20px',
+        padding: '2px',
+        marginTop: '5px'
     }
 });
 
@@ -39,9 +43,14 @@ const Info = props => {
     let popularityChip;
 
     if (props.isPopular) {
+        const labelComponent = (
+            <Typography type="caption" color="default">
+                Popular
+            </Typography>
+        );
         popularityChip = (
             <div className={props.classes.popularity}>
-                <Chip label="Popular" className={props.classes.chip} />
+                <Chip label={labelComponent} className={props.classes.chip} />
             </div>
         );
     }
