@@ -17,10 +17,6 @@ const styles = {
 
     buttonTarget: {
         float: 'right'
-    },
-
-    grow: {
-        left: '-3px'
     }
 };
 
