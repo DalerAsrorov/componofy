@@ -8,7 +8,12 @@ import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 
 const styles = theme => ({
-    root: {}
+    root: {
+        // Fix for the extra space created
+        // after track preview is being rendered
+        // on the page
+        flexDirection: 'initial'
+    }
 });
 
 const Main = ({ classes, match: { url } }) => {
