@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { MenuItem } from 'material-ui/Menu';
+import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
@@ -33,6 +34,7 @@ class MyPlaylists extends PureComponent {
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
+        navigation: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
     };
 
@@ -94,6 +96,17 @@ class MyPlaylists extends PureComponent {
         });
     };
 
+    _handleClickNext = () => {
+        const {
+            setNavIndex,
+            navigateTo,
+            navigation: { nextPage, nextIndex }
+        } = this.props;
+
+        setNavIndex(nextIndex);
+        navigateTo(nextPage);
+    };
+
     _handleAdd = () => {};
 
     _handleClickCollapse = () => {
@@ -127,7 +140,8 @@ class MyPlaylists extends PureComponent {
 
     render() {
         let {
-            myPlaylists: { playlists, playlistsRemaining, canLoadMore }
+            myPlaylists: { playlists, playlistsRemaining, canLoadMore },
+            classes
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
         playlistsRemaining =
@@ -141,6 +155,8 @@ class MyPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleClickCollapse}>
                     Collapse
                 </MenuItem>
+                <Divider />
+                <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
             </div>
         );
 

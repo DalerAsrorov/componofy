@@ -11,7 +11,8 @@ import {
     fetchPlaylistTracks,
     addPlaylistToFinal,
     fetchMyPlaylists,
-    setPlaylistOpen
+    setPlaylistOpen,
+    setNavIndex
 } from './actions';
 
 const isIn = (data, ownProps, key) => {
@@ -68,6 +69,7 @@ const playlistIsIn = (data, ownProps, key) => {
 
 const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
+    navigation: state.navigation,
     numberOfFinalPlaylists: length(
         keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
     ),
@@ -127,6 +129,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removePlaylistTrackFromFinal(track, playlist) {
         dispatch(removePlaylistTrackFromFinal(track, playlist));
+    },
+
+    setNavIndex(index) {
+        dispatch(setNavIndex(index));
     }
 });
 

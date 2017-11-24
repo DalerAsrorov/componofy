@@ -30,3 +30,7 @@ export const removeDuplicates = R.curry((data, prop) => {
         R.pipe(R.map(R.take(1)), R.flatten)
     )(data);
 });
+
+export const swapKeysAndValues = (map, fn = toString) => {
+    return R.zipObj(R.values(map), R.map(fn, R.keys(map)));
+};

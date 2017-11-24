@@ -10,18 +10,6 @@ import FlashOn from 'material-ui-icons/FlashOn';
 
 import './Nav.css';
 
-const ROUTE_INDEX_MAP = {
-    0: '/app',
-    1: '/app/public',
-    2: '/app/componofy'
-};
-
-const ROUTE_INDEX_REVERSE_MAP = {
-    '/app': 0,
-    '/app/public': 1,
-    '/app/componofy': 2
-};
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -34,32 +22,32 @@ const styles = theme => ({
 class Nav extends PureComponent {
     static propTypes = {
         numberOfFinalPlaylists: PropTypes.number.isRequired,
+        navigation: PropTypes.object.isRequired,
+        setNavIndex: PropTypes.func.isRequired,
         navigateTo: PropTypes.func.isRequired,
-        classes: PropTypes.object
-    };
-
-    state = {
-        currentTabIndex: 0
+        classes: PropTypes.object.isRequired
     };
 
     componentDidMount() {
-        const { location: { pathname } } = this.props;
+        const { setNavIndex, location: { pathname }, navigation } = this.props;
 
-        this.setState({
-            currentTabIndex: ROUTE_INDEX_REVERSE_MAP[pathname]
-        });
+        setNavIndex(navigation.routeToIndexMap[pathname]);
     }
 
     _handleChange = (event, value) => {
         event.preventDefault();
+        const { setNavIndex, navigateTo, navigation } = this.props;
 
-        this.props.navigateTo(ROUTE_INDEX_MAP[value]);
-        this.setState({ currentTabIndex: value });
+        navigateTo(navigation.indexToRouteMap[value]);
+        setNavIndex(value);
     };
 
     render() {
-        const { classes, numberOfFinalPlaylists } = this.props;
-        const { currentTabIndex } = this.state;
+        const {
+            classes,
+            numberOfFinalPlaylists,
+            navigation: { index: currentTabIndex }
+        } = this.props;
         const userAddedPlaylist = numberOfFinalPlaylists !== 0;
 
         let componofyIcon = <FlashOn />;

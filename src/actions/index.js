@@ -149,3 +149,12 @@ export const removePlaylistTrackFromFinal = (track, playlist) => {
         track
     };
 };
+
+// Nav actions
+export const SET_NAV_INDEX = 'SET_NAV_INDEX';
+export const setNavIndex = (index = 0) => {
+    return {
+        type: SET_NAV_INDEX,
+        index
+    };
+};
