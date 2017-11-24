@@ -134,6 +134,8 @@ class MyPlaylists extends PureComponent {
             classes
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
+        let playlistRemainingValue =
+            playlistsRemaining !== 0 ? playlistsRemaining : null;
 
         const menuItems = (
             <div>
@@ -154,10 +156,6 @@ class MyPlaylists extends PureComponent {
             />
         );
 
-        if (playlistsRemaining === 0) {
-            playlistsRemaining = null;
-        }
-
         return (
             <div id="myPlaylists">
                 <Waypoint
@@ -175,7 +173,7 @@ class MyPlaylists extends PureComponent {
                     shouldShowCircle={canLoadMore}
                     onClickOptions={this._handleClickOptions}
                     onSelectItem={this._handleClickOption}
-                    circleText={playlistsRemaining}
+                    circleText={playlistRemainingValue}
                     onClick={this._handleLoadMore}
                     isOpen={settingsIsOpen}
                     mainText={status}
