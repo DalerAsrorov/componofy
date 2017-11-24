@@ -9,12 +9,30 @@ import MaterialList, {
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
-
 import Info from './Info';
+import Preview from './Preview';
 
 const styles = theme => ({
     checkmark: {
         color: theme.palette.grey[600]
+    },
+
+    trackInfoContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
+    trackInfo: {
+        flex: '1'
+    },
+
+    preview: {
+        flex: '1'
+    },
+
+    mediaPlayer: {
+        display: 'none'
     }
 });
 
@@ -47,21 +65,30 @@ class Track extends PureComponent {
 
     render() {
         const { track, classes, playlistContainsThisTrack } = this.props;
-
         const {
             id: trackID,
             artists,
             name: trackName,
             album: { name: albumName, external_urls: { spotify: albumUrl } },
             external_urls: { spotify: trackUrl },
+            preview_url,
             popularity
         } = track;
         const {
             name: artistName,
             external_urls: { spotify: artistUrl }
         } = head(artists);
+        let previewComponent;
 
         const isPopular = popularity >= 70;
+
+        if (preview_url) {
+            previewComponent = (
+                <div className={classes.preview}>
+                    <Preview url={preview_url} />
+                </div>
+            );
+        }
 
         return (
             <ListItem divider>
@@ -74,15 +101,20 @@ class Track extends PureComponent {
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <Info
-                            trackName={trackName}
-                            trackUrl={trackUrl}
-                            artistName={artistName}
-                            artistUrl={artistUrl}
-                            albumName={albumName}
-                            albumUrl={albumUrl}
-                            isPopular={isPopular}
-                        />
+                        <div className={classes.trackInfoContainer}>
+                            <div className={classes.trackInfo}>
+                                <Info
+                                    trackName={trackName}
+                                    trackUrl={trackUrl}
+                                    artistName={artistName}
+                                    artistUrl={artistUrl}
+                                    albumName={albumName}
+                                    albumUrl={albumUrl}
+                                    isPopular={isPopular}
+                                />
+                            </div>
+                            {previewComponent}
+                        </div>
                     }
                 />
             </ListItem>

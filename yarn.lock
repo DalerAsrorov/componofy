@@ -6356,6 +6356,12 @@ react-jss@^8.0.0:
     prop-types "^15.6.0"
     theming "^1.2.1"
 
+react-media-player@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-media-player/-/react-media-player-0.7.0.tgz#d4d0a0863f1a642024126c3fec64890db0d8cd47"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-popper@^0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.7.4.tgz#8649d539837e7c6f47bc9b24c9cf57a404e199a1"
