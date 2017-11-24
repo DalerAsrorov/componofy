@@ -10,6 +10,7 @@ import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Info from './Info';
+import PlayPause from './PlayPause';
 
 const styles = theme => ({
     checkmark: {
@@ -28,6 +29,10 @@ const styles = theme => ({
 
     preview: {
         flex: '1'
+    },
+
+    mediaPlayer: {
+        display: 'none'
     }
 });
 
@@ -60,21 +65,30 @@ class Track extends PureComponent {
 
     render() {
         const { track, classes, playlistContainsThisTrack } = this.props;
-
         const {
             id: trackID,
             artists,
             name: trackName,
             album: { name: albumName, external_urls: { spotify: albumUrl } },
             external_urls: { spotify: trackUrl },
+            preview_url,
             popularity
         } = track;
         const {
             name: artistName,
             external_urls: { spotify: artistUrl }
         } = head(artists);
+        let previewComponent;
 
         const isPopular = popularity >= 70;
+
+        if (preview_url) {
+            previewComponent = (
+                <div className={classes.preview}>
+                    <PlayPause url={preview_url} />
+                </div>
+            );
+        }
 
         return (
             <ListItem divider>
@@ -99,7 +113,7 @@ class Track extends PureComponent {
                                     isPopular={isPopular}
                                 />
                             </div>
-                            <div className={classes.preview}>Play button</div>
+                            {previewComponent}
                         </div>
                     }
                 />
