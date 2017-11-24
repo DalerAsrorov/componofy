@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
-import { MenuItem, MenuList } from 'material-ui/Menu';
 import Grow from 'material-ui/transitions/Grow';
 import Paper from 'material-ui/Paper';
-import tealColor from 'material-ui/colors/teal';
 import { Manager, Target, Popper } from 'react-popper';
 import classNames from 'classnames';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
@@ -45,7 +43,6 @@ const CustomMenu = props => {
             </Target>
             <Popper
                 eventsEnabled={props.isOpen}
-                className={props.classes.grow}
                 className={classNames({
                     [props.classes.popperClose]: !props.isOpen
                 })}
@@ -57,19 +54,7 @@ const CustomMenu = props => {
                         id="menu-list"
                         style={{ transformOrigin: '0 0 0' }}
                     >
-                        <Paper>
-                            <MenuList role="menu">
-                                <MenuItem
-                                    disabled={!props.canScrollUp}
-                                    onClick={props.onClickUp}
-                                >
-                                    Up
-                                </MenuItem>
-                                <MenuItem onClick={props.onClickCollapse}>
-                                    Collapse
-                                </MenuItem>
-                            </MenuList>
-                        </Paper>
+                        <Paper>{props.menuItems}</Paper>
                     </Grow>
                 </ClickAwayListener>
             </Popper>
@@ -78,15 +63,13 @@ const CustomMenu = props => {
 };
 
 CustomMenu.propTypes = {
-    onClickCollapse: PropTypes.func.isRequired,
-    iconComponent: PropTypes.func.isRequired,
     onClickOptions: PropTypes.func.isRequired,
+    iconComponent: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
-    onClickUp: PropTypes.bool.isRequired,
+    menuItems: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    onClickUp: PropTypes.func.isRequired,
-    anchorEl: PropTypes.object,
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    anchorEl: PropTypes.object
 };
 
 export default withStyles(styles)(CustomMenu);

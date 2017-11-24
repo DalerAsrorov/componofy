@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import { connect } from 'react-redux';
 import { connectStream } from '../connectPage';
-import { checkIfAuthenticated } from '../actions';
 
 class PrivateRoute extends PureComponent {
     static propTypes = {
