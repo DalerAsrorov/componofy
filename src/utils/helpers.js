@@ -6,12 +6,6 @@ export const replaceTo = path => {
     window.location.replace(`${SERVER_URL}${path}`);
 };
 
-export const formatPlaylist = unformattedPlaylist => {
-    let formatted = unformattedPlaylist;
-
-    return formatted;
-};
-
 export const formatTracks = tracks => {
     return tracks.map(trackObject => {
         const { track, ...rest } = trackObject;
@@ -40,7 +34,6 @@ export const filterSearchPlaylist = (searchTerm, playlists) => {
         R.toUpper(mainStr).indexOf(R.toUpper(compareToStr)) > -1;
 
     const containsInfo = playlist => {
-        let shouldShow = false;
         if (stringContains(playlist.name, searchTerm)) {
             return true;
         }
