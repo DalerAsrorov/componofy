@@ -80,3 +80,7 @@ export const ROUTER_PROPTYPE = PropTypes.shape({
         hash: PropTypes.string
     })
 });
+
+export const searchKeyMap = {
+    focusSearch: 'ctrl+f'
+};

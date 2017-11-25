@@ -35,5 +35,23 @@ export const swapKeysAndValues = (map, fn = toString) => {
     return R.zipObj(R.values(map), R.map(fn, R.keys(map)));
 };
 
+export const filterSearchPlaylist = (searchTerm, playlists) => {
+    const stringContains = (mainStr, compareToStr) =>
+        R.toUpper(mainStr).indexOf(R.toUpper(compareToStr)) > -1;
+
+    const containsInfo = playlist => {
+        let shouldShow = false;
+        if (stringContains(playlist.name, searchTerm)) {
+            return true;
+        }
+
+        return !!R.find(
+            R.propSatisfies(name => stringContains(name, searchTerm), 'name')
+        )(playlist.tracks.list);
+    };
+
+    return R.filter(containsInfo, playlists);
+};
+
 export const isDomElementActive = domElement =>
     domElement === document.activeElement;
