@@ -53,5 +53,5 @@ export const filterSearchPlaylist = (searchTerm, playlists) => {
     return R.filter(containsInfo, playlists);
 };
 
-export const isDomElementActive = domElement =>
+export const isDomElementInFocus = domElement =>
     domElement === document.activeElement;

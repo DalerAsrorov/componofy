@@ -10,7 +10,7 @@ import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
 import { isEmpty, trim } from 'ramda';
 import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
-import { isDomElementActive, filterSearchPlaylist } from '../../utils/helpers';
+import { filterSearchPlaylist } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
