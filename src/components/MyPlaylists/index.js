@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import { Search as SearchIcon } from 'material-ui-icons';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -15,6 +16,12 @@ const LIMIT = 10;
 const styles = theme => ({
     loadmore: {
         width: '100%'
+    },
+
+    searchAdortment: {
+        position: 'relative',
+        top: `${theme.spacing.unit / 2}px`,
+        marginRight: `${theme.spacing.unit}px`
     },
 
     footerPanel: {}
@@ -191,7 +198,9 @@ class MyPlaylists extends PureComponent {
                     onChange={this._handleInputChange}
                     inputId="myPlaylistsSearch"
                     value={searchTerm}
-                    adortment={'$'}
+                    startAdornment={
+                        <SearchIcon className={classes.searchAdortment} />
+                    }
                     placeholder="Search by artists, songs, albums..."
                     autoFocus
                 />

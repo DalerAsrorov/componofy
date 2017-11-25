@@ -11,8 +11,7 @@ const styles = theme => ({
     },
 
     searchInput: {
-        margin: `${theme.spacing.unit}px 0`,
-        padding: `${theme.spacing.unit + 4}px`
+        padding: `${theme.spacing.unit}px`
     }
 });
 
@@ -22,8 +21,7 @@ class Search extends PureComponent {
         classes: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
         value: PropTypes.string.isRequired,
-        inputLabel: PropTypes.string,
-        adortment: PropTypes.any
+        inputLabel: PropTypes.string
     };
 
     render() {
@@ -51,7 +49,6 @@ class Search extends PureComponent {
                     id={inputId}
                     value={value}
                     onChange={onChange}
-                    startAdornment={adortmentComponent}
                     className={classes.searchInput}
                     {...rest}
                 />
