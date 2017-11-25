@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
+import { HotKeys } from 'react-hotkeys';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
@@ -27,6 +28,10 @@ const styles = theme => ({
         color: LIGHT_BLUE_COLOR
     },
 
+    hotKeys: {
+        outline: 'none'
+    },
+
     footerPanel: {}
 });
 
@@ -49,6 +54,10 @@ const searchStyle = {
     position: 'sticky',
     top: '0',
     zIndex: '100'
+};
+
+const searchKeyMap = {
+    focusSearch: 'ctrl+f'
 };
 
 class MyPlaylists extends PureComponent {
@@ -143,6 +152,11 @@ class MyPlaylists extends PureComponent {
         this.props.setMySearchTerm(event.target.value);
     };
 
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
+    };
+
     componentDidMount() {
         let { currentOffset } = this.state;
         const {
@@ -202,43 +216,56 @@ class MyPlaylists extends PureComponent {
             />
         );
 
+        const serachHandlers = {
+            focusSearch: this._handleFocusOnSearch
+        };
+
         return (
-            <div id="myPlaylists">
-                <Search
-                    onChange={this._handleInputChange}
-                    inputId="myPlaylistsSearch"
-                    style={searchStyle}
-                    value={searchTerm}
-                    startAdornment={
-                        <SearchIcon className={classes.searchAdortment} />
-                    }
-                    placeholder="Search by artists, songs, albums..."
-                    autoFocus
-                />
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(false);
-                    }}
-                />
-                {ListOfMyPlaylists}
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(true);
-                    }}
-                />
-                <FooterPanel
-                    shouldShowCircle={canLoadMore}
-                    onClickOptions={this._handleClickOptions}
-                    onSelectItem={this._handleClickOption}
-                    circleText={playlistsRemaining}
-                    onClick={this._handleLoadMore}
-                    isOpen={settingsIsOpen}
-                    mainText={status}
-                    anchorEl={anchorEl}
-                    menuItems={menuItems}
-                    style={footerStyle}
-                />
-            </div>
+            <HotKeys
+                keyMap={searchKeyMap}
+                handlers={serachHandlers}
+                className={classes.hotKeys}
+            >
+                <div id="myPlaylists">
+                    <Search
+                        onChange={this._handleInputChange}
+                        inputId="myPlaylistsSearch"
+                        style={searchStyle}
+                        value={searchTerm}
+                        startAdornment={
+                            <SearchIcon className={classes.searchAdortment} />
+                        }
+                        placeholder="Search by artists, songs, albums..."
+                        inputRef={input => {
+                            this.searchInputRef = input;
+                        }}
+                        autoFocus
+                    />
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(false);
+                        }}
+                    />
+                    {ListOfMyPlaylists}
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(true);
+                        }}
+                    />
+                    <FooterPanel
+                        shouldShowCircle={canLoadMore}
+                        onClickOptions={this._handleClickOptions}
+                        onSelectItem={this._handleClickOption}
+                        circleText={playlistsRemaining}
+                        onClick={this._handleLoadMore}
+                        isOpen={settingsIsOpen}
+                        mainText={status}
+                        anchorEl={anchorEl}
+                        menuItems={menuItems}
+                        style={footerStyle}
+                    />
+                </div>
+            </HotKeys>
         );
     }
 }
