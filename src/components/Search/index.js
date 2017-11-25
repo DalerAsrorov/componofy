@@ -32,6 +32,7 @@ class Search extends PureComponent {
             value,
             onChange,
             adortment,
+            style,
             ...rest
         } = this.props;
 
@@ -43,7 +44,11 @@ class Search extends PureComponent {
         ) : null;
 
         return (
-            <FormControl fullWidth className={classes.formControl}>
+            <FormControl
+                style={style}
+                fullWidth
+                className={classes.formControl}
+            >
                 {inputLabelComponent}
                 <Input
                     id={inputId}

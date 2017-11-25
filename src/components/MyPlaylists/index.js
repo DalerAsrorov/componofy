@@ -40,6 +40,11 @@ const footerStyle = {
     position: 'sticky',
     bottom: '0'
 };
+const searchStyle = {
+    position: 'sticky',
+    top: '0',
+    zIndex: '100'
+};
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
@@ -197,6 +202,7 @@ class MyPlaylists extends PureComponent {
                 <Search
                     onChange={this._handleInputChange}
                     inputId="myPlaylistsSearch"
+                    style={searchStyle}
                     value={searchTerm}
                     startAdornment={
                         <SearchIcon className={classes.searchAdortment} />
