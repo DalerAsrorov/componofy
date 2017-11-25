@@ -68,20 +68,15 @@ const filterSearchPlaylist = (searchTerm, playlists) => {
     const containsInfo = playlist => {
         let shouldShow = false;
 
+        debugger;
+
         if (stringContains(playlist.name, searchTerm)) {
-            console.log(playlist, 'stringContains on playlist name condition');
             shouldShow = true;
         }
         if (!isEmpty(playlist.tracks.list)) {
-            shouldShow = find(
+            shouldShow = !!find(
                 propSatisfies(name => stringContains(name, searchTerm), 'name')
             )(playlist.tracks.list);
-
-            console.log(
-                playlist,
-                'stringContains on track name condition',
-                shouldShow
-            );
         }
 
         return shouldShow;
