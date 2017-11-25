@@ -8,6 +8,7 @@ import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
+import { filter, isEmpty, trim, find, propSatisfies } from 'ramda';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -60,6 +61,35 @@ const searchKeyMap = {
     focusSearch: 'ctrl+f'
 };
 
+const filterSearchPlaylist = (searchTerm, playlists) => {
+    const stringContains = (mainStr, compareToStr) =>
+        mainStr.indexOf(compareToStr) > -1;
+
+    const containsInfo = playlist => {
+        let shouldShow = false;
+
+        if (stringContains(playlist.name, searchTerm)) {
+            console.log(playlist, 'stringContains on playlist name condition');
+            shouldShow = true;
+        }
+        if (!isEmpty(playlist.tracks.list)) {
+            shouldShow = find(
+                propSatisfies(name => stringContains(name, searchTerm), 'name')
+            )(playlist.tracks.list);
+
+            console.log(
+                playlist,
+                'stringContains on track name condition',
+                shouldShow
+            );
+        }
+
+        return shouldShow;
+    };
+
+    return filter(containsInfo, playlists);
+};
+
 class MyPlaylists extends PureComponent {
     static propTypes = {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
@@ -74,6 +104,7 @@ class MyPlaylists extends PureComponent {
 
     state = {
         settingsIsOpen: false,
+        shouldFilterList: false,
         status: STATUS[1],
         canScrollUp: false,
         anchorEl: null
@@ -149,7 +180,18 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleInputChange = event => {
-        this.props.setMySearchTerm(event.target.value);
+        let { value: inputValue } = event.target;
+        let shouldFilterList = false;
+
+        this.props.setMySearchTerm(inputValue);
+
+        if (!isEmpty(trim(inputValue))) {
+            shouldFilterList = true;
+        }
+
+        this.setState({
+            shouldFilterList
+        });
     };
 
     _handleFocusOnSearch = event => {
@@ -191,9 +233,20 @@ class MyPlaylists extends PureComponent {
             },
             classes
         } = this.props;
-        const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
+        const {
+            status,
+            settingsIsOpen,
+            anchorEl,
+            canScrollUp,
+            shouldFilterList
+        } = this.state;
         playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
+
+        if (shouldFilterList) {
+            playlists = filterSearchPlaylist(searchTerm, playlists);
+            console.log(playlists);
+        }
 
         const menuItems = (
             <div>
