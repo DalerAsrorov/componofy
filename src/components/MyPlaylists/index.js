@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
+import Search from '../Search';
 
 const LIMIT = 10;
 
@@ -42,7 +43,9 @@ class MyPlaylists extends PureComponent {
         settingsIsOpen: false,
         status: STATUS[1],
         canScrollUp: false,
-        anchorEl: null
+        anchorEl: null,
+        // should be moved to redux
+        searchTerm: ''
     };
 
     _handleLoadMore = event => {
@@ -114,6 +117,10 @@ class MyPlaylists extends PureComponent {
         this.props.setOpenStatusMyPlaylists();
     };
 
+    _handleInputChange = event => {
+        this.setState({ searchTerm: event.target.value });
+    };
+
     componentDidMount() {
         let { currentOffset } = this.state;
         const {
@@ -143,7 +150,13 @@ class MyPlaylists extends PureComponent {
             myPlaylists: { playlists, playlistsRemaining, canLoadMore },
             classes
         } = this.props;
-        const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
+        const {
+            status,
+            settingsIsOpen,
+            anchorEl,
+            canScrollUp,
+            searchTerm
+        } = this.state;
         playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
 
@@ -170,6 +183,13 @@ class MyPlaylists extends PureComponent {
 
         return (
             <div id="myPlaylists">
+                <Search
+                    onChange={this._handleInputChange}
+                    inputId="myPlaylistsSearch"
+                    inputLabel="Search"
+                    value={searchTerm}
+                    adortment={'$'}
+                />
                 <Waypoint
                     onEnter={() => {
                         this._handleCanScrollUp(false);
