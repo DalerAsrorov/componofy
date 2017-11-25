@@ -15,7 +15,9 @@ const LIMIT = 10;
 const styles = theme => ({
     loadmore: {
         width: '100%'
-    }
+    },
+
+    footerPanel: {}
 });
 
 const SCROLL_DURATION = 500;
@@ -27,6 +29,10 @@ const STATUS = {
 };
 
 let scroll = Scroll.animateScroll;
+const footerStyle = {
+    position: 'sticky',
+    bottom: '0'
+};
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
@@ -188,7 +194,6 @@ class MyPlaylists extends PureComponent {
                     adortment={'$'}
                     placeholder="Search by artists, songs, albums..."
                     autoFocus
-                    fullWidth
                 />
                 <Waypoint
                     onEnter={() => {
@@ -211,6 +216,7 @@ class MyPlaylists extends PureComponent {
                     mainText={status}
                     anchorEl={anchorEl}
                     menuItems={menuItems}
+                    style={footerStyle}
                 />
             </div>
         );
