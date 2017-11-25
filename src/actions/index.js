@@ -158,3 +158,12 @@ export const setNavIndex = (index = 0) => {
         index
     };
 };
+
+// My playlists search term
+export const SET_MY_SEARCH_TERM = 'SET_MY_SEARCH_TERM';
+export const setMySearchTerm = (searchTerm = '') => {
+    return {
+        type: SET_MY_SEARCH_TERM,
+        searchTerm
+    };
+};

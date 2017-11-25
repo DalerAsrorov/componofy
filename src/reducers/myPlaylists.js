@@ -5,7 +5,8 @@ import {
     SET_MY_PLAYLIST_VISITED,
     REQUEST_PLAYLIST_TRACKS,
     RECEIVED_PLAYLIST_TRACKS,
-    SET_OPEN_STATUS_MY_PLAYLISTS
+    SET_OPEN_STATUS_MY_PLAYLISTS,
+    SET_MY_SEARCH_TERM
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 
@@ -13,6 +14,7 @@ export const myPlaylists = (
     state = {
         isFetching: false,
         tracksFetching: false,
+        searchTerm: '',
         playlists: [],
         numberOfTracks: 0,
         lastUpdated: 0,
@@ -112,6 +114,8 @@ export const myPlaylists = (
             return Object.assign({}, state, {
                 playlists: myPlaylists
             });
+        case SET_MY_SEARCH_TERM:
+            return Object.assign({}, state, { searchTerm: action.searchTerm });
         default:
             return state;
     }

@@ -35,6 +35,7 @@ class MyPlaylists extends PureComponent {
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
+        setMySearchTerm: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -43,9 +44,7 @@ class MyPlaylists extends PureComponent {
         settingsIsOpen: false,
         status: STATUS[1],
         canScrollUp: false,
-        anchorEl: null,
-        // should be moved to redux
-        searchTerm: ''
+        anchorEl: null
     };
 
     _handleLoadMore = event => {
@@ -118,7 +117,7 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleInputChange = event => {
-        this.setState({ searchTerm: event.target.value });
+        this.props.setMySearchTerm(event.target.value);
     };
 
     componentDidMount() {
@@ -147,16 +146,15 @@ class MyPlaylists extends PureComponent {
 
     render() {
         let {
-            myPlaylists: { playlists, playlistsRemaining, canLoadMore },
+            myPlaylists: {
+                playlistsRemaining,
+                canLoadMore,
+                searchTerm,
+                playlists
+            },
             classes
         } = this.props;
-        const {
-            status,
-            settingsIsOpen,
-            anchorEl,
-            canScrollUp,
-            searchTerm
-        } = this.state;
+        const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
         playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
 
