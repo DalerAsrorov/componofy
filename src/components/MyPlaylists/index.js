@@ -184,7 +184,6 @@ class MyPlaylists extends PureComponent {
                 <Search
                     onChange={this._handleInputChange}
                     inputId="myPlaylistsSearch"
-                    inputLabel="Search"
                     value={searchTerm}
                     adortment={'$'}
                     placeholder="Search by artists, songs, albums..."

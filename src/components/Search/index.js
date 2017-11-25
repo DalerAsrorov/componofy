@@ -6,16 +6,23 @@ import { withStyles } from 'material-ui/styles';
 import './Search.css';
 
 const styles = theme => ({
-    formControl: {}
+    formControl: {
+        background: `${theme.palette.common.fullWhite}`,
+        padding: `${theme.spacing.unit}px`
+    },
+
+    searchInput: {
+        margin: `${theme.spacing.unit}px 0`
+    }
 });
 
 class Search extends PureComponent {
     static propTypes = {
-        inputLabel: PropTypes.string.isRequired,
         inputId: PropTypes.string.isRequired,
         classes: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
         value: PropTypes.string.isRequired,
+        inputLabel: PropTypes.string,
         adortment: PropTypes.any
     };
 
@@ -33,15 +40,19 @@ class Search extends PureComponent {
         let adortmentComponent = adortment ? (
             <InputAdornment position="start">{adortment}</InputAdornment>
         ) : null;
+        let inputLabelComponent = inputLabel ? (
+            <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>
+        ) : null;
 
         return (
             <FormControl fullWidth className={classes.formControl}>
-                <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>
+                {inputLabelComponent}
                 <Input
                     id={inputId}
                     value={value}
                     onChange={onChange}
                     startAdornment={adortmentComponent}
+                    className={classes.searchInput}
                     {...rest}
                 />
             </FormControl>
