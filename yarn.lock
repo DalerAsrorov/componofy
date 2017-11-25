@@ -1929,7 +1929,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.6.0:
+create-react-class@^15.5.2, create-react-class@^15.6.0:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
   dependencies:
@@ -4871,7 +4871,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-"lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.4:
+"lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -5112,6 +5112,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mousetrap@^1.5.2:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.1.tgz#2a085f5c751294c75e7e81f6ec2545b29cbf42d9"
 
 ms@2.0.0:
   version "2.0.0"
@@ -6333,6 +6337,15 @@ react-event-listener@^0.5.0, react-event-listener@^0.5.1:
 react-flow-types@0.2.0-beta.3:
   version "0.2.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-flow-types/-/react-flow-types-0.2.0-beta.3.tgz#93e7e3c95a75a1a941de05b9d7287e3ca6871046"
+
+react-hotkeys@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-hotkeys/-/react-hotkeys-0.10.0.tgz#d1e78bd63f16d6db58d550d33c8eb071f35d94fb"
+  dependencies:
+    create-react-class "^15.5.2"
+    lodash "^4.13.1"
+    mousetrap "^1.5.2"
+    prop-types "^15.5.8"
 
 react-icon-base@2.0.7:
   version "2.0.7"

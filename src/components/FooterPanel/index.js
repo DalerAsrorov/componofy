@@ -4,7 +4,6 @@ import Button from 'material-ui/Button';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
-import { lightBlue } from 'material-ui/colors';
 import Typography from 'material-ui/Typography';
 import Settings from '../../containers/Settings';
 
@@ -12,9 +11,6 @@ import './FooterPanel.css';
 
 const styles = theme => ({
     root: {
-        background: lightBlue[600],
-        position: 'sticky',
-        bottom: '0',
         paddingTop: `${theme.spacing.unit}px`,
         paddingBottom: `${theme.spacing.unit}px`,
         display: 'flex'
@@ -51,7 +47,7 @@ export const FooterPanel = props => {
     }
 
     return (
-        <Toolbar className={props.classes.root}>
+        <Toolbar style={props.style} className={props.classes.root}>
             <section className={props.classes.loaderSection}>
                 <Button
                     onClick={props.onClick}
@@ -88,7 +84,8 @@ FooterPanel.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     anchorEl: PropTypes.object,
     circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    shouldShowCircle: PropTypes.bool
+    shouldShowCircle: PropTypes.bool,
+    style: PropTypes.object
 };
 
 export default withStyles(styles)(FooterPanel);

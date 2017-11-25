@@ -2,19 +2,37 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
+import { HotKeys } from 'react-hotkeys';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import { lightBlue } from 'material-ui/colors';
+import { Search as SearchIcon } from 'material-ui-icons';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
+import Search from '../Search';
 
 const LIMIT = 10;
+const LIGHT_BLUE_COLOR = lightBlue[600];
 
 const styles = theme => ({
     loadmore: {
         width: '100%'
-    }
+    },
+
+    searchAdortment: {
+        position: 'relative',
+        top: `${theme.spacing.unit / 2}px`,
+        marginRight: `${theme.spacing.unit}px`,
+        color: LIGHT_BLUE_COLOR
+    },
+
+    hotKeys: {
+        outline: 'none'
+    },
+
+    footerPanel: {}
 });
 
 const SCROLL_DURATION = 500;
@@ -27,6 +45,21 @@ const STATUS = {
 
 let scroll = Scroll.animateScroll;
 
+const footerStyle = {
+    background: LIGHT_BLUE_COLOR,
+    position: 'sticky',
+    bottom: '0'
+};
+const searchStyle = {
+    position: 'sticky',
+    top: '0',
+    zIndex: '100'
+};
+
+const searchKeyMap = {
+    focusSearch: 'ctrl+f'
+};
+
 class MyPlaylists extends PureComponent {
     static propTypes = {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
@@ -34,6 +67,7 @@ class MyPlaylists extends PureComponent {
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
+        setMySearchTerm: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -114,6 +148,15 @@ class MyPlaylists extends PureComponent {
         this.props.setOpenStatusMyPlaylists();
     };
 
+    _handleInputChange = event => {
+        this.props.setMySearchTerm(event.target.value);
+    };
+
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
+    };
+
     componentDidMount() {
         let { currentOffset } = this.state;
         const {
@@ -140,7 +183,12 @@ class MyPlaylists extends PureComponent {
 
     render() {
         let {
-            myPlaylists: { playlists, playlistsRemaining, canLoadMore },
+            myPlaylists: {
+                playlistsRemaining,
+                canLoadMore,
+                searchTerm,
+                playlists
+            },
             classes
         } = this.props;
         const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
@@ -168,31 +216,56 @@ class MyPlaylists extends PureComponent {
             />
         );
 
+        const serachHandlers = {
+            focusSearch: this._handleFocusOnSearch
+        };
+
         return (
-            <div id="myPlaylists">
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(false);
-                    }}
-                />
-                {ListOfMyPlaylists}
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(true);
-                    }}
-                />
-                <FooterPanel
-                    shouldShowCircle={canLoadMore}
-                    onClickOptions={this._handleClickOptions}
-                    onSelectItem={this._handleClickOption}
-                    circleText={playlistsRemaining}
-                    onClick={this._handleLoadMore}
-                    isOpen={settingsIsOpen}
-                    mainText={status}
-                    anchorEl={anchorEl}
-                    menuItems={menuItems}
-                />
-            </div>
+            <HotKeys
+                keyMap={searchKeyMap}
+                handlers={serachHandlers}
+                className={classes.hotKeys}
+            >
+                <div id="myPlaylists">
+                    <Search
+                        onChange={this._handleInputChange}
+                        inputId="myPlaylistsSearch"
+                        style={searchStyle}
+                        value={searchTerm}
+                        startAdornment={
+                            <SearchIcon className={classes.searchAdortment} />
+                        }
+                        placeholder="Search by artists, songs, albums..."
+                        inputRef={input => {
+                            this.searchInputRef = input;
+                        }}
+                        autoFocus
+                    />
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(false);
+                        }}
+                    />
+                    {ListOfMyPlaylists}
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(true);
+                        }}
+                    />
+                    <FooterPanel
+                        shouldShowCircle={canLoadMore}
+                        onClickOptions={this._handleClickOptions}
+                        onSelectItem={this._handleClickOption}
+                        circleText={playlistsRemaining}
+                        onClick={this._handleLoadMore}
+                        isOpen={settingsIsOpen}
+                        mainText={status}
+                        anchorEl={anchorEl}
+                        menuItems={menuItems}
+                        style={footerStyle}
+                    />
+                </div>
+            </HotKeys>
         );
     }
 }

@@ -12,6 +12,7 @@ import {
     addPlaylistToFinal,
     fetchMyPlaylists,
     setPlaylistOpen,
+    setMySearchTerm,
     setNavIndex
 } from './actions';
 
@@ -133,6 +134,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setNavIndex(index) {
         dispatch(setNavIndex(index));
+    },
+
+    setMySearchTerm(searchTerm) {
+        dispatch(setMySearchTerm(searchTerm));
     }
 });
 
