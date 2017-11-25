@@ -7,8 +7,7 @@ import './Search.css';
 
 const styles = theme => ({
     formControl: {
-        background: `${theme.palette.common.fullWhite}`,
-        padding: `${theme.spacing.unit}px`
+        background: `${theme.palette.common.fullWhite}`
     },
 
     searchInput: {
