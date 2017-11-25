@@ -8,8 +8,9 @@ import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
-import { filter, isEmpty, trim, find, propSatisfies } from 'ramda';
+import { filter, isEmpty, trim, find, propSatisfies, toUpper } from 'ramda';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
+import { isDomElementActive } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -63,23 +64,17 @@ const searchKeyMap = {
 
 const filterSearchPlaylist = (searchTerm, playlists) => {
     const stringContains = (mainStr, compareToStr) =>
-        mainStr.indexOf(compareToStr) > -1;
+        toUpper(mainStr).indexOf(toUpper(compareToStr)) > -1;
 
     const containsInfo = playlist => {
         let shouldShow = false;
-
-        debugger;
-
         if (stringContains(playlist.name, searchTerm)) {
-            shouldShow = true;
-        }
-        if (!isEmpty(playlist.tracks.list)) {
-            shouldShow = !!find(
-                propSatisfies(name => stringContains(name, searchTerm), 'name')
-            )(playlist.tracks.list);
+            return true;
         }
 
-        return shouldShow;
+        return !!find(
+            propSatisfies(name => stringContains(name, searchTerm), 'name')
+        )(playlist.tracks.list);
     };
 
     return filter(containsInfo, playlists);
@@ -240,7 +235,6 @@ class MyPlaylists extends PureComponent {
 
         if (shouldFilterList) {
             playlists = filterSearchPlaylist(searchTerm, playlists);
-            console.log(playlists);
         }
 
         const menuItems = (

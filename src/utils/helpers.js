@@ -34,3 +34,6 @@ export const removeDuplicates = R.curry((data, prop) => {
 export const swapKeysAndValues = (map, fn = toString) => {
     return R.zipObj(R.values(map), R.map(fn, R.keys(map)));
 };
+
+export const isDomElementActive = domElement =>
+    domElement === document.activeElement;
