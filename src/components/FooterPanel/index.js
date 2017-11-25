@@ -4,7 +4,6 @@ import Button from 'material-ui/Button';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
-import { lightBlue } from 'material-ui/colors';
 import Typography from 'material-ui/Typography';
 import Settings from '../../containers/Settings';
 
@@ -12,7 +11,6 @@ import './FooterPanel.css';
 
 const styles = theme => ({
     root: {
-        background: lightBlue[600],
         paddingTop: `${theme.spacing.unit}px`,
         paddingBottom: `${theme.spacing.unit}px`,
         display: 'flex'

@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
 import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
@@ -12,6 +13,7 @@ import List from '../List';
 import Search from '../Search';
 
 const LIMIT = 10;
+const LIGHT_BLUE_COLOR = lightBlue[600];
 
 const styles = theme => ({
     loadmore: {
@@ -21,7 +23,8 @@ const styles = theme => ({
     searchAdortment: {
         position: 'relative',
         top: `${theme.spacing.unit / 2}px`,
-        marginRight: `${theme.spacing.unit}px`
+        marginRight: `${theme.spacing.unit}px`,
+        color: LIGHT_BLUE_COLOR
     },
 
     footerPanel: {}
@@ -36,7 +39,9 @@ const STATUS = {
 };
 
 let scroll = Scroll.animateScroll;
+
 const footerStyle = {
+    background: LIGHT_BLUE_COLOR,
     position: 'sticky',
     bottom: '0'
 };
