@@ -26,7 +26,8 @@ class Search extends PureComponent {
             inputId,
             value,
             onChange,
-            adortment
+            adortment,
+            ...rest
         } = this.props;
 
         let adortmentComponent = adortment ? (
@@ -41,6 +42,7 @@ class Search extends PureComponent {
                     value={value}
                     onChange={onChange}
                     startAdornment={adortmentComponent}
+                    {...rest}
                 />
             </FormControl>
         );

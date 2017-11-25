@@ -187,6 +187,8 @@ class MyPlaylists extends PureComponent {
                     inputLabel="Search"
                     value={searchTerm}
                     adortment={'$'}
+                    placeholder="Search by artists, songs, albums..."
+                    autoFocus
                 />
                 <Waypoint
                     onEnter={() => {
