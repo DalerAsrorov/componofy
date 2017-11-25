@@ -8,7 +8,9 @@ import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
-import { MY_PLAYLISTS_PROPTYPE } from '../../utils/constants';
+import { isEmpty, trim } from 'ramda';
+import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
+import { isDomElementActive, filterSearchPlaylist } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -56,10 +58,6 @@ const searchStyle = {
     zIndex: '100'
 };
 
-const searchKeyMap = {
-    focusSearch: 'ctrl+f'
-};
-
 class MyPlaylists extends PureComponent {
     static propTypes = {
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
@@ -74,6 +72,7 @@ class MyPlaylists extends PureComponent {
 
     state = {
         settingsIsOpen: false,
+        shouldFilterList: false,
         status: STATUS[1],
         canScrollUp: false,
         anchorEl: null
@@ -149,7 +148,18 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleInputChange = event => {
-        this.props.setMySearchTerm(event.target.value);
+        let { value: inputValue } = event.target;
+        let shouldFilterList = false;
+
+        this.props.setMySearchTerm(inputValue);
+
+        if (!isEmpty(trim(inputValue))) {
+            shouldFilterList = true;
+        }
+
+        this.setState({
+            shouldFilterList
+        });
     };
 
     _handleFocusOnSearch = event => {
@@ -191,9 +201,19 @@ class MyPlaylists extends PureComponent {
             },
             classes
         } = this.props;
-        const { status, settingsIsOpen, anchorEl, canScrollUp } = this.state;
+        const {
+            status,
+            settingsIsOpen,
+            anchorEl,
+            canScrollUp,
+            shouldFilterList
+        } = this.state;
         playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
+
+        if (shouldFilterList) {
+            playlists = filterSearchPlaylist(searchTerm, playlists);
+        }
 
         const menuItems = (
             <div>
