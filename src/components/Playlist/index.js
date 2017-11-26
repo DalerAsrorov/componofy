@@ -81,7 +81,7 @@ class Playlist extends PureComponent {
                         {playlistIconComponent}
                     </ListItemIcon>
                     <Avatar
-                        alt={`${playlist.name} playlist image`}
+                        alt={`${playlist.name} playlist cover`}
                         src={playlistImage.url}
                         className={classes.playlistAvatar}
                     />
