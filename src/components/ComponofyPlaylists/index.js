@@ -38,8 +38,6 @@ class ComponofyPlaylists extends PureComponent {
             numberOfFinalPlaylists
         } = this.props;
 
-        console.log(this.props);
-
         if (numberOfFinalPlaylists === 0) {
             const pageIndex = navigation.routeToIndexMap['/app'];
 
