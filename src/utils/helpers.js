@@ -46,5 +46,24 @@ export const filterSearchPlaylist = (searchTerm, playlists) => {
     return R.filter(containsInfo, playlists);
 };
 
+export const formatPlaylistsData = (playlistsMap, tracksMap) => {
+    return R.pipe(
+        R.toPairs,
+        R.map(([playlistKey, playlistData]) => {
+            let { list, ...restTrackProps } = playlistData.tracks;
+            list = playlistData.tracks.list.map(trackID => tracksMap[trackID]);
+
+            return {
+                ...playlistData,
+                id: playlistKey,
+                tracks: {
+                    list,
+                    ...restTrackProps
+                }
+            };
+        })
+    )(playlistsMap);
+};
+
 export const isDomElementInFocus = domElement =>
     domElement === document.activeElement;

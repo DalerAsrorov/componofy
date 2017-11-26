@@ -8,9 +8,9 @@ import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
-import { isEmpty, trim } from 'ramda';
+import * as R from 'ramda';
 import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
-import { filterSearchPlaylist } from '../../utils/helpers';
+import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -38,6 +38,8 @@ class ComponofyPlaylists extends PureComponent {
             numberOfFinalPlaylists
         } = this.props;
 
+        console.log(this.props);
+
         if (numberOfFinalPlaylists === 0) {
             const pageIndex = navigation.routeToIndexMap['/app'];
 
@@ -48,8 +50,17 @@ class ComponofyPlaylists extends PureComponent {
 
     render() {
         const { finalPlaylists } = this.props;
+        let playlists, tracks;
 
-        console.log(this.props);
+        if (!R.isEmpty(finalPlaylists.playlists)) {
+            const {
+                playlists: {
+                    entities: { playlists: playlistsMap, tracks: tracksMap }
+                }
+            } = finalPlaylists;
+
+            playlists = formatPlaylistsData(playlistsMap, tracksMap);
+        }
 
         return <h1>h3llo</h1>;
     }
