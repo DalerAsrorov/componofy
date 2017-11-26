@@ -253,7 +253,10 @@ class MyPlaylists extends PureComponent {
                         style={searchStyle}
                         value={searchTerm}
                         startAdornment={
-                            <SearchIcon className={classes.searchAdortment} />
+                            <SearchIcon
+                                onClick={this._handleFocusOnSearch}
+                                className={classes.searchAdortment}
+                            />
                         }
                         placeholder="Search by artists, songs, albums..."
                         inputRef={input => {
