@@ -69,6 +69,7 @@ const playlistIsIn = (data, ownProps, key) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
+    finalPlaylists: state.finalPlaylists,
     myPlaylists: state.myPlaylists,
     navigation: state.navigation,
     numberOfFinalPlaylists: length(
