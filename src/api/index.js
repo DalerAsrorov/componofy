@@ -24,7 +24,7 @@ export const getMyPlaylists = (offset = 0, limit = 10) => {
     );
 };
 
-export const searchPlaylists = (query = '', offset = 1, limit = 10) => {
+export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
     const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
 
     return fetch(URL).then(
@@ -37,7 +37,7 @@ export const getPlaylistTracks = (
     userID,
     playlistID,
     offset = 0,
-    limit = 10
+    limit = 100
 ) => {
     const URL = `${API_BASE_URL}/playlist-tracks/${userID}/${playlistID}/${offset}/${limit}`;
 
