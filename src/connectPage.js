@@ -10,6 +10,7 @@ import {
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
     fetchPlaylistTracks,
+    setFinalSearchTerm,
     addPlaylistToFinal,
     fetchMyPlaylists,
     setPlaylistOpen,
@@ -133,6 +134,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setFinalPlaylistOpen(playlistID, isOpen) {
         dispatch(setFinalPlaylistOpen(playlistID, isOpen));
+    },
+
+    setFinalSearchTerm(searchTerm) {
+        dispatch(setFinalSearchTerm(searchTerm));
     },
 
     setMyPlaylistVisited(isVisited) {
