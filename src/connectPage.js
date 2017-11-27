@@ -8,6 +8,7 @@ import {
     removePlaylistFromFinal,
     checkIfAuthenticated,
     setMyPlaylistVisited,
+    setFinalPlaylistOpen,
     fetchPlaylistTracks,
     addPlaylistToFinal,
     fetchMyPlaylists,
@@ -109,12 +110,12 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setPlaylistOpen(playlistID, isOpen));
     },
 
-    setMyPlaylistVisited(isVisited) {
-        dispatch(setMyPlaylistVisited(isVisited));
+    setFinalPlaylistOpen(playlistID, isOpen) {
+        dispatch(setFinalPlaylistOpen(playlistID, isOpen));
     },
 
-    setOpenStatusMyPlaylists(isOpen = false) {
-        dispatch(setOpenStatusMyPlaylists(isOpen));
+    setMyPlaylistVisited(isVisited) {
+        dispatch(setMyPlaylistVisited(isVisited));
     },
 
     addPlaylistToFinal(playlist = {}) {

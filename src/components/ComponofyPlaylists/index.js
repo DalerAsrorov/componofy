@@ -24,6 +24,7 @@ const styles = theme => ({
 class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfFinalPlaylists: PropTypes.number.isRequired,
+        setFinalPlaylistOpen: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
@@ -32,6 +33,10 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleRemovePlaylist = (playlist, containsPlaylist) => {
         this.props.removePlaylistFromFinal(playlist);
+    };
+
+    _handleClickPlaylist = (id, isOpen) => {
+        this.props.setFinalPlaylistOpen(id, !isOpen);
     };
 
     componentDidMount() {
@@ -63,11 +68,10 @@ class ComponofyPlaylists extends PureComponent {
 
             const playlists = formatPlaylistsData(playlistsMap, tracksMap);
 
-            console.log(playlists);
-
             playlistList = (
                 <List
                     onClickMain={this._handleRemovePlaylist}
+                    onClickItem={this._handleClickPlaylist}
                     items={playlists}
                     isPlaylist={true}
                 />

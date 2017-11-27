@@ -60,11 +60,11 @@ const searchStyle = {
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
-        setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
+        setPlaylistOpen: PropTypes.func.isRequired,
         setMySearchTerm: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
@@ -111,6 +111,10 @@ class MyPlaylists extends PureComponent {
         this.setState({
             canScrollUp
         });
+    };
+
+    _handleClickPlaylist = (id, isOpen) => {
+        this.props.setPlaylistOpen(id, !isOpen);
     };
 
     _handleAddPlaylist = (playlist, containsPlaylist) => {
@@ -231,6 +235,7 @@ class MyPlaylists extends PureComponent {
         const ListOfMyPlaylists = (
             <List
                 onClickMain={this._handleAddPlaylist}
+                onClickItem={this._handleClickPlaylist}
                 items={playlists}
                 isPlaylist={true}
             />

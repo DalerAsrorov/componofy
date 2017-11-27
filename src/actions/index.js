@@ -167,3 +167,13 @@ export const setMySearchTerm = (searchTerm = '') => {
         searchTerm
     };
 };
+
+// final playlist actions
+export const SET_FINAL_PLAYLIST_OPEN = 'SET_FINAL_PLAYLIST_OPEN';
+export const setFinalPlaylistOpen = (playlistID, isOpen) => {
+    return {
+        type: SET_FINAL_PLAYLIST_OPEN,
+        playlistID,
+        isOpen
+    };
+};

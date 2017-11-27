@@ -4,7 +4,8 @@ import {
     ADD_PLAYLIST_TO_FINAL,
     ADD_PLAYLIST_TRACK_TO_FINAL,
     REMOVE_PLAYLIST_FROM_FINAL,
-    REMOVE_PLAYLIST_TRACK_FROM_FINAL
+    REMOVE_PLAYLIST_TRACK_FROM_FINAL,
+    SET_FINAL_PLAYLIST_OPEN
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -82,6 +83,16 @@ export const finalPlaylists = (
                 lastUpdated: receivedAt,
                 playlists: statePlaylists
             };
+        case SET_FINAL_PLAYLIST_OPEN:
+            playlists = clone(state.playlists);
+            let { playlistID, isOpen } = action;
+
+            playlists.entities.playlists[playlistID].isOpen = isOpen;
+
+            return {
+                playlists
+            };
+
         default:
             return state;
     }
