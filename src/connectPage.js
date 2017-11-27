@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { contains, isEmpty, keys, length } from 'ramda';
+import * as R from 'ramda';
 import {
     removePlaylistTrackFromFinal,
     setOpenStatusMyPlaylists,
@@ -41,7 +41,7 @@ const trackIsIn = (data, ownProps, key) => {
     ];
     let playlist = entities.playlists[propsPlaylistID];
 
-    return contains(propsTrackID, playlist.tracks.list);
+    return R.contains(propsTrackID, playlist.tracks.list);
 };
 
 const getPlaylistsData = (playlistsData, key) => {
@@ -63,18 +63,35 @@ const playlistIsIn = (data, ownProps, key) => {
 
     if (hasPlaylist) {
         let playlist = data.entities.playlists[ownProps.playlist.id];
-        hasPlaylist = !isEmpty(playlist.tracks.list);
+        hasPlaylist = !R.isEmpty(playlist.tracks.list);
     }
 
     return hasPlaylist;
+};
+
+const getNumberOfTracks = playlists => {
+    const calculateTotalLength = (accum, track) => {
+        return accum + track.list.length;
+    };
+
+    const result = R.pipe(
+        R.values,
+        R.map(R.prop('tracks')),
+        R.reduce(calculateTotalLength, 0)
+    )(playlists);
+
+    return result;
 };
 
 const mapStateToProps = (state, ownProps) => ({
     finalPlaylists: state.finalPlaylists,
     myPlaylists: state.myPlaylists,
     navigation: state.navigation,
-    numberOfFinalPlaylists: length(
-        keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
+    numberOfFinalPlaylists: R.length(
+        R.keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
+    ),
+    numberOfTracksInFinalPlaylist: getNumberOfTracks(
+        getPlaylistsData(state.finalPlaylists.playlists, 'playlists')
     ),
     containsThisPlaylist: playlistIsIn(
         state.finalPlaylists.playlists,
@@ -104,6 +121,10 @@ export const mapDispatchToProps = dispatch => ({
 
     checkIfAuthenticated() {
         dispatch(checkIfAuthenticated());
+    },
+
+    setOpenStatusMyPlaylists(isOpen) {
+        dispatch(setOpenStatusMyPlaylists(isOpen));
     },
 
     setPlaylistOpen(playlistID, isOpen) {

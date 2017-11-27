@@ -6,17 +6,21 @@ import { HotKeys } from 'react-hotkeys';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
 import { isEmpty, trim } from 'ramda';
-import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
+import {
+    MY_PLAYLISTS_PROPTYPE,
+    LIGHT_BLUE_COLOR,
+    searchKeyMap,
+    footerStyle,
+    searchStyle
+} from '../../utils/constants';
 import { filterSearchPlaylist } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
 
 const LIMIT = 10;
-const LIGHT_BLUE_COLOR = lightBlue[600];
 
 const styles = theme => ({
     loadmore: {
@@ -34,6 +38,12 @@ const styles = theme => ({
         outline: 'none'
     },
 
+    playlistRemaining: {
+        textAlign: 'left',
+        paddingLeft: `${theme.spacing.unit}px`,
+        width: '100%'
+    },
+
     footerPanel: {}
 });
 
@@ -46,17 +56,6 @@ const STATUS = {
 };
 
 let scroll = Scroll.animateScroll;
-
-const footerStyle = {
-    background: LIGHT_BLUE_COLOR,
-    position: 'sticky',
-    bottom: '0'
-};
-const searchStyle = {
-    position: 'sticky',
-    top: '0',
-    zIndex: '100'
-};
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
@@ -240,6 +239,11 @@ class MyPlaylists extends PureComponent {
                 isPlaylist={true}
             />
         );
+        const playlistCounter = (
+            <div className={classes.playlistRemaining}>
+                {playlistsRemaining}
+            </div>
+        );
 
         const serachHandlers = {
             focusSearch: this._handleFocusOnSearch
@@ -284,7 +288,7 @@ class MyPlaylists extends PureComponent {
                         shouldShowCircle={canLoadMore}
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
-                        circleText={playlistsRemaining}
+                        circleText={playlistCounter}
                         onClick={this._handleLoadMore}
                         isOpen={settingsIsOpen}
                         mainText={status}
