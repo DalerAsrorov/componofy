@@ -30,6 +30,10 @@ class ComponofyPlaylists extends PureComponent {
         navigateTo: PropTypes.func.isRequired
     };
 
+    _handleRemovePlaylist = (playlist, containsPlaylist) => {
+        this.props.removePlaylistFromFinal(playlist);
+    };
+
     componentDidMount() {
         const {
             navigateTo,
@@ -48,7 +52,7 @@ class ComponofyPlaylists extends PureComponent {
 
     render() {
         const { finalPlaylists } = this.props;
-        let playlists, tracks;
+        let playlistList, tracks;
 
         if (!R.isEmpty(finalPlaylists.playlists)) {
             const {
@@ -57,10 +61,20 @@ class ComponofyPlaylists extends PureComponent {
                 }
             } = finalPlaylists;
 
-            playlists = formatPlaylistsData(playlistsMap, tracksMap);
+            const playlists = formatPlaylistsData(playlistsMap, tracksMap);
+
+            console.log(playlists);
+
+            playlistList = (
+                <List
+                    onClickMain={this._handleRemovePlaylist}
+                    items={playlists}
+                    isPlaylist={true}
+                />
+            );
         }
 
-        return <h1>h3llo</h1>;
+        return <div>{playlistList}</div>;
     }
 }
 
