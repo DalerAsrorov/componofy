@@ -123,6 +123,10 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(checkIfAuthenticated());
     },
 
+    setOpenStatusMyPlaylists(isOpen) {
+        dispatch(setOpenStatusMyPlaylists(isOpen));
+    },
+
     setPlaylistOpen(playlistID, isOpen) {
         dispatch(setPlaylistOpen(playlistID, isOpen));
     },
