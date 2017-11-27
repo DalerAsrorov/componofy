@@ -5,7 +5,8 @@ import {
     ADD_PLAYLIST_TRACK_TO_FINAL,
     REMOVE_PLAYLIST_FROM_FINAL,
     REMOVE_PLAYLIST_TRACK_FROM_FINAL,
-    SET_FINAL_PLAYLIST_OPEN
+    SET_FINAL_PLAYLIST_OPEN,
+    SET_FINAL_SEARCH_TERM
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -14,6 +15,7 @@ export const finalPlaylists = (
         isFetching: false,
         playlists: {},
         lastUpdated: 0,
+        searchTerm: '',
         isVisited: false
     },
     action
@@ -26,10 +28,10 @@ export const finalPlaylists = (
             let normalizedPlaylist = normalize(playlist, playlistSchema);
             playlists = mergeDeepLeft(normalizedPlaylist, playlists);
 
-            return {
+            return Object.assign({}, state, {
                 lastUpdated: receivedAt,
                 playlists
-            };
+            });
         case ADD_PLAYLIST_TRACK_TO_FINAL:
             receivedAt = action.receivedAt;
             playlist = clone(action.playlist);
@@ -51,10 +53,10 @@ export const finalPlaylists = (
                 playlists = mergeDeepLeft(state.playlists, normalizedPlaylist);
             }
 
-            return {
+            return Object.assign({}, state, {
                 lastUpdated: receivedAt,
                 playlists
-            };
+            });
         case REMOVE_PLAYLIST_FROM_FINAL:
             receivedAt = action.receivedAt;
             let statePlaylists = clone(state.playlists);
@@ -79,20 +81,23 @@ export const finalPlaylists = (
 
             playlists[action.playlist.id].tracks.list = playlistTracklist;
 
-            return {
+            return Object.assign({}, state, {
                 lastUpdated: receivedAt,
                 playlists: statePlaylists
-            };
+            });
         case SET_FINAL_PLAYLIST_OPEN:
             playlists = clone(state.playlists);
             let { playlistID, isOpen } = action;
 
             playlists.entities.playlists[playlistID].isOpen = isOpen;
 
-            return {
+            return Object.assign({}, state, {
                 playlists
-            };
-
+            });
+        case SET_FINAL_SEARCH_TERM:
+            return Object.assign({}, state, {
+                searchTerm: action.searchTerm
+            });
         default:
             return state;
     }

@@ -43,6 +43,13 @@ const styles = theme => ({
         color: MOST_LIGHT_BLUE_COLOR
     },
 
+    searchAdortment: {
+        position: 'relative',
+        top: `${theme.spacing.unit / 2}px`,
+        marginRight: `${theme.spacing.unit}px`,
+        color: LIGHT_BLUE_COLOR
+    },
+
     statsInfo: {
         width: '100%',
         lineHeight: '2.5',
@@ -51,10 +58,15 @@ const styles = theme => ({
 });
 
 class ComponofyPlaylists extends PureComponent {
+    state = {
+        shouldFilterList: false
+    };
+
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
+        setFinalSearchTerm: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
@@ -67,6 +79,26 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleClickPlaylist = (id, isOpen) => {
         this.props.setFinalPlaylistOpen(id, !isOpen);
+    };
+
+    _handleInputChange = event => {
+        let { value: inputValue } = event.target;
+        let shouldFilterList = false;
+
+        this.props.setFinalSearchTerm(inputValue);
+
+        if (!R.isEmpty(R.trim(inputValue))) {
+            shouldFilterList = true;
+        }
+
+        this.setState({
+            shouldFilterList
+        });
+    };
+
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
     };
 
     componentDidMount() {
@@ -90,16 +122,18 @@ class ComponofyPlaylists extends PureComponent {
             finalPlaylists,
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
+            searchTerm,
             classes
         } = this.props;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, tracks;
+        let playlistList, search, tracks;
 
         if (isNotEmpty) {
             const {
                 playlists: {
                     entities: { playlists: playlistsMap, tracks: tracksMap }
-                }
+                },
+                searchTerm
             } = finalPlaylists;
 
             const playlists = formatPlaylistsData(playlistsMap, tracksMap);
@@ -110,6 +144,26 @@ class ComponofyPlaylists extends PureComponent {
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
                     isPlaylist={true}
+                />
+            );
+
+            search = (
+                <Search
+                    onChange={this._handleInputChange}
+                    inputId="myPlaylistsSearch"
+                    style={searchStyle}
+                    value={searchTerm}
+                    startAdornment={
+                        <SearchIcon
+                            onClick={this._handleFocusOnSearch}
+                            className={classes.searchAdortment}
+                        />
+                    }
+                    placeholder="Search by artists, songs, albums..."
+                    inputRef={input => {
+                        this.searchInputRef = input;
+                    }}
+                    autoFocus
                 />
             );
         }
@@ -146,6 +200,7 @@ class ComponofyPlaylists extends PureComponent {
 
         return (
             <div id="finalPlaylists">
+                {search}
                 {playlistList}
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
