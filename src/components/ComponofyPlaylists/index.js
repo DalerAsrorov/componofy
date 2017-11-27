@@ -8,9 +8,9 @@ import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
-import { isEmpty, trim } from 'ramda';
+import * as R from 'ramda';
 import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
-import { filterSearchPlaylist } from '../../utils/helpers';
+import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -24,9 +24,19 @@ const styles = theme => ({
 class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfFinalPlaylists: PropTypes.number.isRequired,
+        setFinalPlaylistOpen: PropTypes.func.isRequired,
+        finalPlaylists: PropTypes.object.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
         navigateTo: PropTypes.func.isRequired
+    };
+
+    _handleRemovePlaylist = (playlist, containsPlaylist) => {
+        this.props.removePlaylistFromFinal(playlist);
+    };
+
+    _handleClickPlaylist = (id, isOpen) => {
+        this.props.setFinalPlaylistOpen(id, !isOpen);
     };
 
     componentDidMount() {
@@ -46,7 +56,29 @@ class ComponofyPlaylists extends PureComponent {
     }
 
     render() {
-        return <h3>Hello World</h3>;
+        const { finalPlaylists } = this.props;
+        let playlistList, tracks;
+
+        if (!R.isEmpty(finalPlaylists.playlists)) {
+            const {
+                playlists: {
+                    entities: { playlists: playlistsMap, tracks: tracksMap }
+                }
+            } = finalPlaylists;
+
+            const playlists = formatPlaylistsData(playlistsMap, tracksMap);
+
+            playlistList = (
+                <List
+                    onClickMain={this._handleRemovePlaylist}
+                    onClickItem={this._handleClickPlaylist}
+                    items={playlists}
+                    isPlaylist={true}
+                />
+            );
+        }
+
+        return <div>{playlistList}</div>;
     }
 }
 

@@ -25,6 +25,7 @@ class List extends PureComponent {
                 PropTypes.object
             )
         ]).isRequired,
+        onClickItem: PropTypes.func,
         onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
         subheader: PropTypes.string,
@@ -39,6 +40,7 @@ class List extends PureComponent {
             classes,
             isPlaylist,
             onClickMain,
+            onClickItem,
             keyItem
         } = this.props;
         let listOfItems;
@@ -48,6 +50,7 @@ class List extends PureComponent {
                 ? items.map(playlist => (
                       <Playlist
                           onClickIcon={onClickMain}
+                          onClickPlaylist={onClickItem}
                           key={playlist.id}
                           playlist={playlist}
                       />

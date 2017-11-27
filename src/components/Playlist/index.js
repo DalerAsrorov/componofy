@@ -22,6 +22,7 @@ const styles = theme => ({
 class Playlist extends PureComponent {
     static propTypes = {
         containsThisPlaylist: PropTypes.bool.isRequired,
+        onClickPlaylist: PropTypes.func.isRequired,
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
@@ -40,10 +41,9 @@ class Playlist extends PureComponent {
 
     _handleClick = event => {
         event.preventDefault();
+        const { onClickPlaylist, playlist: { id, isOpen } } = this.props;
 
-        const { setPlaylistOpen, playlist: { id, isOpen } } = this.props;
-
-        setPlaylistOpen(id, !isOpen);
+        onClickPlaylist(id, isOpen);
     };
 
     _handleIconClick = event => {
