@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { lightBlue } from 'material-ui/colors';
 
 export const EXTERNAL_URLS_PROPTYPE = PropTypes.shape({
     spotify: PropTypes.string.isRequired
@@ -83,4 +84,18 @@ export const ROUTER_PROPTYPE = PropTypes.shape({
 
 export const searchKeyMap = {
     focusSearch: 'ctrl+f'
+};
+
+export const LIGHT_BLUE_COLOR = lightBlue[600];
+
+export const footerStyle = {
+    background: LIGHT_BLUE_COLOR,
+    position: 'sticky',
+    bottom: '0'
+};
+
+export const searchStyle = {
+    position: 'sticky',
+    top: '0',
+    zIndex: '100'
 };

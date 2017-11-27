@@ -9,7 +9,13 @@ import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
 import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
-import { MY_PLAYLISTS_PROPTYPE, searchKeyMap } from '../../utils/constants';
+import {
+    MY_PLAYLISTS_PROPTYPE,
+    LIGHT_BLUE_COLOR,
+    searchKeyMap,
+    footerStyle,
+    searchStyle
+} from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -78,7 +84,21 @@ class ComponofyPlaylists extends PureComponent {
             );
         }
 
-        return <div>{playlistList}</div>;
+        return (
+            <div id="finalPlaylists">
+                {playlistList}
+                <FooterPanel
+                    shouldShowCircle={true}
+                    onClickOptions={() => {}}
+                    onSelectItem={() => {}}
+                    circleText={0}
+                    onClick={() => {}}
+                    isOpen={false}
+                    mainText={'something'}
+                    style={footerStyle}
+                />
+            </div>
+        );
     }
 }
 
