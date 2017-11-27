@@ -43,6 +43,13 @@ const styles = theme => ({
         color: MOST_LIGHT_BLUE_COLOR
     },
 
+    searchAdortment: {
+        position: 'relative',
+        top: `${theme.spacing.unit / 2}px`,
+        marginRight: `${theme.spacing.unit}px`,
+        color: LIGHT_BLUE_COLOR
+    },
+
     statsInfo: {
         width: '100%',
         lineHeight: '2.5',
@@ -87,6 +94,11 @@ class ComponofyPlaylists extends PureComponent {
         this.setState({
             shouldFilterList
         });
+    };
+
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
     };
 
     componentDidMount() {
