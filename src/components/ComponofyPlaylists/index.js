@@ -7,6 +7,7 @@ import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { lightBlue } from 'material-ui/colors';
+import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
 import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
@@ -24,11 +25,14 @@ import Search from '../Search';
 const styles = theme => ({
     loadmore: {
         width: '100%'
-    }
+    },
+
+    statsInfo: {}
 });
 
 class ComponofyPlaylists extends PureComponent {
     static propTypes = {
+        numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
@@ -62,10 +66,16 @@ class ComponofyPlaylists extends PureComponent {
     }
 
     render() {
-        const { finalPlaylists } = this.props;
+        const {
+            finalPlaylists,
+            numberOfFinalPlaylists,
+            numberOfTracksInFinalPlaylist,
+            classes
+        } = this.props;
+        const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, tracks;
 
-        if (!R.isEmpty(finalPlaylists.playlists)) {
+        if (isNotEmpty) {
             const {
                 playlists: {
                     entities: { playlists: playlistsMap, tracks: tracksMap }
@@ -84,14 +94,27 @@ class ComponofyPlaylists extends PureComponent {
             );
         }
 
+        const statsComponent = (
+            <div className={classes.statsInfo}>
+                <span>
+                    {numberOfFinalPlaylists} <PlaylistAddCheck />
+                </span>
+                <span>
+                    {numberOfTracksInFinalPlaylist} <Audiotrack />
+                </span>
+            </div>
+        );
+
         return (
             <div id="finalPlaylists">
                 {playlistList}
                 <FooterPanel
-                    shouldShowCircle={true}
+                    shouldShowCircle={isNotEmpty}
                     onClickOptions={() => {}}
                     onSelectItem={() => {}}
-                    circleText={0}
+                    // should show: number of playlists and tracks
+                    // Looks like: 45 (playlist icon) (124 (track icon) -- smaller)
+                    circleText={statsComponent}
                     onClick={() => {}}
                     isOpen={false}
                     mainText={'something'}

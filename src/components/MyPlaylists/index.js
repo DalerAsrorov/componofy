@@ -38,6 +38,12 @@ const styles = theme => ({
         outline: 'none'
     },
 
+    playlistRemaining: {
+        textAlign: 'left',
+        paddingLeft: `${theme.spacing.unit}px`,
+        width: '100%'
+    },
+
     footerPanel: {}
 });
 
@@ -233,6 +239,11 @@ class MyPlaylists extends PureComponent {
                 isPlaylist={true}
             />
         );
+        const playlistCounter = (
+            <div className={classes.playlistRemaining}>
+                {playlistsRemaining}
+            </div>
+        );
 
         const serachHandlers = {
             focusSearch: this._handleFocusOnSearch
@@ -277,7 +288,7 @@ class MyPlaylists extends PureComponent {
                         shouldShowCircle={canLoadMore}
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
-                        circleText={playlistsRemaining}
+                        circleText={playlistCounter}
                         onClick={this._handleLoadMore}
                         isOpen={settingsIsOpen}
                         mainText={status}

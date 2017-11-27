@@ -18,12 +18,21 @@ const styles = theme => ({
 
     maintext: {},
 
-    loadmore: {},
+    loadmore: {
+        flex: '0 1 240px'
+    },
+
+    secondaryBtn: {
+        flex: '1',
+        textAlign: 'left'
+    },
 
     settings: {},
 
     loaderSection: {
-        flex: '1 300px'
+        flex: '1 300px',
+        display: 'flex',
+        flexDirection: 'row'
     },
 
     settingsSection: {
@@ -40,6 +49,7 @@ export const FooterPanel = props => {
                 color="primary"
                 disabled
                 aria-label="Playlists remaining"
+                className={props.classes.secondaryBtn}
             >
                 {props.circleText}
             </IconButton>
