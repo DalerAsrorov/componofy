@@ -125,6 +125,7 @@ class ComponofyPlaylists extends PureComponent {
             searchTerm,
             classes
         } = this.props;
+        const { shouldFilterList } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, search, tracks;
 
@@ -136,7 +137,11 @@ class ComponofyPlaylists extends PureComponent {
                 searchTerm
             } = finalPlaylists;
 
-            const playlists = formatPlaylistsData(playlistsMap, tracksMap);
+            let playlists = formatPlaylistsData(playlistsMap, tracksMap);
+
+            if (shouldFilterList) {
+                playlists = filterSearchPlaylist(searchTerm, playlists);
+            }
 
             playlistList = (
                 <List
