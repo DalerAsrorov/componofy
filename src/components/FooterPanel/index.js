@@ -90,7 +90,8 @@ FooterPanel.propTypes = {
     onClickOptions: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     menuItems: PropTypes.object.isRequired,
-    mainText: PropTypes.string.isRequired,
+    mainText: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+        .isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
