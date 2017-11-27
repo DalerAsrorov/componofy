@@ -105,6 +105,15 @@ class ComponofyPlaylists extends PureComponent {
             );
         }
 
+        const menuItems = (
+            <div>
+                <MenuItem>Up</MenuItem>
+                <MenuItem>Collapse</MenuItem>
+                <Divider />
+                <MenuItem>Next</MenuItem>
+            </div>
+        );
+
         const statsComponent = (
             <div className={classes.statsInfo}>
                 <Badge
@@ -127,10 +136,9 @@ class ComponofyPlaylists extends PureComponent {
                 {playlistList}
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
+                    menuItems={menuItems}
                     onClickOptions={() => {}}
                     onSelectItem={() => {}}
-                    // should show: number of playlists and tracks
-                    // Looks like: 45 (playlist icon) (124 (track icon) -- smaller)
                     circleText={statsComponent}
                     onClick={() => {}}
                     isOpen={false}

@@ -93,7 +93,11 @@ FooterPanel.propTypes = {
     onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
     anchorEl: PropTypes.object,
-    circleText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    circleText: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.object
+    ]),
     shouldShowCircle: PropTypes.bool,
     style: PropTypes.object
 };
