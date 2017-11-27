@@ -27,7 +27,10 @@ const styles = theme => ({
         width: '100%'
     },
 
-    statsInfo: {}
+    statsInfo: {
+        width: '100%',
+        paddingLeft: `${theme.spacing.unit}px`
+    }
 });
 
 class ComponofyPlaylists extends PureComponent {
