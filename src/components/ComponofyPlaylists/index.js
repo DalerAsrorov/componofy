@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
+import Badge from 'material-ui/Badge';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
@@ -29,7 +30,12 @@ const styles = theme => ({
 
     statsInfo: {
         width: '100%',
+        lineHeight: '2.5',
         paddingLeft: `${theme.spacing.unit}px`
+    },
+
+    badgeCommon: {
+        padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`
     }
 });
 
@@ -99,12 +105,20 @@ class ComponofyPlaylists extends PureComponent {
 
         const statsComponent = (
             <div className={classes.statsInfo}>
-                <span>
-                    {numberOfFinalPlaylists} <PlaylistAddCheck />
-                </span>
-                <span>
-                    {numberOfTracksInFinalPlaylist} <Audiotrack />
-                </span>
+                <Badge
+                    className={classes.badgeCommon}
+                    badgeContent={numberOfFinalPlaylists}
+                    color="accent"
+                >
+                    <PlaylistAddCheck />
+                </Badge>
+                <Badge
+                    className={classes.badgeCommon}
+                    badgeContent={numberOfTracksInFinalPlaylist}
+                    color="accent"
+                >
+                    <Audiotrack />
+                </Badge>
             </div>
         );
 
