@@ -86,6 +86,7 @@ export const searchKeyMap = {
     focusSearch: 'ctrl+f'
 };
 
+export const MOST_LIGHT_BLUE_COLOR = lightBlue[50];
 export const LIGHT_BLUE_COLOR = lightBlue[600];
 
 export const footerStyle = {

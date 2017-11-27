@@ -14,6 +14,7 @@ import * as R from 'ramda';
 import {
     MY_PLAYLISTS_PROPTYPE,
     LIGHT_BLUE_COLOR,
+    MOST_LIGHT_BLUE_COLOR,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -35,7 +36,8 @@ const styles = theme => ({
     },
 
     badgeCommon: {
-        padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`
+        padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
+        color: MOST_LIGHT_BLUE_COLOR
     }
 });
 
@@ -108,14 +110,12 @@ class ComponofyPlaylists extends PureComponent {
                 <Badge
                     className={classes.badgeCommon}
                     badgeContent={numberOfFinalPlaylists}
-                    color="accent"
                 >
                     <PlaylistAddCheck />
                 </Badge>
                 <Badge
                     className={classes.badgeCommon}
                     badgeContent={numberOfTracksInFinalPlaylist}
-                    color="accent"
                 >
                     <Audiotrack />
                 </Badge>
