@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { lightBlue } from 'material-ui/colors';
+import { lightBlue, cyan } from 'material-ui/colors';
 
 export const EXTERNAL_URLS_PROPTYPE = PropTypes.shape({
     spotify: PropTypes.string.isRequired
@@ -88,6 +88,7 @@ export const searchKeyMap = {
 
 export const MOST_LIGHT_BLUE_COLOR = lightBlue[50];
 export const LIGHT_BLUE_COLOR = lightBlue[600];
+export const LIGHT_CYAN_COLOR = cyan[500];
 
 export const footerStyle = {
     background: LIGHT_BLUE_COLOR,

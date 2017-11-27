@@ -63,8 +63,9 @@ export const FooterPanel = props => {
                     onClick={props.onClick}
                     disabled={!props.shouldShowCircle}
                     raised
-                    color="accent"
+                    color={props.mainButtonColor}
                     className={props.classes.loadmore}
+                    style={props.mainButtonStyle}
                 >
                     <Typography type="subheading">{props.mainText}</Typography>
                 </Button>
@@ -85,10 +86,12 @@ export const FooterPanel = props => {
 };
 
 FooterPanel.propTypes = {
+    mainButtonColor: PropTypes.string.isRequired,
     onClickOptions: PropTypes.func.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     menuItems: PropTypes.object.isRequired,
-    mainText: PropTypes.string.isRequired,
+    mainText: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+        .isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
@@ -99,6 +102,7 @@ FooterPanel.propTypes = {
         PropTypes.object
     ]),
     shouldShowCircle: PropTypes.bool,
+    mainButtonStyle: PropTypes.object,
     style: PropTypes.object
 };
 

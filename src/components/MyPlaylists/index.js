@@ -286,6 +286,7 @@ class MyPlaylists extends PureComponent {
                     />
                     <FooterPanel
                         shouldShowCircle={canLoadMore}
+                        mainButtonColor="accent"
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
                         circleText={playlistCounter}

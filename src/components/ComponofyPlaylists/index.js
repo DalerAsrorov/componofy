@@ -15,6 +15,7 @@ import {
     MY_PLAYLISTS_PROPTYPE,
     LIGHT_BLUE_COLOR,
     MOST_LIGHT_BLUE_COLOR,
+    LIGHT_CYAN_COLOR,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -24,20 +25,28 @@ import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
 
+const mainButtonStyle = {
+    background: LIGHT_CYAN_COLOR
+};
+
 const styles = theme => ({
+    badgeCommon: {
+        padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
+        color: MOST_LIGHT_BLUE_COLOR
+    },
+
     loadmore: {
         width: '100%'
+    },
+
+    mainButtonText: {
+        color: MOST_LIGHT_BLUE_COLOR
     },
 
     statsInfo: {
         width: '100%',
         lineHeight: '2.5',
         paddingLeft: `${theme.spacing.unit}px`
-    },
-
-    badgeCommon: {
-        padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
-        color: MOST_LIGHT_BLUE_COLOR
     }
 });
 
@@ -131,19 +140,25 @@ class ComponofyPlaylists extends PureComponent {
             </div>
         );
 
+        const mainText = (
+            <span className={classes.mainButtonText}>Componofy!</span>
+        );
+
         return (
             <div id="finalPlaylists">
                 {playlistList}
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
+                    mainButtonColor="primary"
                     menuItems={menuItems}
                     onClickOptions={() => {}}
                     onSelectItem={() => {}}
                     circleText={statsComponent}
                     onClick={() => {}}
                     isOpen={false}
-                    mainText={'something'}
+                    mainText={mainText}
                     style={footerStyle}
+                    mainButtonStyle={mainButtonStyle}
                 />
             </div>
         );
