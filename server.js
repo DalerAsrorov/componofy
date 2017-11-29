@@ -7,7 +7,9 @@ import {
     getMe,
     getMyPlaylists,
     searchPlaylists,
-    getPlaylistTracks
+    getPlaylistTracks,
+    createPlaylist,
+    addTracksToPlaylist
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -225,6 +227,61 @@ server.register({ register: Yar, options }, error => {
                 'Returns playlist tracks given the user and playlist IDs.',
             notes: 'Both UserID and PlaylistID are required to fetch teh data.',
             tags: ['api', 'playlists']
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/createplaylist',
+        handler: (request, reply) => {
+            const { yar } = request;
+            const session = yar.get('session');
+            const { id: userID } = session;
+            const payload = JSON.parse(request.payload);
+            const { playlistName, options } = payload;
+
+            createPlaylist(userID, playlistName, options)
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description:
+                'Creates playlist and returns back info about the new playlist.',
+            notes:
+                'Should be authenticated to create playlist. This endpoint does not create tracks in playlist.',
+            tags: ['api', 'playlists', 'action']
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/addtracks',
+        handler: (request, reply) => {
+            const { yar } = request;
+            const session = yar.get('session');
+            const { id: userID } = session;
+            const payload = JSON.parse(request.payload);
+            const { playlistID, tracks, options } = payload;
+
+            addTracksToPlaylist(userID, playlistID, tracks, options)
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description: 'Adds tracks to the playlist with the specified ID.',
+            notes:
+                'The playlist ID is required. Tracks received from data is an array of track IDs.',
+            tags: ['api', 'playlists', 'action', 'tracks']
         }
     });
 });

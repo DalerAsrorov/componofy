@@ -1,4 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-node';
+import * as R from 'ramda';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -93,9 +94,52 @@ export async function getMe() {
     }
 }
 
+// TODO: Allow to chose permissions (public, private) in UI
+export async function createPlaylist(userId, playlistName, options, callback) {
+    try {
+        const newPlaylistInfo = await spotifyApi.createPlaylist(
+            userId,
+            playlistName,
+            options,
+            callback
+        );
+
+        return newPlaylistInfo;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function addTracksToPlaylist(
+    userId,
+    playlistId,
+    trackIDs,
+    options,
+    callback
+) {
+    const stringToAttach = 'spotify:track:';
+    let tracks = R.map(R.concat(stringToAttach), trackIDs);
+
+    try {
+        const snapshot = await spotifyApi.addTracksToPlaylist(
+            userId,
+            playlistId,
+            tracks,
+            options,
+            callback
+        );
+
+        return snapshot;
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
     getPlaylists,
-    getPlaylistTracks
+    getPlaylistTracks,
+    getMe,
+    createPlaylist
 };

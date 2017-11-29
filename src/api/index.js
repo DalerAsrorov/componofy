@@ -1,14 +1,18 @@
 const API_BASE_URL = 'http://localhost:3001/api';
 
+const corsParams = {
+    mode: 'cors',
+    // allow client to access server data
+    // Note: without this parameter session
+    // variables would not be shared from the server
+    credentials: 'include'
+};
+
 export const getMyStatus = () => {
     const URL = `${API_BASE_URL}/userstatus`;
 
     return fetch(URL, {
-        mode: 'cors',
-        // allow client to access server data
-        // Note: without this parameter session
-        // variables would not be shared from the server
-        credentials: 'include'
+        ...corsParams
     }).then(
         response => response.json(),
         error => console.error('Error fetching my status')
@@ -48,4 +52,33 @@ export const getPlaylistTracks = (
                 `Error fetching ${userID}'s traks from ${playlistID}.`
             )
     );
+};
+
+export const createPlaylist = (playlistName = '', options) => {
+    const URL = `${API_BASE_URL}/createplaylist`;
+    const body = JSON.stringify({
+        playlistName,
+        options
+    });
+
+    return fetch(URL, {
+        method: 'post',
+        body,
+        ...corsParams
+    });
+};
+
+export const addTracksToPlaylist = (playlistID, tracks, options) => {
+    const URL = `${API_BASE_URL}/addtracks`;
+    const body = JSON.stringify({
+        playlistID,
+        options,
+        tracks
+    });
+
+    return fetch(URL, {
+        method: 'post',
+        body,
+        ...corsParams
+    });
 };
