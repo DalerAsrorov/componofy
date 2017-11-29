@@ -240,7 +240,14 @@ server.register({ register: Yar, options }, error => {
             const payload = JSON.parse(request.payload);
             const { playlistName, options } = payload;
 
-            createPlaylist(userID, playlistName, options);
+            createPlaylist(userID, playlistName, options)
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
         },
         config: {
             description:
