@@ -60,12 +60,6 @@ class Playlist extends PureComponent {
         const { playlist, containsThisPlaylist, classes } = this.props;
         const { tracks: { list: tracks }, images: playlistImages } = playlist;
 
-        // R.ifElse(
-        //     R.isEmpty,
-        //     () => <LibraryMusic />,
-        //     R.lensProp('url', R.head)
-        // )(playlistImages);
-
         let playlistIconComponent = containsThisPlaylist ? (
             <PlaylistAddCheck />
         ) : (
