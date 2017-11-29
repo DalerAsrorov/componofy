@@ -82,7 +82,6 @@ class Playlist extends PureComponent {
         );
 
         if (!R.isEmpty(playlistImages)) {
-            debugger;
             const avatar = R.head(playlistImages);
             playlistImage = (
                 <Avatar

@@ -95,8 +95,10 @@ export async function createPlaylist(userId, playlistName, options, callback) {
             callback
         );
 
-        newPlaylistInfo.then(response => console.log('response', response));
-    } catch (error) {}
+        return newPlaylistInfo;
+    } catch (error) {
+        return error;
+    }
 }
 
 export async function getMe() {

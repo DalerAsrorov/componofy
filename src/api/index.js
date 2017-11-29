@@ -57,7 +57,7 @@ export const getPlaylistTracks = (
 export const createPlaylist = (playlistName = '', options) => {
     const URL = `${API_BASE_URL}/createplaylist`;
     const body = JSON.stringify({
-        options: options,
+        options,
         playlistName
     });
 
@@ -68,4 +68,4 @@ export const createPlaylist = (playlistName = '', options) => {
     });
 };
 
-// createPlaylist('Componofy test playlist', { public: true });
+createPlaylist('Componofy test playlist', { public: true });

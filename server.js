@@ -237,11 +237,11 @@ server.register({ register: Yar, options }, error => {
             const session = yar.get('session');
             const { id: userID } = session;
             const payload = JSON.parse(request.payload);
-            const { playlistName, ...rest } = payload;
+            const { playlistName, options } = payload;
 
-            console.log(userID, playlistName, rest);
+            console.log(userID, playlistName, options);
 
-            // createPlaylist(userID, playlistName);
+            createPlaylist(userID, playlistName, options);
         },
         config: {
             description:
