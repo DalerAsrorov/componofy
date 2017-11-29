@@ -8,7 +8,8 @@ import {
     getMyPlaylists,
     searchPlaylists,
     getPlaylistTracks,
-    createPlaylist
+    createPlaylist,
+    addTracksToPlaylist
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -239,8 +240,6 @@ server.register({ register: Yar, options }, error => {
             const payload = JSON.parse(request.payload);
             const { playlistName, options } = payload;
 
-            console.log(userID, playlistName, options);
-
             createPlaylist(userID, playlistName, options);
         },
         config: {
@@ -249,6 +248,33 @@ server.register({ register: Yar, options }, error => {
             notes:
                 'Should be authenticated to create playlist. This endpoint does not create tracks in playlist.',
             tags: ['api', 'playlists', 'action']
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/addtracks',
+        handler: (request, reply) => {
+            const { yar } = request;
+            const session = yar.get('session');
+            const { id: userID } = session;
+            const payload = JSON.parse(request.payload);
+            const { playlistID, tracks, options } = payload;
+
+            addTracksToPlaylist(userID, playlistID, tracks, options)
+                .then(data => {
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description: 'Adds tracks to the playlist with the specified ID.',
+            notes:
+                'The playlist ID is required. Tracks received from data is an array of track IDs.',
+            tags: ['api', 'playlists', 'action', 'tracks']
         }
     });
 });

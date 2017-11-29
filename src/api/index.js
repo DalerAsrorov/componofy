@@ -57,15 +57,37 @@ export const getPlaylistTracks = (
 export const createPlaylist = (playlistName = '', options) => {
     const URL = `${API_BASE_URL}/createplaylist`;
     const body = JSON.stringify({
-        options,
-        playlistName
+        playlistName,
+        options
     });
 
-    fetch(URL, {
+    return fetch(URL, {
         method: 'post',
         body,
         ...corsParams
     });
 };
 
-createPlaylist('Componofy test playlist', { public: true });
+export const addTracksToPlaylist = (playlistID, tracks, options) => {
+    const URL = `${API_BASE_URL}/addtracks`;
+    const body = JSON.stringify({
+        playlistID,
+        options,
+        tracks
+    });
+
+    return fetch(URL, {
+        method: 'post',
+        body,
+        ...corsParams
+    }).then(data => {
+        debugger;
+    });
+};
+
+const testPlaylistURL = '11c8FlKwqPSVyE88fw9mjc';
+
+addTracksToPlaylist(testPlaylistURL, [
+    '1fy015PWkCjeiN0mEQ28gK',
+    '6mgS6Y9ivI6eYYFa2N6r68'
+]);
