@@ -85,6 +85,20 @@ export async function getPlaylistTracks(userID, playlistID, options = {}) {
     }
 }
 
+// TODO: Allow to chose permissions (public, private) in UI
+export async function createPlaylist(userId, playlistName, options, callback) {
+    try {
+        const newPlaylistInfo = await spotifyApi.createPlaylist(
+            userId,
+            playlistName,
+            options,
+            callback
+        );
+
+        newPlaylistInfo.then(response => console.log('response', response));
+    } catch (error) {}
+}
+
 export async function getMe() {
     try {
         return await spotifyApi.getMe();

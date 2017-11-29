@@ -1,14 +1,18 @@
 const API_BASE_URL = 'http://localhost:3001/api';
 
+const corsParams = {
+    mode: 'cors',
+    // allow client to access server data
+    // Note: without this parameter session
+    // variables would not be shared from the server
+    credentials: 'include'
+};
+
 export const getMyStatus = () => {
     const URL = `${API_BASE_URL}/userstatus`;
 
     return fetch(URL, {
-        mode: 'cors',
-        // allow client to access server data
-        // Note: without this parameter session
-        // variables would not be shared from the server
-        credentials: 'include'
+        ...corsParams
     }).then(
         response => response.json(),
         error => console.error('Error fetching my status')
@@ -49,3 +53,19 @@ export const getPlaylistTracks = (
             )
     );
 };
+
+export const createPlaylist = (playlistName = '', options) => {
+    const URL = `${API_BASE_URL}/createplaylist`;
+    const body = JSON.stringify({
+        options: options,
+        playlistName
+    });
+
+    fetch(URL, {
+        method: 'post',
+        body,
+        ...corsParams
+    });
+};
+
+// createPlaylist('Componofy test playlist', { public: true });

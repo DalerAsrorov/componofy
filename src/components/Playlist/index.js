@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
-import { PlaylistAdd, PlaylistAddCheck } from 'material-ui-icons';
+import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
 import Avatar from 'material-ui/Avatar';
-import { isEmpty, head } from 'ramda';
+import * as R from 'ramda';
 import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
 import List from '../List';
 
@@ -59,18 +59,45 @@ class Playlist extends PureComponent {
     render() {
         const { playlist, containsThisPlaylist, classes } = this.props;
         const { tracks: { list: tracks }, images: playlistImages } = playlist;
-        const playlistImage = head(playlistImages);
+
+        // R.ifElse(
+        //     R.isEmpty,
+        //     () => <LibraryMusic />,
+        //     R.lensProp('url', R.head)
+        // )(playlistImages);
+
         let playlistIconComponent = containsThisPlaylist ? (
             <PlaylistAddCheck />
         ) : (
             <PlaylistAdd />
         );
 
+        let playlistImage = (
+            <Avatar
+                alt={`${playlist.name} playlist cover`}
+                className={classes.playlistAvatar}
+            >
+                <LibraryMusic />
+            </Avatar>
+        );
+
+        if (!R.isEmpty(playlistImages)) {
+            debugger;
+            const avatar = R.head(playlistImages);
+            playlistImage = (
+                <Avatar
+                    src={avatar.url}
+                    alt={`${playlist.name} playlist cover`}
+                    className={classes.playlistAvatar}
+                />
+            );
+        }
+
         return (
             <div>
                 <ListItem
                     onClick={this._handleClick}
-                    disabled={isEmpty(tracks)}
+                    disabled={R.isEmpty(tracks)}
                     button
                     divider
                 >
@@ -80,12 +107,7 @@ class Playlist extends PureComponent {
                     >
                         {playlistIconComponent}
                     </ListItemIcon>
-                    <Avatar
-                        alt={`${playlist.name} playlist cover`}
-                        src={playlistImage.url}
-                        className={classes.playlistAvatar}
-                    />
-
+                    {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
                 <Collapse

@@ -7,7 +7,8 @@ import {
     getMe,
     getMyPlaylists,
     searchPlaylists,
-    getPlaylistTracks
+    getPlaylistTracks,
+    createPlaylist
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -225,6 +226,29 @@ server.register({ register: Yar, options }, error => {
                 'Returns playlist tracks given the user and playlist IDs.',
             notes: 'Both UserID and PlaylistID are required to fetch teh data.',
             tags: ['api', 'playlists']
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/createplaylist',
+        handler: (request, reply) => {
+            const { yar } = request;
+            const session = yar.get('session');
+            const { id: userID } = session;
+            const payload = JSON.parse(request.payload);
+            const { playlistName, ...rest } = payload;
+
+            console.log(userID, playlistName, rest);
+
+            // createPlaylist(userID, playlistName);
+        },
+        config: {
+            description:
+                'Creates playlist and returns back info about the new playlist.',
+            notes:
+                'Should be authenticated to create playlist. This endpoint does not create tracks in playlist.',
+            tags: ['api', 'playlists', 'action']
         }
     });
 });
