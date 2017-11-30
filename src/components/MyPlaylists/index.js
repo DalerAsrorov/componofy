@@ -60,6 +60,7 @@ let scroll = Scroll.animateScroll;
 class MyPlaylists extends PureComponent {
     static propTypes = {
         removePlaylistFromFinal: PropTypes.func.isRequired,
+        myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
@@ -144,8 +145,13 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleClickCollapse = () => {
+        const {
+            setOpenStatusMyPlaylists,
+            myPlaylistsHasOpenPlaylist
+        } = this.props;
+
         this._handleClickOption();
-        this.props.setOpenStatusMyPlaylists();
+        setOpenStatusMyPlaylists(!myPlaylistsHasOpenPlaylist);
     };
 
     _handleInputChange = event => {
@@ -193,15 +199,6 @@ class MyPlaylists extends PureComponent {
     }
 
     render() {
-        let {
-            myPlaylists: {
-                playlistsRemaining,
-                canLoadMore,
-                searchTerm,
-                playlists
-            },
-            classes
-        } = this.props;
         const {
             status,
             settingsIsOpen,
@@ -209,6 +206,20 @@ class MyPlaylists extends PureComponent {
             canScrollUp,
             shouldFilterList
         } = this.state;
+        let {
+            myPlaylists: {
+                playlistsRemaining,
+                canLoadMore,
+                searchTerm,
+                playlists
+            },
+            myPlaylistsHasOpenPlaylist,
+            classes
+        } = this.props;
+
+        let collapseText = myPlaylistsHasOpenPlaylist
+            ? 'Collapse All'
+            : 'Expand All';
         playlistsRemaining =
             playlistsRemaining !== 0 ? playlistsRemaining : null;
 
@@ -222,7 +233,7 @@ class MyPlaylists extends PureComponent {
                     Up
                 </MenuItem>
                 <MenuItem onClick={this._handleClickCollapse}>
-                    Collapse
+                    {collapseText}
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
