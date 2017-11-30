@@ -147,6 +147,9 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleComponofy = () => {
         console.log('invoked handle componfy');
+
+        // full screen dialog
+        // create state for the modal form with redux
     };
 
     _handleClickUp = () => {
