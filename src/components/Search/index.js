@@ -22,8 +22,8 @@ class Search extends PureComponent {
         inputId: PropTypes.string.isRequired,
         classes: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
-        value: PropTypes.string,
-        inputLabel: PropTypes.string
+        inputLabel: PropTypes.string,
+        value: PropTypes.string
     };
 
     render() {
