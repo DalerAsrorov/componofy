@@ -5,6 +5,7 @@ import {
     ADD_PLAYLIST_TRACK_TO_FINAL,
     REMOVE_PLAYLIST_FROM_FINAL,
     REMOVE_PLAYLIST_TRACK_FROM_FINAL,
+    SET_OPEN_STATUS_FINAL_PLAYLISTS,
     SET_FINAL_PLAYLIST_OPEN,
     SET_FINAL_SEARCH_TERM
 } from '../actions';
@@ -98,6 +99,15 @@ export const finalPlaylists = (
             return Object.assign({}, state, {
                 searchTerm: action.searchTerm
             });
+        case SET_OPEN_STATUS_FINAL_PLAYLISTS:
+            playlists = clone(state.playlists);
+            let playlistMap = playlists.entities.playlists;
+
+            for (let playlistId in playlistMap) {
+                playlistMap[playlistId].isOpen = action.isOpen;
+            }
+
+            return Object.assign({}, state, { playlists });
         default:
             return state;
     }

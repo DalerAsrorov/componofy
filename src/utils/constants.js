@@ -101,3 +101,5 @@ export const searchStyle = {
     top: '0',
     zIndex: '100'
 };
+
+export const SCROLL_DURATION = 500;

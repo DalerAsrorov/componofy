@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
     removePlaylistTrackFromFinal,
+    setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
@@ -158,6 +159,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removePlaylistTrackFromFinal(track, playlist) {
         dispatch(removePlaylistTrackFromFinal(track, playlist));
+    },
+
+    setOpenStatusFinalPlaylists(isOpen) {
+        dispatch(setOpenStatusFinalPlaylists(isOpen));
     },
 
     setNavIndex(index) {

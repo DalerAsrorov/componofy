@@ -13,9 +13,10 @@ import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
     MY_PLAYLISTS_PROPTYPE,
-    LIGHT_BLUE_COLOR,
     MOST_LIGHT_BLUE_COLOR,
+    LIGHT_BLUE_COLOR,
     LIGHT_CYAN_COLOR,
+    SCROLL_DURATION,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -28,6 +29,8 @@ import Search from '../Search';
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR
 };
+
+let scroll = Scroll.animateScroll;
 
 const styles = theme => ({
     badgeCommon: {
@@ -59,11 +62,15 @@ const styles = theme => ({
 
 class ComponofyPlaylists extends PureComponent {
     state = {
-        shouldFilterList: false
+        shouldFilterList: false,
+        settingsIsOpen: false,
+        canScrollUp: false,
+        anchorEl: null
     };
 
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
+        setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
         setFinalSearchTerm: PropTypes.func.isRequired,
@@ -96,9 +103,45 @@ class ComponofyPlaylists extends PureComponent {
         });
     };
 
+    _handleClickCollapse = () => {
+        this._handleClickOption();
+        this.props.setOpenStatusFinalPlaylists();
+    };
+
     _handleFocusOnSearch = event => {
         event.preventDefault();
         this.searchInputRef.focus();
+    };
+
+    _handleClickOptions = event => {
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleClickOption = () => {
+        this.setState({
+            settingsIsOpen: false
+        });
+    };
+
+    _handleCanScrollUp = canScrollUp => {
+        this.setState({
+            canScrollUp: !canScrollUp
+        });
+    };
+
+    _handleComponofy = () => {
+        console.log('invoked handle componfy');
+    };
+
+    _handleClickUp = () => {
+        this._handleClickOption();
+
+        scroll.scrollToTop({
+            duration: SCROLL_DURATION
+        });
     };
 
     componentDidMount() {
@@ -125,7 +168,12 @@ class ComponofyPlaylists extends PureComponent {
             searchTerm,
             classes
         } = this.props;
-        const { shouldFilterList } = this.state;
+        const {
+            shouldFilterList,
+            settingsIsOpen,
+            canScrollUp,
+            anchorEl
+        } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, search, tracks;
 
@@ -175,10 +223,12 @@ class ComponofyPlaylists extends PureComponent {
 
         const menuItems = (
             <div>
-                <MenuItem>Up</MenuItem>
-                <MenuItem>Collapse</MenuItem>
-                <Divider />
-                <MenuItem>Next</MenuItem>
+                <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                    Up
+                </MenuItem>
+                <MenuItem onClick={this._handleClickCollapse}>
+                    Collapse
+                </MenuItem>
             </div>
         );
 
@@ -203,25 +253,37 @@ class ComponofyPlaylists extends PureComponent {
             <span className={classes.mainButtonText}>Componofy!</span>
         );
 
-        return (
-            <div id="finalPlaylists">
+        let pageComponent = (
+            <div id="componofyPlaylists">
                 {search}
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(true);
+                    }}
+                />
                 {playlistList}
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(false);
+                    }}
+                />
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
                     mainButtonColor="primary"
-                    menuItems={menuItems}
-                    onClickOptions={() => {}}
-                    onSelectItem={() => {}}
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    onClick={this._handleComponofy}
                     circleText={statsComponent}
-                    onClick={() => {}}
-                    isOpen={false}
+                    isOpen={settingsIsOpen}
+                    menuItems={menuItems}
                     mainText={mainText}
                     style={footerStyle}
                     mainButtonStyle={mainButtonStyle}
                 />
             </div>
         );
+
+        return pageComponent;
     }
 }
 
