@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
+import { safeString } from '../../utils/helpers';
 
 import './Search.css';
 
@@ -21,7 +22,7 @@ class Search extends PureComponent {
         inputId: PropTypes.string.isRequired,
         classes: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
-        value: PropTypes.string.isRequired,
+        value: PropTypes.string,
         inputLabel: PropTypes.string
     };
 
@@ -53,7 +54,7 @@ class Search extends PureComponent {
                 {inputLabelComponent}
                 <Input
                     id={inputId}
-                    value={value}
+                    value={safeString(value)}
                     onChange={onChange}
                     className={classes.searchInput}
                     {...rest}

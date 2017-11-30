@@ -67,3 +67,5 @@ export const formatPlaylistsData = (playlistsMap, tracksMap) => {
 
 export const isDomElementInFocus = domElement =>
     domElement === document.activeElement;
+
+export const safeString = (str = '') => str;
