@@ -74,6 +74,7 @@ class ComponofyPlaylists extends PureComponent {
 
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
+        finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
@@ -108,8 +109,13 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleClickCollapse = () => {
+        const {
+            setOpenStatusFinalPlaylists,
+            finalPlaylistsHasOpenPlaylist
+        } = this.props;
+
         this._handleClickOption();
-        this.props.setOpenStatusFinalPlaylists();
+        setOpenStatusFinalPlaylists(!finalPlaylistsHasOpenPlaylist);
     };
 
     _handleFocusOnSearch = event => {
@@ -169,6 +175,7 @@ class ComponofyPlaylists extends PureComponent {
             finalPlaylists,
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
+            finalPlaylistsHasOpenPlaylist,
             searchTerm,
             classes
         } = this.props;
@@ -180,6 +187,9 @@ class ComponofyPlaylists extends PureComponent {
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, search, tracks;
+        let collapseExpandText = finalPlaylistsHasOpenPlaylist
+            ? 'Collapse All'
+            : 'Expand All';
 
         if (isNotEmpty) {
             const {
@@ -231,7 +241,7 @@ class ComponofyPlaylists extends PureComponent {
                     Up
                 </MenuItem>
                 <MenuItem onClick={this._handleClickCollapse}>
-                    Collapse
+                    {collapseExpandText}
                 </MenuItem>
             </div>
         );
