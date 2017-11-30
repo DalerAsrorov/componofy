@@ -137,8 +137,11 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleCanScrollUp = canScrollUp => {
+        canScrollUp =
+            this.props.numberOfTracksInFinalPlaylist <= 5 ? false : canScrollUp;
+
         this.setState({
-            canScrollUp: !canScrollUp
+            canScrollUp
         });
     };
 
@@ -281,13 +284,13 @@ class ComponofyPlaylists extends PureComponent {
                     {search}
                     <Waypoint
                         onEnter={() => {
-                            this._handleCanScrollUp(true);
+                            this._handleCanScrollUp(false);
                         }}
                     />
                     {playlistList}
                     <Waypoint
                         onEnter={() => {
-                            this._handleCanScrollUp(false);
+                            this._handleCanScrollUp(true);
                         }}
                     />
                     <FooterPanel
