@@ -85,9 +85,28 @@ const getNumberOfTracks = playlists => {
     return result;
 };
 
+const hasOpenPlaylist = playlistState => {
+    if (R.isEmpty(playlistState.playlists)) {
+        return false;
+    }
+
+    let { playlists } = playlistState;
+    const isOpen = playlist => playlist.isOpen;
+
+    if (R.is(Array, playlists)) {
+        return playlists.some(playlist => isOpen(playlist));
+    }
+
+    return R.pipe(R.path(['entities', 'playlists']), R.values, R.any(isOpen))(
+        playlists
+    );
+};
+
 const mapStateToProps = (state, ownProps) => ({
     finalPlaylists: state.finalPlaylists,
     myPlaylists: state.myPlaylists,
+    myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
+    finalPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.finalPlaylists),
     navigation: state.navigation,
     numberOfFinalPlaylists: R.length(
         R.keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
