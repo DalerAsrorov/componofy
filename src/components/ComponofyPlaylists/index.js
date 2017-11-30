@@ -13,9 +13,10 @@ import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
     MY_PLAYLISTS_PROPTYPE,
-    LIGHT_BLUE_COLOR,
     MOST_LIGHT_BLUE_COLOR,
+    LIGHT_BLUE_COLOR,
     LIGHT_CYAN_COLOR,
+    SCROLL_DURATION,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -28,6 +29,8 @@ import Search from '../Search';
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR
 };
+
+let scroll = Scroll.animateScroll;
 
 const styles = theme => ({
     badgeCommon: {
@@ -117,8 +120,22 @@ class ComponofyPlaylists extends PureComponent {
         });
     };
 
+    _handleCanScrollUp = canScrollUp => {
+        this.setState({
+            canScrollUp: !canScrollUp
+        });
+    };
+
     _handleComponofy = () => {
         console.log('invoked handle componfy');
+    };
+
+    _handleClickUp = () => {
+        this._handleClickOption();
+
+        scroll.scrollToTop({
+            duration: SCROLL_DURATION
+        });
     };
 
     componentDidMount() {
@@ -145,7 +162,12 @@ class ComponofyPlaylists extends PureComponent {
             searchTerm,
             classes
         } = this.props;
-        const { shouldFilterList, settingsIsOpen } = this.state;
+        const {
+            shouldFilterList,
+            settingsIsOpen,
+            canScrollUp,
+            anchorEl
+        } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, search, tracks;
 
@@ -195,10 +217,12 @@ class ComponofyPlaylists extends PureComponent {
 
         const menuItems = (
             <div>
-                <MenuItem>Up</MenuItem>
-                <MenuItem>Collapse</MenuItem>
-                <Divider />
-                <MenuItem>Next</MenuItem>
+                <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                    Up
+                </MenuItem>
+                <MenuItem onClick={this._handleClickCollapse}>
+                    Collapse
+                </MenuItem>
             </div>
         );
 
@@ -226,7 +250,17 @@ class ComponofyPlaylists extends PureComponent {
         let pageComponent = (
             <div id="componofyPlaylists">
                 {search}
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(true);
+                    }}
+                />
                 {playlistList}
+                <Waypoint
+                    onEnter={() => {
+                        this._handleCanScrollUp(false);
+                    }}
+                />
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
                     mainButtonColor="primary"

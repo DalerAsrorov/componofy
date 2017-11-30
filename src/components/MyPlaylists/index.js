@@ -11,6 +11,7 @@ import { isEmpty, trim } from 'ramda';
 import {
     MY_PLAYLISTS_PROPTYPE,
     LIGHT_BLUE_COLOR,
+    SCROLL_DURATION,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -47,7 +48,6 @@ const styles = theme => ({
     footerPanel: {}
 });
 
-const SCROLL_DURATION = 500;
 const STATUS = {
     // There is no tracks to load
     0: 'All playlists loaded',
