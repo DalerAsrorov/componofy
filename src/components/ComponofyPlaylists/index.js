@@ -42,6 +42,10 @@ const styles = theme => ({
         width: '100%'
     },
 
+    hotKeys: {
+        outline: 'none'
+    },
+
     mainButtonText: {
         color: MOST_LIGHT_BLUE_COLOR
     },
@@ -253,34 +257,44 @@ class ComponofyPlaylists extends PureComponent {
             <span className={classes.mainButtonText}>Componofy!</span>
         );
 
+        const serachHandlers = {
+            focusSearch: this._handleFocusOnSearch
+        };
+
         let pageComponent = (
-            <div id="componofyPlaylists">
-                {search}
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(true);
-                    }}
-                />
-                {playlistList}
-                <Waypoint
-                    onEnter={() => {
-                        this._handleCanScrollUp(false);
-                    }}
-                />
-                <FooterPanel
-                    shouldShowCircle={isNotEmpty}
-                    mainButtonColor="primary"
-                    onClickOptions={this._handleClickOptions}
-                    onSelectItem={this._handleClickOption}
-                    onClick={this._handleComponofy}
-                    circleText={statsComponent}
-                    isOpen={settingsIsOpen}
-                    menuItems={menuItems}
-                    mainText={mainText}
-                    style={footerStyle}
-                    mainButtonStyle={mainButtonStyle}
-                />
-            </div>
+            <HotKeys
+                keyMap={searchKeyMap}
+                handlers={serachHandlers}
+                className={classes.hotKeys}
+            >
+                <div id="componofyPlaylists">
+                    {search}
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(true);
+                        }}
+                    />
+                    {playlistList}
+                    <Waypoint
+                        onEnter={() => {
+                            this._handleCanScrollUp(false);
+                        }}
+                    />
+                    <FooterPanel
+                        shouldShowCircle={isNotEmpty}
+                        mainButtonColor="primary"
+                        onClickOptions={this._handleClickOptions}
+                        onSelectItem={this._handleClickOption}
+                        onClick={this._handleComponofy}
+                        circleText={statsComponent}
+                        isOpen={settingsIsOpen}
+                        menuItems={menuItems}
+                        mainText={mainText}
+                        style={footerStyle}
+                        mainButtonStyle={mainButtonStyle}
+                    />
+                </div>
+            </HotKeys>
         );
 
         return pageComponent;
