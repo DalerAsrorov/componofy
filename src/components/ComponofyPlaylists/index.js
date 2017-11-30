@@ -59,7 +59,10 @@ const styles = theme => ({
 
 class ComponofyPlaylists extends PureComponent {
     state = {
-        shouldFilterList: false
+        shouldFilterList: false,
+        settingsIsOpen: false,
+        canScrollUp: false,
+        anchorEl: null
     };
 
     static propTypes = {
@@ -101,6 +104,23 @@ class ComponofyPlaylists extends PureComponent {
         this.searchInputRef.focus();
     };
 
+    _handleClickOptions = event => {
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleClickOption = () => {
+        this.setState({
+            settingsIsOpen: false
+        });
+    };
+
+    _handleComponofy = () => {
+        console.log('invoked handle componfy');
+    };
+
     componentDidMount() {
         const {
             navigateTo,
@@ -125,7 +145,7 @@ class ComponofyPlaylists extends PureComponent {
             searchTerm,
             classes
         } = this.props;
-        const { shouldFilterList } = this.state;
+        const { shouldFilterList, settingsIsOpen } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, search, tracks;
 
@@ -203,25 +223,27 @@ class ComponofyPlaylists extends PureComponent {
             <span className={classes.mainButtonText}>Componofy!</span>
         );
 
-        return (
-            <div id="finalPlaylists">
+        let pageComponent = (
+            <div id="componofyPlaylists">
                 {search}
                 {playlistList}
                 <FooterPanel
                     shouldShowCircle={isNotEmpty}
                     mainButtonColor="primary"
-                    menuItems={menuItems}
-                    onClickOptions={() => {}}
-                    onSelectItem={() => {}}
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    onClick={this._handleComponofy}
                     circleText={statsComponent}
-                    onClick={() => {}}
-                    isOpen={false}
+                    isOpen={settingsIsOpen}
+                    menuItems={menuItems}
                     mainText={mainText}
                     style={footerStyle}
                     mainButtonStyle={mainButtonStyle}
                 />
             </div>
         );
+
+        return pageComponent;
     }
 }
 
