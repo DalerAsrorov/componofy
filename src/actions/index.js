@@ -185,3 +185,12 @@ export const setFinalSearchTerm = (searchTerm = '') => {
         searchTerm
     };
 };
+
+export const SET_OPEN_STATUS_FINAL_PLAYLISTS =
+    'SET_OPEN_STATUS_FINAL_PLAYLISTS';
+export const setOpenStatusFinalPlaylists = (isOpen = false) => {
+    return {
+        type: SET_OPEN_STATUS_FINAL_PLAYLISTS,
+        isOpen
+    };
+};

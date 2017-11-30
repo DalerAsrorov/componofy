@@ -143,8 +143,6 @@ class MyPlaylists extends PureComponent {
         navigateTo(nextPage);
     };
 
-    _handleAdd = () => {};
-
     _handleClickCollapse = () => {
         this._handleClickOption();
         this.props.setOpenStatusMyPlaylists();
