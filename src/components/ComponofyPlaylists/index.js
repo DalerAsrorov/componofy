@@ -149,8 +149,6 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleComponofy = () => {
         this.setState({ isOpenModal: true });
-        // full screen dialog
-        // create state for the modal form with redux
     };
 
     _handleClickUp = () => {

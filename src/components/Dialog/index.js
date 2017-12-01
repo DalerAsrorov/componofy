@@ -84,8 +84,6 @@ class Dialog extends PureComponent {
             onClickClose
         } = this.props;
 
-        console.log(this.props);
-
         return (
             <MaterialDialog
                 fullScreen
