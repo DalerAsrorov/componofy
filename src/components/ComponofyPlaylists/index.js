@@ -214,12 +214,6 @@ class ComponofyPlaylists extends PureComponent {
             } = finalPlaylists;
 
             let playlists = formatPlaylistsData(playlistsMap, tracksMap);
-            // const formattedTracks = getAllPlaylistsTrackIds(
-            //     playlistsMap
-            // ).map(trackId => {
-            //     tracksMap[trackId].id = trackId;
-            //     return tracksMap[trackId];
-            // });
 
             if (shouldFilterList) {
                 playlists = filterSearchPlaylist(searchTerm, playlists);
