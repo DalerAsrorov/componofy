@@ -25,7 +25,10 @@ const styles = theme => ({
 
     formContainer: {
         margin: '0',
-        padding: `${theme.spacing.unit}px`,
+        padding: `${theme.spacing.unit}px`
+    },
+
+    inputSection: {
         display: 'flex'
     },
 
@@ -78,6 +81,7 @@ class Dialog extends PureComponent {
         const {
             componoform: { isPublic, playlistName },
             switchLabel,
+            children,
             classes,
             isOpen,
             title,
@@ -111,29 +115,32 @@ class Dialog extends PureComponent {
                         noValidate={false}
                         autoComplete="off"
                     >
-                        <TextField
-                            id="playlistName"
-                            onChange={this._handlePlaylistNameChange}
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                            value={playlistName}
-                            label="Playlist Name"
-                            className={classes.textField}
-                            required
-                        />
-                        <FormControlLabel
-                            className={classes.switchControl}
-                            control={
-                                <Switch
-                                    checked={isPublic}
-                                    onClick={this._handlePublicSwitch}
-                                    aria-label="publicPlaylist"
-                                />
-                            }
-                            label={switchLabel}
-                        />
+                        <section className={classes.inputSection}>
+                            <TextField
+                                id="playlistName"
+                                onChange={this._handlePlaylistNameChange}
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                                value={playlistName}
+                                label="Playlist Name"
+                                className={classes.textField}
+                                required
+                            />
+                            <FormControlLabel
+                                className={classes.switchControl}
+                                control={
+                                    <Switch
+                                        checked={isPublic}
+                                        onClick={this._handlePublicSwitch}
+                                        aria-label="publicPlaylist"
+                                    />
+                                }
+                                label={switchLabel}
+                            />
+                        </section>
+                        <section>{children}</section>
                     </form>
                 </div>
             </MaterialDialog>

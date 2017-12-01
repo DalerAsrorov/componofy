@@ -318,7 +318,9 @@ class ComponofyPlaylists extends PureComponent {
                         isOpen={isOpenModal}
                         switchLabel="Public"
                         title="New playlist info"
-                    />
+                    >
+                        <div>hello</div>
+                    </Dialog>
                 </div>
             </HotKeys>
         );
