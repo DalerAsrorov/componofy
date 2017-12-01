@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import MaterialDialog from 'material-ui/Dialog';
 import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import CloseIcon from 'material-ui-icons/Close';
+import IconButton from 'material-ui/IconButton';
+import MaterialDialog from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
+import Switch from 'material-ui/Switch';
+import TextField from 'material-ui/TextField';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import { FormControlLabel } from 'material-ui/Form';
+import { withStyles } from 'material-ui/styles';
 import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
@@ -17,8 +20,25 @@ const styles = theme => ({
     },
 
     flex: {
-        flex: 1,
         color: MOST_LIGHT_BLUE_COLOR
+    },
+
+    formContainer: {
+        margin: '0',
+        padding: `${theme.spacing.unit}px`,
+        display: 'flex'
+    },
+
+    publicSwitch: {
+        color: 'green'
+    },
+
+    switchControl: {
+        flex: '0 100px'
+    },
+
+    textField: {
+        flex: '1'
     },
 
     toolbar: {
@@ -32,11 +52,18 @@ class Dialog extends PureComponent {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
         onClickClose: PropTypes.func.isRequired,
+        switchLabel: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired
     };
 
     render() {
-        const { title, isOpen, onClickClose, classes } = this.props;
+        const {
+            title,
+            switchLabel,
+            isOpen,
+            onClickClose,
+            classes
+        } = this.props;
 
         return (
             <MaterialDialog
@@ -59,7 +86,38 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div>container</div>
+                <div>
+                    <form
+                        className={classes.formContainer}
+                        noValidate={false}
+                        autoComplete="off"
+                    >
+                        <TextField
+                            id="playlistName"
+                            onChange={() => {}}
+                            error={false}
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true
+                            }}
+                            label="Playlist Name"
+                            className={classes.textField}
+                            defaultValue="foo"
+                            required
+                        />
+                        <FormControlLabel
+                            className={classes.switchControl}
+                            control={
+                                <Switch
+                                    checked={true}
+                                    onChange={() => {}}
+                                    aria-label="publicPlaylist"
+                                />
+                            }
+                            label={switchLabel}
+                        />
+                    </form>
+                </div>
             </MaterialDialog>
         );
     }

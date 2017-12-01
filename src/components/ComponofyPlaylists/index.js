@@ -318,6 +318,7 @@ class ComponofyPlaylists extends PureComponent {
                     <Dialog
                         onClickClose={this._handleClickCloseModal}
                         isOpen={isOpenModal}
+                        switchLabel="Public"
                         title="New playlist info"
                     />
                 </div>
