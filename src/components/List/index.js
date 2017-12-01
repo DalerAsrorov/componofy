@@ -45,7 +45,9 @@ class List extends PureComponent {
             keyItem,
             showSubItemsOnly
         } = this.props;
-        let listOfItems;
+        let listOfItems, listSub;
+
+        listSub = subheader ? <ListSubheader>{subheader}</ListSubheader> : null;
 
         if (isPlaylist) {
             listOfItems = is(Array, items)
@@ -68,10 +70,7 @@ class List extends PureComponent {
         }
 
         return (
-            <MaterialList
-                className={classes.root}
-                subheader={<ListSubheader>{subheader}</ListSubheader>}
-            >
+            <MaterialList className={classes.root} subheader={listSub}>
                 {listOfItems}
             </MaterialList>
         );

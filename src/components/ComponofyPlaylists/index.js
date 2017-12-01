@@ -238,6 +238,7 @@ class ComponofyPlaylists extends PureComponent {
                 <List
                     onClickMain={this._handleRemovePlaylist}
                     onClickItem={this._handleClickPlaylist}
+                    subheader="New playlist tracks"
                     items={playlists}
                     isPlaylist={true}
                     showSubItemsOnly={true}
