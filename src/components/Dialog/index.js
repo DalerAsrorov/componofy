@@ -50,6 +50,7 @@ const Transition = props => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
     static propTypes = {
+        setFinalPlaylistPublic: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -61,6 +62,16 @@ class Dialog extends PureComponent {
 
     _handlePlaylistNameChange = event => {
         this.props.setNewPlaylistName(event.target.value);
+    };
+
+    _handlePublicSwitch = event => {
+        event.preventDefault();
+
+        const {
+            setFinalPlaylistPublic,
+            componoform: { isPublic }
+        } = this.props;
+        setFinalPlaylistPublic(!isPublic);
     };
 
     render() {
@@ -119,7 +130,7 @@ class Dialog extends PureComponent {
                             control={
                                 <Switch
                                     checked={isPublic}
-                                    onChange={() => {}}
+                                    onClick={this._handlePublicSwitch}
                                     aria-label="publicPlaylist"
                                 />
                             }

@@ -202,3 +202,11 @@ export const setNewPlaylistName = newPlaylistName => {
         newPlaylistName
     };
 };
+
+export const SET_FINAL_PLAYLIST_PUBLIC = 'SET_FINAL_PLAYLIST_PUBLIC';
+export const setFinalPlaylistPublic = isPublic => {
+    return {
+        type: SET_FINAL_PLAYLIST_PUBLIC,
+        isPublic
+    };
+};

@@ -7,6 +7,7 @@ import {
     setOpenStatusMyPlaylists,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
+    setFinalPlaylistPublic,
     checkIfAuthenticated,
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
@@ -196,6 +197,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setNewPlaylistName(name) {
         dispatch(setNewPlaylistName(name));
+    },
+
+    setFinalPlaylistPublic(isPublic) {
+        dispatch(setFinalPlaylistPublic(isPublic));
     }
 });
 
