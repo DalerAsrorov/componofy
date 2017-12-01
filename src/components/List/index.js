@@ -30,7 +30,8 @@ class List extends PureComponent {
         onClickMain: PropTypes.func,
         subheader: PropTypes.string,
         classes: PropTypes.object,
-        keyItem: PropTypes.object
+        keyItem: PropTypes.object,
+        showSubItemsOnly: PropTypes.bool
     };
 
     render() {
@@ -41,7 +42,8 @@ class List extends PureComponent {
             isPlaylist,
             onClickMain,
             onClickItem,
-            keyItem
+            keyItem,
+            showSubItemsOnly
         } = this.props;
         let listOfItems;
 
@@ -53,6 +55,7 @@ class List extends PureComponent {
                           onClickPlaylist={onClickItem}
                           key={playlist.id}
                           playlist={playlist}
+                          showTracksOnly={showSubItemsOnly}
                       />
                   ))
                 : [];

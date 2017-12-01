@@ -5,6 +5,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
 import Avatar from 'material-ui/Avatar';
+import classNames from 'classnames';
 import * as R from 'ramda';
 import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
 import List from '../List';
@@ -26,7 +27,8 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
-        user: USER_PROPTYPE.isRequired
+        user: USER_PROPTYPE.isRequired,
+        showPlaylist: PropTypes.bool
     };
 
     componentDidMount = () => {
@@ -57,8 +59,19 @@ class Playlist extends PureComponent {
     };
 
     render() {
-        const { playlist, containsThisPlaylist, classes } = this.props;
-        const { tracks: { list: tracks }, images: playlistImages } = playlist;
+        const {
+            playlist,
+            containsThisPlaylist,
+            classes,
+            showTracksOnly
+        } = this.props;
+        const {
+            tracks: { list: tracks },
+            images: playlistImages,
+            isOpen: playlistIsOpen
+        } = playlist;
+        let playlistClassName = classNames({ 'no-display': showTracksOnly });
+        let isOpen = showTracksOnly ? true : playlistIsOpen;
 
         let playlistIconComponent = containsThisPlaylist ? (
             <PlaylistAddCheck />
@@ -91,6 +104,7 @@ class Playlist extends PureComponent {
                 <ListItem
                     onClick={this._handleClick}
                     disabled={R.isEmpty(tracks)}
+                    className={playlistClassName}
                     button
                     divider
                 >
@@ -103,11 +117,7 @@ class Playlist extends PureComponent {
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse
-                    in={playlist.isOpen}
-                    transitionDuration="auto"
-                    unmountOnExit
-                >
+                <Collapse in={isOpen} transitionDuration="auto" unmountOnExit>
                     <List keyItem={playlist} items={tracks} />
                 </Collapse>
             </div>

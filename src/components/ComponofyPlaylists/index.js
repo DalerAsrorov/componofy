@@ -22,7 +22,11 @@ import {
     footerStyle,
     searchStyle
 } from '../../utils/constants';
-import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
+import {
+    filterSearchPlaylist,
+    formatPlaylistsData,
+    getAllPlaylistsTrackIds
+} from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -196,7 +200,7 @@ class ComponofyPlaylists extends PureComponent {
             anchorEl
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, search, tracks;
+        let playlistList, search, tracks, modalTracklist;
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
@@ -210,6 +214,12 @@ class ComponofyPlaylists extends PureComponent {
             } = finalPlaylists;
 
             let playlists = formatPlaylistsData(playlistsMap, tracksMap);
+            // const formattedTracks = getAllPlaylistsTrackIds(
+            //     playlistsMap
+            // ).map(trackId => {
+            //     tracksMap[trackId].id = trackId;
+            //     return tracksMap[trackId];
+            // });
 
             if (shouldFilterList) {
                 playlists = filterSearchPlaylist(searchTerm, playlists);
@@ -221,6 +231,16 @@ class ComponofyPlaylists extends PureComponent {
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
                     isPlaylist={true}
+                />
+            );
+
+            modalTracklist = (
+                <List
+                    onClickMain={this._handleRemovePlaylist}
+                    onClickItem={this._handleClickPlaylist}
+                    items={playlists}
+                    isPlaylist={true}
+                    showSubItemsOnly={true}
                 />
             );
 
@@ -319,7 +339,7 @@ class ComponofyPlaylists extends PureComponent {
                         switchLabel="Public"
                         title="New playlist info"
                     >
-                        <div>hello</div>
+                        {modalTracklist}
                     </Dialog>
                 </div>
             </HotKeys>
