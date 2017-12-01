@@ -7,6 +7,7 @@ import Badge from 'material-ui/Badge';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import Dialog from '../Dialog';
 import { lightBlue } from 'material-ui/colors';
 import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
 import { Search as SearchIcon } from 'material-ui-icons';
@@ -67,6 +68,7 @@ const styles = theme => ({
 class ComponofyPlaylists extends PureComponent {
     state = {
         shouldFilterList: false,
+        isOpenModal: false,
         settingsIsOpen: false,
         canScrollUp: false,
         anchorEl: null
@@ -146,8 +148,7 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleComponofy = () => {
-        console.log('invoked handle componfy');
-
+        this.setState({ isOpenModal: true });
         // full screen dialog
         // create state for the modal form with redux
     };
@@ -158,6 +159,10 @@ class ComponofyPlaylists extends PureComponent {
         scroll.scrollToTop({
             duration: SCROLL_DURATION
         });
+    };
+
+    _handleClickCloseModal = () => {
+        this.setState({ isOpenModal: false });
     };
 
     componentDidMount() {
@@ -187,6 +192,7 @@ class ComponofyPlaylists extends PureComponent {
         } = this.props;
         const {
             shouldFilterList,
+            isOpenModal,
             settingsIsOpen,
             canScrollUp,
             anchorEl
@@ -308,6 +314,11 @@ class ComponofyPlaylists extends PureComponent {
                         mainText={mainText}
                         style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
+                    />
+                    <Dialog
+                        onClickClose={this._handleClickCloseModal}
+                        isOpen={isOpenModal}
+                        title="New playlist info"
                     />
                 </div>
             </HotKeys>
