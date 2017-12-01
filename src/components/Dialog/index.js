@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
+import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
     appBar: {
@@ -16,7 +17,12 @@ const styles = theme => ({
     },
 
     flex: {
-        flex: 1
+        flex: 1,
+        color: MOST_LIGHT_BLUE_COLOR
+    },
+
+    toolbar: {
+        background: LIGHT_BLUE_COLOR
     }
 });
 
@@ -40,7 +46,7 @@ class Dialog extends PureComponent {
                 transition={Transition}
             >
                 <AppBar className={classes.appBar}>
-                    <Toolbar>
+                    <Toolbar className={classes.toolbar}>
                         <IconButton
                             color="contrast"
                             onClick={onClickClose}
@@ -48,11 +54,7 @@ class Dialog extends PureComponent {
                         >
                             <CloseIcon />
                         </IconButton>
-                        <Typography
-                            type="title"
-                            color="inherit"
-                            className={classes.flex}
-                        >
+                        <Typography type="title" className={classes.flex}>
                             {title}
                         </Typography>
                     </Toolbar>
