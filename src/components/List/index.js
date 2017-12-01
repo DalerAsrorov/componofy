@@ -30,7 +30,8 @@ class List extends PureComponent {
         onClickMain: PropTypes.func,
         subheader: PropTypes.string,
         classes: PropTypes.object,
-        keyItem: PropTypes.object
+        keyItem: PropTypes.object,
+        showSubItemsOnly: PropTypes.bool
     };
 
     render() {
@@ -41,9 +42,12 @@ class List extends PureComponent {
             isPlaylist,
             onClickMain,
             onClickItem,
-            keyItem
+            keyItem,
+            showSubItemsOnly
         } = this.props;
-        let listOfItems;
+        let listOfItems, listSub;
+
+        listSub = subheader ? <ListSubheader>{subheader}</ListSubheader> : null;
 
         if (isPlaylist) {
             listOfItems = is(Array, items)
@@ -53,6 +57,7 @@ class List extends PureComponent {
                           onClickPlaylist={onClickItem}
                           key={playlist.id}
                           playlist={playlist}
+                          showTracksOnly={showSubItemsOnly}
                       />
                   ))
                 : [];
@@ -65,10 +70,7 @@ class List extends PureComponent {
         }
 
         return (
-            <MaterialList
-                className={classes.root}
-                subheader={<ListSubheader>{subheader}</ListSubheader>}
-            >
+            <MaterialList className={classes.root} subheader={listSub}>
                 {listOfItems}
             </MaterialList>
         );

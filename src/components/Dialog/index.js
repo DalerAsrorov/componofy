@@ -12,6 +12,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
+import * as R from 'ramda';
 import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
@@ -25,7 +26,10 @@ const styles = theme => ({
 
     formContainer: {
         margin: '0',
-        padding: `${theme.spacing.unit}px`,
+        padding: `${theme.spacing.unit}px`
+    },
+
+    inputSection: {
         display: 'flex'
     },
 
@@ -77,12 +81,15 @@ class Dialog extends PureComponent {
     render() {
         const {
             componoform: { isPublic, playlistName },
+            finalPlaylists,
             switchLabel,
+            children,
             classes,
             isOpen,
             title,
             onClickClose
         } = this.props;
+        let tracks;
 
         return (
             <MaterialDialog
@@ -111,29 +118,32 @@ class Dialog extends PureComponent {
                         noValidate={false}
                         autoComplete="off"
                     >
-                        <TextField
-                            id="playlistName"
-                            onChange={this._handlePlaylistNameChange}
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                            value={playlistName}
-                            label="Playlist Name"
-                            className={classes.textField}
-                            required
-                        />
-                        <FormControlLabel
-                            className={classes.switchControl}
-                            control={
-                                <Switch
-                                    checked={isPublic}
-                                    onClick={this._handlePublicSwitch}
-                                    aria-label="publicPlaylist"
-                                />
-                            }
-                            label={switchLabel}
-                        />
+                        <section className={classes.inputSection}>
+                            <TextField
+                                id="playlistName"
+                                onChange={this._handlePlaylistNameChange}
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                                value={playlistName}
+                                label="Playlist Name"
+                                className={classes.textField}
+                                required
+                            />
+                            <FormControlLabel
+                                className={classes.switchControl}
+                                control={
+                                    <Switch
+                                        checked={isPublic}
+                                        onClick={this._handlePublicSwitch}
+                                        aria-label="publicPlaylist"
+                                    />
+                                }
+                                label={switchLabel}
+                            />
+                        </section>
+                        <section>{children}</section>
                     </form>
                 </div>
             </MaterialDialog>

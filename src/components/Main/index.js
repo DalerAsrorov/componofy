@@ -3,10 +3,13 @@ import { Route } from 'react-router';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames';
 import PublicPlaylists from '../PublicPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 import ComponofyPlaylists from '../../containers/ComponofyPlaylists';
+
+import './Main.css';
 
 const styles = theme => ({
     root: {
@@ -18,12 +21,14 @@ const styles = theme => ({
 });
 
 const Main = ({ classes, match: { url } }) => {
+    let gridClasses = classNames(classes.root, 'main');
+
     return (
         <Grid
             container
             direction="column"
             justify="center"
-            className={classes.root}
+            className={gridClasses}
         >
             <Grid item xs={12}>
                 <Nav />
