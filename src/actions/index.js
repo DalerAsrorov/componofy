@@ -194,3 +194,11 @@ export const setOpenStatusFinalPlaylists = (isOpen = false) => {
         isOpen
     };
 };
+
+export const SET_NEW_PLAYLIST_NAME = 'SET_NEW_PLAYLIST_NAME';
+export const setNewPlaylistName = newPlaylistName => {
+    return {
+        type: SET_NEW_PLAYLIST_NAME,
+        newPlaylistName
+    };
+};

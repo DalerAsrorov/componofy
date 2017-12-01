@@ -50,20 +50,30 @@ const Transition = props => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
     static propTypes = {
-        isOpen: PropTypes.bool.isRequired,
-        onClickClose: PropTypes.func.isRequired,
+        setNewPlaylistName: PropTypes.func.isRequired,
+        finalPlaylists: PropTypes.object.isRequired,
+        componoform: PropTypes.object.isRequired,
         switchLabel: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired
+        onClickClose: PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool.isRequired
+    };
+
+    _handlePlaylistNameChange = event => {
+        this.props.setNewPlaylistName(event.target.value);
     };
 
     render() {
         const {
-            title,
+            componoform: { isPublic, playlistName },
             switchLabel,
+            classes,
             isOpen,
-            onClickClose,
-            classes
+            title,
+            onClickClose
         } = this.props;
+
+        console.log(this.props);
 
         return (
             <MaterialDialog
@@ -94,22 +104,21 @@ class Dialog extends PureComponent {
                     >
                         <TextField
                             id="playlistName"
-                            onChange={() => {}}
-                            error={false}
+                            onChange={this._handlePlaylistNameChange}
                             margin="normal"
                             InputLabelProps={{
                                 shrink: true
                             }}
+                            value={playlistName}
                             label="Playlist Name"
                             className={classes.textField}
-                            defaultValue="foo"
                             required
                         />
                         <FormControlLabel
                             className={classes.switchControl}
                             control={
                                 <Switch
-                                    checked={true}
+                                    checked={isPublic}
                                     onChange={() => {}}
                                     aria-label="publicPlaylist"
                                 />

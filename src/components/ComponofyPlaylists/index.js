@@ -7,7 +7,7 @@ import Badge from 'material-ui/Badge';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import Dialog from '../Dialog';
+import Dialog from '../../containers/Dialog';
 import { lightBlue } from 'material-ui/colors';
 import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
 import { Search as SearchIcon } from 'material-ui-icons';

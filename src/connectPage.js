@@ -11,6 +11,7 @@ import {
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
     fetchPlaylistTracks,
+    setNewPlaylistName,
     setFinalSearchTerm,
     addPlaylistToFinal,
     fetchMyPlaylists,
@@ -114,6 +115,7 @@ const mapStateToProps = (state, ownProps) => ({
     numberOfTracksInFinalPlaylist: getNumberOfTracks(
         getPlaylistsData(state.finalPlaylists.playlists, 'playlists')
     ),
+    componoform: state.componoform,
     containsThisPlaylist: playlistIsIn(
         state.finalPlaylists.playlists,
         ownProps,
@@ -190,6 +192,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setMySearchTerm(searchTerm) {
         dispatch(setMySearchTerm(searchTerm));
+    },
+
+    setNewPlaylistName(name) {
+        dispatch(setNewPlaylistName(name));
     }
 });
 
