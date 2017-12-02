@@ -196,10 +196,10 @@ export const setOpenStatusFinalPlaylists = (isOpen = false) => {
 };
 
 export const SET_NEW_PLAYLIST_NAME = 'SET_NEW_PLAYLIST_NAME';
-export const setNewPlaylistName = newPlaylistName => {
+export const setNewPlaylistName = playlsitName => {
     return {
         type: SET_NEW_PLAYLIST_NAME,
-        newPlaylistName
+        playlsitName
     };
 };
 
