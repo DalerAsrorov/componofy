@@ -10,7 +10,7 @@ export const componoform = (
     switch (action.type) {
         case SET_NEW_PLAYLIST_NAME:
             return Object.assign({}, state, {
-                playlistName: action.playlistName
+                playlistName: action.playlsitName
             });
         case SET_FINAL_PLAYLIST_PUBLIC:
             return Object.assign({}, state, {
