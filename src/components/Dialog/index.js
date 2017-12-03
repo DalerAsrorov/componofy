@@ -20,6 +20,10 @@ const styles = theme => ({
         position: 'relative'
     },
 
+    descField: {
+        marginBottom: `${theme.spacing.unit}px`
+    },
+
     flex: {
         color: MOST_LIGHT_BLUE_COLOR
     },
@@ -42,7 +46,8 @@ const styles = theme => ({
     },
 
     textField: {
-        flex: '1'
+        flex: '1',
+        width: '100%'
     },
 
     toolbar: {
@@ -68,6 +73,10 @@ class Dialog extends PureComponent {
         this.props.setNewPlaylistName(event.target.value);
     };
 
+    _handlePlaylistDescChange = event => {
+        this.props.setNewPlaylistDesc(event.target.value);
+    };
+
     _handlePublicSwitch = event => {
         event.preventDefault();
 
@@ -80,7 +89,7 @@ class Dialog extends PureComponent {
 
     render() {
         const {
-            componoform: { isPublic, playlistName },
+            componoform: { isPublic, playlistName, playlistDesc },
             finalPlaylists,
             switchLabel,
             children,
@@ -141,6 +150,19 @@ class Dialog extends PureComponent {
                                     />
                                 }
                                 label={switchLabel}
+                            />
+                        </section>
+                        <section className={classes.descField}>
+                            <TextField
+                                id="playlistDesc"
+                                onChange={this._handlePlaylistDescChange}
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true
+                                }}
+                                value={playlistDesc}
+                                label="Playlist Description"
+                                className={classes.textField}
                             />
                         </section>
                         <section>{children}</section>
