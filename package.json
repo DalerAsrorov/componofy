@@ -21,6 +21,7 @@
         "history": "^4.7.2",
         "material-ui": "^1.0.0-beta.21",
         "material-ui-icons": "^1.0.0-beta.15",
+        "node-fetch": "^1.7.3",
         "node-sass-chokidar": "^0.0.3",
         "normalizr": "^3.2.4",
         "npm-run-all": "^4.0.2",

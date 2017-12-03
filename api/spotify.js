@@ -1,5 +1,6 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import * as R from 'ramda';
+import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -142,21 +143,20 @@ export const uploadPlaylistCoverImage = (
     imageData,
     accessToken
 ) => {
-    console.log('executed');
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
 
-    console.log('url', URL);
-
-    return fetch(URL, {
-        method: 'PUT',
+    fetch(URL, {
+        method: 'put',
+        body: imageData,
         headers: {
-            'Content-Type': 'image/jpeg',
-            Authorization: accessToken
-        },
-        body: JSON.stringify({
-            imageData
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'image/jpeg'
+        }
+    })
+        .then(data => {
+            console.log('data', data);
         })
-    });
+        .catch(error => console.log(error));
 };
 
 export default {
