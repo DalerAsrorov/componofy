@@ -303,11 +303,10 @@ server.register({ register: Yar, options }, error => {
                 accessToken
             )
                 .then(data => {
-                    // reply({
-                    //     date: Date.now(),
-                    //     data
-                    // });
-                    console.log('Uploaded image!!', data);
+                    reply({
+                        date: Date.now(),
+                        data
+                    });
                 })
                 .catch(error => reply({ error }));
         },

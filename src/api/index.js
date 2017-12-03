@@ -97,7 +97,6 @@ export const uploadPlaylistCoverImage = (
             imageBase64,
             playlistId
         }),
-        credentials: 'include',
-        mode: 'no-cors'
-    });
+        credentials: 'include'
+    }).then(response => response.json());
 };
