@@ -136,13 +136,14 @@ export async function addTracksToPlaylist(
     }
 }
 
-export async function uploadPlaylistCoverImage(
+export const uploadPlaylistCoverImage = (
     userId,
     playlistId,
     imageData,
     accessToken
-) {
-    const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlist_id}/images`;
+) => {
+    console.log('executed');
+    const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
 
     console.log('url', URL);
 
@@ -156,7 +157,7 @@ export async function uploadPlaylistCoverImage(
             imageData
         })
     });
-}
+};
 
 export default {
     createAuthorizeURL,
