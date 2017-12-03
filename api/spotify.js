@@ -145,7 +145,7 @@ export const uploadPlaylistCoverImage = (
 ) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
 
-    fetch(URL, {
+    return fetch(URL, {
         method: 'put',
         body: imageData,
         headers: {
@@ -154,9 +154,12 @@ export const uploadPlaylistCoverImage = (
         }
     })
         .then(data => {
-            console.log('data', data);
+            return {
+                status: data.status,
+                statusText: data.statusText
+            };
         })
-        .catch(error => console.log(error));
+        .catch(error => error);
 };
 
 export default {
