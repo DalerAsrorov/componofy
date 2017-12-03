@@ -9,7 +9,8 @@ import {
     searchPlaylists,
     getPlaylistTracks,
     createPlaylist,
-    addTracksToPlaylist
+    addTracksToPlaylist,
+    uploadPlaylistCoverImage
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -282,6 +283,40 @@ server.register({ register: Yar, options }, error => {
             notes:
                 'The playlist ID is required. Tracks received from data is an array of track IDs.',
             tags: ['api', 'playlists', 'action', 'tracks']
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/api/upload-playlist-image',
+        handler: (request, reply) => {
+            const { yar } = request;
+            const session = yar.get('session');
+            const { id: userId, accessToken } = session;
+            const payload = JSON.parse(request.payload);
+            const { playlistId, imageBase64 } = payload;
+
+            uploadPlaylistCoverImage(
+                userId,
+                playlistId,
+                imageBase64,
+                accessToken
+            )
+                .then(data => {
+                    // reply({
+                    //     date: Date.now(),
+                    //     data
+                    // });
+                    console.log('Uploaded image!!', data);
+                })
+                .catch(error => reply({ error }));
+        },
+        config: {
+            description:
+                'Uploas cover image to the specified existing playlist.',
+            notes:
+                'Receives an image with base64 file format. Needs authentication.',
+            tags: ['api', 'playlists', 'image', 'update']
         }
     });
 });

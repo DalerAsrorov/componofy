@@ -6,8 +6,9 @@ dotenv.config();
 
 const SCOPES_STR =
     'user-library-read user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
-    'y-public playlist-modify-private user-library-read';
+    'y-public playlist-modify-private user-library-read ugc-image-upload';
 const SCOPE_LIST = SCOPES_STR.split(' ');
+const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
@@ -135,11 +136,34 @@ export async function addTracksToPlaylist(
     }
 }
 
+export async function uploadPlaylistCoverImage(
+    userId,
+    playlistId,
+    imageData,
+    accessToken
+) {
+    const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlist_id}/images`;
+
+    console.log('url', URL);
+
+    return fetch(URL, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'image/jpeg',
+            Authorization: accessToken
+        },
+        body: JSON.stringify({
+            imageData
+        })
+    });
+}
+
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
     getPlaylists,
     getPlaylistTracks,
     getMe,
-    createPlaylist
+    createPlaylist,
+    uploadPlaylistCoverImage
 };
