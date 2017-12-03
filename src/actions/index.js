@@ -203,6 +203,14 @@ export const setNewPlaylistName = playlsitName => {
     };
 };
 
+export const SET_NEW_PLAYLIST_DESC = 'SET_NEW_PLAYLIST_DESC';
+export const setNewPlaylistDesc = playlistDesc => {
+    return {
+        type: SET_NEW_PLAYLIST_DESC,
+        playlistDesc
+    };
+};
+
 export const SET_FINAL_PLAYLIST_PUBLIC = 'SET_FINAL_PLAYLIST_PUBLIC';
 export const setFinalPlaylistPublic = isPublic => {
     return {

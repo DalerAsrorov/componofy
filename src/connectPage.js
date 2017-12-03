@@ -13,6 +13,7 @@ import {
     setFinalPlaylistOpen,
     fetchPlaylistTracks,
     setNewPlaylistName,
+    setNewPlaylistDesc,
     setFinalSearchTerm,
     addPlaylistToFinal,
     fetchMyPlaylists,
@@ -197,6 +198,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setNewPlaylistName(name) {
         dispatch(setNewPlaylistName(name));
+    },
+
+    setNewPlaylistDesc(desc) {
+        dispatch(setNewPlaylistDesc(desc));
     },
 
     setFinalPlaylistPublic(isPublic) {
