@@ -43,7 +43,8 @@ class List extends PureComponent {
             onClickMain,
             onClickItem,
             keyItem,
-            showSubItemsOnly
+            showSubItemsOnly,
+            ...restProps
         } = this.props;
         let listOfItems, listSub;
 
@@ -70,7 +71,11 @@ class List extends PureComponent {
         }
 
         return (
-            <MaterialList className={classes.root} subheader={listSub}>
+            <MaterialList
+                className={classes.root}
+                subheader={listSub}
+                {...restProps}
+            >
                 {listOfItems}
             </MaterialList>
         );

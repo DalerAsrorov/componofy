@@ -236,6 +236,10 @@ class ComponofyPlaylists extends PureComponent {
                     items={playlists}
                     isPlaylist={true}
                     showSubItemsOnly={true}
+                    style={{
+                        maxHeight: '400px',
+                        overflow: 'auto'
+                    }}
                 />
             );
 
