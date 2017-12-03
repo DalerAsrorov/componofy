@@ -82,3 +82,21 @@ export const addTracksToPlaylist = (playlistID, tracks, options) => {
         ...corsParams
     });
 };
+
+// Make sure to remove the "data:base64," part
+export const uploadPlaylistCoverImage = (
+    playlistId,
+    imageBase64,
+    options = {}
+) => {
+    const URL = `${API_BASE_URL}/upload-playlist-image`;
+
+    return fetch(URL, {
+        method: 'post',
+        body: JSON.stringify({
+            imageBase64,
+            playlistId
+        }),
+        credentials: 'include'
+    }).then(response => response.json());
+};

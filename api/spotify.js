@@ -1,13 +1,15 @@
 import SpotifyWebApi from 'spotify-web-api-node';
 import * as R from 'ramda';
+import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const SCOPES_STR =
     'user-library-read user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
-    'y-public playlist-modify-private user-library-read';
+    'y-public playlist-modify-private user-library-read ugc-image-upload';
 const SCOPE_LIST = SCOPES_STR.split(' ');
+const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
@@ -135,11 +137,37 @@ export async function addTracksToPlaylist(
     }
 }
 
+export const uploadPlaylistCoverImage = (
+    userId,
+    playlistId,
+    imageData,
+    accessToken
+) => {
+    const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
+
+    return fetch(URL, {
+        method: 'put',
+        body: imageData,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'image/jpeg'
+        }
+    })
+        .then(data => {
+            return {
+                status: data.status,
+                statusText: data.statusText
+            };
+        })
+        .catch(error => error);
+};
+
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
     getPlaylists,
     getPlaylistTracks,
     getMe,
-    createPlaylist
+    createPlaylist,
+    uploadPlaylistCoverImage
 };
