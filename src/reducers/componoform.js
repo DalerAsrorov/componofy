@@ -1,13 +1,15 @@
 import {
     SET_NEW_PLAYLIST_NAME,
     SET_NEW_PLAYLIST_DESC,
-    SET_FINAL_PLAYLIST_PUBLIC
+    SET_FINAL_PLAYLIST_PUBLIC,
+    SET_FINAL_PLAYLIST_IMAGE_URI
 } from '../actions';
 
 export const componoform = (
     state = {
         playlistName: '',
         playlistDesc: '',
+        imageUri: '',
         isPublic: true
     },
     action
@@ -25,6 +27,8 @@ export const componoform = (
             return Object.assign({}, state, {
                 isPublic: action.isPublic
             });
+        case SET_FINAL_PLAYLIST_IMAGE_URI:
+            return Object.assign({}, state, { imageUri: action.imageUri });
         default:
             return state;
     }

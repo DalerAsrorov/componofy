@@ -5,14 +5,17 @@ import Button from 'material-ui/Button';
 import CloseIcon from 'material-ui-icons/Close';
 import IconButton from 'material-ui/IconButton';
 import MaterialDialog from 'material-ui/Dialog';
+import Avatar from 'material-ui/Avatar';
 import Slide from 'material-ui/transitions/Slide';
 import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import { AddAPhoto } from 'material-ui-icons';
+import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
+import { withStyles } from 'material-ui/styles';
 import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
@@ -22,6 +25,18 @@ const styles = theme => ({
 
     descField: {
         marginBottom: `${theme.spacing.unit}px`
+    },
+
+    dropImageZone: {
+        color: LIGHT_BLUE_COLOR,
+        height: `${theme.spacing.unit * 18}px`,
+        border: `${theme.spacing.unit / 2}px dotted ${theme.palette.common
+            .lightBlack}`,
+        cursor: 'pointer'
+    },
+
+    dropImageZoneImg: {
+        height: '100%'
     },
 
     flex: {
@@ -35,6 +50,18 @@ const styles = theme => ({
 
     inputSection: {
         display: 'flex'
+    },
+
+    newPlaylistImage: {
+        height: '100%',
+        width: '50%',
+        margin: '0 auto',
+        borderRadius: '0'
+    },
+
+    photoUploadIcon: {
+        height: '100%',
+        width: '100%'
     },
 
     publicSwitch: {
@@ -60,6 +87,7 @@ const Transition = props => <Slide direction="up" {...props} />;
 class Dialog extends PureComponent {
     static propTypes = {
         setFinalPlaylistPublic: PropTypes.func.isRequired,
+        setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -87,9 +115,29 @@ class Dialog extends PureComponent {
         setFinalPlaylistPublic(!isPublic);
     };
 
+    _handleImageUpload = (acceptedFiles, rejectedFiles) => {
+        const { setFinalPlaylistImageURI } = this.props;
+
+        if (!R.isEmpty(acceptedFiles)) {
+            const file = R.head(acceptedFiles);
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const { result: base64URI } = reader;
+
+                setFinalPlaylistImageURI(base64URI);
+            };
+
+            reader.onabort = () => console.log('file reading was aborted');
+            reader.onerror = () => console.log('file reading has failed');
+
+            reader.readAsDataURL(file);
+        }
+    };
+
     render() {
         const {
-            componoform: { isPublic, playlistName, playlistDesc },
+            componoform: { isPublic, playlistName, playlistDesc, imageUri },
             finalPlaylists,
             switchLabel,
             children,
@@ -98,7 +146,19 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
-        let tracks;
+        let tracks,
+            playlistImage = imageUri ? (
+                <Avatar
+                    alt="New playlist image cover"
+                    src={imageUri}
+                    classes={{
+                        root: classes.newPlaylistImage,
+                        img: classes.dropImageZoneImg
+                    }}
+                />
+            ) : (
+                <AddAPhoto className={classes.photoUploadIcon} />
+            );
 
         return (
             <MaterialDialog
@@ -127,6 +187,15 @@ class Dialog extends PureComponent {
                         noValidate={false}
                         autoComplete="off"
                     >
+                        <section>
+                            <Dropzone
+                                accept="image/jpeg"
+                                onDrop={this._handleImageUpload}
+                                className={classes.dropImageZone}
+                            >
+                                {playlistImage}
+                            </Dropzone>
+                        </section>
                         <section className={classes.inputSection}>
                             <TextField
                                 id="playlistName"
