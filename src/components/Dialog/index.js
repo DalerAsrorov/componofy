@@ -26,6 +26,17 @@ const styles = theme => ({
         marginBottom: `${theme.spacing.unit}px`
     },
 
+    dropImageZone: {
+        width: '60%',
+        color: LIGHT_BLUE_COLOR,
+        height: `${theme.spacing.unit * 18}px`,
+        textAlign: 'center',
+        border: `${theme.spacing.unit / 2}px dotted ${theme.palette.common
+            .lightBlack}`,
+        margin: '0 auto',
+        cursor: 'pointer'
+    },
+
     flex: {
         color: MOST_LIGHT_BLUE_COLOR
     },
@@ -39,7 +50,10 @@ const styles = theme => ({
         display: 'flex'
     },
 
-    photoUploadIcon: {},
+    photoUploadIcon: {
+        height: '100%',
+        width: '100%'
+    },
 
     publicSwitch: {
         color: 'green'
@@ -156,6 +170,7 @@ class Dialog extends PureComponent {
                             <Dropzone
                                 accept="image/jpeg"
                                 onDrop={this._handleImageUpload}
+                                className={classes.dropImageZone}
                             >
                                 <AddAPhoto
                                     className={classes.photoUploadIcon}
