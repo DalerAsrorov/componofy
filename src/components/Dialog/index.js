@@ -5,6 +5,7 @@ import Button from 'material-ui/Button';
 import CloseIcon from 'material-ui-icons/Close';
 import IconButton from 'material-ui/IconButton';
 import MaterialDialog from 'material-ui/Dialog';
+import Avatar from 'material-ui/Avatar';
 import Slide from 'material-ui/transitions/Slide';
 import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
@@ -48,6 +49,13 @@ const styles = theme => ({
 
     inputSection: {
         display: 'flex'
+    },
+
+    newPlaylistImage: {
+        height: '100%',
+        width: '50%',
+        margin: '0 auto',
+        borderRadius: '0'
     },
 
     photoUploadIcon: {
@@ -128,7 +136,7 @@ class Dialog extends PureComponent {
 
     render() {
         const {
-            componoform: { isPublic, playlistName, playlistDesc },
+            componoform: { isPublic, playlistName, playlistDesc, imageUri },
             finalPlaylists,
             switchLabel,
             children,
@@ -137,7 +145,16 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
-        let tracks;
+        let tracks,
+            playlistImage = imageUri ? (
+                <Avatar
+                    alt="New playlist image cover"
+                    src={imageUri}
+                    className={classes.newPlaylistImage}
+                />
+            ) : (
+                <AddAPhoto className={classes.photoUploadIcon} />
+            );
 
         return (
             <MaterialDialog
@@ -172,9 +189,7 @@ class Dialog extends PureComponent {
                                 onDrop={this._handleImageUpload}
                                 className={classes.dropImageZone}
                             >
-                                <AddAPhoto
-                                    className={classes.photoUploadIcon}
-                                />
+                                {playlistImage}
                             </Dropzone>
                         </section>
                         <section className={classes.inputSection}>
