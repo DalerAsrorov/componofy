@@ -28,14 +28,15 @@ const styles = theme => ({
     },
 
     dropImageZone: {
-        width: '60%',
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
-        textAlign: 'center',
         border: `${theme.spacing.unit / 2}px dotted ${theme.palette.common
             .lightBlack}`,
-        margin: '0 auto',
         cursor: 'pointer'
+    },
+
+    dropImageZoneImg: {
+        height: '100%'
     },
 
     flex: {
@@ -150,7 +151,10 @@ class Dialog extends PureComponent {
                 <Avatar
                     alt="New playlist image cover"
                     src={imageUri}
-                    className={classes.newPlaylistImage}
+                    classes={{
+                        root: classes.newPlaylistImage,
+                        img: classes.dropImageZoneImg
+                    }}
                 />
             ) : (
                 <AddAPhoto className={classes.photoUploadIcon} />
