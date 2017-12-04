@@ -64,6 +64,7 @@ const Transition = props => <Slide direction="up" {...props} />;
 class Dialog extends PureComponent {
     static propTypes = {
         setFinalPlaylistPublic: PropTypes.func.isRequired,
+        setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -92,14 +93,16 @@ class Dialog extends PureComponent {
     };
 
     _handleImageUpload = (acceptedFiles, rejectedFiles) => {
+        const { setFinalPlaylistImageURI } = this.props;
+
         if (!R.isEmpty(acceptedFiles)) {
             const file = R.head(acceptedFiles);
             const reader = new FileReader();
 
             reader.onload = () => {
-                const base64URI = reader.result;
+                const { result: base64URI } = reader;
 
-                console.log('binary file to store', reader);
+                setFinalPlaylistImageURI(base64URI);
             };
 
             reader.onabort = () => console.log('file reading was aborted');

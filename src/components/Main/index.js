@@ -33,7 +33,14 @@ const Main = ({ classes, match: { url } }) => {
             <Grid item xs={12}>
                 <Nav />
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+                item
+                xs={12}
+                style={{
+                    paddingTop: '0',
+                    paddingBottom: '0'
+                }}
+            >
                 <Route exact path={`${url}`} component={MyPlaylists} />
                 <Route path={`${url}/public`} component={PublicPlaylists} />
                 <Route

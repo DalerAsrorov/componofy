@@ -218,3 +218,11 @@ export const setFinalPlaylistPublic = isPublic => {
         isPublic
     };
 };
+
+export const SET_FINAL_PLAYLIST_IMAGE_URI = 'SET_FINAL_PLAYLIST_IMAGE_URI';
+export const setFinalPlaylistImageURI = imageUri => {
+    return {
+        type: SET_FINAL_PLAYLIST_IMAGE_URI,
+        imageUri
+    };
+};
