@@ -13,6 +13,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import { AddAPhoto } from 'material-ui-icons';
+import FaRocket from 'react-icons/lib/fa/rocket';
 import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
 import { withStyles } from 'material-ui/styles';
@@ -52,6 +53,10 @@ const styles = theme => ({
         display: 'flex'
     },
 
+    rightIcon: {
+        marginLeft: theme.spacing.unit
+    },
+
     newPlaylistImage: {
         height: '100%',
         width: '50%',
@@ -71,6 +76,8 @@ const styles = theme => ({
     switchControl: {
         flex: '0 100px'
     },
+
+    submitButton: {},
 
     textField: {
         flex: '1',
@@ -133,6 +140,17 @@ class Dialog extends PureComponent {
 
             reader.readAsDataURL(file);
         }
+    };
+
+    _handleClickSubmit = event => {
+        event.preventDefault();
+
+        const { onSubmit } = this.props;
+
+        // ToDo: error handling
+
+        // if no errors, submit
+        console.log('handle submit in the future');
     };
 
     render() {
@@ -235,6 +253,18 @@ class Dialog extends PureComponent {
                             />
                         </section>
                         <section>{children}</section>
+                        <section>
+                            <Button
+                                onClick={this._handleClickSubmit}
+                                type="submit"
+                                className={classes.submitButton}
+                                raised
+                                color="accent"
+                            >
+                                Start
+                                <FaRocket className={classes.rightIcon} />
+                            </Button>
+                        </section>
                     </form>
                 </div>
             </MaterialDialog>
