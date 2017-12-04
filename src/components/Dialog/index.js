@@ -54,7 +54,8 @@ const styles = theme => ({
     },
 
     rightIcon: {
-        marginLeft: theme.spacing.unit
+        marginLeft: theme.spacing.unit,
+        fontSize: `${theme.spacing.unit * 3}px`
     },
 
     newPlaylistImage: {
@@ -78,6 +79,12 @@ const styles = theme => ({
     },
 
     submitButton: {},
+
+    submitText: {},
+
+    topSpace: {
+        marginTop: `${theme.spacing.unit * 2}px`
+    },
 
     textField: {
         flex: '1',
@@ -253,15 +260,21 @@ class Dialog extends PureComponent {
                             />
                         </section>
                         <section>{children}</section>
-                        <section>
+                        <section className={classes.topSpace}>
                             <Button
                                 onClick={this._handleClickSubmit}
                                 type="submit"
-                                className={classes.submitButton}
+                                className={classes.photoUploadIcon}
                                 raised
                                 color="accent"
                             >
-                                Start
+                                <Typography
+                                    type="headline"
+                                    className={classes.submitText}
+                                    color="inherit"
+                                >
+                                    Start
+                                </Typography>
                                 <FaRocket className={classes.rightIcon} />
                             </Button>
                         </section>
