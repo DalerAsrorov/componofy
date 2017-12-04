@@ -11,8 +11,10 @@ import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import { AddAPhoto } from 'material-ui-icons';
+import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
+import { withStyles } from 'material-ui/styles';
 import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
@@ -36,6 +38,8 @@ const styles = theme => ({
     inputSection: {
         display: 'flex'
     },
+
+    photoUploadIcon: {},
 
     publicSwitch: {
         color: 'green'
@@ -87,6 +91,24 @@ class Dialog extends PureComponent {
         setFinalPlaylistPublic(!isPublic);
     };
 
+    _handleImageUpload = (acceptedFiles, rejectedFiles) => {
+        if (!R.isEmpty(acceptedFiles)) {
+            const file = R.head(acceptedFiles);
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const base64URI = reader.result;
+
+                console.log('binary file to store', reader);
+            };
+
+            reader.onabort = () => console.log('file reading was aborted');
+            reader.onerror = () => console.log('file reading has failed');
+
+            reader.readAsDataURL(file);
+        }
+    };
+
     render() {
         const {
             componoform: { isPublic, playlistName, playlistDesc },
@@ -127,6 +149,16 @@ class Dialog extends PureComponent {
                         noValidate={false}
                         autoComplete="off"
                     >
+                        <section>
+                            <Dropzone
+                                accept="image/jpeg"
+                                onDrop={this._handleImageUpload}
+                            >
+                                <AddAPhoto
+                                    className={classes.photoUploadIcon}
+                                />
+                            </Dropzone>
+                        </section>
                         <section className={classes.inputSection}>
                             <TextField
                                 id="playlistName"

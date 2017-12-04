@@ -6,9 +6,9 @@ export const EXTERNAL_URLS_PROPTYPE = PropTypes.shape({
 });
 
 export const IMAGE_PROPTYPE = PropTypes.shape({
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired,
+    height: PropTypes.number,
+    width: PropTypes.number
 });
 
 export const ARTIST_PROPTYPE = PropTypes.shape({
