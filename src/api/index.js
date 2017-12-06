@@ -56,6 +56,7 @@ export const getPlaylistTracks = (
 
 export const createPlaylist = (playlistName = '', options) => {
     const URL = `${API_BASE_URL}/createplaylist`;
+
     const body = JSON.stringify({
         playlistName,
         options
@@ -65,7 +66,7 @@ export const createPlaylist = (playlistName = '', options) => {
         method: 'post',
         body,
         ...corsParams
-    });
+    }).then(response => response.json());
 };
 
 export const addTracksToPlaylist = (playlistID, tracks, options) => {
@@ -80,7 +81,7 @@ export const addTracksToPlaylist = (playlistID, tracks, options) => {
         method: 'post',
         body,
         ...corsParams
-    });
+    }).then(response => response.json());
 };
 
 // Make sure to remove the "data:base64," part

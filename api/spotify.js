@@ -96,7 +96,6 @@ export async function getMe() {
     }
 }
 
-// TODO: Allow to chose permissions (public, private) in UI
 export async function createPlaylist(userId, playlistName, options, callback) {
     try {
         const newPlaylistInfo = await spotifyApi.createPlaylist(
@@ -144,6 +143,11 @@ export const uploadPlaylistCoverImage = (
     accessToken
 ) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
+
+    imageData =
+        imageData.indexOf('data') > -1
+            ? imageData.substring(imageData.indexOf(',') + 1)
+            : imageData;
 
     return fetch(URL, {
         method: 'put',

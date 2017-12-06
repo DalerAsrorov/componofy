@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { lightBlue, cyan } from 'material-ui/colors';
+import { lightBlue, cyan, green } from 'material-ui/colors';
 
 export const EXTERNAL_URLS_PROPTYPE = PropTypes.shape({
     spotify: PropTypes.string.isRequired
@@ -89,6 +89,7 @@ export const searchKeyMap = {
 export const MOST_LIGHT_BLUE_COLOR = lightBlue[50];
 export const LIGHT_BLUE_COLOR = lightBlue[600];
 export const LIGHT_CYAN_COLOR = cyan[500];
+export const SUCCESS_COLOR = green[600];
 
 export const footerStyle = {
     background: LIGHT_BLUE_COLOR,
@@ -103,3 +104,7 @@ export const searchStyle = {
 };
 
 export const SCROLL_DURATION = 500;
+
+// Max image size is 256KB
+// https://developer.spotify.com/web-api/upload-a-custom-playlist-cover-image/
+export const MAX_IMAGE_SIZE_LIMIT = 256000;

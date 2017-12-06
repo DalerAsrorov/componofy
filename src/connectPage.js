@@ -12,6 +12,7 @@ import {
     checkIfAuthenticated,
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
+    launchPlaylistMerger,
     fetchPlaylistTracks,
     setNewPlaylistName,
     setNewPlaylistDesc,
@@ -211,6 +212,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setFinalPlaylistImageURI(imageUri) {
         dispatch(setFinalPlaylistImageURI(imageUri));
+    },
+
+    launchPlaylistMerger() {
+        dispatch(launchPlaylistMerger());
     }
 });
 

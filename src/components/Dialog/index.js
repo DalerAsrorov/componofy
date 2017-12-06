@@ -12,12 +12,20 @@ import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
-import { AddAPhoto } from 'material-ui-icons';
+import { LinearProgress } from 'material-ui/Progress';
+import { AddAPhoto, CheckCircle } from 'material-ui-icons';
 import FaRocket from 'react-icons/lib/fa/rocket';
 import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
+import {
+    LIGHT_BLUE_COLOR,
+    MOST_LIGHT_BLUE_COLOR,
+    SUCCESS_COLOR,
+    MAX_IMAGE_SIZE_LIMIT
+} from '../../utils/constants';
+import { createTypographyLink } from '../../common';
+import Loader from '../Loader';
 
 const styles = theme => ({
     appBar: {
@@ -53,9 +61,11 @@ const styles = theme => ({
         display: 'flex'
     },
 
-    rightIcon: {
-        marginLeft: theme.spacing.unit,
-        fontSize: `${theme.spacing.unit * 3}px`
+    loaderWrapper: {
+        width: '80%',
+        margin: '0 auto',
+        marginTop: '200px',
+        textAlign: 'center'
     },
 
     newPlaylistImage: {
@@ -74,11 +84,27 @@ const styles = theme => ({
         color: 'green'
     },
 
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+        fontSize: `${theme.spacing.unit * 3}px`
+    },
+
     switchControl: {
         flex: '0 100px'
     },
 
     submitButton: {},
+
+    successCheck: {
+        width: '4.5em',
+        height: '4.5em',
+        color: SUCCESS_COLOR
+    },
+
+    succesButtons: {
+        color: MOST_LIGHT_BLUE_COLOR,
+        margin: theme.spacing.unit
+    },
 
     submitText: {},
 
@@ -102,8 +128,10 @@ class Dialog extends PureComponent {
     static propTypes = {
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
+        launchPlaylistMerger: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
+        onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
         switchLabel: PropTypes.string.isRequired,
         onClickClose: PropTypes.func.isRequired,
@@ -152,18 +180,30 @@ class Dialog extends PureComponent {
     _handleClickSubmit = event => {
         event.preventDefault();
 
-        const { onSubmit } = this.props;
+        const { launchPlaylistMerger } = this.props;
 
         // ToDo: error handling
 
         // if no errors, submit
-        console.log('handle submit in the future');
+        launchPlaylistMerger();
+    };
+
+    _handleClickBack = event => {
+        event.preventDefault();
+
+        const { onReturnToMain } = this.props;
+
+        onReturnToMain();
     };
 
     render() {
         const {
             componoform: { isPublic, playlistName, playlistDesc, imageUri },
-            finalPlaylists,
+            finalPlaylists: {
+                statusText: loaderText,
+                status: shouldShowLoader,
+                finalPlaylistUrl
+            },
             switchLabel,
             children,
             classes,
@@ -171,6 +211,10 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
+        const LoaderWrapper = props => (
+            <div className={classes.loaderWrapper}>{props.children}</div>
+        );
+
         let tracks,
             playlistImage = imageUri ? (
                 <Avatar
@@ -184,6 +228,117 @@ class Dialog extends PureComponent {
             ) : (
                 <AddAPhoto className={classes.photoUploadIcon} />
             );
+        let modalContent = (
+            <form
+                className={classes.formContainer}
+                noValidate={false}
+                autoComplete="off"
+            >
+                <section>
+                    <Dropzone
+                        accept="image/jpeg"
+                        onDrop={this._handleImageUpload}
+                        className={classes.dropImageZone}
+                        maxSize={MAX_IMAGE_SIZE_LIMIT}
+                    >
+                        {playlistImage}
+                    </Dropzone>
+                </section>
+                <section className={classes.inputSection}>
+                    <TextField
+                        id="playlistName"
+                        onChange={this._handlePlaylistNameChange}
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true
+                        }}
+                        value={playlistName}
+                        label="Playlist Name"
+                        className={classes.textField}
+                        required
+                    />
+                    <FormControlLabel
+                        className={classes.switchControl}
+                        control={
+                            <Switch
+                                checked={isPublic}
+                                onClick={this._handlePublicSwitch}
+                                aria-label="publicPlaylist"
+                            />
+                        }
+                        label={switchLabel}
+                    />
+                </section>
+                <section>{children}</section>
+                <section className={classes.topSpace}>
+                    <Button
+                        onClick={this._handleClickSubmit}
+                        type="submit"
+                        className={classes.photoUploadIcon}
+                        raised
+                        color="accent"
+                    >
+                        <Typography
+                            type="headline"
+                            className={classes.submitText}
+                            color="inherit"
+                        >
+                            Start
+                        </Typography>
+                        <FaRocket className={classes.rightIcon} />
+                    </Button>
+                </section>
+            </form>
+        );
+
+        if (shouldShowLoader) {
+            modalContent = (
+                <LoaderWrapper>
+                    <Loader
+                        icon={<LinearProgress color="accent" />}
+                        text={
+                            <Typography type="title" color="secondary">
+                                {loaderText}
+                            </Typography>
+                        }
+                    />
+                </LoaderWrapper>
+            );
+        } else if (!R.isEmpty(finalPlaylistUrl)) {
+            modalContent = (
+                <LoaderWrapper>
+                    <Loader
+                        icon={<CheckCircle className={classes.successCheck} />}
+                        text={
+                            <div>
+                                <Button
+                                    raised
+                                    color="accent"
+                                    className={classes.succesButtons}
+                                >
+                                    {createTypographyLink(
+                                        'See your playlist',
+                                        'headline',
+                                        finalPlaylistUrl,
+                                        'inherit'
+                                    )}
+                                </Button>
+                                <Button
+                                    raised
+                                    color="primary"
+                                    className={classes.succesButtons}
+                                    onClick={this._handleClickBack}
+                                >
+                                    <Typography type="headline" color="inherit">
+                                        Back to app
+                                    </Typography>
+                                </Button>
+                            </div>
+                        }
+                    />
+                </LoaderWrapper>
+            );
+        }
 
         return (
             <MaterialDialog
@@ -206,80 +361,7 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div>
-                    <form
-                        className={classes.formContainer}
-                        noValidate={false}
-                        autoComplete="off"
-                    >
-                        <section>
-                            <Dropzone
-                                accept="image/jpeg"
-                                onDrop={this._handleImageUpload}
-                                className={classes.dropImageZone}
-                            >
-                                {playlistImage}
-                            </Dropzone>
-                        </section>
-                        <section className={classes.inputSection}>
-                            <TextField
-                                id="playlistName"
-                                onChange={this._handlePlaylistNameChange}
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
-                                value={playlistName}
-                                label="Playlist Name"
-                                className={classes.textField}
-                                required
-                            />
-                            <FormControlLabel
-                                className={classes.switchControl}
-                                control={
-                                    <Switch
-                                        checked={isPublic}
-                                        onClick={this._handlePublicSwitch}
-                                        aria-label="publicPlaylist"
-                                    />
-                                }
-                                label={switchLabel}
-                            />
-                        </section>
-                        <section className={classes.descField}>
-                            <TextField
-                                id="playlistDesc"
-                                onChange={this._handlePlaylistDescChange}
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
-                                value={playlistDesc}
-                                label="Playlist Description"
-                                className={classes.textField}
-                            />
-                        </section>
-                        <section>{children}</section>
-                        <section className={classes.topSpace}>
-                            <Button
-                                onClick={this._handleClickSubmit}
-                                type="submit"
-                                className={classes.photoUploadIcon}
-                                raised
-                                color="accent"
-                            >
-                                <Typography
-                                    type="headline"
-                                    className={classes.submitText}
-                                    color="inherit"
-                                >
-                                    Start
-                                </Typography>
-                                <FaRocket className={classes.rightIcon} />
-                            </Button>
-                        </section>
-                    </form>
-                </div>
+                <div>{modalContent}</div>
             </MaterialDialog>
         );
     }

@@ -1,6 +1,14 @@
 import { push } from 'react-router-redux';
-import { getMyPlaylists, getMyStatus, getPlaylistTracks } from '../api';
-import { formatTracks } from '../utils/helpers';
+import {
+    getMyPlaylists,
+    getMyStatus,
+    getPlaylistTracks,
+    createPlaylist,
+    addTracksToPlaylist,
+    uploadPlaylistCoverImage
+} from '../api';
+import { isEmpty } from 'ramda';
+import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -99,6 +107,65 @@ export const fetchPlaylistTracks = (userID, playlistID) => {
                 tracks = payload.items;
             }
             dispatch(receivedPlaylistTracks(playlistID, tracks));
+        });
+    };
+};
+
+export const SET_MERGER_STATUS = 'SET_MERGER_STATUS';
+export const setMergerStatus = (status, statusText) => {
+    return {
+        type: SET_MERGER_STATUS,
+        statusText,
+        status
+    };
+};
+
+export const SET_FINAL_PLAYLIST_URL = 'SET_FINAL_PLAYLIST_URL';
+export const setFinalPlaylistUrl = url => {
+    return {
+        type: SET_FINAL_PLAYLIST_URL,
+        url
+    };
+};
+
+export const launchPlaylistMerger = () => {
+    return (dispatch, getState) => {
+        const {
+            finalPlaylists: { playlists: { entities: { playlists } } },
+            componoform: { playlistName, imageUri, isPublic }
+        } = getState();
+        const tracks = getAllPlaylistsTrackIds(playlists);
+
+        dispatch(setMergerStatus(true, 'Creating playlist...'));
+        createPlaylist(playlistName, { public: isPublic }).then(response => {
+            dispatch(setMergerStatus(true, 'Adding tracks...'));
+            const {
+                data: {
+                    body: {
+                        id: playlistId,
+                        external_urls: { spotify: finalPlaylistUrl }
+                    }
+                }
+            } = response;
+
+            addTracksToPlaylist(playlistId, tracks).then(response => {
+                if (!isEmpty(imageUri)) {
+                    dispatch(setMergerStatus(true, 'Adding cover image...'));
+
+                    uploadPlaylistCoverImage(
+                        playlistId,
+                        imageUri
+                    ).then(response => {
+                        dispatch(setMergerStatus(false, 'Finished!'));
+                        dispatch(setMergerStatus(false, ''));
+                        dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
+                    });
+                } else {
+                    dispatch(setMergerStatus(false, 'Finished!'));
+                    dispatch(setMergerStatus(false, ''));
+                    dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
+                }
+            });
         });
     };
 };

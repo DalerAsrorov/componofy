@@ -30,6 +30,7 @@ import {
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
+import { setNavIndex } from '../../actions/index';
 
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR
@@ -165,6 +166,15 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleClickCloseModal = () => {
         this.setState({ isOpenModal: false });
+    };
+
+    _handleReturnToMain = () => {
+        this.setState({
+            isOpenModal: false
+        });
+
+        this.props.navigateTo('/app');
+        this.props.setNavIndex(0);
     };
 
     componentDidMount() {
@@ -337,6 +347,7 @@ class ComponofyPlaylists extends PureComponent {
                         isOpen={isOpenModal}
                         switchLabel="Public"
                         title="New playlist info"
+                        onReturnToMain={this._handleReturnToMain}
                     >
                         {modalTracklist}
                     </Dialog>
