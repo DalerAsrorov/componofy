@@ -170,10 +170,6 @@ class ComponofyPlaylists extends PureComponent {
     _handleReturnToMain = () => {
         const { navigateTo } = this.props;
 
-        this.setState({
-            isOpenModal: false
-        });
-
         navigateTo('/app');
     };
 
