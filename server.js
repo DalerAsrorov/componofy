@@ -241,6 +241,8 @@ server.register({ register: Yar, options }, error => {
             const payload = JSON.parse(request.payload);
             const { playlistName, options } = payload;
 
+            console.log('server', options);
+
             createPlaylist(userID, playlistName, options)
                 .then(data => {
                     reply({

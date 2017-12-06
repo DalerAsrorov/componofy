@@ -124,12 +124,12 @@ export const launchPlaylistMerger = () => {
     return (dispatch, getState) => {
         const {
             finalPlaylists: { playlists: { entities: { playlists } } },
-            componoform: { playlistName, imageUri }
+            componoform: { playlistName, imageUri, isPublic }
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
 
         dispatch(setMergerStatus(true, 'Creating playlist...'));
-        createPlaylist(playlistName).then(response => {
+        createPlaylist(playlistName, { public: isPublic }).then(response => {
             dispatch(setMergerStatus(true, 'Adding tracks...'));
             const { data: { body: { id: playlistId } } } = response;
 

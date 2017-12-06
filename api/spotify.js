@@ -96,8 +96,8 @@ export async function getMe() {
     }
 }
 
-// TODO: Allow to chose permissions (public, private) in UI
 export async function createPlaylist(userId, playlistName, options, callback) {
+    console.log(playlistName, options);
     try {
         const newPlaylistInfo = await spotifyApi.createPlaylist(
             userId,
