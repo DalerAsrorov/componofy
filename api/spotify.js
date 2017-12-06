@@ -97,7 +97,6 @@ export async function getMe() {
 }
 
 export async function createPlaylist(userId, playlistName, options, callback) {
-    console.log(playlistName, options);
     try {
         const newPlaylistInfo = await spotifyApi.createPlaylist(
             userId,

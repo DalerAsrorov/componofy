@@ -57,8 +57,6 @@ export const getPlaylistTracks = (
 export const createPlaylist = (playlistName = '', options) => {
     const URL = `${API_BASE_URL}/createplaylist`;
 
-    console.log('options', options);
-
     const body = JSON.stringify({
         playlistName,
         options
