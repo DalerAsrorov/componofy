@@ -102,6 +102,7 @@ class Dialog extends PureComponent {
     static propTypes = {
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
+        launchPlaylistMerger: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -152,12 +153,13 @@ class Dialog extends PureComponent {
     _handleClickSubmit = event => {
         event.preventDefault();
 
-        const { onSubmit } = this.props;
+        const { launchPlaylistMerger } = this.props;
 
         // ToDo: error handling
 
         // if no errors, submit
         console.log('handle submit in the future');
+        launchPlaylistMerger();
     };
 
     render() {
@@ -244,19 +246,6 @@ class Dialog extends PureComponent {
                                     />
                                 }
                                 label={switchLabel}
-                            />
-                        </section>
-                        <section className={classes.descField}>
-                            <TextField
-                                id="playlistDesc"
-                                onChange={this._handlePlaylistDescChange}
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true
-                                }}
-                                value={playlistDesc}
-                                label="Playlist Description"
-                                className={classes.textField}
                             />
                         </section>
                         <section>{children}</section>

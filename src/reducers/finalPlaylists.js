@@ -7,13 +7,15 @@ import {
     REMOVE_PLAYLIST_TRACK_FROM_FINAL,
     SET_OPEN_STATUS_FINAL_PLAYLISTS,
     SET_FINAL_PLAYLIST_OPEN,
-    SET_FINAL_SEARCH_TERM
+    SET_FINAL_SEARCH_TERM,
+    SET_MERGER_STATUS
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
 export const finalPlaylists = (
     state = {
-        isFetching: false,
+        status: false,
+        statusText: '',
         playlists: {},
         lastUpdated: 0,
         searchTerm: '',
@@ -108,6 +110,11 @@ export const finalPlaylists = (
             }
 
             return Object.assign({}, state, { playlists });
+        case SET_MERGER_STATUS:
+            return Object.assign({}, state, {
+                status: action.status,
+                statusText: action.statusText
+            });
         default:
             return state;
     }

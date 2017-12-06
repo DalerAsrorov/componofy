@@ -1,6 +1,13 @@
 import { push } from 'react-router-redux';
-import { getMyPlaylists, getMyStatus, getPlaylistTracks } from '../api';
-import { formatTracks } from '../utils/helpers';
+import {
+    getMyPlaylists,
+    getMyStatus,
+    getPlaylistTracks,
+    createPlaylist,
+    addTracksToPlaylist,
+    uploadPlaylistCoverImage
+} from '../api';
+import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -99,6 +106,46 @@ export const fetchPlaylistTracks = (userID, playlistID) => {
                 tracks = payload.items;
             }
             dispatch(receivedPlaylistTracks(playlistID, tracks));
+        });
+    };
+};
+
+export const SET_MERGER_STATUS = 'SET_MERGER_STATUS';
+export const setMergerStatus = (status, statusText) => {
+    return {
+        type: SET_MERGER_STATUS,
+        statusText,
+        status
+    };
+};
+
+export const launchPlaylistMerger = () => {
+    return (dispatch, getState) => {
+        const {
+            finalPlaylists: { playlists: { entities: { playlists } } },
+            componoform: { playlistName, imageUri }
+        } = getState();
+        const tracks = getAllPlaylistsTrackIds(playlists);
+
+        dispatch(setMergerStatus(true, 'Creating playlist'));
+        createPlaylist(playlistName).then(response => {
+            dispatch(setMergerStatus(true, 'Adding tracks'));
+            // data.body.id
+            const { data: { body: { id: playlistId } } } = response;
+            console.log('response', response);
+
+            addTracksToPlaylist(playlistId, tracks).then(response => {
+                //         if (image string is not empty) {
+                //             dispatch(setMergerStatus(true, 'Adding playlist cover image'));
+                //             uploadPlaylistCoverImage(imgSrc).then(response => {
+                //             dispatch(setMergerStatus(false, 'Finished!'))
+                //             dispatch(setMergerStatus(false, ''))
+                //             })
+                //         } else {
+                //         dispatch(setMergerStatus(false, 'Finished!'))
+                //         dispatch(setMergerStatus(false, ''))
+                //         }
+            });
         });
     };
 };

@@ -65,7 +65,7 @@ export const createPlaylist = (playlistName = '', options) => {
         method: 'post',
         body,
         ...corsParams
-    });
+    }).then(response => response.json());
 };
 
 export const addTracksToPlaylist = (playlistID, tracks, options) => {
