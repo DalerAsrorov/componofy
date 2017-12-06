@@ -32,7 +32,7 @@ class Login extends PureComponent {
             <Grid className={classes.root} container justify="center">
                 <Grid item>
                     <Landing
-                        iconText="Authorize"
+                        iconText="Start"
                         title="Componofy"
                         subTitle="Make a perfect playlist from a bunch of playlists"
                         onAuth={this._handleAuth}
