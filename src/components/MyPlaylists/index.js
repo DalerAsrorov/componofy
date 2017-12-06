@@ -16,7 +16,7 @@ import {
     footerStyle,
     searchStyle
 } from '../../utils/constants';
-import { filterSearchPlaylist } from '../../utils/helpers';
+import { filterSearchPlaylist, toTop } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -175,6 +175,8 @@ class MyPlaylists extends PureComponent {
     };
 
     componentDidMount() {
+        toTop();
+
         let { currentOffset } = this.state;
         const {
             fetchMyPlaylists,

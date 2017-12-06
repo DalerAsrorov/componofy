@@ -30,6 +30,7 @@ import {
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
+import { setNavIndex } from '../../actions/index';
 
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR
@@ -168,13 +169,12 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleReturnToMain = () => {
-        const { navigateTo } = this.props;
-
         this.setState({
             isOpenModal: false
         });
 
-        navigateTo('/app');
+        this.props.navigateTo('/app');
+        this.props.setNavIndex(0);
     };
 
     componentDidMount() {
