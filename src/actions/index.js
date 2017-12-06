@@ -134,7 +134,6 @@ export const launchPlaylistMerger = () => {
             const { data: { body: { id: playlistId } } } = response;
 
             addTracksToPlaylist(playlistId, tracks).then(response => {
-                console.log('response', response);
                 if (!isEmpty(imageUri)) {
                     dispatch(setMergerStatus(true, 'Adding cover image...'));
 
