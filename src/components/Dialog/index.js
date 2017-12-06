@@ -139,12 +139,10 @@ class Dialog extends PureComponent {
 
         if (!R.isEmpty(acceptedFiles)) {
             const file = R.head(acceptedFiles);
-            console.log('file', file);
             const reader = new FileReader();
 
             reader.onload = () => {
                 const { result: base64URI } = reader;
-                console.log(reader);
 
                 setFinalPlaylistImageURI(base64URI);
             };
@@ -164,7 +162,6 @@ class Dialog extends PureComponent {
         // ToDo: error handling
 
         // if no errors, submit
-        console.log('handle submit in the future');
         launchPlaylistMerger();
     };
 

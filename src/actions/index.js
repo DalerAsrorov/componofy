@@ -144,7 +144,6 @@ export const launchPlaylistMerger = () => {
                     ).then(response => {
                         dispatch(setMergerStatus(false, 'Finished!'));
                         dispatch(setMergerStatus(false, ''));
-                        console.log('response from image', response);
                     });
                 } else {
                     dispatch(setMergerStatus(false, 'Finished!'));
