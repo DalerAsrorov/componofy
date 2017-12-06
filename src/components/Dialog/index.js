@@ -17,7 +17,11 @@ import FaRocket from 'react-icons/lib/fa/rocket';
 import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import { LIGHT_BLUE_COLOR, MOST_LIGHT_BLUE_COLOR } from '../../utils/constants';
+import {
+    LIGHT_BLUE_COLOR,
+    MOST_LIGHT_BLUE_COLOR,
+    MAX_IMAGE_SIZE_LIMIT
+} from '../../utils/constants';
 
 const styles = theme => ({
     appBar: {
@@ -135,10 +139,12 @@ class Dialog extends PureComponent {
 
         if (!R.isEmpty(acceptedFiles)) {
             const file = R.head(acceptedFiles);
+            console.log('file', file);
             const reader = new FileReader();
 
             reader.onload = () => {
                 const { result: base64URI } = reader;
+                console.log(reader);
 
                 setFinalPlaylistImageURI(base64URI);
             };
@@ -219,6 +225,7 @@ class Dialog extends PureComponent {
                                 accept="image/jpeg"
                                 onDrop={this._handleImageUpload}
                                 className={classes.dropImageZone}
+                                maxSize={MAX_IMAGE_SIZE_LIMIT}
                             >
                                 {playlistImage}
                             </Dropzone>
