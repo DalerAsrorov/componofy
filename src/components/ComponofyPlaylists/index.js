@@ -167,6 +167,16 @@ class ComponofyPlaylists extends PureComponent {
         this.setState({ isOpenModal: false });
     };
 
+    _handleReturnToMain = () => {
+        const { navigateTo } = this.props;
+
+        this.setState({
+            isOpenModal: false
+        });
+
+        navigateTo('/app');
+    };
+
     componentDidMount() {
         const {
             navigateTo,
@@ -337,6 +347,7 @@ class ComponofyPlaylists extends PureComponent {
                         isOpen={isOpenModal}
                         switchLabel="Public"
                         title="New playlist info"
+                        onReturnToMain={this._handleReturnToMain}
                     >
                         {modalTracklist}
                     </Dialog>

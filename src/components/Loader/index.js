@@ -8,7 +8,9 @@ import './Loader.css';
 
 const styles = theme => ({
     loaderSection: {
-        marginTop: `${theme.spacing.unit * 2}px`
+        marginTop: `${theme.spacing.unit * 2}px`,
+        display: 'flex',
+        justifyContent: 'center'
     },
 
     wrapper: {

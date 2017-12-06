@@ -8,7 +8,8 @@ import {
     SET_OPEN_STATUS_FINAL_PLAYLISTS,
     SET_FINAL_PLAYLIST_OPEN,
     SET_FINAL_SEARCH_TERM,
-    SET_MERGER_STATUS
+    SET_MERGER_STATUS,
+    SET_FINAL_PLAYLIST_URL
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -19,7 +20,8 @@ export const finalPlaylists = (
         playlists: {},
         lastUpdated: 0,
         searchTerm: '',
-        isVisited: false
+        isVisited: false,
+        finalPlaylistUrl: ''
     },
     action
 ) => {
@@ -114,6 +116,10 @@ export const finalPlaylists = (
             return Object.assign({}, state, {
                 status: action.status,
                 statusText: action.statusText
+            });
+        case SET_FINAL_PLAYLIST_URL:
+            return Object.assign({}, state, {
+                finalPlaylistUrl: action.url
             });
         default:
             return state;

@@ -13,7 +13,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
 import { LinearProgress } from 'material-ui/Progress';
-import { AddAPhoto } from 'material-ui-icons';
+import { AddAPhoto, CheckCircle } from 'material-ui-icons';
 import FaRocket from 'react-icons/lib/fa/rocket';
 import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
@@ -21,8 +21,10 @@ import { withStyles } from 'material-ui/styles';
 import {
     LIGHT_BLUE_COLOR,
     MOST_LIGHT_BLUE_COLOR,
+    SUCCESS_COLOR,
     MAX_IMAGE_SIZE_LIMIT
 } from '../../utils/constants';
+import { createTypographyLink } from '../../common';
 import Loader from '../Loader';
 
 const styles = theme => ({
@@ -93,6 +95,17 @@ const styles = theme => ({
 
     submitButton: {},
 
+    successCheck: {
+        width: '4.5em',
+        height: '4.5em',
+        color: SUCCESS_COLOR
+    },
+
+    succesButtons: {
+        color: MOST_LIGHT_BLUE_COLOR,
+        margin: theme.spacing.unit
+    },
+
     submitText: {},
 
     topSpace: {
@@ -118,6 +131,7 @@ class Dialog extends PureComponent {
         launchPlaylistMerger: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
+        onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
         switchLabel: PropTypes.string.isRequired,
         onClickClose: PropTypes.func.isRequired,
@@ -174,12 +188,21 @@ class Dialog extends PureComponent {
         launchPlaylistMerger();
     };
 
+    _handleClickBack = event => {
+        event.preventDefault();
+
+        const { onReturnToMain } = this.props;
+
+        onReturnToMain();
+    };
+
     render() {
         const {
             componoform: { isPublic, playlistName, playlistDesc, imageUri },
             finalPlaylists: {
                 statusText: loaderText,
-                status: shouldShowLoader
+                status: shouldShowLoader,
+                finalPlaylistUrl
             },
             switchLabel,
             children,
@@ -188,6 +211,10 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
+        const LoaderWrapper = props => (
+            <div className={classes.loaderWrapper}>{props.children}</div>
+        );
+
         let tracks,
             playlistImage = imageUri ? (
                 <Avatar
@@ -266,7 +293,7 @@ class Dialog extends PureComponent {
 
         if (shouldShowLoader) {
             modalContent = (
-                <div className={classes.loaderWrapper}>
+                <LoaderWrapper>
                     <Loader
                         icon={<LinearProgress color="accent" />}
                         text={
@@ -275,7 +302,41 @@ class Dialog extends PureComponent {
                             </Typography>
                         }
                     />
-                </div>
+                </LoaderWrapper>
+            );
+        } else if (!R.isEmpty(finalPlaylistUrl)) {
+            modalContent = (
+                <LoaderWrapper>
+                    <Loader
+                        icon={<CheckCircle className={classes.successCheck} />}
+                        text={
+                            <div>
+                                <Button
+                                    raised
+                                    color="accent"
+                                    className={classes.succesButtons}
+                                >
+                                    {createTypographyLink(
+                                        'See your playlist',
+                                        'headline',
+                                        finalPlaylistUrl,
+                                        'inherit'
+                                    )}
+                                </Button>
+                                <Button
+                                    raised
+                                    color="primary"
+                                    className={classes.succesButtons}
+                                    onClick={this._handleClickBack}
+                                >
+                                    <Typography type="headline" color="inherit">
+                                        Back to app
+                                    </Typography>
+                                </Button>
+                            </div>
+                        }
+                    />
+                </LoaderWrapper>
             );
         }
 

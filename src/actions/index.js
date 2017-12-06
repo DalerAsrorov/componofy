@@ -120,6 +120,14 @@ export const setMergerStatus = (status, statusText) => {
     };
 };
 
+export const SET_FINAL_PLAYLIST_URL = 'SET_FINAL_PLAYLIST_URL';
+export const setFinalPlaylistUrl = url => {
+    return {
+        type: SET_FINAL_PLAYLIST_URL,
+        url
+    };
+};
+
 export const launchPlaylistMerger = () => {
     return (dispatch, getState) => {
         const {
@@ -131,7 +139,14 @@ export const launchPlaylistMerger = () => {
         dispatch(setMergerStatus(true, 'Creating playlist...'));
         createPlaylist(playlistName, { public: isPublic }).then(response => {
             dispatch(setMergerStatus(true, 'Adding tracks...'));
-            const { data: { body: { id: playlistId } } } = response;
+            const {
+                data: {
+                    body: {
+                        id: playlistId,
+                        external_urls: { spotify: finalPlaylistUrl }
+                    }
+                }
+            } = response;
 
             addTracksToPlaylist(playlistId, tracks).then(response => {
                 if (!isEmpty(imageUri)) {
@@ -143,10 +158,12 @@ export const launchPlaylistMerger = () => {
                     ).then(response => {
                         dispatch(setMergerStatus(false, 'Finished!'));
                         dispatch(setMergerStatus(false, ''));
+                        dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
                     });
                 } else {
                     dispatch(setMergerStatus(false, 'Finished!'));
                     dispatch(setMergerStatus(false, ''));
+                    dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
                 }
             });
         });
