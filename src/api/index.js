@@ -80,7 +80,7 @@ export const addTracksToPlaylist = (playlistID, tracks, options) => {
         method: 'post',
         body,
         ...corsParams
-    });
+    }).then(response => response.json());
 };
 
 // Make sure to remove the "data:base64," part

@@ -145,6 +145,11 @@ export const uploadPlaylistCoverImage = (
 ) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
 
+    imageData =
+        imageData.indexOf('data') > -1
+            ? imageData.substring(imageData.indexOf(',') + 1)
+            : imageData;
+
     return fetch(URL, {
         method: 'put',
         body: imageData,

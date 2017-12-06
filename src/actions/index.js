@@ -7,6 +7,7 @@ import {
     addTracksToPlaylist,
     uploadPlaylistCoverImage
 } from '../api';
+import { isEmpty } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
@@ -127,24 +128,28 @@ export const launchPlaylistMerger = () => {
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
 
-        dispatch(setMergerStatus(true, 'Creating playlist'));
+        dispatch(setMergerStatus(true, 'Creating playlist...'));
         createPlaylist(playlistName).then(response => {
-            dispatch(setMergerStatus(true, 'Adding tracks'));
-            // data.body.id
+            dispatch(setMergerStatus(true, 'Adding tracks...'));
             const { data: { body: { id: playlistId } } } = response;
-            console.log('response', response);
 
             addTracksToPlaylist(playlistId, tracks).then(response => {
-                //         if (image string is not empty) {
-                //             dispatch(setMergerStatus(true, 'Adding playlist cover image'));
-                //             uploadPlaylistCoverImage(imgSrc).then(response => {
-                //             dispatch(setMergerStatus(false, 'Finished!'))
-                //             dispatch(setMergerStatus(false, ''))
-                //             })
-                //         } else {
-                //         dispatch(setMergerStatus(false, 'Finished!'))
-                //         dispatch(setMergerStatus(false, ''))
-                //         }
+                console.log('response', response);
+                if (!isEmpty(imageUri)) {
+                    dispatch(setMergerStatus(true, 'Adding cover image...'));
+
+                    uploadPlaylistCoverImage(
+                        playlistId,
+                        imageUri
+                    ).then(response => {
+                        dispatch(setMergerStatus(false, 'Finished!'));
+                        dispatch(setMergerStatus(false, ''));
+                        console.log('response from image', response);
+                    });
+                } else {
+                    dispatch(setMergerStatus(false, 'Finished!'));
+                    dispatch(setMergerStatus(false, ''));
+                }
             });
         });
     };
