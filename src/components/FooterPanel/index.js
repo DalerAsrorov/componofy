@@ -67,9 +67,7 @@ export const FooterPanel = props => {
                     className={props.classes.loadmore}
                     style={props.mainButtonStyle}
                 >
-                    <Typography type="subheading">
-                        {props.mainText} Hello ballo
-                    </Typography>
+                    <Typography type="subheading">{props.mainText}</Typography>
                 </Button>
                 {circleTextIcon}
             </section>
