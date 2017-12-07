@@ -13,6 +13,7 @@ import {
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
     launchPlaylistMerger,
+    setFinalPlaylistUrl,
     fetchPlaylistTracks,
     setNewPlaylistName,
     setNewPlaylistDesc,
@@ -21,8 +22,8 @@ import {
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
-    setNavIndex,
-    clearFinalData
+    clearFinalData,
+    setNavIndex
 } from './actions';
 
 const isIn = (data, ownProps, key) => {
@@ -213,6 +214,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setFinalPlaylistImageURI(imageUri) {
         dispatch(setFinalPlaylistImageURI(imageUri));
+    },
+
+    setFinalPlaylistUrl(url) {
+        dispatch(setFinalPlaylistUrl(url));
     },
 
     launchPlaylistMerger() {
