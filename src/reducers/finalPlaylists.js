@@ -9,7 +9,8 @@ import {
     SET_FINAL_PLAYLIST_OPEN,
     SET_FINAL_SEARCH_TERM,
     SET_MERGER_STATUS,
-    SET_FINAL_PLAYLIST_URL
+    SET_FINAL_PLAYLIST_URL,
+    CLEAR_FINAL_DATA
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -120,6 +121,15 @@ export const finalPlaylists = (
         case SET_FINAL_PLAYLIST_URL:
             return Object.assign({}, state, {
                 finalPlaylistUrl: action.url
+            });
+        case CLEAR_FINAL_DATA:
+            playlists = clone(state.playlists);
+
+            return Object.assign({}, state, {
+                finalPlaylistUrl: '',
+                playlists: {},
+                statusText: '',
+                status: false
             });
         default:
             return state;

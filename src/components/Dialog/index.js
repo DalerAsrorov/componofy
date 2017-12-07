@@ -132,6 +132,7 @@ class Dialog extends PureComponent {
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
+        clearFinalData: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
         switchLabel: PropTypes.string.isRequired,
         onClickClose: PropTypes.func.isRequired,
@@ -191,8 +192,9 @@ class Dialog extends PureComponent {
     _handleClickBack = event => {
         event.preventDefault();
 
-        const { onReturnToMain } = this.props;
+        const { onReturnToMain, clearFinalData } = this.props;
 
+        clearFinalData();
         onReturnToMain();
     };
 

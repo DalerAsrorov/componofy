@@ -293,3 +293,10 @@ export const setFinalPlaylistImageURI = imageUri => {
         imageUri
     };
 };
+
+export const CLEAR_FINAL_DATA = 'CLEAR_FINAL_DATA';
+export const clearFinalData = () => {
+    return {
+        type: CLEAR_FINAL_DATA
+    };
+};

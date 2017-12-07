@@ -21,7 +21,8 @@ import {
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
-    setNavIndex
+    setNavIndex,
+    clearFinalData
 } from './actions';
 
 const isIn = (data, ownProps, key) => {
@@ -216,6 +217,11 @@ export const mapDispatchToProps = dispatch => ({
 
     launchPlaylistMerger() {
         dispatch(launchPlaylistMerger());
+    },
+
+    clearFinalData() {
+        debugger;
+        dispatch(clearFinalData());
     }
 });
 
