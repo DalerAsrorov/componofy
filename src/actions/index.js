@@ -128,11 +128,22 @@ export const setFinalPlaylistUrl = url => {
     };
 };
 
+export const CLEAR_FINAL_DATA = 'CLEAR_FINAL_DATA';
+export const clearFinalData = () => {
+    return {
+        type: CLEAR_FINAL_DATA
+    };
+};
+
 export const launchPlaylistMerger = () => {
     return (dispatch, getState) => {
         const {
-            finalPlaylists: { playlists: { entities: { playlists } } },
-            componoform: { playlistName, imageUri, isPublic }
+            finalPlaylists: {
+                playlistName,
+                imageUri,
+                isPublic,
+                playlists: { entities: { playlists } }
+            }
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
 
@@ -159,11 +170,13 @@ export const launchPlaylistMerger = () => {
                         dispatch(setMergerStatus(false, 'Finished!'));
                         dispatch(setMergerStatus(false, ''));
                         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
+                        dispatch(clearFinalData());
                     });
                 } else {
                     dispatch(setMergerStatus(false, 'Finished!'));
                     dispatch(setMergerStatus(false, ''));
                     dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
+                    dispatch(clearFinalData());
                 }
             });
         });

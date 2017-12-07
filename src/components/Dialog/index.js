@@ -152,7 +152,7 @@ class Dialog extends PureComponent {
 
         const {
             setFinalPlaylistPublic,
-            componoform: { isPublic }
+            finalPlaylists: { isPublic }
         } = this.props;
         setFinalPlaylistPublic(!isPublic);
     };
@@ -191,18 +191,22 @@ class Dialog extends PureComponent {
     _handleClickBack = event => {
         event.preventDefault();
 
-        const { onReturnToMain } = this.props;
+        const { onReturnToMain, setFinalPlaylistUrl } = this.props;
 
+        setFinalPlaylistUrl('');
         onReturnToMain();
     };
 
     render() {
         const {
-            componoform: { isPublic, playlistName, playlistDesc, imageUri },
+            componoform: { finalPlaylistUrl },
             finalPlaylists: {
                 statusText: loaderText,
                 status: shouldShowLoader,
-                finalPlaylistUrl
+                playlistName,
+                playlistDesc,
+                isPublic,
+                imageUri
             },
             switchLabel,
             children,
@@ -315,13 +319,12 @@ class Dialog extends PureComponent {
                                     raised
                                     color="accent"
                                     className={classes.succesButtons}
+                                    href={finalPlaylistUrl}
+                                    target="__blank"
                                 >
-                                    {createTypographyLink(
-                                        'See your playlist',
-                                        'headline',
-                                        finalPlaylistUrl,
-                                        'inherit'
-                                    )}
+                                    <Typography type="headline" color="inherit">
+                                        See your playlist
+                                    </Typography>
                                 </Button>
                                 <Button
                                     raised

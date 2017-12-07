@@ -9,22 +9,28 @@ import {
     SET_FINAL_PLAYLIST_OPEN,
     SET_FINAL_SEARCH_TERM,
     SET_MERGER_STATUS,
-    SET_FINAL_PLAYLIST_URL
+    CLEAR_FINAL_DATA,
+    SET_NEW_PLAYLIST_NAME,
+    SET_NEW_PLAYLIST_DESC,
+    SET_FINAL_PLAYLIST_PUBLIC,
+    SET_FINAL_PLAYLIST_IMAGE_URI
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
-export const finalPlaylists = (
-    state = {
-        status: false,
-        statusText: '',
-        playlists: {},
-        lastUpdated: 0,
-        searchTerm: '',
-        isVisited: false,
-        finalPlaylistUrl: ''
-    },
-    action
-) => {
+const DEFAULT_STATE = {
+    status: false,
+    statusText: '',
+    playlists: {},
+    lastUpdated: 0,
+    searchTerm: '',
+    isVisited: false,
+    playlistName: '',
+    playlistDesc: '',
+    imageUri: '',
+    isPublic: true
+};
+
+export const finalPlaylists = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case ADD_PLAYLIST_TO_FINAL:
             let { playlist, receivedAt } = action;
@@ -117,10 +123,24 @@ export const finalPlaylists = (
                 status: action.status,
                 statusText: action.statusText
             });
-        case SET_FINAL_PLAYLIST_URL:
+        case SET_NEW_PLAYLIST_NAME:
             return Object.assign({}, state, {
-                finalPlaylistUrl: action.url
+                playlistName: action.playlsitName
             });
+        case SET_NEW_PLAYLIST_DESC:
+            return Object.assign({}, state, {
+                playlistDesc: action.playlistDesc
+            });
+        case SET_FINAL_PLAYLIST_PUBLIC:
+            return Object.assign({}, state, {
+                isPublic: action.isPublic
+            });
+        case SET_FINAL_PLAYLIST_IMAGE_URI:
+            return Object.assign({}, state, { imageUri: action.imageUri });
+        case CLEAR_FINAL_DATA:
+            playlists = clone(state.playlists);
+
+            return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;
     }

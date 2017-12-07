@@ -13,6 +13,7 @@ import {
     setMyPlaylistVisited,
     setFinalPlaylistOpen,
     launchPlaylistMerger,
+    setFinalPlaylistUrl,
     fetchPlaylistTracks,
     setNewPlaylistName,
     setNewPlaylistDesc,
@@ -21,6 +22,7 @@ import {
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
+    clearFinalData,
     setNavIndex
 } from './actions';
 
@@ -214,8 +216,17 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setFinalPlaylistImageURI(imageUri));
     },
 
+    setFinalPlaylistUrl(url) {
+        dispatch(setFinalPlaylistUrl(url));
+    },
+
     launchPlaylistMerger() {
         dispatch(launchPlaylistMerger());
+    },
+
+    clearFinalData() {
+        debugger;
+        dispatch(clearFinalData());
     }
 });
 
