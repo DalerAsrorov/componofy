@@ -57,9 +57,14 @@ class PublicPlaylists extends PureComponent {
     };
 
     componentDidMount() {
-        const { setPublicPlaylistsVisited } = this.props;
+        const {
+            publicPlaylists: { isVisited },
+            setPublicPlaylistsVisited
+        } = this.props;
 
-        // search for playlists here
+        if (!isVisited) {
+            setPublicPlaylistsVisited();
+        }
     }
 
     render() {
