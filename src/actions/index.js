@@ -336,21 +336,30 @@ export const setPublicPlaylistsVisited = (isVisited = true) => {
     };
 };
 
+export const REQUEST_SEARCHED_PLAYLISTS = 'REQUEST_SEARCHED_PLAYLISTS';
+export const requestSearchedPlaylists = () => {
+    return {
+        type: REQUEST_SEARCHED_PLAYLISTS
+    };
+};
+
+export const RECEIVED_SEARCHED_PLAYLISTS = 'RECEIVED_SEARCHED_PLAYLISTS';
+export const receivedSearchedPlaylists = json => {
+    return {
+        type: RECEIVED_SEARCHED_PLAYLISTS,
+        playlists: json.data.body ? json.data.body.playlists.items : {},
+        numberOfTracks: json.data.body ? json.data.body.playlists.total : 0,
+        receivedAt: Date.now()
+    };
+};
+
 export const searchPublicPlaylists = () => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
 
-        console.log(searchTerm, currentOffset);
-
-        // return searchPlaylists(searchTerm, currentOffset);
+        dispatch(requestSearchedPlaylists());
+        return searchPlaylists(searchTerm, currentOffset).then(json => {
+            dispatch(receivedSearchedPlaylists(json));
+        });
     };
 };
-
-// export const fetchMyPlaylists = offset => {
-//     return dispatch => {
-//         dispatch(requestPlaylists());
-//         return getMyPlaylists(offset).then(json =>
-//             dispatch(receivePlaylists(json))
-//         );
-//     };
-// };
