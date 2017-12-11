@@ -21,12 +21,31 @@ import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
 
-const styles = theme => ({});
+const styles = theme => ({
+    searchAdortment: {
+        position: 'relative',
+        top: `${theme.spacing.unit / 2}px`,
+        marginRight: `${theme.spacing.unit}px`,
+        color: LIGHT_BLUE_COLOR
+    }
+});
 
 class PublicPlaylists extends PureComponent {
     static propTypes = {
+        setPublicSearchTerm: PropTypes.func.isRequired,
         publicPlaylists: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
+    };
+
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
+    };
+
+    _handleInputChange = event => {
+        let { value: inputValue } = event.target;
+
+        this.props.setPublicSearchTerm(inputValue);
     };
 
     componentDidMount() {
@@ -34,13 +53,30 @@ class PublicPlaylists extends PureComponent {
     }
 
     render() {
-        const { publicPlaylists } = this.props;
+        const { publicPlaylists: { searchTerm }, classes } = this.props;
+        let pageComponent;
 
-        return (
-            <div>
-                <h1> Stuff </h1>
-            </div>
+        pageComponent = (
+            <Search
+                onChange={this._handleInputChange}
+                inputId="publicPlaylistsSearch"
+                style={searchStyle}
+                value={searchTerm}
+                startAdornment={
+                    <SearchIcon
+                        onClick={this._handleFocusOnSearch}
+                        className={classes.searchAdortment}
+                    />
+                }
+                placeholder="Search public playlists by artists, type, mood..."
+                inputRef={input => {
+                    this.searchInputRef = input;
+                }}
+                autoFocus
+            />
         );
+
+        return pageComponent;
     }
 }
 
