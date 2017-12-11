@@ -317,3 +317,12 @@ export const launchPlaylistMerger = () => {
         });
     };
 };
+
+// PUBLIC PLAYLISTS ACTIONS
+export const SET_PUBLIC_SEARCH_TERM = 'SET_PUBLIC_SEARCH_TERM';
+export const setPublicSearchTerm = (searchTerm = '') => {
+    return {
+        type: SET_PUBLIC_SEARCH_TERM,
+        searchTerm
+    };
+};

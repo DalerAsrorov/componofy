@@ -15,6 +15,7 @@ import {
     launchPlaylistMerger,
     setFinalPlaylistUrl,
     fetchPlaylistTracks,
+    setPublicSearchTerm,
     setNewPlaylistName,
     setNewPlaylistDesc,
     setFinalSearchTerm,
@@ -112,6 +113,7 @@ const hasOpenPlaylist = playlistState => {
 const mapStateToProps = (state, ownProps) => ({
     finalPlaylists: state.finalPlaylists,
     myPlaylists: state.myPlaylists,
+    publicPlaylists: state.publicPlaylists,
     myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
     finalPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.finalPlaylists),
     navigation: state.navigation,
@@ -225,8 +227,11 @@ export const mapDispatchToProps = dispatch => ({
     },
 
     clearFinalData() {
-        debugger;
         dispatch(clearFinalData());
+    },
+
+    setPublicSearchTerm(searchTerm) {
+        dispatch(setPublicSearchTerm(searchTerm));
     }
 });
 

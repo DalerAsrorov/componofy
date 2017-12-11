@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
-import PublicPlaylists from '../PublicPlaylists';
+import PublicPlaylists from '../../containers/PublicPlaylists';
 import Nav from '../../containers/Nav';
 import MyPlaylists from '../../containers/MyPlaylists';
 import ComponofyPlaylists from '../../containers/ComponofyPlaylists';
