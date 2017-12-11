@@ -135,6 +135,13 @@ export const clearFinalData = () => {
     };
 };
 
+export const CLEAR_MY_DATA = 'CLEAR_MY_DATA';
+export const clearMyData = () => {
+    return {
+        type: CLEAR_MY_DATA
+    };
+};
+
 export const launchPlaylistMerger = () => {
     return (dispatch, getState) => {
         const {
@@ -171,12 +178,14 @@ export const launchPlaylistMerger = () => {
                         dispatch(setMergerStatus(false, ''));
                         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
                         dispatch(clearFinalData());
+                        dispatch(clearMyData());
                     });
                 } else {
                     dispatch(setMergerStatus(false, 'Finished!'));
                     dispatch(setMergerStatus(false, ''));
                     dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
                     dispatch(clearFinalData());
+                    dispatch(clearMyData());
                 }
             });
         });

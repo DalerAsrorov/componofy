@@ -23,7 +23,7 @@ const configureStore = () => {
         rootReducer,
         window.__REDUX_DEVTOOLS_EXTENSION__ &&
             window.__REDUX_DEVTOOLS_EXTENSION__(),
-        applyMiddleware(routeMiddleware, thunkMiddleware, logger)
+        applyMiddleware(routeMiddleware, thunkMiddleware)
     );
 
     if (process.env.NODE_ENV !== 'production') {
