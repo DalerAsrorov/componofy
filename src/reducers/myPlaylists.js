@@ -6,25 +6,25 @@ import {
     REQUEST_PLAYLIST_TRACKS,
     RECEIVED_PLAYLIST_TRACKS,
     SET_OPEN_STATUS_MY_PLAYLISTS,
-    SET_MY_SEARCH_TERM
+    SET_MY_SEARCH_TERM,
+    CLEAR_MY_DATA
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 
-export const myPlaylists = (
-    state = {
-        isFetching: false,
-        tracksFetching: false,
-        searchTerm: '',
-        playlists: [],
-        numberOfTracks: 0,
-        lastUpdated: 0,
-        currentOffset: 0,
-        playlistsRemaining: 0,
-        canLoadMore: true,
-        isVisited: false
-    },
-    action
-) => {
+const DEFAULT_STATE = {
+    isFetching: false,
+    tracksFetching: false,
+    searchTerm: '',
+    playlists: [],
+    numberOfTracks: 0,
+    lastUpdated: 0,
+    currentOffset: 0,
+    playlistsRemaining: 0,
+    canLoadMore: true,
+    isVisited: false
+};
+
+export const myPlaylists = (state = DEFAULT_STATE, action) => {
     const OFFSET_LIMIT = 10;
 
     switch (action.type) {
@@ -116,6 +116,8 @@ export const myPlaylists = (
             });
         case SET_MY_SEARCH_TERM:
             return Object.assign({}, state, { searchTerm: action.searchTerm });
+        case CLEAR_MY_DATA:
+            return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;
     }
