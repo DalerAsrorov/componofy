@@ -14,14 +14,13 @@ import {
     SCROLL_DURATION,
     searchKeyMap,
     footerStyle,
-    searchStyle
+    searchStyle,
+    OFFSET_LIMIT
 } from '../../utils/constants';
 import { filterSearchPlaylist, toTop } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
-
-const LIMIT = 10;
 
 const styles = theme => ({
     loadmore: {
@@ -104,7 +103,7 @@ class MyPlaylists extends PureComponent {
         const { myPlaylists: { playlists } } = this.props;
         const nTracks = playlists.length;
 
-        if (canScrollUp && nTracks < LIMIT) {
+        if (canScrollUp && nTracks < OFFSET_LIMIT) {
             canScrollUp = false;
         }
 

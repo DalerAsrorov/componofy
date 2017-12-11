@@ -1,7 +1,15 @@
 import { myPlaylists } from './myPlaylists';
-import { user } from './user';
 import { finalPlaylists } from './finalPlaylists';
+import { publicPlaylists } from './publicPlaylists';
 import { navigation } from './navigation';
 import { componoform } from './componoform';
+import { user } from './user';
 
-export { myPlaylists, user, finalPlaylists, navigation, componoform };
+export {
+    myPlaylists,
+    user,
+    finalPlaylists,
+    navigation,
+    componoform,
+    publicPlaylists
+};
