@@ -33,6 +33,7 @@ const styles = theme => ({
 class PublicPlaylists extends PureComponent {
     static propTypes = {
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
+        searchPublicPlaylists: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
         publicPlaylists: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
@@ -49,10 +50,16 @@ class PublicPlaylists extends PureComponent {
         this.props.setPublicSearchTerm(inputValue);
     };
 
+    _handleSearchSubmit = event => {
+        event.preventDefault();
+
+        this.props.searchPublicPlaylists();
+    };
+
     componentDidMount() {
         const { setPublicPlaylistsVisited } = this.props;
 
-        setPublicPlaylistsVisited();
+        // search for playlists here
     }
 
     render() {
@@ -60,23 +67,30 @@ class PublicPlaylists extends PureComponent {
         let pageComponent;
 
         pageComponent = (
-            <Search
-                onChange={this._handleInputChange}
-                inputId="publicPlaylistsSearch"
-                style={searchStyle}
-                value={searchTerm}
-                startAdornment={
-                    <SearchIcon
-                        onClick={this._handleFocusOnSearch}
-                        className={classes.searchAdortment}
-                    />
-                }
-                placeholder="Search public playlists by artists, type, mood..."
-                inputRef={input => {
-                    this.searchInputRef = input;
-                }}
-                autoFocus
-            />
+            <form
+                onSubmit={this._handleSearchSubmit}
+                name="playlistsSearchForm"
+                className={classes.playlistsSearchForm}
+            >
+                <Search
+                    onChange={this._handleInputChange}
+                    inputId="publicPlaylistsSearch"
+                    style={searchStyle}
+                    value={searchTerm}
+                    startAdornment={
+                        <SearchIcon
+                            onClick={this._handleFocusOnSearch}
+                            className={classes.searchAdortment}
+                        />
+                    }
+                    placeholder="Search public playlists by artists, type, mood..."
+                    inputRef={input => {
+                        this.searchInputRef = input;
+                    }}
+                    autoComplete="off"
+                    autoFocus
+                />
+            </form>
         );
 
         return pageComponent;

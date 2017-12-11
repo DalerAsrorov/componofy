@@ -5,7 +5,8 @@ import {
     getPlaylistTracks,
     createPlaylist,
     addTracksToPlaylist,
-    uploadPlaylistCoverImage
+    uploadPlaylistCoverImage,
+    searchPlaylists
 } from '../api';
 import { isEmpty } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
@@ -334,3 +335,22 @@ export const setPublicPlaylistsVisited = (isVisited = true) => {
         isVisited
     };
 };
+
+export const searchPublicPlaylists = () => {
+    return (dispatch, getState) => {
+        const { publicPlaylists: { searchTerm, currentOffset } } = getState();
+
+        console.log(searchTerm, currentOffset);
+
+        // return searchPlaylists(searchTerm, currentOffset);
+    };
+};
+
+// export const fetchMyPlaylists = offset => {
+//     return dispatch => {
+//         dispatch(requestPlaylists());
+//         return getMyPlaylists(offset).then(json =>
+//             dispatch(receivePlaylists(json))
+//         );
+//     };
+// };
