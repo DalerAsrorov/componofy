@@ -142,56 +142,6 @@ export const clearMyData = () => {
     };
 };
 
-export const launchPlaylistMerger = () => {
-    return (dispatch, getState) => {
-        const {
-            finalPlaylists: {
-                playlistName,
-                imageUri,
-                isPublic,
-                playlists: { entities: { playlists } }
-            }
-        } = getState();
-        const tracks = getAllPlaylistsTrackIds(playlists);
-
-        dispatch(setMergerStatus(true, 'Creating playlist...'));
-        createPlaylist(playlistName, { public: isPublic }).then(response => {
-            dispatch(setMergerStatus(true, 'Adding tracks...'));
-            const {
-                data: {
-                    body: {
-                        id: playlistId,
-                        external_urls: { spotify: finalPlaylistUrl }
-                    }
-                }
-            } = response;
-
-            addTracksToPlaylist(playlistId, tracks).then(response => {
-                if (!isEmpty(imageUri)) {
-                    dispatch(setMergerStatus(true, 'Adding cover image...'));
-
-                    uploadPlaylistCoverImage(
-                        playlistId,
-                        imageUri
-                    ).then(response => {
-                        dispatch(setMergerStatus(false, 'Finished!'));
-                        dispatch(setMergerStatus(false, ''));
-                        dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
-                        dispatch(clearFinalData());
-                        dispatch(clearMyData());
-                    });
-                } else {
-                    dispatch(setMergerStatus(false, 'Finished!'));
-                    dispatch(setMergerStatus(false, ''));
-                    dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
-                    dispatch(clearFinalData());
-                    dispatch(clearMyData());
-                }
-            });
-        });
-    };
-};
-
 export const SET_OPEN_STATUS_MY_PLAYLISTS = 'SET_OPEN_STATUS_MY_PLAYLISTS';
 export const setOpenStatusMyPlaylists = isOpen => {
     return {
@@ -313,5 +263,57 @@ export const setFinalPlaylistImageURI = imageUri => {
     return {
         type: SET_FINAL_PLAYLIST_IMAGE_URI,
         imageUri
+    };
+};
+
+export const finalizeProcessing = finalPlaylistUrl => {
+    return dispatch => {
+        dispatch(setMergerStatus(false, 'Finished!'));
+        dispatch(setMergerStatus(false, ''));
+        dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
+        dispatch(clearFinalData());
+        dispatch(clearMyData());
+    };
+};
+
+export const launchPlaylistMerger = () => {
+    return (dispatch, getState) => {
+        const {
+            finalPlaylists: {
+                playlistName,
+                imageUri,
+                isPublic,
+                playlists: { entities: { playlists } }
+            }
+        } = getState();
+        const tracks = getAllPlaylistsTrackIds(playlists);
+
+        dispatch(setMergerStatus(true, 'Creating playlist...'));
+        createPlaylist(playlistName, { public: isPublic }).then(response => {
+            dispatch(setMergerStatus(true, 'Adding tracks...'));
+            const {
+                data: {
+                    body: {
+                        id: playlistId,
+                        external_urls: { spotify: finalPlaylistUrl }
+                    }
+                }
+            } = response;
+
+            addTracksToPlaylist(playlistId, tracks).then(response => {
+                if (!isEmpty(imageUri)) {
+                    dispatch(setMergerStatus(true, 'Adding cover image...'));
+
+                    uploadPlaylistCoverImage(
+                        playlistId,
+                        imageUri
+                    ).then(response => {
+                        dispatch(finalizeProcessing(finalPlaylistUrl));
+                    });
+                } else {
+                    dispatch(finalizeProcessing(finalPlaylistUrl));
+                }
+            });
+        });
     };
 };
