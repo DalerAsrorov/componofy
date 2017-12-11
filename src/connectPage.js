@@ -6,6 +6,7 @@ import {
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
+    setPublicPlaylistsVisited,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
     setFinalPlaylistPublic,
@@ -232,6 +233,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setPublicSearchTerm(searchTerm) {
         dispatch(setPublicSearchTerm(searchTerm));
+    },
+
+    setPublicPlaylistsVisited(isVisited) {
+        dispatch(setPublicPlaylistsVisited(isVisited));
     }
 });
 

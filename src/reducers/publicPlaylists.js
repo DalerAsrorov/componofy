@@ -1,4 +1,7 @@
-import { SET_PUBLIC_SEARCH_TERM } from '../actions';
+import {
+    SET_PUBLIC_SEARCH_TERM,
+    SET_PUBLIC_PLAYLISTS_VISITED
+} from '../actions';
 
 console.log('here');
 
@@ -18,6 +21,8 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case SET_PUBLIC_SEARCH_TERM:
             return Object.assign({}, state, { searchTerm: action.searchTerm });
+        case SET_PUBLIC_PLAYLISTS_VISITED:
+            return Object.assign({}, state, { isVisited: action.isVisited });
 
         default:
             return state;

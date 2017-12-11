@@ -32,6 +32,7 @@ const styles = theme => ({
 
 class PublicPlaylists extends PureComponent {
     static propTypes = {
+        setPublicPlaylistsVisited: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
         publicPlaylists: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
@@ -49,7 +50,9 @@ class PublicPlaylists extends PureComponent {
     };
 
     componentDidMount() {
-        console.log(this.props);
+        const { setPublicPlaylistsVisited } = this.props;
+
+        setPublicPlaylistsVisited();
     }
 
     render() {

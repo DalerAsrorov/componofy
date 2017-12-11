@@ -326,3 +326,11 @@ export const setPublicSearchTerm = (searchTerm = '') => {
         searchTerm
     };
 };
+
+export const SET_PUBLIC_PLAYLISTS_VISITED = 'SET_PUBLIC_PLAYLISTS_VISITED';
+export const setPublicPlaylistsVisited = (isVisited = true) => {
+    return {
+        type: SET_PUBLIC_PLAYLISTS_VISITED,
+        isVisited
+    };
+};
