@@ -8,6 +8,7 @@ import {
     SET_SEARCH_RESULTS_MESSAGE,
     CLEAN_PUBLIC_SEARCH_RESULTS
 } from '../actions';
+import { removeDuplicates } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
 
 const DEFAULT_STATE = {
@@ -63,7 +64,10 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
         case RECEIVED_PUBLIC_PLAYLIST_TRACKS:
             playlists = state.playlists.map(playlist => {
                 if (playlist.id === action.playlistId) {
-                    playlist.tracks.list = action.tracks;
+                    playlist.tracks.list = removeDuplicates(
+                        action.tracks,
+                        'id'
+                    );
                 }
                 return playlist;
             });
