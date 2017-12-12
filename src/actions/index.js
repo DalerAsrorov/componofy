@@ -139,9 +139,6 @@ export const fetchPlaylistTracks = (userId, playlistId) => {
                 tracks = payload.items;
             }
 
-            console.log(pathname, indexToRouteMap);
-            debugger;
-
             switch (pathname) {
                 case indexToRouteMap[0]:
                     dispatch(receivedPlaylistTracks(playlistId, tracks));
