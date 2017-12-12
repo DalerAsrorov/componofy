@@ -9,6 +9,7 @@ import {
     setPublicPlaylistsVisited,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
+    setSearchResultsMessage,
     setFinalPlaylistPublic,
     searchPublicPlaylists,
     setPublicPlaylistOpen,
@@ -247,6 +248,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setPublicPlaylistOpen(playlistId, isOpen) {
         dispatch(setPublicPlaylistOpen(playlistId, isOpen));
+    },
+
+    setSearchResultsMessage(message) {
+        dispatch(setSearchResultsMessage(message));
     }
 });
 

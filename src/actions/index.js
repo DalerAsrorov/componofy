@@ -107,22 +107,6 @@ export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
     };
 };
 
-// export const fetchPlaylistTracks = (userID, playlistID) => {
-//     return dispatch => {
-//         dispatch(requestPlaylistTracks());
-
-//         return getPlaylistTracks(userID, playlistID).then(response => {
-//             const { data: { body: payload } } = response;
-//             let tracks = [];
-
-//             if (payload) {
-//                 tracks = payload.items;
-//             }
-//             dispatch(receivedPlaylistTracks(playlistID, tracks));
-//         });
-//     };
-// };
-
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
         const {
@@ -396,13 +380,30 @@ export const receivedSearchedPlaylists = json => {
     };
 };
 
+export const SET_SEARCH_RESULTS_MESSAGE = 'SET_SEARCH_RESULTS_MESSAGE';
+export const setSearchResultsMessage = (message = '') => {
+    return {
+        type: SET_SEARCH_RESULTS_MESSAGE,
+        message
+    };
+};
+
+export const CLEAN_PUBLIC_SEARCH_RESULTS = 'CLEAN_PUBLIC_SEARCH_RESULTS';
+export const cleanPublicSearchResults = () => {
+    return {
+        type: CLEAN_PUBLIC_SEARCH_RESULTS
+    };
+};
+
 export const searchPublicPlaylists = () => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
 
         dispatch(requestSearchedPlaylists());
+        dispatch(cleanPublicSearchResults());
         return searchPlaylists(searchTerm, currentOffset).then(json => {
             dispatch(receivedSearchedPlaylists(json));
+            dispatch(setSearchResultsMessage(`Results for "${searchTerm}"`));
         });
     };
 };
