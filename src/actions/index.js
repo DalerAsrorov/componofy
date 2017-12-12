@@ -107,22 +107,6 @@ export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
     };
 };
 
-// export const fetchPlaylistTracks = (userID, playlistID) => {
-//     return dispatch => {
-//         dispatch(requestPlaylistTracks());
-
-//         return getPlaylistTracks(userID, playlistID).then(response => {
-//             const { data: { body: payload } } = response;
-//             let tracks = [];
-
-//             if (payload) {
-//                 tracks = payload.items;
-//             }
-//             dispatch(receivedPlaylistTracks(playlistID, tracks));
-//         });
-//     };
-// };
-
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
         const {
@@ -396,6 +380,14 @@ export const receivedSearchedPlaylists = json => {
     };
 };
 
+export const SET_SEARCH_RESULTS_MESSAGE = 'SET_SEARCH_RESULTS_MESSAGE';
+export const setSearchResultsMessage = (message = '') => {
+    return {
+        type: SET_SEARCH_RESULTS_MESSAGE,
+        message
+    };
+};
+
 export const searchPublicPlaylists = () => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
@@ -403,6 +395,7 @@ export const searchPublicPlaylists = () => {
         dispatch(requestSearchedPlaylists());
         return searchPlaylists(searchTerm, currentOffset).then(json => {
             dispatch(receivedSearchedPlaylists(json));
+            dispatch(setSearchResultsMessage(`Results for "${searchTerm}"`));
         });
     };
 };

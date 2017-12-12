@@ -38,6 +38,7 @@ class PublicPlaylists extends PureComponent {
     static propTypes = {
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
+        setSearchResultsMessage: PropTypes.func.isRequired,
         setPublicPlaylistOpen: PropTypes.func.isRequired,
         searchPublicPlaylists: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
@@ -88,7 +89,7 @@ class PublicPlaylists extends PureComponent {
 
     render() {
         const {
-            publicPlaylists: { searchTerm, playlists },
+            publicPlaylists: { searchTerm, playlists, searchResultsMessage },
             classes
         } = this.props;
         let listOfPlaylistsComponent, pageComponent;
@@ -99,6 +100,7 @@ class PublicPlaylists extends PureComponent {
                     onClickMain={this._handleAddPlaylist}
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
+                    subheader={searchResultsMessage}
                     isPlaylist={true}
                 />
             );
