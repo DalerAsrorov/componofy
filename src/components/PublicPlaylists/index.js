@@ -22,6 +22,10 @@ import List from '../List';
 import Search from '../Search';
 
 const styles = theme => ({
+    hotKeys: {
+        outline: 'none'
+    },
+
     searchAdortment: {
         position: 'relative',
         top: `${theme.spacing.unit / 2}px`,
@@ -33,7 +37,11 @@ const styles = theme => ({
 class PublicPlaylists extends PureComponent {
     static propTypes = {
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
+        removePlaylistFromFinal: PropTypes.func.isRequired,
+        setPublicPlaylistOpen: PropTypes.func.isRequired,
+        searchPublicPlaylists: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
+        addPlaylistToFinal: PropTypes.func.isRequired,
         publicPlaylists: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -49,34 +57,79 @@ class PublicPlaylists extends PureComponent {
         this.props.setPublicSearchTerm(inputValue);
     };
 
-    componentDidMount() {
-        const { setPublicPlaylistsVisited } = this.props;
+    _handleSearchSubmit = event => {
+        event.preventDefault();
 
-        setPublicPlaylistsVisited();
+        this.props.searchPublicPlaylists();
+    };
+
+    _handleClickPlaylist = (id, isOpen) => {
+        this.props.setPublicPlaylistOpen(id, !isOpen);
+    };
+
+    _handleAddPlaylist = (playlist, containsPlaylist) => {
+        if (!containsPlaylist) {
+            return this.props.addPlaylistToFinal(playlist);
+        }
+
+        return this.props.removePlaylistFromFinal(playlist);
+    };
+
+    componentDidMount() {
+        const {
+            publicPlaylists: { isVisited },
+            setPublicPlaylistsVisited
+        } = this.props;
+
+        if (!isVisited) {
+            setPublicPlaylistsVisited();
+        }
     }
 
     render() {
-        const { publicPlaylists: { searchTerm }, classes } = this.props;
-        let pageComponent;
+        const {
+            publicPlaylists: { searchTerm, playlists },
+            classes
+        } = this.props;
+        let listOfPlaylistsComponent, pageComponent;
+
+        if (!R.isEmpty(playlists)) {
+            listOfPlaylistsComponent = (
+                <List
+                    onClickMain={this._handleAddPlaylist}
+                    onClickItem={this._handleClickPlaylist}
+                    items={playlists}
+                    isPlaylist={true}
+                />
+            );
+        }
 
         pageComponent = (
-            <Search
-                onChange={this._handleInputChange}
-                inputId="publicPlaylistsSearch"
-                style={searchStyle}
-                value={searchTerm}
-                startAdornment={
-                    <SearchIcon
-                        onClick={this._handleFocusOnSearch}
-                        className={classes.searchAdortment}
-                    />
-                }
-                placeholder="Search public playlists by artists, type, mood..."
-                inputRef={input => {
-                    this.searchInputRef = input;
-                }}
-                autoFocus
-            />
+            <form
+                onSubmit={this._handleSearchSubmit}
+                name="playlistsSearchForm"
+                className={classes.playlistsSearchForm}
+            >
+                <Search
+                    onChange={this._handleInputChange}
+                    inputId="publicPlaylistsSearch"
+                    style={searchStyle}
+                    value={searchTerm}
+                    startAdornment={
+                        <SearchIcon
+                            onClick={this._handleFocusOnSearch}
+                            className={classes.searchAdortment}
+                        />
+                    }
+                    placeholder="Search public playlists by artists, type, mood..."
+                    inputRef={input => {
+                        this.searchInputRef = input;
+                    }}
+                    autoComplete="off"
+                    autoFocus
+                />
+                {listOfPlaylistsComponent}
+            </form>
         );
 
         return pageComponent;

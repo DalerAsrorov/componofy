@@ -10,6 +10,7 @@ import {
     CLEAR_MY_DATA
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
+import { OFFSET_LIMIT } from '../utils/constants';
 
 const DEFAULT_STATE = {
     isFetching: false,
@@ -25,8 +26,6 @@ const DEFAULT_STATE = {
 };
 
 export const myPlaylists = (state = DEFAULT_STATE, action) => {
-    const OFFSET_LIMIT = 10;
-
     switch (action.type) {
         case REQUEST_PLAYLISTS:
             return Object.assign({}, state, {

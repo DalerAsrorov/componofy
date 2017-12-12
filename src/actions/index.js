@@ -5,7 +5,8 @@ import {
     getPlaylistTracks,
     createPlaylist,
     addTracksToPlaylist,
-    uploadPlaylistCoverImage
+    uploadPlaylistCoverImage,
+    searchPlaylists
 } from '../api';
 import { isEmpty } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
@@ -95,18 +96,61 @@ export const receivedPlaylistTracks = (playlistID, tracks) => {
     };
 };
 
-export const fetchPlaylistTracks = (userID, playlistID) => {
-    return dispatch => {
-        dispatch(requestPlaylistTracks());
+export const RECEIVED_PUBLIC_PLAYLIST_TRACKS =
+    'RECEIVED_PUBLIC_PLAYLIST_TRACKS';
+export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
+    return {
+        type: RECEIVED_PUBLIC_PLAYLIST_TRACKS,
+        receivedTracksAt: Date.now(),
+        tracks: formatTracks(tracks),
+        playlistId
+    };
+};
 
-        return getPlaylistTracks(userID, playlistID).then(response => {
+// export const fetchPlaylistTracks = (userID, playlistID) => {
+//     return dispatch => {
+//         dispatch(requestPlaylistTracks());
+
+//         return getPlaylistTracks(userID, playlistID).then(response => {
+//             const { data: { body: payload } } = response;
+//             let tracks = [];
+
+//             if (payload) {
+//                 tracks = payload.items;
+//             }
+//             dispatch(receivedPlaylistTracks(playlistID, tracks));
+//         });
+//     };
+// };
+
+export const fetchPlaylistTracks = (userId, playlistId) => {
+    return (dispatch, getState) => {
+        const {
+            user: { id: myUserId },
+            router: { location: { pathname } },
+            navigation: { indexToRouteMap }
+        } = getState();
+
+        return getPlaylistTracks(userId, playlistId).then(response => {
             const { data: { body: payload } } = response;
             let tracks = [];
 
             if (payload) {
                 tracks = payload.items;
             }
-            dispatch(receivedPlaylistTracks(playlistID, tracks));
+
+            switch (pathname) {
+                case indexToRouteMap[0]:
+                    dispatch(receivedPlaylistTracks(playlistId, tracks));
+                    break;
+                case indexToRouteMap[1]:
+                    dispatch(receivedPublicPlaylistTracks(playlistId, tracks));
+                    break;
+                default:
+                    console.error(
+                        'Could not find correct category for these tracks.'
+                    );
+            }
         });
     };
 };
@@ -332,5 +376,42 @@ export const setPublicPlaylistsVisited = (isVisited = true) => {
     return {
         type: SET_PUBLIC_PLAYLISTS_VISITED,
         isVisited
+    };
+};
+
+export const REQUEST_SEARCHED_PLAYLISTS = 'REQUEST_SEARCHED_PLAYLISTS';
+export const requestSearchedPlaylists = () => {
+    return {
+        type: REQUEST_SEARCHED_PLAYLISTS
+    };
+};
+
+export const RECEIVED_SEARCHED_PLAYLISTS = 'RECEIVED_SEARCHED_PLAYLISTS';
+export const receivedSearchedPlaylists = json => {
+    return {
+        type: RECEIVED_SEARCHED_PLAYLISTS,
+        playlists: json.data.body ? json.data.body.playlists.items : {},
+        numberOfTracks: json.data.body ? json.data.body.playlists.total : 0,
+        receivedAt: Date.now()
+    };
+};
+
+export const searchPublicPlaylists = () => {
+    return (dispatch, getState) => {
+        const { publicPlaylists: { searchTerm, currentOffset } } = getState();
+
+        dispatch(requestSearchedPlaylists());
+        return searchPlaylists(searchTerm, currentOffset).then(json => {
+            dispatch(receivedSearchedPlaylists(json));
+        });
+    };
+};
+
+export const SET_PUBLIC_PLAYLIST_OPEN = 'SET_PUBLIC_PLAYLIST_OPEN';
+export const setPublicPlaylistOpen = (playlistId, isOpen) => {
+    return {
+        type: SET_PUBLIC_PLAYLIST_OPEN,
+        playlistId,
+        isOpen
     };
 };
