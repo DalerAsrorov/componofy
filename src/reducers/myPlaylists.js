@@ -39,6 +39,7 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
                 numberOfTracks,
                 canLoadMore
             } = state;
+
             numberOfTracks = action.numberOfTracks;
 
             if (numberOfTracks < OFFSET_LIMIT) {
@@ -56,7 +57,6 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
             }
 
             playlistsRemaining = numberOfTracks - currentOffset;
-            playlists = removeDuplicates(playlists, 'id');
 
             return Object.assign({}, state, {
                 numberOfTracks: action.numberOfTracks,
@@ -70,7 +70,10 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
         case RECEIVED_PLAYLIST_TRACKS:
             const updatedPlaylists = state.playlists.map(playlist => {
                 if (playlist.id === action.playlistID) {
-                    playlist.tracks.list = action.tracks;
+                    playlist.tracks.list = removeDuplicates(
+                        action.tracks,
+                        'id'
+                    );
                 }
                 return playlist;
             });
@@ -87,7 +90,6 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
                 if (playlist.id === playlistID) {
                     playlist.isOpen = isOpen;
                 }
-
                 return playlist;
             });
 
