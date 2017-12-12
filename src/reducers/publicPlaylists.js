@@ -5,7 +5,8 @@ import {
     REQUEST_SEARCHED_PLAYLISTS,
     SET_PUBLIC_PLAYLIST_OPEN,
     RECEIVED_PUBLIC_PLAYLIST_TRACKS,
-    SET_SEARCH_RESULTS_MESSAGE
+    SET_SEARCH_RESULTS_MESSAGE,
+    CLEAN_PUBLIC_SEARCH_RESULTS
 } from '../actions';
 import { OFFSET_LIMIT } from '../utils/constants';
 
@@ -89,6 +90,16 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
         case SET_SEARCH_RESULTS_MESSAGE:
             return Object.assign({}, state, {
                 searchResultsMessage: action.message
+            });
+        case CLEAN_PUBLIC_SEARCH_RESULTS:
+            return Object.assign({}, state, {
+                searchResultsMessage: '',
+                playlists: [],
+                numberOfTracks: 0,
+                playlistsRemaining: 0,
+                lastUpdated: Date.now(),
+                currentOffset: 0,
+                canLoadMore: true
             });
         default:
             return state;

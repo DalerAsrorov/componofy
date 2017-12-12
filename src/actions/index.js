@@ -388,11 +388,19 @@ export const setSearchResultsMessage = (message = '') => {
     };
 };
 
+export const CLEAN_PUBLIC_SEARCH_RESULTS = 'CLEAN_PUBLIC_SEARCH_RESULTS';
+export const cleanPublicSearchResults = () => {
+    return {
+        type: CLEAN_PUBLIC_SEARCH_RESULTS
+    };
+};
+
 export const searchPublicPlaylists = () => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
 
         dispatch(requestSearchedPlaylists());
+        dispatch(cleanPublicSearchResults());
         return searchPlaylists(searchTerm, currentOffset).then(json => {
             dispatch(receivedSearchedPlaylists(json));
             dispatch(setSearchResultsMessage(`Results for "${searchTerm}"`));

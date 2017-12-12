@@ -59,9 +59,14 @@ class PublicPlaylists extends PureComponent {
     };
 
     _handleSearchSubmit = event => {
+        const { publicPlaylists: { searchTerm } } = this.props;
         event.preventDefault();
 
-        this.props.searchPublicPlaylists();
+        if (R.isEmpty(searchTerm)) {
+            console.log('search featured/suggested playlists');
+        } else {
+            this.props.searchPublicPlaylists();
+        }
     };
 
     _handleClickPlaylist = (id, isOpen) => {
