@@ -2,7 +2,8 @@ import {
     SET_PUBLIC_SEARCH_TERM,
     SET_PUBLIC_PLAYLISTS_VISITED,
     RECEIVED_SEARCHED_PLAYLISTS,
-    REQUEST_SEARCHED_PLAYLISTS
+    REQUEST_SEARCHED_PLAYLISTS,
+    SET_PUBLIC_PLAYLIST_OPEN
 } from '../actions';
 import { OFFSET_LIMIT } from '../utils/constants';
 
@@ -19,6 +20,8 @@ const DEFAULT_STATE = {
 };
 
 export const publicPlaylists = (state = DEFAULT_STATE, action) => {
+    let playlists;
+
     switch (action.type) {
         case RECEIVED_SEARCHED_PLAYLISTS:
             let playlists = [...state.playlists, ...action.playlists];
@@ -57,6 +60,18 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, { searchTerm: action.searchTerm });
         case SET_PUBLIC_PLAYLISTS_VISITED:
             return Object.assign({}, state, { isVisited: action.isVisited });
+        case SET_PUBLIC_PLAYLIST_OPEN:
+            playlists = state.playlists.map(playlist => {
+                if (playlist.id === action.playlistId) {
+                    playlist.isOpen = action.isOpen;
+                }
+
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists
+            });
         default:
             return state;
     }

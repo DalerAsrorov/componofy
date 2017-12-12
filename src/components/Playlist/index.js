@@ -7,7 +7,7 @@ import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
 import Avatar from 'material-ui/Avatar';
 import classNames from 'classnames';
 import * as R from 'ramda';
-import { PLAYLIST_PROPTYPE, USER_PROPTYPE } from '../../utils/constants';
+import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import List from '../List';
 
 import './Playlist.css';
@@ -27,18 +27,16 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
-        user: USER_PROPTYPE.isRequired,
         showPlaylist: PropTypes.bool
     };
 
     componentDidMount = () => {
         const {
-            user: { id: userID },
-            playlist: { id: playlistID },
+            playlist: { id: playlistID, owner: { id: userId } },
             fetchPlaylistTracks
         } = this.props;
 
-        fetchPlaylistTracks(userID, playlistID);
+        fetchPlaylistTracks(userId, playlistID);
     };
 
     _handleClick = event => {

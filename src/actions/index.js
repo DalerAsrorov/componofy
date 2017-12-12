@@ -363,3 +363,12 @@ export const searchPublicPlaylists = () => {
         });
     };
 };
+
+export const SET_PUBLIC_PLAYLIST_OPEN = 'SET_PUBLIC_PLAYLIST_OPEN';
+export const setPublicPlaylistOpen = (playlistId, isOpen) => {
+    return {
+        type: SET_PUBLIC_PLAYLIST_OPEN,
+        playlistId,
+        isOpen
+    };
+};
