@@ -96,18 +96,36 @@ export const receivedPlaylistTracks = (playlistID, tracks) => {
     };
 };
 
-export const fetchPlaylistTracks = (userID, playlistID) => {
-    return dispatch => {
-        dispatch(requestPlaylistTracks());
+export const RECEIVED_PUBLIC_PLAYLIST_TRACKS =
+    'RECEIVED_PUBLIC_PLAYLIST_TRACKS';
+export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
+    return {
+        type: RECEIVED_PUBLIC_PLAYLIST_TRACKS,
+        receivedTracksAt: Date.now(),
+        tracks: formatTracks(tracks),
+        playlistId
+    };
+};
 
-        return getPlaylistTracks(userID, playlistID).then(response => {
+export const fetchPlaylistTracks = (userId, playlistId) => {
+    return (dispatch, getState) => {
+        const { user: { id: myUserId } } = getState();
+
+        // dispatch(requestPublicPlaylistTracks());
+
+        return getPlaylistTracks(userId, playlistId).then(response => {
             const { data: { body: payload } } = response;
             let tracks = [];
 
             if (payload) {
                 tracks = payload.items;
             }
-            dispatch(receivedPlaylistTracks(playlistID, tracks));
+
+            if (userId === myUserId) {
+                dispatch(receivedPlaylistTracks(playlistId, tracks));
+            } else {
+                dispatch(receivedPublicPlaylistTracks(playlistId, tracks));
+            }
         });
     };
 };
