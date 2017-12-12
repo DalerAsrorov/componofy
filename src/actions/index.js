@@ -107,11 +107,29 @@ export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
     };
 };
 
+// export const fetchPlaylistTracks = (userID, playlistID) => {
+//     return dispatch => {
+//         dispatch(requestPlaylistTracks());
+
+//         return getPlaylistTracks(userID, playlistID).then(response => {
+//             const { data: { body: payload } } = response;
+//             let tracks = [];
+
+//             if (payload) {
+//                 tracks = payload.items;
+//             }
+//             dispatch(receivedPlaylistTracks(playlistID, tracks));
+//         });
+//     };
+// };
+
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
-        const { user: { id: myUserId } } = getState();
-
-        // dispatch(requestPublicPlaylistTracks());
+        const {
+            user: { id: myUserId },
+            router: { location: { pathname } },
+            navigation: { indexToRouteMap }
+        } = getState();
 
         return getPlaylistTracks(userId, playlistId).then(response => {
             const { data: { body: payload } } = response;
@@ -121,10 +139,20 @@ export const fetchPlaylistTracks = (userId, playlistId) => {
                 tracks = payload.items;
             }
 
-            if (userId === myUserId) {
-                dispatch(receivedPlaylistTracks(playlistId, tracks));
-            } else {
-                dispatch(receivedPublicPlaylistTracks(playlistId, tracks));
+            console.log(pathname, indexToRouteMap);
+            debugger;
+
+            switch (pathname) {
+                case indexToRouteMap[0]:
+                    dispatch(receivedPlaylistTracks(playlistId, tracks));
+                    break;
+                case indexToRouteMap[1]:
+                    dispatch(receivedPublicPlaylistTracks(playlistId, tracks));
+                    break;
+                default:
+                    console.error(
+                        'Could not find correct category for these tracks.'
+                    );
             }
         });
     };
