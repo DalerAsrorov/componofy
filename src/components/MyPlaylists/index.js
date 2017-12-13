@@ -15,7 +15,8 @@ import {
     searchKeyMap,
     footerStyle,
     searchStyle,
-    OFFSET_LIMIT
+    OFFSET_LIMIT,
+    LOAD_MORE_STATUS
 } from '../../utils/constants';
 import { filterSearchPlaylist, toTop } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
@@ -47,13 +48,6 @@ const styles = theme => ({
     footerPanel: {}
 });
 
-const STATUS = {
-    // There is no tracks to load
-    0: 'All playlists loaded',
-    // There is more tracks to load
-    1: 'Load more'
-};
-
 let scroll = Scroll.animateScroll;
 
 class MyPlaylists extends PureComponent {
@@ -72,7 +66,7 @@ class MyPlaylists extends PureComponent {
     state = {
         settingsIsOpen: false,
         shouldFilterList: false,
-        status: STATUS[1],
+        status: LOAD_MORE_STATUS[1],
         canScrollUp: false,
         anchorEl: null
     };
@@ -194,7 +188,7 @@ class MyPlaylists extends PureComponent {
 
         if (!canLoadMore) {
             this.setState({
-                status: STATUS[0]
+                status: LOAD_MORE_STATUS[0]
             });
         }
     }
