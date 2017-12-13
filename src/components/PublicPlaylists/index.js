@@ -27,6 +27,12 @@ const styles = theme => ({
         outline: 'none'
     },
 
+    playlistRemaining: {
+        textAlign: 'left',
+        paddingLeft: `${theme.spacing.unit}px`,
+        width: '100%'
+    },
+
     searchAdortment: {
         position: 'relative',
         top: `${theme.spacing.unit / 2}px`,
