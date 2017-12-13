@@ -6,7 +6,8 @@ import {
     SET_PUBLIC_PLAYLIST_OPEN,
     RECEIVED_PUBLIC_PLAYLIST_TRACKS,
     SET_SEARCH_RESULTS_MESSAGE,
-    CLEAN_PUBLIC_SEARCH_RESULTS
+    CLEAN_PUBLIC_SEARCH_RESULTS,
+    SET_OPEN_STATUS_PUBLIC_PLAYLISTS
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
@@ -104,6 +105,15 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
                 lastUpdated: Date.now(),
                 currentOffset: 0,
                 canLoadMore: true
+            });
+        case SET_OPEN_STATUS_PUBLIC_PLAYLISTS:
+            playlists = state.playlists.map(playlist => {
+                playlist.isOpen = action.isOpen;
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists
             });
         default:
             return state;

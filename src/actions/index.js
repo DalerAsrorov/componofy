@@ -424,3 +424,12 @@ export const setPublicPlaylistOpen = (playlistId, isOpen) => {
         isOpen
     };
 };
+
+export const SET_OPEN_STATUS_PUBLIC_PLAYLISTS =
+    'SET_OPEN_STATUS_PUBLIC_PLAYLISTS';
+export const setOpenStatusPublicPlaylists = isOpen => {
+    return {
+        type: SET_OPEN_STATUS_PUBLIC_PLAYLISTS,
+        isOpen
+    };
+};

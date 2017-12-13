@@ -45,6 +45,8 @@ let scroll = Scroll.animateScroll;
 
 class PublicPlaylists extends PureComponent {
     static propTypes = {
+        publicPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setOpenStatusPublicPlaylists: PropTypes.func.isRequired,
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         setSearchResultsMessage: PropTypes.func.isRequired,
@@ -141,6 +143,16 @@ class PublicPlaylists extends PureComponent {
         navigateTo(nextPage);
     };
 
+    _handleClickCollapse = () => {
+        const {
+            setOpenStatusPublicPlaylists,
+            publicPlaylistsHasOpenPlaylist
+        } = this.props;
+
+        this._handleClickOption();
+        setOpenStatusPublicPlaylists(!publicPlaylistsHasOpenPlaylist);
+    };
+
     componentDidMount() {
         const {
             publicPlaylists: { isVisited },
@@ -172,9 +184,13 @@ class PublicPlaylists extends PureComponent {
                 canLoadMore,
                 playlistsRemaining
             },
+            publicPlaylistsHasOpenPlaylist,
             classes
         } = this.props;
         let listOfPlaylistsComponent, pageComponent;
+        let collapseText = publicPlaylistsHasOpenPlaylist
+            ? 'Collapse All'
+            : 'Expand All';
 
         if (!R.isEmpty(playlists)) {
             listOfPlaylistsComponent = (
@@ -200,7 +216,7 @@ class PublicPlaylists extends PureComponent {
                     Up
                 </MenuItem>
                 <MenuItem onClick={this._handleClickCollapse}>
-                    {'collapseText'}
+                    {collapseText}
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
