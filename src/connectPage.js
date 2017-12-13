@@ -242,8 +242,8 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setPublicPlaylistsVisited(isVisited));
     },
 
-    searchPublicPlaylists() {
-        dispatch(searchPublicPlaylists());
+    searchPublicPlaylists(shouldLoadMore) {
+        dispatch(searchPublicPlaylists(shouldLoadMore));
     },
 
     setPublicPlaylistOpen(playlistId, isOpen) {

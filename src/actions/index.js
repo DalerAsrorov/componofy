@@ -395,9 +395,17 @@ export const cleanPublicSearchResults = () => {
     };
 };
 
-export const searchPublicPlaylists = () => {
+export const searchPublicPlaylists = shouldLoadMore => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
+
+        dispatch(requestSearchedPlaylists());
+
+        if (shouldLoadMore) {
+            return searchPlaylists(searchTerm, currentOffset).then(json => {
+                dispatch(receivedSearchedPlaylists(json));
+            });
+        }
 
         dispatch(requestSearchedPlaylists());
         dispatch(cleanPublicSearchResults());

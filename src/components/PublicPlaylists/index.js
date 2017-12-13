@@ -126,7 +126,7 @@ class PublicPlaylists extends PureComponent {
             publicPlaylists: { currentOffset }
         } = this.props;
 
-        searchPublicPlaylists();
+        searchPublicPlaylists(true);
         scroll.scrollToBottom();
     };
 
