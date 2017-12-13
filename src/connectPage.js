@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
     removePlaylistTrackFromFinal,
+    setOpenStatusPublicPlaylists,
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
@@ -119,6 +120,7 @@ const mapStateToProps = (state, ownProps) => ({
     myPlaylists: state.myPlaylists,
     publicPlaylists: state.publicPlaylists,
     myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
+    publicPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.publicPlaylists),
     finalPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.finalPlaylists),
     navigation: state.navigation,
     numberOfFinalPlaylists: R.length(
@@ -242,8 +244,8 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setPublicPlaylistsVisited(isVisited));
     },
 
-    searchPublicPlaylists() {
-        dispatch(searchPublicPlaylists());
+    searchPublicPlaylists(shouldLoadMore) {
+        dispatch(searchPublicPlaylists(shouldLoadMore));
     },
 
     setPublicPlaylistOpen(playlistId, isOpen) {
@@ -252,6 +254,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setSearchResultsMessage(message) {
         dispatch(setSearchResultsMessage(message));
+    },
+
+    setOpenStatusPublicPlaylists(hasOpenPlaylist) {
+        dispatch(setOpenStatusPublicPlaylists(hasOpenPlaylist));
     }
 });
 

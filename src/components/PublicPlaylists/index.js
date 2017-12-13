@@ -10,6 +10,7 @@ import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
     MY_PLAYLISTS_PROPTYPE,
+    LOAD_MORE_STATUS,
     LIGHT_BLUE_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
@@ -26,6 +27,12 @@ const styles = theme => ({
         outline: 'none'
     },
 
+    playlistRemaining: {
+        textAlign: 'left',
+        paddingLeft: `${theme.spacing.unit}px`,
+        width: '100%'
+    },
+
     searchAdortment: {
         position: 'relative',
         top: `${theme.spacing.unit / 2}px`,
@@ -34,8 +41,12 @@ const styles = theme => ({
     }
 });
 
+let scroll = Scroll.animateScroll;
+
 class PublicPlaylists extends PureComponent {
     static propTypes = {
+        publicPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setOpenStatusPublicPlaylists: PropTypes.func.isRequired,
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         setSearchResultsMessage: PropTypes.func.isRequired,
@@ -45,6 +56,21 @@ class PublicPlaylists extends PureComponent {
         addPlaylistToFinal: PropTypes.func.isRequired,
         publicPlaylists: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
+    };
+
+    state = {
+        settingsIsOpen: false,
+        status: LOAD_MORE_STATUS[1],
+        canScrollUp: false,
+        anchorEl: null
+    };
+
+    _handleClickUp = () => {
+        this._handleClickOption();
+
+        scroll.scrollToTop({
+            duration: SCROLL_DURATION
+        });
     };
 
     _handleFocusOnSearch = event => {
@@ -81,6 +107,52 @@ class PublicPlaylists extends PureComponent {
         return this.props.removePlaylistFromFinal(playlist);
     };
 
+    _handleClickOptions = event => {
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleClickOption = () => {
+        this.setState({
+            settingsIsOpen: false
+        });
+    };
+
+    _handleLoadMore = event => {
+        event.preventDefault();
+
+        const {
+            searchPublicPlaylists,
+            publicPlaylists: { currentOffset }
+        } = this.props;
+
+        searchPublicPlaylists(true);
+        scroll.scrollToBottom();
+    };
+
+    _handleClickNext = () => {
+        const {
+            setNavIndex,
+            navigateTo,
+            navigation: { nextPage, nextIndex }
+        } = this.props;
+
+        setNavIndex(nextIndex);
+        navigateTo(nextPage);
+    };
+
+    _handleClickCollapse = () => {
+        const {
+            setOpenStatusPublicPlaylists,
+            publicPlaylistsHasOpenPlaylist
+        } = this.props;
+
+        this._handleClickOption();
+        setOpenStatusPublicPlaylists(!publicPlaylistsHasOpenPlaylist);
+    };
+
     componentDidMount() {
         const {
             publicPlaylists: { isVisited },
@@ -92,12 +164,33 @@ class PublicPlaylists extends PureComponent {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { publicPlaylists: { canLoadMore } } = nextProps;
+
+        if (!canLoadMore) {
+            this.setState({
+                status: LOAD_MORE_STATUS[0]
+            });
+        }
+    }
+
     render() {
+        const { settingsIsOpen, canScrollUp, anchorEl, status } = this.state;
         const {
-            publicPlaylists: { searchTerm, playlists, searchResultsMessage },
+            publicPlaylists: {
+                searchTerm,
+                playlists,
+                searchResultsMessage,
+                canLoadMore,
+                playlistsRemaining
+            },
+            publicPlaylistsHasOpenPlaylist,
             classes
         } = this.props;
         let listOfPlaylistsComponent, pageComponent;
+        let collapseText = publicPlaylistsHasOpenPlaylist
+            ? 'Collapse All'
+            : 'Expand All';
 
         if (!R.isEmpty(playlists)) {
             listOfPlaylistsComponent = (
@@ -110,6 +203,25 @@ class PublicPlaylists extends PureComponent {
                 />
             );
         }
+
+        const playlistCounter = (
+            <div className={classes.playlistRemaining}>
+                {playlistsRemaining}
+            </div>
+        );
+
+        const menuItems = (
+            <div>
+                <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                    Up
+                </MenuItem>
+                <MenuItem onClick={this._handleClickCollapse}>
+                    {collapseText}
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
+            </div>
+        );
 
         pageComponent = (
             <form
@@ -136,6 +248,19 @@ class PublicPlaylists extends PureComponent {
                     autoFocus
                 />
                 {listOfPlaylistsComponent}
+                <FooterPanel
+                    shouldShowCircle={canLoadMore}
+                    mainButtonColor="accent"
+                    onClickOptions={this._handleClickOptions}
+                    onSelectItem={this._handleClickOption}
+                    circleText={playlistCounter}
+                    onClick={this._handleLoadMore}
+                    isOpen={settingsIsOpen}
+                    mainText={status}
+                    anchorEl={anchorEl}
+                    menuItems={menuItems}
+                    style={footerStyle}
+                />
             </form>
         );
 

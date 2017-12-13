@@ -395,9 +395,17 @@ export const cleanPublicSearchResults = () => {
     };
 };
 
-export const searchPublicPlaylists = () => {
+export const searchPublicPlaylists = shouldLoadMore => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
+
+        dispatch(requestSearchedPlaylists());
+
+        if (shouldLoadMore) {
+            return searchPlaylists(searchTerm, currentOffset).then(json => {
+                dispatch(receivedSearchedPlaylists(json));
+            });
+        }
 
         dispatch(requestSearchedPlaylists());
         dispatch(cleanPublicSearchResults());
@@ -413,6 +421,15 @@ export const setPublicPlaylistOpen = (playlistId, isOpen) => {
     return {
         type: SET_PUBLIC_PLAYLIST_OPEN,
         playlistId,
+        isOpen
+    };
+};
+
+export const SET_OPEN_STATUS_PUBLIC_PLAYLISTS =
+    'SET_OPEN_STATUS_PUBLIC_PLAYLISTS';
+export const setOpenStatusPublicPlaylists = isOpen => {
+    return {
+        type: SET_OPEN_STATUS_PUBLIC_PLAYLISTS,
         isOpen
     };
 };
