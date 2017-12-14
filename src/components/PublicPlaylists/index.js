@@ -184,13 +184,18 @@ class PublicPlaylists extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { publicPlaylists: { canLoadMore } } = nextProps;
+        let { publicPlaylists: { canLoadMore, isFetching } } = nextProps;
+        let status = LOAD_MORE_STATUS[1];
 
-        if (!canLoadMore) {
-            this.setState({
-                status: LOAD_MORE_STATUS[0]
-            });
+        if (isFetching) {
+            status = LOAD_MORE_STATUS[2];
+        } else if (!canLoadMore) {
+            status = LOAD_MORE_STATUS[0];
         }
+
+        this.setState({
+            status
+        });
     }
 
     render() {
@@ -201,15 +206,18 @@ class PublicPlaylists extends PureComponent {
                 playlists,
                 searchResultsMessage,
                 canLoadMore,
+                isFetching,
                 playlistsRemaining
             },
             publicPlaylistsHasOpenPlaylist,
             classes
         } = this.props;
-        let listOfPlaylistsComponent, pageComponent;
-        let collapseText = publicPlaylistsHasOpenPlaylist
+        const loadMoreButtonIsEnabled =
+            canLoadMore && !isFetching && !R.isEmpty(playlists);
+        const collapseText = publicPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
+        let listOfPlaylistsComponent, pageComponent;
 
         if (!R.isEmpty(playlists)) {
             listOfPlaylistsComponent = (
@@ -288,7 +296,7 @@ class PublicPlaylists extends PureComponent {
                             }}
                         />
                         <FooterPanel
-                            shouldShowCircle={canLoadMore}
+                            shouldShowCircle={loadMoreButtonIsEnabled}
                             mainButtonColor="accent"
                             onClickOptions={this._handleClickOptions}
                             onSelectItem={this._handleClickOption}
