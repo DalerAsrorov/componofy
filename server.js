@@ -45,12 +45,12 @@ const startApp = async () => {
         server.route({
             method: 'GET',
             path: '/',
-            handler: (request, reply) => {
-                reply({
+            handler: (request, h) => {
+                return {
                     time: new Date().getTime(),
                     app: 'Componofy',
                     isOn: true
-                });
+                };
             },
             config: {
                 description: 'Starting end point.',
@@ -89,15 +89,15 @@ const startApp = async () => {
         server.route({
             method: 'GET',
             path: '/logout',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { yar } = request;
 
                 yar.reset();
 
-                reply({
+                return {
                     isAuthenticated: !!yar.get('session'),
                     offlineAt: Date.now()
-                });
+                };
             },
             config: {
                 description:
@@ -184,21 +184,19 @@ const startApp = async () => {
         server.route({
             method: 'GET',
             path: '/api/searchplaylist/{query}/{offset}/{limit}',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { query, offset, limit } = request.params;
 
-                searchPlaylists(query, {
+                return searchPlaylists(query, {
                     offset,
                     limit
                 })
-                    .then(data => {
-                        reply({
-                            date: Date.now(),
-                            query,
-                            data
-                        });
-                    })
-                    .catch(error => reply({ error }));
+                    .then(data => ({
+                        date: Date.now(),
+                        query,
+                        data
+                    }))
+                    .catch(error => ({ error }));
             },
             config: {
                 description:
@@ -211,7 +209,7 @@ const startApp = async () => {
         server.route({
             method: 'GET',
             path: '/api/playlist-tracks/{userID}/{playlistID}/{offset}/{limit}',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { offset, limit, userID, playlistID } = request.params;
 
                 return getPlaylistTracks(userID, playlistID, { offset, limit })
@@ -233,23 +231,24 @@ const startApp = async () => {
         server.route({
             method: 'POST',
             path: '/api/createplaylist',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { yar } = request;
                 const session = yar.get('session');
                 const { id: userID } = session;
                 const payload = JSON.parse(request.payload);
                 const { playlistName, options } = payload;
 
-                createPlaylist(userID, playlistName, options)
-                    .then(data => {
-                        reply({
-                            date: Date.now(),
-                            data
-                        });
-                    })
-                    .catch(error => reply({ error }));
+                return createPlaylist(userID, playlistName, options)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Creates playlist and returns back info about the new playlist.',
                 notes:
@@ -261,23 +260,24 @@ const startApp = async () => {
         server.route({
             method: 'POST',
             path: '/api/addtracks',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { yar } = request;
                 const session = yar.get('session');
                 const { id: userID } = session;
                 const payload = JSON.parse(request.payload);
                 const { playlistID, tracks, options } = payload;
 
-                addTracksToPlaylist(userID, playlistID, tracks, options)
-                    .then(data => {
-                        reply({
-                            date: Date.now(),
-                            data
-                        });
-                    })
-                    .catch(error => reply({ error }));
+                return addTracksToPlaylist(userID, playlistID, tracks, options)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Adds tracks to the playlist with the specified ID.',
                 notes:
@@ -289,28 +289,29 @@ const startApp = async () => {
         server.route({
             method: 'POST',
             path: '/api/upload-playlist-image',
-            handler: (request, reply) => {
+            handler: (request, h) => {
                 const { yar } = request;
                 const session = yar.get('session');
                 const { id: userId, accessToken } = session;
                 const payload = JSON.parse(request.payload);
                 const { playlistId, imageBase64 } = payload;
 
-                uploadPlaylistCoverImage(
+                return uploadPlaylistCoverImage(
                     userId,
                     playlistId,
                     imageBase64,
                     accessToken
                 )
-                    .then(data => {
-                        reply({
-                            date: Date.now(),
-                            data
-                        });
-                    })
-                    .catch(error => reply({ error }));
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Uploas cover image to the specified existing playlist.',
                 notes:
