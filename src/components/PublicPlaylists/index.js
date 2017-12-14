@@ -13,6 +13,7 @@ import {
     LOAD_MORE_STATUS,
     LIGHT_BLUE_COLOR,
     SCROLL_DURATION,
+    OFFSET_LIMIT,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -153,6 +154,24 @@ class PublicPlaylists extends PureComponent {
         setOpenStatusPublicPlaylists(!publicPlaylistsHasOpenPlaylist);
     };
 
+    _handleFocusOnSearch = event => {
+        event.preventDefault();
+        this.searchInputRef.focus();
+    };
+
+    _handleCanScrollUp = canScrollUp => {
+        const { publicPlaylists: { playlists } } = this.props;
+        const nPlaylists = playlists.length;
+
+        if (canScrollUp && nPlaylists < OFFSET_LIMIT) {
+            canScrollUp = false;
+        }
+
+        this.setState({
+            canScrollUp
+        });
+    };
+
     componentDidMount() {
         const {
             publicPlaylists: { isVisited },
@@ -165,13 +184,18 @@ class PublicPlaylists extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { publicPlaylists: { canLoadMore } } = nextProps;
+        let { publicPlaylists: { canLoadMore, isFetching } } = nextProps;
+        let status = LOAD_MORE_STATUS[1];
 
-        if (!canLoadMore) {
-            this.setState({
-                status: LOAD_MORE_STATUS[0]
-            });
+        if (isFetching) {
+            status = LOAD_MORE_STATUS[2];
+        } else if (!canLoadMore) {
+            status = LOAD_MORE_STATUS[0];
         }
+
+        this.setState({
+            status
+        });
     }
 
     render() {
@@ -182,15 +206,18 @@ class PublicPlaylists extends PureComponent {
                 playlists,
                 searchResultsMessage,
                 canLoadMore,
+                isFetching,
                 playlistsRemaining
             },
             publicPlaylistsHasOpenPlaylist,
             classes
         } = this.props;
-        let listOfPlaylistsComponent, pageComponent;
-        let collapseText = publicPlaylistsHasOpenPlaylist
+        const loadMoreButtonIsEnabled =
+            canLoadMore && !isFetching && !R.isEmpty(playlists);
+        const collapseText = publicPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
+        let listOfPlaylistsComponent, pageComponent;
 
         if (!R.isEmpty(playlists)) {
             listOfPlaylistsComponent = (
@@ -223,45 +250,67 @@ class PublicPlaylists extends PureComponent {
             </div>
         );
 
+        const serachHandlers = {
+            focusSearch: this._handleFocusOnSearch
+        };
+
         pageComponent = (
-            <form
-                onSubmit={this._handleSearchSubmit}
-                name="playlistsSearchForm"
-                className={classes.playlistsSearchForm}
+            <HotKeys
+                keyMap={searchKeyMap}
+                handlers={serachHandlers}
+                className={classes.hotKeys}
             >
-                <Search
-                    onChange={this._handleInputChange}
-                    inputId="publicPlaylistsSearch"
-                    style={searchStyle}
-                    value={searchTerm}
-                    startAdornment={
-                        <SearchIcon
-                            onClick={this._handleFocusOnSearch}
-                            className={classes.searchAdortment}
+                <div id="publicPlaylists">
+                    <form
+                        onSubmit={this._handleSearchSubmit}
+                        name="playlistsSearchForm"
+                        className={classes.playlistsSearchForm}
+                    >
+                        <Waypoint
+                            onEnter={() => {
+                                this._handleCanScrollUp(false);
+                            }}
                         />
-                    }
-                    placeholder="Search public playlists by artists, type, mood..."
-                    inputRef={input => {
-                        this.searchInputRef = input;
-                    }}
-                    autoComplete="off"
-                    autoFocus
-                />
-                {listOfPlaylistsComponent}
-                <FooterPanel
-                    shouldShowCircle={canLoadMore}
-                    mainButtonColor="accent"
-                    onClickOptions={this._handleClickOptions}
-                    onSelectItem={this._handleClickOption}
-                    circleText={playlistCounter}
-                    onClick={this._handleLoadMore}
-                    isOpen={settingsIsOpen}
-                    mainText={status}
-                    anchorEl={anchorEl}
-                    menuItems={menuItems}
-                    style={footerStyle}
-                />
-            </form>
+                        <Search
+                            onChange={this._handleInputChange}
+                            inputId="publicPlaylistsSearch"
+                            style={searchStyle}
+                            value={searchTerm}
+                            startAdornment={
+                                <SearchIcon
+                                    onClick={this._handleFocusOnSearch}
+                                    className={classes.searchAdortment}
+                                />
+                            }
+                            placeholder="Search public playlists by artists, type, mood..."
+                            inputRef={input => {
+                                this.searchInputRef = input;
+                            }}
+                            autoComplete="off"
+                            autoFocus
+                        />
+                        {listOfPlaylistsComponent}
+                        <Waypoint
+                            onEnter={() => {
+                                this._handleCanScrollUp(true);
+                            }}
+                        />
+                        <FooterPanel
+                            shouldShowCircle={loadMoreButtonIsEnabled}
+                            mainButtonColor="accent"
+                            onClickOptions={this._handleClickOptions}
+                            onSelectItem={this._handleClickOption}
+                            circleText={playlistCounter}
+                            onClick={this._handleLoadMore}
+                            isOpen={settingsIsOpen}
+                            mainText={status}
+                            anchorEl={anchorEl}
+                            menuItems={menuItems}
+                            style={footerStyle}
+                        />
+                    </form>
+                </div>
+            </HotKeys>
         );
 
         return pageComponent;

@@ -114,5 +114,7 @@ export const LOAD_MORE_STATUS = {
     // There is no tracks to load
     0: 'All playlists loaded',
     // There is more tracks to load
-    1: 'Load more'
+    1: 'Load more',
+    // Is true during data request
+    2: 'Loading...'
 };

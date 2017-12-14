@@ -407,7 +407,6 @@ export const searchPublicPlaylists = shouldLoadMore => {
             });
         }
 
-        dispatch(requestSearchedPlaylists());
         dispatch(cleanPublicSearchResults());
         return searchPlaylists(searchTerm, currentOffset).then(json => {
             dispatch(receivedSearchedPlaylists(json));
