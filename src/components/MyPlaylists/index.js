@@ -184,13 +184,18 @@ class MyPlaylists extends PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { myPlaylists: { canLoadMore } } = nextProps;
+        const { myPlaylists: { canLoadMore, isFetching } } = nextProps;
+        let status = LOAD_MORE_STATUS[1];
 
-        if (!canLoadMore) {
-            this.setState({
-                status: LOAD_MORE_STATUS[0]
-            });
+        if (isFetching) {
+            status = LOAD_MORE_STATUS[2];
+        } else if (!canLoadMore) {
+            status = LOAD_MORE_STATUS[0];
         }
+
+        this.setState({
+            status
+        });
     }
 
     render() {
@@ -205,12 +210,15 @@ class MyPlaylists extends PureComponent {
             myPlaylists: {
                 playlistsRemaining,
                 canLoadMore,
+                isFetching,
                 searchTerm,
                 playlists
             },
             myPlaylistsHasOpenPlaylist,
             classes
         } = this.props;
+        const loadMoreButtonIsEnabled =
+            canLoadMore && !isFetching && !isEmpty(playlists);
 
         let collapseText = myPlaylistsHasOpenPlaylist
             ? 'Collapse All'
@@ -289,7 +297,7 @@ class MyPlaylists extends PureComponent {
                         }}
                     />
                     <FooterPanel
-                        shouldShowCircle={canLoadMore}
+                        shouldShowCircle={loadMoreButtonIsEnabled}
                         mainButtonColor="accent"
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
