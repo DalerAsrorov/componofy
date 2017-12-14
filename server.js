@@ -68,8 +68,6 @@ const startApp = async () => {
                 let { id: sessionID } = yar;
                 let session = yar.get('session');
 
-                console.log(session, sessionID);
-
                 return {
                     sessionID,
                     isAuthenticated: !!session,
@@ -78,7 +76,6 @@ const startApp = async () => {
             },
             config: {
                 cors: {
-                    origin: ['*'],
                     credentials: true
                 },
                 description:
