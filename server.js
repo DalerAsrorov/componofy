@@ -1,6 +1,7 @@
 import Hapi from 'hapi';
 import Yar from 'yar';
 import Inert from 'inert';
+import Path from 'path';
 import corsHeaders from 'hapi-cors-headers';
 import {
     createAuthorizeURL,
@@ -22,7 +23,9 @@ dotenv.config();
 const server = new Hapi.Server({
     port: 3001,
     host: 'localhost',
-    routes: { cors: true }
+    routes: {
+        cors: true
+    }
 });
 
 // options for session management module
@@ -33,8 +36,6 @@ const options = {
     }
 };
 
-// server.ext('onPreResponse', corsHeaders);
-
 const startApp = async () => {
     try {
         await server.register([
@@ -44,13 +45,11 @@ const startApp = async () => {
 
         server.route({
             method: 'GET',
-            path: '/',
-            handler: (request, h) => {
-                return {
-                    time: new Date().getTime(),
-                    app: 'Componofy',
-                    isOn: true
-                };
+            path: '/{param*}',
+            handler: {
+                directory: {
+                    path: 'build'
+                }
             },
             config: {
                 description: 'Starting end point.',
