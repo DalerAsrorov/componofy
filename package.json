@@ -17,7 +17,7 @@
         "dotenv": "^4.0.0",
         "enzyme-adapter-react-15": "^1.0.5",
         "hapi": "^17.1",
-        "hapi-cors-headers": "^1.0.0",
+        "hapi-cors-headers": "^1.0.3",
         "history": "^4.7.2",
         "inert": "^5.0.1",
         "material-ui": "^1.0.0-beta.21",
