@@ -115,6 +115,13 @@ const startApp = async () => {
 
                 return authorizationCodeGrant(code)
                     .then(({ clientAppURL, accessToken, refreshToken }) => {
+                        console.log(
+                            'Figure out the problem',
+                            clientAppURL,
+                            accessToken,
+                            refreshToken
+                        );
+                        debugger;
                         return getMe().then(({ body: { id, email } }) => {
                             const sessionState = {
                                 lastVisit: Date.now(),
