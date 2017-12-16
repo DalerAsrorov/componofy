@@ -19,7 +19,6 @@
         "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
     },
-    "cacheDirectories": ["node_modules"],
     "heroku-postbuild": "npm run install && npm run build",
     "dependencies": {
         "classnames": "^2.2.5",
