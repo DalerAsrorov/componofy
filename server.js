@@ -303,23 +303,37 @@ const startApp = async () => {
             }
         });
 
-        // server.route({
-        //     method: 'GET',
-        //     path: '/{param*}',
-        //     handler: {
-        //         directory: {
-        //             path: Path.join(__dirname, './build'),
-        //             listing: false,
-        //             index: ['index.html']
-        //         }
-        //     },
-        //     config: {
-        //         description: 'Starting end point.',
-        //         notes:
-        //             'Can be used for checking if server connection still exists.',
-        //         tags: ['api', 'index']
-        //     }
-        // });
+        server.route({
+            method: 'GET',
+            path: '/{param*}',
+            handler: {
+                file: Path.join(__dirname, './build/index.html')
+            },
+            config: {
+                description: 'Starting end point.',
+                notes:
+                    'Can be used for checking if server connection still exists.',
+                tags: ['api', 'index']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/static/{param*}',
+            handler: {
+                directory: {
+                    path: Path.join(__dirname, './build/static'),
+                    listing: false,
+                    index: true
+                }
+            },
+            config: {
+                description: 'Starting end point.',
+                notes:
+                    'Can be used for checking if server connection still exists.',
+                tags: ['api', 'index']
+            }
+        });
 
         await server.start();
     } catch (error) {
