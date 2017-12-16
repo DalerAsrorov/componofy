@@ -21,7 +21,7 @@ dotenv.config();
 
 // Hapi server instance.
 const server = new Hapi.Server({
-    port: 3001,
+    port: process.env.PORT || 3001,
     host: 'localhost',
     routes: {
         cors: true
