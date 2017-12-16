@@ -101,6 +101,9 @@ const startApp = async () => {
                 return h.redirect(authUrl);
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description: 'Receives confirmation to start authentication.',
                 notes: 'Authentication process will redirect',
                 tags: ['api', 'auth', 'user']
@@ -115,13 +118,6 @@ const startApp = async () => {
 
                 return authorizationCodeGrant(code)
                     .then(({ clientAppURL, accessToken, refreshToken }) => {
-                        console.log(
-                            'Figure out the problem',
-                            clientAppURL,
-                            accessToken,
-                            refreshToken
-                        );
-                        debugger;
                         return getMe().then(({ body: { id, email } }) => {
                             const sessionState = {
                                 lastVisit: Date.now(),
