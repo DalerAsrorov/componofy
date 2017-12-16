@@ -101,9 +101,6 @@ const startApp = async () => {
                 return h.redirect(authUrl);
             },
             config: {
-                cors: {
-                    credentials: true
-                },
                 description: 'Receives confirmation to start authentication.',
                 notes: 'Authentication process will redirect',
                 tags: ['api', 'auth', 'user']
@@ -135,6 +132,10 @@ const startApp = async () => {
                     .catch(error => console.error(error));
             },
             config: {
+                cors: {
+                    credentials: true,
+                    origin: ['*']
+                },
                 description:
                     'Given code from Spotify authentication server, generates token and `re`directs back to client app.',
                 notes: 'Accepts the code value',
