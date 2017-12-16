@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const DEV_HOST = 'http://localhost:3000';
 const SCOPES_STR =
     'user-library-read user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
     'y-public playlist-modify-private user-library-read ugc-image-upload';
@@ -32,7 +33,7 @@ export const createAuthorizeURL = (
 // eslint-disable-next-line
 export async function authorizationCodeGrant(code) {
     let params = {
-        clientAppURL: `${APP_CLIENT_URL}/app`
+        clientAppURL: `${APP_CLIENT_URL || DEV_HOST}/app`
     };
 
     try {
