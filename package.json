@@ -20,7 +20,7 @@
         "eject": "react-scripts eject"
     },
     "cacheDirectories": ["node_modules"],
-    "heroku-postbuild": "yarn && yarn build",
+    "heroku-postbuild": "npm run install && npm run build",
     "dependencies": {
         "classnames": "^2.2.5",
         "dotenv": "^4.0.0",
