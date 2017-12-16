@@ -24,9 +24,7 @@ const PORT = process.env.PORT || 3001;
 const server = new Hapi.Server({
     port: PORT,
     routes: {
-        cors: true,
-        credentials: true,
-        origin: ['*']
+        cors: true
     }
 });
 
@@ -102,6 +100,10 @@ const startApp = async () => {
                 return h.redirect(authUrl);
             },
             config: {
+                cors: {
+                    credentials: true,
+                    origin: ['*']
+                },
                 description: 'Receives confirmation to start authentication.',
                 notes: 'Authentication process will redirect',
                 tags: ['api', 'auth', 'user']
