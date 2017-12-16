@@ -19,10 +19,11 @@ import dotenv from 'dotenv';
 // allow server to import environment variables
 dotenv.config();
 
+const PORT = process.env.PORT || 3001;
+
 // Hapi server instance.
 const server = new Hapi.Server({
-    port: process.env.PORT || 3001,
-    host: 'localhost',
+    port: PORT,
     routes: {
         cors: true
     }
