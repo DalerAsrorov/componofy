@@ -22,7 +22,7 @@ class Login extends PureComponent {
     };
 
     _handleAuth = () => {
-        replaceTo('/auth');
+        replaceTo('/api/auth');
     };
 
     render() {

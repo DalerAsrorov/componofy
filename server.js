@@ -45,22 +45,6 @@ const startApp = async () => {
 
         server.route({
             method: 'GET',
-            path: '/{param*}',
-            handler: {
-                directory: {
-                    path: 'build'
-                }
-            },
-            config: {
-                description: 'Starting end point.',
-                notes:
-                    'Can be used for checking if server connection still exists.',
-                tags: ['api', 'index']
-            }
-        });
-
-        server.route({
-            method: 'GET',
             path: '/api/userstatus',
             handler: (request, h) => {
                 const { yar } = request;
@@ -87,7 +71,7 @@ const startApp = async () => {
 
         server.route({
             method: 'GET',
-            path: '/logout',
+            path: '/api/logout',
             handler: (request, h) => {
                 const { yar } = request;
 
@@ -109,7 +93,7 @@ const startApp = async () => {
 
         server.route({
             method: 'GET',
-            path: '/auth',
+            path: '/api/auth',
             handler: (request, h) => {
                 const { authUrl } = createAuthorizeURL();
 
@@ -124,7 +108,7 @@ const startApp = async () => {
 
         server.route({
             method: 'GET',
-            path: '/callback',
+            path: '/api/callback',
             handler: (request, h) => {
                 const { query: { code } } = request;
 
@@ -318,6 +302,24 @@ const startApp = async () => {
                 tags: ['api', 'playlists', 'image', 'update']
             }
         });
+
+        // server.route({
+        //     method: 'GET',
+        //     path: '/{param*}',
+        //     handler: {
+        //         directory: {
+        //             path: Path.join(__dirname, './build'),
+        //             listing: false,
+        //             index: ['index.html']
+        //         }
+        //     },
+        //     config: {
+        //         description: 'Starting end point.',
+        //         notes:
+        //             'Can be used for checking if server connection still exists.',
+        //         tags: ['api', 'index']
+        //     }
+        // });
 
         await server.start();
     } catch (error) {
