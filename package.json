@@ -11,8 +11,9 @@
             "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css":
             "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-        "start-js": "cross-env NODE_PATH=src react-scripts start",
-        "start": "npm-run-all -p watch-css start-js",
+        "start-js": "cross-env react-scripts start",
+        "start": "yarn start:api",
+        "start:dev": "npm-run-all -p watch-css start-js",
         "start:api": "babel-node server.js --presets es2015,stage-2",
         "build": "npm run build-css && react-scripts build",
         "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
