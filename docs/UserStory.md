@@ -9,6 +9,7 @@ This document provides information on available actions for the user that exist 
 * The user should be able to switch between Public and My playlists pages.
 * The user should be able to go to `/componofy` page only after the user added at least one playlist 
 or *at least 1 track* to the final list located in `/componofy` page.
+* The user should be able to input new playlist name.
 
 ## Can (not)
 
@@ -23,3 +24,6 @@ or *at least 1 track* to the final list located in `/componofy` page.
 * The user can delete any track from the list by unselecting checkmark.
 * The user can unselect specific tracks from the playlist - delete.
 * The user can preview track if it is available.
+* The user can set new playlist as `public` or `private`
+* The user can new playlist's cover image.
+* The user can see the status of merging process.
