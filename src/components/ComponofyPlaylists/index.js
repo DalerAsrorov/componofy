@@ -303,7 +303,7 @@ class ComponofyPlaylists extends PureComponent {
         );
 
         const mainText = (
-            <span className={classes.mainButtonText}>Componofy!</span>
+            <span className={classes.mainButtonText}>Componofy</span>
         );
 
         const serachHandlers = {
