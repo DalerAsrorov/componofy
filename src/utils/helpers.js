@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-const SERVER_URL = 'http://localhost:3001';
+const SERVER_URL = window.location.origin;
 
 export const replaceTo = path => {
     window.location.replace(`${SERVER_URL}${path}`);
