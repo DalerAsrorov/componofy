@@ -131,9 +131,7 @@ export const fetchPlaylistTracks = (userId, playlistId) => {
                     dispatch(receivedPublicPlaylistTracks(playlistId, tracks));
                     break;
                 default:
-                    console.error(
-                        'Could not find correct category for these tracks.'
-                    );
+                    break;
             }
         });
     };
