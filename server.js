@@ -2,7 +2,6 @@ import Hapi from 'hapi';
 import Yar from 'yar';
 import Inert from 'inert';
 import Path from 'path';
-import corsHeaders from 'hapi-cors-headers';
 import {
     createAuthorizeURL,
     authorizationCodeGrant,
