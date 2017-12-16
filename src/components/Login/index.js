@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import FaSpotify from 'react-icons/lib/fa/spotify';
-import { replaceTo } from 'utils/helpers';
-import Landing from 'components/Landing';
+import { replaceTo } from '../../utils/helpers';
+import Landing from '../Landing';
 
 import './Login.css';
 
@@ -22,7 +22,7 @@ class Login extends PureComponent {
     };
 
     _handleAuth = () => {
-        replaceTo('/auth');
+        replaceTo('/api/auth');
     };
 
     render() {

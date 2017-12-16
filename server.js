@@ -1,5 +1,7 @@
 import Hapi from 'hapi';
 import Yar from 'yar';
+import Inert from 'inert';
+import Path from 'path';
 import corsHeaders from 'hapi-cors-headers';
 import {
     createAuthorizeURL,
@@ -18,7 +20,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Hapi server instance.
-const server = new Hapi.Server();
+const server = new Hapi.Server({
+    port: 3001,
+    host: 'localhost',
+    routes: {
+        cors: true
+    }
+});
 
 // options for session management module
 const options = {
@@ -28,294 +36,309 @@ const options = {
     }
 };
 
-server.connection({
-    port: 3001,
-    host: 'localhost'
-});
+const startApp = async () => {
+    try {
+        await server.register([
+            { plugin: Yar, options },
+            { plugin: Inert, options: {} }
+        ]);
 
-server.register({ register: Yar, options }, error => {
-    if (error) {
-        throw error;
-    }
+        server.route({
+            method: 'GET',
+            path: '/api/userstatus',
+            handler: (request, h) => {
+                const { yar } = request;
+                let { id: sessionID } = yar;
+                let session = yar.get('session');
 
-    server.start(err => {
-        if (err) {
-            throw err;
-        }
+                return {
+                    sessionID,
+                    isAuthenticated: !!session,
+                    ...session
+                };
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Lets client know whether the user has already been authenticated.',
+                notes:
+                    'Can be used for checking if server connection still exists.',
+                tags: ['api', 'index', 'user']
+            }
+        });
 
-        console.log(`Componofy server running at: ${server.info.uri}`);
-    });
+        server.route({
+            method: 'GET',
+            path: '/api/logout',
+            handler: (request, h) => {
+                const { yar } = request;
 
-    server.ext('onPreResponse', corsHeaders);
+                yar.reset();
 
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, reply) => {
-            reply({
-                time: new Date().getTime(),
-                app: 'Componofy',
-                isOn: true
-            });
-        },
-        config: {
-            description: 'Starting end point.',
-            notes:
-                'Can be used for checking if server connection still exists.',
-            tags: ['api', 'index']
-        }
-    });
+                return {
+                    isAuthenticated: !!yar.get('session'),
+                    offlineAt: Date.now()
+                };
+            },
+            config: {
+                description:
+                    'Logs out user from the app and clears the session.',
+                notes:
+                    'Session object will not be available if this request is made.',
+                tags: ['api', 'auth']
+            }
+        });
 
-    server.route({
-        method: 'GET',
-        path: '/api/userstatus',
-        handler: (request, reply) => {
-            const { yar } = request;
-            let { id: sessionID } = yar;
-            let session = yar.get('session');
+        server.route({
+            method: 'GET',
+            path: '/api/auth',
+            handler: (request, h) => {
+                const { authUrl } = createAuthorizeURL();
 
-            reply({
-                sessionID,
-                isAuthenticated: !!session,
-                ...session
-            });
-        },
-        config: {
-            description:
-                'Lets client know whether the user has already been authenticated.',
-            notes:
-                'Can be used for checking if server connection still exists.',
-            tags: ['api', 'index', 'user']
-        }
-    });
+                return h.redirect(authUrl);
+            },
+            config: {
+                description: 'Receives confirmation to start authentication.',
+                notes: 'Authentication process will redirect',
+                tags: ['api', 'auth', 'user']
+            }
+        });
 
-    server.route({
-        method: 'GET',
-        path: '/logout',
-        handler: (request, reply) => {
-            const { yar } = request;
+        server.route({
+            method: 'GET',
+            path: '/api/callback',
+            handler: (request, h) => {
+                const { query: { code } } = request;
 
-            yar.reset();
+                return authorizationCodeGrant(code)
+                    .then(({ clientAppURL, accessToken, refreshToken }) => {
+                        return getMe().then(({ body: { id, email } }) => {
+                            const sessionState = {
+                                lastVisit: Date.now(),
+                                accessToken,
+                                refreshToken,
+                                email,
+                                id
+                            };
 
-            reply({
-                isAuthenticated: !!yar.get('session'),
-                offlineAt: Date.now()
-            });
-        },
-        config: {
-            description: 'Logs out user from the app and clears the session.',
-            notes:
-                'Session object will not be available if this request is made.',
-            tags: ['api', 'auth']
-        }
-    });
+                            request.yar.set('session', sessionState);
 
-    server.route({
-        method: 'GET',
-        path: '/auth',
-        handler: (request, reply) => {
-            const { authUrl } = createAuthorizeURL();
-            reply.redirect(authUrl);
-        },
-        config: {
-            description: 'Receives confirmation to start authentication.',
-            notes: 'Authentication process will redirect',
-            tags: ['api', 'auth', 'user']
-        }
-    });
+                            return h.redirect(clientAppURL);
+                        });
+                    })
+                    .catch(error => console.error(error));
+            },
+            config: {
+                description:
+                    'Given code from Spotify authentication server, generates token and `re`directs back to client app.',
+                notes: 'Accepts the code value',
+                tags: ['api', 'auth', 'user']
+            }
+        });
 
-    server.route({
-        method: 'GET',
-        path: '/callback',
-        handler: (request, reply) => {
-            const { query: { code } } = request;
+        server.route({
+            method: 'GET',
+            path: '/api/myplaylists/{offset}/{limit}',
+            handler: (request, h) => {
+                const { offset, limit } = request.params;
 
-            authorizationCodeGrant(code)
-                .then(({ clientAppURL, accessToken, refreshToken }) => {
-                    getMe().then(({ body: { id, email } }) => {
-                        const sessionState = {
-                            lastVisit: Date.now(),
-                            accessToken,
-                            refreshToken,
-                            email,
-                            id
+                return getMyPlaylists({
+                    offset,
+                    limit
+                })
+                    .then(data => {
+                        return {
+                            date: Date.now(),
+                            data
                         };
+                    })
+                    .catch(error => ({ error }));
+            },
+            config: {
+                description: 'Return the authenticated user playlist.',
+                notes:
+                    'Should be authenticated first to have access to this information',
+                tags: ['api', 'playlists', 'user']
+            }
+        });
 
-                        request.yar.set('session', sessionState);
-                        reply.redirect(clientAppURL);
-                    });
+        server.route({
+            method: 'GET',
+            path: '/api/searchplaylist/{query}/{offset}/{limit}',
+            handler: (request, h) => {
+                const { query, offset, limit } = request.params;
+
+                return searchPlaylists(query, {
+                    offset,
+                    limit
                 })
-                .catch(error => console.error(error));
-        },
-        config: {
-            description:
-                'Given code from Spotify authentication server, generates token and `re`directs back to client app.',
-            notes: 'Accepts the code value',
-            tags: ['api', 'auth', 'user']
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/api/myplaylists/{offset}/{limit}',
-        handler: (request, reply) => {
-            const { offset, limit } = request.params;
-
-            getMyPlaylists({
-                offset,
-                limit
-            })
-                .then(data => {
-                    reply({
-                        date: Date.now(),
-                        data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description: 'Return the authenticated user playlist.',
-            notes:
-                'Should be authenticated first to have access to this information',
-            tags: ['api', 'playlists', 'user']
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/api/searchplaylist/{query}/{offset}/{limit}',
-        handler: (request, reply) => {
-            const { query, offset, limit } = request.params;
-
-            searchPlaylists(query, {
-                offset,
-                limit
-            })
-                .then(data => {
-                    reply({
+                    .then(data => ({
                         date: Date.now(),
                         query,
                         data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description:
-                'Returns the list of playlists based on the given search parameters.',
-            notes: 'This endpoint does not require authentication.',
-            tags: ['api', 'playlsits', 'search']
-        }
-    });
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                description:
+                    'Returns the list of playlists based on the given search parameters.',
+                notes: 'This endpoint does not require authentication.',
+                tags: ['api', 'playlsits', 'search']
+            }
+        });
 
-    server.route({
-        method: 'GET',
-        path: '/api/playlist-tracks/{userID}/{playlistID}/{offset}/{limit}',
-        handler: (request, reply) => {
-            const { offset, limit, userID, playlistID } = request.params;
+        server.route({
+            method: 'GET',
+            path: '/api/playlist-tracks/{userID}/{playlistID}/{offset}/{limit}',
+            handler: (request, h) => {
+                const { offset, limit, userID, playlistID } = request.params;
 
-            getPlaylistTracks(userID, playlistID, { offset, limit })
-                .then(data => {
-                    reply({
+                return getPlaylistTracks(userID, playlistID, { offset, limit })
+                    .then(data => ({
                         date: Date.now(),
                         data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description:
-                'Returns playlist tracks given the user and playlist IDs.',
-            notes: 'Both UserID and PlaylistID are required to fetch teh data.',
-            tags: ['api', 'playlists']
-        }
-    });
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                description:
+                    'Returns playlist tracks given the user and playlist IDs.',
+                notes:
+                    'Both UserID and PlaylistID are required to fetch teh data.',
+                tags: ['api', 'playlists']
+            }
+        });
 
-    server.route({
-        method: 'POST',
-        path: '/api/createplaylist',
-        handler: (request, reply) => {
-            const { yar } = request;
-            const session = yar.get('session');
-            const { id: userID } = session;
-            const payload = JSON.parse(request.payload);
-            const { playlistName, options } = payload;
+        server.route({
+            method: 'POST',
+            path: '/api/createplaylist',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userID } = session;
+                const payload = JSON.parse(request.payload);
+                const { playlistName, options } = payload;
 
-            createPlaylist(userID, playlistName, options)
-                .then(data => {
-                    reply({
+                return createPlaylist(userID, playlistName, options)
+                    .then(data => ({
                         date: Date.now(),
                         data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description:
-                'Creates playlist and returns back info about the new playlist.',
-            notes:
-                'Should be authenticated to create playlist. This endpoint does not create tracks in playlist.',
-            tags: ['api', 'playlists', 'action']
-        }
-    });
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Creates playlist and returns back info about the new playlist.',
+                notes:
+                    'Should be authenticated to create playlist. This endpoint does not create tracks in playlist.',
+                tags: ['api', 'playlists', 'action']
+            }
+        });
 
-    server.route({
-        method: 'POST',
-        path: '/api/addtracks',
-        handler: (request, reply) => {
-            const { yar } = request;
-            const session = yar.get('session');
-            const { id: userID } = session;
-            const payload = JSON.parse(request.payload);
-            const { playlistID, tracks, options } = payload;
+        server.route({
+            method: 'POST',
+            path: '/api/addtracks',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userID } = session;
+                const payload = JSON.parse(request.payload);
+                const { playlistID, tracks, options } = payload;
 
-            addTracksToPlaylist(userID, playlistID, tracks, options)
-                .then(data => {
-                    reply({
+                return addTracksToPlaylist(userID, playlistID, tracks, options)
+                    .then(data => ({
                         date: Date.now(),
                         data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description: 'Adds tracks to the playlist with the specified ID.',
-            notes:
-                'The playlist ID is required. Tracks received from data is an array of track IDs.',
-            tags: ['api', 'playlists', 'action', 'tracks']
-        }
-    });
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Adds tracks to the playlist with the specified ID.',
+                notes:
+                    'The playlist ID is required. Tracks received from data is an array of track IDs.',
+                tags: ['api', 'playlists', 'action', 'tracks']
+            }
+        });
 
-    server.route({
-        method: 'POST',
-        path: '/api/upload-playlist-image',
-        handler: (request, reply) => {
-            const { yar } = request;
-            const session = yar.get('session');
-            const { id: userId, accessToken } = session;
-            const payload = JSON.parse(request.payload);
-            const { playlistId, imageBase64 } = payload;
+        server.route({
+            method: 'POST',
+            path: '/api/upload-playlist-image',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId, accessToken } = session;
+                const payload = JSON.parse(request.payload);
+                const { playlistId, imageBase64 } = payload;
 
-            uploadPlaylistCoverImage(
-                userId,
-                playlistId,
-                imageBase64,
-                accessToken
-            )
-                .then(data => {
-                    reply({
+                return uploadPlaylistCoverImage(
+                    userId,
+                    playlistId,
+                    imageBase64,
+                    accessToken
+                )
+                    .then(data => ({
                         date: Date.now(),
                         data
-                    });
-                })
-                .catch(error => reply({ error }));
-        },
-        config: {
-            description:
-                'Uploas cover image to the specified existing playlist.',
-            notes:
-                'Receives an image with base64 file format. Needs authentication.',
-            tags: ['api', 'playlists', 'image', 'update']
-        }
-    });
-});
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Uploas cover image to the specified existing playlist.',
+                notes:
+                    'Receives an image with base64 file format. Needs authentication.',
+                tags: ['api', 'playlists', 'image', 'update']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/{param*}',
+            handler: {
+                file: Path.join(__dirname, './build/index.html')
+            },
+            config: {
+                description: 'Starting end point.',
+                notes:
+                    'Can be used for checking if server connection still exists.',
+                tags: ['api', 'index']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/static/{param*}',
+            handler: {
+                directory: {
+                    path: Path.join(__dirname, './build/static'),
+                    listing: false,
+                    index: true
+                }
+            },
+            config: {
+                description: 'Starting end point.',
+                notes:
+                    'Can be used for checking if server connection still exists.',
+                tags: ['api', 'index']
+            }
+        });
+
+        await server.start();
+    } catch (error) {
+        console.log('Registration error.', error);
+    }
+};
+
+startApp();

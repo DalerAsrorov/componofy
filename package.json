@@ -16,9 +16,10 @@
         "classnames": "^2.2.5",
         "dotenv": "^4.0.0",
         "enzyme-adapter-react-15": "^1.0.5",
-        "hapi": "^16.5.2",
-        "hapi-cors-headers": "^1.0.0",
+        "hapi": "^17.1",
+        "hapi-cors-headers": "^1.0.3",
         "history": "^4.7.2",
+        "inert": "^5.0.1",
         "material-ui": "^1.0.0-beta.21",
         "material-ui-icons": "^1.0.0-beta.15",
         "node-fetch": "^1.7.3",
@@ -47,7 +48,7 @@
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.2.0",
         "spotify-web-api-node": "^2.4.0",
-        "yar": "^8.1.2"
+        "yar": "9.0.1"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",

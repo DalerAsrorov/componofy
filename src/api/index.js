@@ -1,5 +1,9 @@
 const API_BASE_URL = 'http://localhost:3001/api';
 
+const sessionHeader = new Headers({
+    'Access-Control-Allow-Credentials': '*'
+});
+
 const corsParams = {
     mode: 'cors',
     // allow client to access server data
@@ -15,7 +19,7 @@ export const getMyStatus = () => {
         ...corsParams
     }).then(
         response => response.json(),
-        error => console.error('Error fetching my status')
+        error => console.error('Error fetching my status', error)
     );
 };
 
