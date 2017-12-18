@@ -6,9 +6,9 @@ A web app that allows a user to merge multiple playlists into a new one and make
 
 PRs are always welcome! If you want to contribute, you would need to:
 
-1. git clone https://github.com/DalerAsrorov/componofy.git
-1. cd ./componofy
-1. yarn install
+1. `git clone https://github.com/DalerAsrorov/componofy.git`
+1. `cd ./componofy`
+1. `yarn install`
 1. In `/componofy/src/utils/helpers.js` replace `DEV_SERVER_URL` with `HOST_URL`.
 1. Create an `.env` file with the following information:
 
@@ -22,7 +22,7 @@ YAR_PASS=[any set of characters (without quotes)]
 
 6. `yarn start:api` in one terminal (window/tab)
 1. `yarn start:dev` in another terminal (window/tab)
-1. Go to `localhost:3000` in your favorite browser (hopefully not IE)
+1. Go to `localhost:3000` in your favorite browser (hopefully not IE :D)
 
 Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section.
 
