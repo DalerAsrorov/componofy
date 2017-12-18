@@ -1,9 +1,10 @@
 import * as R from 'ramda';
 
-const SERVER_URL = 'http://localhost:3001';
+const HOST_URL = window.location.origin;
+const DEV_SERVER_URL = 'http://localhost:3001';
 
 export const replaceTo = path => {
-    window.location.replace(`${SERVER_URL}${path}`);
+    window.location.replace(`${HOST_URL}${path}`);
 };
 
 export const formatTracks = tracks => {

@@ -4,7 +4,9 @@
     "description":
         "Web application that helps user merge the user's and public playlists.",
     "engines": {
-        "node": "8.9.x"
+        "node": ">=8.9.3",
+        "npm": ">=5.5.1",
+        "yarn": ">=1.3.2"
     },
     "scripts": {
         "build-css":
@@ -12,20 +14,22 @@
         "watch-css":
             "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "start-js": "cross-env react-scripts start",
-        "start": "yarn start:api",
+        "start": "npm run start:api",
         "start:dev": "npm-run-all -p watch-css start-js",
         "start:api": "babel-node server.js --presets es2015,stage-2",
         "build": "npm run build-css && react-scripts build",
         "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
+        "heroku-postbuild": "npm run install && npm run build",
         "eject": "react-scripts eject"
     },
-    "heroku-postbuild": "npm run install && npm run build",
     "dependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
         "classnames": "^2.2.5",
         "dotenv": "^4.0.0",
         "enzyme-adapter-react-15": "^1.0.5",
         "hapi": "^17.1",
-        "hapi-cors-headers": "^1.0.3",
         "history": "^4.7.2",
         "inert": "^5.0.1",
         "material-ui": "^1.0.0-beta.21",
@@ -56,16 +60,17 @@
         "redux-logger": "^3.0.6",
         "redux-thunk": "^2.2.0",
         "spotify-web-api-node": "^2.4.0",
-        "yar": "9.0.1",
-        "babel-cli": "^6.26.0",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-stage-2": "^6.24.1"
+        "yar": "^9.0.1"
     },
     "devDependencies": {
         "cross-env": "^5.0.5",
         "enzyme": "^3.1.1",
         "jest": "^21.2.1",
-        "prettier": "1.7.0"
+        "prettier": "^1.7.0"
     },
-    "proxy": "http://localhost:3001"
+    "proxy": "http://localhost:3001/",
+    "main": "server.js",
+    "repository": "https://github.com/DalerAsrorov/componofy.git",
+    "author": "Daler Asrorov <asrorids@gmail.com>",
+    "license": "Apache-2.0"
 }
