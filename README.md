@@ -20,6 +20,10 @@ SPOTIFY_REDIRECT_URI=http://localhost:3001/api/callback
 YAR_PASS=[any set of characters (without quotes)]
 ```
 
+6. `yarn start:api` in one terminal (window/tab)
+1. `yarn start:dev` in another terminal (window/tab)
+1. Go to `localhost:3000` in your favorite browser (hopefully not IE)
+
 Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section.
 
 ## License

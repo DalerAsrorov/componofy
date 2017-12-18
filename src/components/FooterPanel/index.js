@@ -19,7 +19,7 @@ const styles = theme => ({
     maintext: {},
 
     loadmore: {
-        flex: '0 1 240px'
+        flex: '1 60px'
     },
 
     secondaryBtn: {
@@ -30,7 +30,7 @@ const styles = theme => ({
     settings: {},
 
     loaderSection: {
-        flex: '1 300px',
+        flex: '1 100px',
         display: 'flex',
         flexDirection: 'row'
     },
