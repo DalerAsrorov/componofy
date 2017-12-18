@@ -4,7 +4,7 @@ const HOST_URL = window.location.origin;
 const DEV_SERVER_URL = 'http://localhost:3001';
 
 export const replaceTo = path => {
-    window.location.replace(`${HOST_URL}${path}`);
+    window.location.replace(`${DEV_SERVER_URL}${path}`);
 };
 
 export const formatTracks = tracks => {
@@ -70,6 +70,7 @@ export const isDomElementInFocus = domElement =>
     domElement === document.activeElement;
 
 export const safeString = (str = '') => str;
+export const safeBool = (bool = true) => bool;
 
 export const getAllPlaylistsTrackIds = (playlistsMap = {}) => {
     return R.pipe(R.values, R.map(R.path(['tracks', 'list'])), R.flatten)(
