@@ -24,10 +24,7 @@ const PORT = process.env.PORT || 3001;
 
 // Hapi server instance.
 const server = new Hapi.Server({
-    port: PORT,
-    routes: {
-        cors: true
-    }
+    port: PORT
 });
 
 // options for session management module
