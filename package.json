@@ -68,7 +68,7 @@
         "prettier": "^1.7.0"
     },
     "proxy": "http://localhost:3001/",
-    "main": "index.js",
+    "main": "server.js",
     "repository": "https://github.com/DalerAsrorov/componofy.git",
     "author": "Daler Asrorov <asrorids@gmail.com>",
     "license": "Apache-2.0"
