@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
+    removeErrorFromFinalPlaylists,
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
+    addErrorToFinalPlaylists,
     setFinalPlaylistImageURI,
     setPublicPlaylistsVisited,
     addPlaylistTrackToFinal,
@@ -258,6 +260,14 @@ export const mapDispatchToProps = dispatch => ({
 
     setOpenStatusPublicPlaylists(hasOpenPlaylist) {
         dispatch(setOpenStatusPublicPlaylists(hasOpenPlaylist));
+    },
+
+    addErrorToFinalPlaylists(error, errorId) {
+        dispatch(addErrorToFinalPlaylists(error, errorId));
+    },
+
+    removeErrorFromFinalPlaylists(errorId) {
+        dispatch(removeErrorFromFinalPlaylists(errorId));
     }
 });
 

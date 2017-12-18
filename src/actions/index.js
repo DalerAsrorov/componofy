@@ -110,7 +110,6 @@ export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
         const {
-            user: { id: myUserId },
             router: { location: { pathname } },
             navigation: { indexToRouteMap }
         } = getState();
@@ -292,6 +291,27 @@ export const setFinalPlaylistImageURI = imageUri => {
     };
 };
 
+export const ADD_ERROR_TO_FINAL_PLAYLISTS = 'ADD_ERROR_TO_FINAL_PLAYLISTS';
+export const addErrorToFinalPlaylists = (
+    error = { message: '', timeout: 0 },
+    errorId = Date.now()
+) => {
+    return {
+        type: ADD_ERROR_TO_FINAL_PLAYLISTS,
+        errorId,
+        error
+    };
+};
+
+export const REMOVE_ERROR_FROM_FINAL_PLAYLISTS =
+    'REMOVE_ERROR_FROM_FINAL_PLAYLISTS';
+export const removeErrorFromFinalPlaylists = errorId => {
+    return {
+        type: REMOVE_ERROR_FROM_FINAL_PLAYLISTS,
+        errorId
+    };
+};
+
 export const finalizeProcessing = finalPlaylistUrl => {
     return dispatch => {
         dispatch(setMergerStatus(false, 'Finished!'));
@@ -330,12 +350,11 @@ export const launchPlaylistMerger = () => {
                 if (!isEmpty(imageUri)) {
                     dispatch(setMergerStatus(true, 'Adding cover image...'));
 
-                    uploadPlaylistCoverImage(
-                        playlistId,
-                        imageUri
-                    ).then(response => {
-                        dispatch(finalizeProcessing(finalPlaylistUrl));
-                    });
+                    uploadPlaylistCoverImage(playlistId, imageUri).then(
+                        response => {
+                            dispatch(finalizeProcessing(finalPlaylistUrl));
+                        }
+                    );
                 } else {
                     dispatch(finalizeProcessing(finalPlaylistUrl));
                 }

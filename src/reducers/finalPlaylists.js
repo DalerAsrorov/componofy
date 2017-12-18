@@ -13,13 +13,16 @@ import {
     SET_NEW_PLAYLIST_NAME,
     SET_NEW_PLAYLIST_DESC,
     SET_FINAL_PLAYLIST_PUBLIC,
-    SET_FINAL_PLAYLIST_IMAGE_URI
+    SET_FINAL_PLAYLIST_IMAGE_URI,
+    ADD_ERROR_TO_FINAL_PLAYLISTS,
+    REMOVE_ERROR_FROM_FINAL_PLAYLISTS
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
 const DEFAULT_STATE = {
     status: false,
     statusText: '',
+    errors: {},
     playlists: {},
     lastUpdated: 0,
     searchTerm: '',
@@ -31,10 +34,12 @@ const DEFAULT_STATE = {
 };
 
 export const finalPlaylists = (state = DEFAULT_STATE, action) => {
+    let playlists, errors;
+
     switch (action.type) {
         case ADD_PLAYLIST_TO_FINAL:
             let { playlist, receivedAt } = action;
-            let { playlists } = clone(state);
+            let playlists = clone(state.playlists);
 
             let normalizedPlaylist = normalize(playlist, playlistSchema);
             playlists = mergeDeepLeft(normalizedPlaylist, playlists);
@@ -141,6 +146,19 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             playlists = clone(state.playlists);
 
             return Object.assign({}, state, DEFAULT_STATE);
+        case ADD_ERROR_TO_FINAL_PLAYLISTS:
+            errors = clone(state.errors);
+
+            errors[action.errorId] = action.error;
+
+            return Object.assign({}, state, { errors });
+
+        case REMOVE_ERROR_FROM_FINAL_PLAYLISTS:
+            errors = clone(state.errors);
+
+            delete errors[action.errorId];
+
+            return Object.assign({}, state, { errors });
         default:
             return state;
     }

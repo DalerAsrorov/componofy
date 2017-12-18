@@ -13,7 +13,7 @@ import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
 import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
-    MY_PLAYLISTS_PROPTYPE,
+    PLAYLISTS_PROPTYPE,
     MOST_LIGHT_BLUE_COLOR,
     LIGHT_BLUE_COLOR,
     LIGHT_CYAN_COLOR,
