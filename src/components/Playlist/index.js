@@ -115,7 +115,7 @@ class Playlist extends PureComponent {
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse in={isOpen} transitionDuration="auto" unmountOnExit>
+                <Collapse in={isOpen} timeout="auto" unmountOnExit>
                     <List keyItem={playlist} items={tracks} />
                 </Collapse>
             </div>
