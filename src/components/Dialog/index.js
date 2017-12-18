@@ -24,6 +24,7 @@ import {
     SUCCESS_COLOR,
     MAX_IMAGE_SIZE_LIMIT
 } from '../../utils/constants';
+import { safeBool } from '../../utils/helpers';
 import { createTypographyLink } from '../../common';
 import Loader from '../Loader';
 
@@ -39,8 +40,9 @@ const styles = theme => ({
     dropImageZone: {
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
-        border: `${theme.spacing.unit / 2}px dotted ${theme.palette.common
-            .lightBlack}`,
+        border: `${theme.spacing.unit / 2}px dotted ${
+            theme.palette.common.lightBlack
+        }`,
         cursor: 'pointer'
     },
 
@@ -265,7 +267,7 @@ class Dialog extends PureComponent {
                         className={classes.switchControl}
                         control={
                             <Switch
-                                checked={isPublic}
+                                checked={safeBool(isPublic)}
                                 onClick={this._handlePublicSwitch}
                                 aria-label="publicPlaylist"
                             />

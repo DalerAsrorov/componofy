@@ -70,6 +70,7 @@ export const isDomElementInFocus = domElement =>
     domElement === document.activeElement;
 
 export const safeString = (str = '') => str;
+export const safeBool = (bool = true) => bool;
 
 export const getAllPlaylistsTrackIds = (playlistsMap = {}) => {
     return R.pipe(R.values, R.map(R.path(['tracks', 'list'])), R.flatten)(
