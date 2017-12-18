@@ -349,7 +349,7 @@ class Dialog extends PureComponent {
             <MaterialDialog
                 fullScreen
                 open={isOpen}
-                onRequestClose={onClickClose}
+                onClose={onClickClose}
                 transition={Transition}
             >
                 <AppBar className={classes.appBar}>
