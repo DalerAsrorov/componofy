@@ -26,7 +26,7 @@ const server = new Hapi.Server({
 });
 
 // options for session management module
-const options = {
+const yarOptions = {
     cookieOptions: {
         password: process.env.YAR_PASS
     }
@@ -35,7 +35,7 @@ const options = {
 const startApp = async () => {
     try {
         await server.register([
-            { plugin: Yar, options },
+            { plugin: Yar, options: yarOptions },
             { plugin: Inert, options: {} }
         ]);
 
