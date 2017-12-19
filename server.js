@@ -56,9 +56,6 @@ const startApp = async () => {
                 };
             },
             config: {
-                cors: {
-                    credentials: true
-                },
                 description:
                     'Lets client know whether the user has already been authenticated.',
                 notes:
@@ -232,9 +229,6 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
-                cors: {
-                    credentials: true
-                },
                 description:
                     'Creates playlist and returns back info about the new playlist.',
                 notes:
@@ -261,9 +255,6 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
-                cors: {
-                    credentials: true
-                },
                 description:
                     'Adds tracks to the playlist with the specified ID.',
                 notes:
@@ -290,9 +281,6 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
-                cors: {
-                    credentials: true
-                },
                 description:
                     'Uploas cover image to the specified existing playlist.',
                 notes:
