@@ -170,11 +170,11 @@ class MyPlaylists extends PureComponent {
     componentDidMount() {
         toTop();
 
-        let { currentOffset } = this.state;
         const {
-            fetchMyPlaylists,
+            myPlaylists: { currentOffset, isVisited },
             setMyPlaylistVisited,
-            myPlaylists: { isVisited }
+            fetchMyPlaylists,
+            user
         } = this.props;
 
         if (!isVisited) {

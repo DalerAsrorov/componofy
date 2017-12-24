@@ -55,23 +55,12 @@ export async function authorizationCodeGrant(code) {
 }
 
 export async function getMyPlaylists(options = {}) {
-    const myPlaylistParams = [
-        // skip the first argument (userID) to get my playlist
-        undefined,
-        // options needs next and offset for pagination
-        options
-    ];
-
     try {
-        return await spotifyApi.getUserPlaylists(...myPlaylistParams);
+        return await spotifyApi.getUserPlaylists(undefined, options);
     } catch (error) {
         return error;
     }
 }
-
-export const getPlaylists = () => {
-    return [];
-};
 
 export async function searchPlaylists(query, options = {}) {
     try {
@@ -170,7 +159,7 @@ export const uploadPlaylistCoverImage = (
 export default {
     createAuthorizeURL,
     authorizationCodeGrant,
-    getPlaylists,
+    getMyPlaylists,
     getPlaylistTracks,
     getMe,
     createPlaylist,
