@@ -156,8 +156,6 @@ const startApp = async () => {
                     limit
                 })
                     .then(data => {
-                        // console.log('\nMyPlaylists: ', JSON.parse(data));
-
                         return {
                             date: Date.now(),
                             data
@@ -214,8 +212,7 @@ const startApp = async () => {
             config: {
                 description:
                     'Returns playlist tracks given the user and playlist IDs.',
-                notes:
-                    'Both UserID and PlaylistID are required to fetch teh data.',
+                notes: 'Both user and playlist IDs are required to fetch data.',
                 tags: ['api', 'playlists']
             }
         });
@@ -226,11 +223,11 @@ const startApp = async () => {
             handler: (request, h) => {
                 const { yar } = request;
                 const session = yar.get('session');
-                const { id: userID } = session;
+                const { id: userId } = session;
                 const payload = JSON.parse(request.payload);
                 const { playlistName, options } = payload;
 
-                return createPlaylist(userID, playlistName, options)
+                return createPlaylist(userId, playlistName, options)
                     .then(data => ({
                         date: Date.now(),
                         data
