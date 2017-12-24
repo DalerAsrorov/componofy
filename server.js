@@ -47,8 +47,8 @@ const startApp = async () => {
             path: '/api/userstatus',
             handler: (request, h) => {
                 const { yar } = request;
-                let { id: sessionID } = yar;
-                let session = yar.get('session');
+                const { id: sessionID } = yar;
+                const session = yar.get('session');
 
                 return {
                     sessionID,
