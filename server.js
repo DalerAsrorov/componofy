@@ -9,6 +9,7 @@ import {
     getMyPlaylists,
     searchPlaylists,
     getPlaylistTracks,
+    setUserAndTokens,
     createPlaylist,
     addTracksToPlaylist,
     uploadPlaylistCoverImage
@@ -126,6 +127,8 @@ const startApp = async () => {
                                 id
                             };
 
+                            setUserAndTokens(id, accessToken, refreshToken);
+
                             request.yar.set('session', sessionState);
 
                             return h.redirect(clientAppURL);
@@ -150,12 +153,17 @@ const startApp = async () => {
             path: '/api/myplaylists/{offset}/{limit}',
             handler: (request, h) => {
                 const { offset, limit } = request.params;
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
 
-                return getMyPlaylists({
+                return getMyPlaylists(userId, {
                     offset,
                     limit
                 })
                     .then(data => {
+                        console.log('data', data);
+
                         return {
                             date: Date.now(),
                             data
