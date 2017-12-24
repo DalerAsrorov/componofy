@@ -20,11 +20,20 @@ const { APP_CLIENT_URL } = process.env;
 
 let userMap = {};
 
+const setUpTokens = (accessToken, refreshToken) => {
+    spotifyApi.setAccessToken(accessToken);
+    spotifyApi.setRefreshToken(refreshToken);
+};
+
 export const setUserAndTokens = (userId, accessToken, refreshToken) => {
     userMap[userId] = {
         accessToken,
         refreshToken
     };
+};
+
+export const deleteUserData = userId => {
+    delete userMap[userId];
 };
 
 export const createAuthorizeURL = (
@@ -38,12 +47,6 @@ export const createAuthorizeURL = (
         ...arguments
     };
 };
-
-export const setUpTokens = (accessToken, refreshToken) => {
-    spotifyApi.setAccessToken(accessToken);
-    spotifyApi.setRefreshToken(refreshToken);
-};
-
 export async function authorizationCodeGrant(code) {
     let params = {
         clientAppURL: `${APP_CLIENT_URL || DEV_HOST}/app`
@@ -60,9 +63,6 @@ export async function authorizationCodeGrant(code) {
         } = payload;
 
         setUpTokens(accessToken, refreshToken);
-
-        console.log(spotifyApi);
-
         params['accessToken'] = accessToken;
         params['refreshToken'] = refreshToken;
         params['expiresIn'] = expiresIn;
@@ -180,6 +180,8 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
 };
 
 export default {
+    setUserAndTokens,
+    deleteUserData,
     createAuthorizeURL,
     authorizationCodeGrant,
     getMyPlaylists,

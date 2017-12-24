@@ -4,6 +4,7 @@ import Inert from 'inert';
 import Path from 'path';
 import {
     createAuthorizeURL,
+    deleteUserData,
     authorizationCodeGrant,
     getMe,
     getMyPlaylists,
@@ -75,6 +76,7 @@ const startApp = async () => {
             handler: (request, h) => {
                 const { yar } = request;
 
+                deleteUserData(yar.get('session').id);
                 yar.reset();
 
                 return {
