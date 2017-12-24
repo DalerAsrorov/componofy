@@ -63,7 +63,7 @@ export const USER_PROPTYPE = PropTypes.shape({
     id: PropTypes.string.isRequired
 });
 
-export const PLAYLISTS_PROPTYPE = PropTypes.shape({
+export const MY_PLAYLISTS_PROPTYPE = PropTypes.shape({
     playlists: PropTypes.arrayOf(PLAYLIST_PROPTYPE).isRequired,
     isFetching: PropTypes.bool.isRequired,
     numberOfTracks: PropTypes.number.isRequired,

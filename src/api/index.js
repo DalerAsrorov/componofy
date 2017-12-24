@@ -1,5 +1,9 @@
 const API_BASE_URL = '/api';
 
+const sessionHeader = new Headers({
+    'Access-Control-Allow-Credentials': '*'
+});
+
 const corsParams = {
     mode: 'cors',
     // allow client to access server data

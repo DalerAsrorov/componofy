@@ -128,10 +128,8 @@ const Transition = props => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
     static propTypes = {
-        removeErrorFromFinalPlaylists: PropTypes.func.isRequired,
-        addErrorToFinalPlaylists: PropTypes.func.isRequired,
-        setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
+        setFinalPlaylistImageURI: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
