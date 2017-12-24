@@ -31,8 +31,7 @@ const server = new Hapi.Server({
 // options for session management module
 const options = {
     cookieOptions: {
-        password: process.env.YAR_PASS,
-        isSecure: false
+        password: process.env.YAR_PASS
     }
 };
 
@@ -157,6 +156,8 @@ const startApp = async () => {
                     limit
                 })
                     .then(data => {
+                        // console.log('\nMyPlaylists: ', JSON.parse(data));
+
                         return {
                             date: Date.now(),
                             data

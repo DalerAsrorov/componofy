@@ -170,16 +170,22 @@ class MyPlaylists extends PureComponent {
     componentDidMount() {
         toTop();
 
-        let { currentOffset } = this.state;
-        const {
-            fetchMyPlaylists,
-            setMyPlaylistVisited,
-            myPlaylists: { isVisited }
-        } = this.props;
+        const { setMyPlaylistVisited, myPlaylists: { isVisited } } = this.props;
 
         if (!isVisited) {
-            fetchMyPlaylists(currentOffset);
             setMyPlaylistVisited(true);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {
+            myPlaylists: { currentOffset },
+            fetchMyPlaylists,
+            user
+        } = this.props;
+
+        if (isEmpty(prevProps.user) && !isEmpty(user)) {
+            fetchMyPlaylists(currentOffset);
         }
     }
 
