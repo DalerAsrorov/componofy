@@ -151,13 +151,11 @@ export async function addTracksToPlaylist(
     }
 }
 
-export const uploadPlaylistCoverImage = (
-    userId,
-    playlistId,
-    imageData,
-    accessToken
-) => {
+export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
+
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
     imageData =
         imageData.indexOf('data') > -1

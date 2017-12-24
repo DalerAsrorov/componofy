@@ -293,12 +293,7 @@ const startApp = async () => {
                 const payload = JSON.parse(request.payload);
                 const { playlistId, imageBase64 } = payload;
 
-                return uploadPlaylistCoverImage(
-                    userId,
-                    playlistId,
-                    imageBase64,
-                    accessToken
-                )
+                return uploadPlaylistCoverImage(userId, playlistId, imageBase64)
                     .then(data => ({
                         date: Date.now(),
                         data
