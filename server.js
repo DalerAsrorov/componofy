@@ -164,8 +164,6 @@ const startApp = async () => {
                     limit
                 })
                     .then(data => {
-                        console.log('data', data);
-
                         return {
                             date: Date.now(),
                             data

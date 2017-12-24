@@ -63,6 +63,7 @@ export async function authorizationCodeGrant(code) {
         } = payload;
 
         setUpTokens(accessToken, refreshToken);
+
         params['accessToken'] = accessToken;
         params['refreshToken'] = refreshToken;
         params['expiresIn'] = expiresIn;
@@ -78,6 +79,7 @@ export async function authorizationCodeGrant(code) {
 export async function getMyPlaylists(userId, options = {}) {
     try {
         const { accessToken, refreshToken } = userMap[userId];
+
         setUpTokens(accessToken, refreshToken);
 
         return await spotifyApi.getUserPlaylists(undefined, options);
