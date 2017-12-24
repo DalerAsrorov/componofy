@@ -4,11 +4,13 @@ import Inert from 'inert';
 import Path from 'path';
 import {
     createAuthorizeURL,
+    deleteUserData,
     authorizationCodeGrant,
     getMe,
     getMyPlaylists,
     searchPlaylists,
     getPlaylistTracks,
+    setUserAndTokens,
     createPlaylist,
     addTracksToPlaylist,
     uploadPlaylistCoverImage
@@ -29,7 +31,7 @@ const server = new Hapi.Server({
 });
 
 // options for session management module
-const options = {
+const yarOptions = {
     cookieOptions: {
         password: process.env.YAR_PASS
     }
@@ -38,7 +40,7 @@ const options = {
 const startApp = async () => {
     try {
         await server.register([
-            { plugin: Yar, options },
+            { plugin: Yar, options: yarOptions },
             { plugin: Inert, options: {} }
         ]);
 
@@ -74,6 +76,7 @@ const startApp = async () => {
             handler: (request, h) => {
                 const { yar } = request;
 
+                deleteUserData(yar.get('session').id);
                 yar.reset();
 
                 return {
@@ -126,6 +129,8 @@ const startApp = async () => {
                                 id
                             };
 
+                            setUserAndTokens(id, accessToken, refreshToken);
+
                             request.yar.set('session', sessionState);
 
                             return h.redirect(clientAppURL);
@@ -150,8 +155,11 @@ const startApp = async () => {
             path: '/api/myplaylists/{offset}/{limit}',
             handler: (request, h) => {
                 const { offset, limit } = request.params;
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
 
-                return getMyPlaylists({
+                return getMyPlaylists(userId, {
                     offset,
                     limit
                 })
@@ -285,12 +293,7 @@ const startApp = async () => {
                 const payload = JSON.parse(request.payload);
                 const { playlistId, imageBase64 } = payload;
 
-                return uploadPlaylistCoverImage(
-                    userId,
-                    playlistId,
-                    imageBase64,
-                    accessToken
-                )
+                return uploadPlaylistCoverImage(userId, playlistId, imageBase64)
                     .then(data => ({
                         date: Date.now(),
                         data

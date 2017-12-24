@@ -18,6 +18,24 @@ const spotifyApi = new SpotifyWebApi({
 });
 const { APP_CLIENT_URL } = process.env;
 
+let userMap = {};
+
+const setUpTokens = (accessToken, refreshToken) => {
+    spotifyApi.setAccessToken(accessToken);
+    spotifyApi.setRefreshToken(refreshToken);
+};
+
+export const setUserAndTokens = (userId, accessToken, refreshToken) => {
+    userMap[userId] = {
+        accessToken,
+        refreshToken
+    };
+};
+
+export const deleteUserData = userId => {
+    delete userMap[userId];
+};
+
 export const createAuthorizeURL = (
     scopes = SCOPE_LIST,
     state = 'spotify-auth'
@@ -29,8 +47,6 @@ export const createAuthorizeURL = (
         ...arguments
     };
 };
-
-// eslint-disable-next-line
 export async function authorizationCodeGrant(code) {
     let params = {
         clientAppURL: `${APP_CLIENT_URL || DEV_HOST}/app`
@@ -38,13 +54,19 @@ export async function authorizationCodeGrant(code) {
 
     try {
         const payload = await spotifyApi.authorizationCodeGrant(code);
-        const { body: { expires_in, access_token, refresh_token } } = payload;
+        const {
+            body: {
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                expires_in: expiresIn
+            }
+        } = payload;
 
-        spotifyApi.setAccessToken(access_token);
-        spotifyApi.setRefreshToken(refresh_token);
+        setUpTokens(accessToken, refreshToken);
 
-        params['accessToken'] = access_token;
-        params['refreshToken'] = refresh_token;
+        params['accessToken'] = accessToken;
+        params['refreshToken'] = refreshToken;
+        params['expiresIn'] = expiresIn;
 
         return params;
     } catch (error) {
@@ -54,8 +76,12 @@ export async function authorizationCodeGrant(code) {
     return params;
 }
 
-export async function getMyPlaylists(options = {}) {
+export async function getMyPlaylists(userId, options = {}) {
     try {
+        const { accessToken, refreshToken } = userMap[userId];
+
+        setUpTokens(accessToken, refreshToken);
+
         return await spotifyApi.getUserPlaylists(undefined, options);
     } catch (error) {
         return error;
@@ -88,14 +114,15 @@ export async function getMe() {
 
 export async function createPlaylist(userId, playlistName, options, callback) {
     try {
-        const newPlaylistInfo = await spotifyApi.createPlaylist(
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
+        return await spotifyApi.createPlaylist(
             userId,
             playlistName,
             options,
             callback
         );
-
-        return newPlaylistInfo;
     } catch (error) {
         return error;
     }
@@ -126,13 +153,11 @@ export async function addTracksToPlaylist(
     }
 }
 
-export const uploadPlaylistCoverImage = (
-    userId,
-    playlistId,
-    imageData,
-    accessToken
-) => {
+export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
+
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
     imageData =
         imageData.indexOf('data') > -1
@@ -157,6 +182,8 @@ export const uploadPlaylistCoverImage = (
 };
 
 export default {
+    setUserAndTokens,
+    deleteUserData,
     createAuthorizeURL,
     authorizationCodeGrant,
     getMyPlaylists,
