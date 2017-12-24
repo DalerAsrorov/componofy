@@ -22,7 +22,10 @@ const PORT = process.env.PORT || 3001;
 
 // Hapi server instance.
 const server = new Hapi.Server({
-    port: PORT
+    port: PORT,
+    routes: {
+        cors: true
+    }
 });
 
 // options for session management module
@@ -54,6 +57,9 @@ const startApp = async () => {
                 };
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Lets client know whether the user has already been authenticated.',
                 notes:
@@ -93,6 +99,10 @@ const startApp = async () => {
                 return h.redirect(authUrl);
             },
             config: {
+                cors: {
+                    credentials: true,
+                    origin: ['*']
+                },
                 description: 'Receives confirmation to start authentication.',
                 notes: 'Authentication process will redirect',
                 tags: ['api', 'auth', 'user']
@@ -124,6 +134,10 @@ const startApp = async () => {
                     .catch(error => console.error(error));
             },
             config: {
+                cors: {
+                    credentials: true,
+                    origin: ['*']
+                },
                 description:
                     'Given code from Spotify authentication server, generates token and `re`directs back to client app.',
                 notes: 'Accepts the code value',
@@ -221,6 +235,9 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Creates playlist and returns back info about the new playlist.',
                 notes:
@@ -247,6 +264,9 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Adds tracks to the playlist with the specified ID.',
                 notes:
@@ -278,6 +298,9 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
+                cors: {
+                    credentials: true
+                },
                 description:
                     'Uploas cover image to the specified existing playlist.',
                 notes:
