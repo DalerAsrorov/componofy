@@ -135,10 +135,13 @@ export async function addTracksToPlaylist(
     options,
     callback
 ) {
-    const stringToAttach = 'spotify:track:';
-    let tracks = R.map(R.concat(stringToAttach), trackIDs);
-
     try {
+        const stringToAttach = 'spotify:track:';
+        const tracks = R.map(R.concat(stringToAttach), trackIDs);
+        const { accessToken, refreshToken } = userMap[userId];
+
+        setUpTokens(accessToken, refreshToken);
+
         const snapshot = await spotifyApi.addTracksToPlaylist(
             userId,
             playlistId,
