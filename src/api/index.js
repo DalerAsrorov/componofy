@@ -105,3 +105,14 @@ export const uploadPlaylistCoverImage = (
         credentials: 'include'
     }).then(response => response.json());
 };
+
+export const getLogOutUser = () => {
+    const URL = `${API_BASE_URL}/logout`;
+
+    return fetch(URL, {
+        ...corsParams
+    }).then(
+        response => response.json(),
+        error => console.error('Error fetching my status', error)
+    );
+};

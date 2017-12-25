@@ -60,6 +60,7 @@ class MyPlaylists extends PureComponent {
         setPlaylistOpen: PropTypes.func.isRequired,
         setMySearchTerm: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
+        logOutUser: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired
     };
 
@@ -135,6 +136,12 @@ class MyPlaylists extends PureComponent {
 
         setNavIndex(nextIndex);
         navigateTo(nextPage);
+    };
+
+    _handleLogOut = () => {
+        const { logOutUser } = this.props;
+
+        logOutUser();
     };
 
     _handleClickCollapse = () => {
@@ -238,8 +245,9 @@ class MyPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleClickCollapse}>
                     {collapseText}
                 </MenuItem>
-                <Divider />
                 <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
+                <Divider />
+                <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
             </div>
         );
 
