@@ -6,7 +6,8 @@ import {
     createPlaylist,
     addTracksToPlaylist,
     uploadPlaylistCoverImage,
-    searchPlaylists
+    searchPlaylists,
+    getLogOutUser
 } from '../api';
 import { isEmpty } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
@@ -330,12 +331,11 @@ export const launchPlaylistMerger = () => {
                 if (!isEmpty(imageUri)) {
                     dispatch(setMergerStatus(true, 'Adding cover image...'));
 
-                    uploadPlaylistCoverImage(
-                        playlistId,
-                        imageUri
-                    ).then(response => {
-                        dispatch(finalizeProcessing(finalPlaylistUrl));
-                    });
+                    uploadPlaylistCoverImage(playlistId, imageUri).then(
+                        response => {
+                            dispatch(finalizeProcessing(finalPlaylistUrl));
+                        }
+                    );
                 } else {
                     dispatch(finalizeProcessing(finalPlaylistUrl));
                 }
@@ -428,5 +428,15 @@ export const setOpenStatusPublicPlaylists = isOpen => {
     return {
         type: SET_OPEN_STATUS_PUBLIC_PLAYLISTS,
         isOpen
+    };
+};
+
+export const logOutUser = () => {
+    return dispatch => {
+        return getLogOutUser().then(({ isAuthenticated }) => {
+            if (!isAuthenticated) {
+                dispatch(push('/'));
+            }
+        });
     };
 };

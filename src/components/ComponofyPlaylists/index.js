@@ -89,6 +89,7 @@ class ComponofyPlaylists extends PureComponent {
         finalPlaylists: PropTypes.object.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
+        logOutUser: PropTypes.func.isRequired,
         navigateTo: PropTypes.func.isRequired
     };
 
@@ -113,6 +114,12 @@ class ComponofyPlaylists extends PureComponent {
         this.setState({
             shouldFilterList
         });
+    };
+
+    _handleLogOut = () => {
+        const { logOutUser } = this.props;
+
+        logOutUser();
     };
 
     _handleClickCollapse = () => {
@@ -282,6 +289,8 @@ class ComponofyPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleClickCollapse}>
                     {collapseExpandText}
                 </MenuItem>
+                <Divider />
+                <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
             </div>
         );
 

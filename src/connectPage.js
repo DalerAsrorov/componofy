@@ -29,7 +29,8 @@ import {
     setPlaylistOpen,
     setMySearchTerm,
     clearFinalData,
-    setNavIndex
+    setNavIndex,
+    logOutUser
 } from './actions';
 
 const isIn = (data, ownProps, key) => {
@@ -258,6 +259,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setOpenStatusPublicPlaylists(hasOpenPlaylist) {
         dispatch(setOpenStatusPublicPlaylists(hasOpenPlaylist));
+    },
+
+    logOutUser() {
+        dispatch(logOutUser());
     }
 });
 
