@@ -77,10 +77,10 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
             delete playlists[action.playlist.id];
 
-            return {
+            return Object.assign({}, state, {
                 playlists: statePlaylists,
                 lastUpdated: receivedAt
-            };
+            });
         case REMOVE_PLAYLIST_TRACK_FROM_FINAL:
             receivedAt = action.receivedAt;
             statePlaylists = clone(state.playlists);
