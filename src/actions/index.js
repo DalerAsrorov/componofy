@@ -294,13 +294,15 @@ export const setFinalPlaylistImageURI = imageUri => {
 
 export const ADD_ERROR_TO_APP = 'ADD_ERROR_TO_APP';
 export const addErrorToApp = (
-    error = { message: '', timeout: 0 },
+    message = '',
+    timeout = 10000,
     errorId = Date.now()
 ) => {
     return {
         type: ADD_ERROR_TO_APP,
         errorId,
-        error
+        timeout,
+        message
     };
 };
 

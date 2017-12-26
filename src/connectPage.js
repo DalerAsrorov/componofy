@@ -143,7 +143,8 @@ const mapStateToProps = (state, ownProps) => ({
         ownProps,
         'track'
     ),
-    user: state.user
+    user: state.user,
+    errors: state.errors
 });
 
 export const mapDispatchToProps = dispatch => ({

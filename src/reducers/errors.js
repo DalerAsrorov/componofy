@@ -2,13 +2,18 @@ import { ADD_ERROR_TO_APP, REMOVE_ERROR_FROM_APP } from '../actions';
 import * as R from 'ramda';
 
 export const errors = (state = {}, action) => {
-    let errors;
+    let errors, errorId;
 
     switch (action.type) {
         case ADD_ERROR_TO_APP:
             errors = R.clone(state);
+            errorId = R.toString(action.errorId);
 
-            errors[action.errorId] = action.error;
+            errors[errorId] = {
+                message: action.message,
+                timeout: action.timeout,
+                errorId
+            };
 
             return errors;
 

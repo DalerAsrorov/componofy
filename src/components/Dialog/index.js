@@ -132,7 +132,6 @@ class Dialog extends PureComponent {
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
         setNewPlaylistName: PropTypes.func.isRequired,
-        removeErrorFromApp: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
