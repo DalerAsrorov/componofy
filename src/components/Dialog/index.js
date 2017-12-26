@@ -217,6 +217,7 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
+
         const LoaderWrapper = props => (
             <div className={classes.loaderWrapper}>{props.children}</div>
         );
