@@ -2,12 +2,10 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
-    removeErrorFromFinalPlaylists,
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
-    addErrorToFinalPlaylists,
     setFinalPlaylistImageURI,
     setPublicPlaylistsVisited,
     addPlaylistTrackToFinal,
@@ -25,12 +23,14 @@ import {
     setPublicSearchTerm,
     setNewPlaylistName,
     setNewPlaylistDesc,
+    removeErrorFromApp,
     setFinalSearchTerm,
     addPlaylistToFinal,
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
     clearFinalData,
+    addErrorToApp,
     setNavIndex,
     logOutUser
 } from './actions';
@@ -267,12 +267,12 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(logOutUser());
     },
 
-    addErrorToFinalPlaylists(error, errorId) {
-        dispatch(addErrorToFinalPlaylists(error, errorId));
+    addErrorToApp(error, errorId) {
+        dispatch(addErrorToApp(error, errorId));
     },
 
-    removeErrorFromFinalPlaylists(errorId) {
-        dispatch(removeErrorFromFinalPlaylists(errorId));
+    removeErrorFromApp(errorId) {
+        dispatch(removeErrorFromApp(errorId));
     }
 });
 
