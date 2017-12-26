@@ -9,7 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import { Search as SearchIcon } from 'material-ui-icons';
 import { isEmpty, trim } from 'ramda';
 import {
-    MY_PLAYLISTS_PROPTYPE,
+    PLAYLISTS_PROPTYPE,
     LIGHT_BLUE_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
@@ -52,13 +52,14 @@ let scroll = Scroll.animateScroll;
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
-        removePlaylistFromFinal: PropTypes.func.isRequired,
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
-        myPlaylists: MY_PLAYLISTS_PROPTYPE.isRequired,
+        removePlaylistFromFinal: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
+        myPlaylists: PLAYLISTS_PROPTYPE.isRequired,
         setPlaylistOpen: PropTypes.func.isRequired,
         setMySearchTerm: PropTypes.func.isRequired,
+        addErrorToApp: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         logOutUser: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired

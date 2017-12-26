@@ -111,7 +111,6 @@ export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
         const {
-            user: { id: myUserId },
             router: { location: { pathname } },
             navigation: { indexToRouteMap }
         } = getState();
@@ -290,6 +289,28 @@ export const setFinalPlaylistImageURI = imageUri => {
     return {
         type: SET_FINAL_PLAYLIST_IMAGE_URI,
         imageUri
+    };
+};
+
+export const ADD_ERROR_TO_APP = 'ADD_ERROR_TO_APP';
+export const addErrorToApp = (
+    message = '',
+    timeout = 10000,
+    errorId = Date.now()
+) => {
+    return {
+        type: ADD_ERROR_TO_APP,
+        errorId,
+        timeout,
+        message
+    };
+};
+
+export const REMOVE_ERROR_FROM_APP = 'REMOVE_ERROR_FROM_APP';
+export const removeErrorFromApp = errorId => {
+    return {
+        type: REMOVE_ERROR_FROM_APP,
+        errorId
     };
 };
 

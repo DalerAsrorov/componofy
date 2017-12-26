@@ -31,10 +31,12 @@ const DEFAULT_STATE = {
 };
 
 export const finalPlaylists = (state = DEFAULT_STATE, action) => {
+    let playlists;
+
     switch (action.type) {
         case ADD_PLAYLIST_TO_FINAL:
             let { playlist, receivedAt } = action;
-            let { playlists } = clone(state);
+            let playlists = clone(state.playlists);
 
             let normalizedPlaylist = normalize(playlist, playlistSchema);
             playlists = mergeDeepLeft(normalizedPlaylist, playlists);

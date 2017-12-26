@@ -23,12 +23,14 @@ import {
     setPublicSearchTerm,
     setNewPlaylistName,
     setNewPlaylistDesc,
+    removeErrorFromApp,
     setFinalSearchTerm,
     addPlaylistToFinal,
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
     clearFinalData,
+    addErrorToApp,
     setNavIndex,
     logOutUser
 } from './actions';
@@ -141,7 +143,8 @@ const mapStateToProps = (state, ownProps) => ({
         ownProps,
         'track'
     ),
-    user: state.user
+    user: state.user,
+    errors: state.errors
 });
 
 export const mapDispatchToProps = dispatch => ({
@@ -263,6 +266,14 @@ export const mapDispatchToProps = dispatch => ({
 
     logOutUser() {
         dispatch(logOutUser());
+    },
+
+    addErrorToApp(error, errorId) {
+        dispatch(addErrorToApp(error, errorId));
+    },
+
+    removeErrorFromApp(errorId) {
+        dispatch(removeErrorFromApp(errorId));
     }
 });
 
