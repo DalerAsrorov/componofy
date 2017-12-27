@@ -88,8 +88,11 @@ export async function getMyPlaylists(userId, options = {}) {
     }
 }
 
-export async function searchPlaylists(query, options = {}) {
+export async function searchPlaylists(userId, query, options = {}) {
     try {
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
         return await spotifyApi.searchPlaylists(query, options);
     } catch (error) {
         return error;

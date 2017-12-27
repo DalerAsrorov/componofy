@@ -31,7 +31,9 @@ export const getMyPlaylists = (offset = 0, limit = 10) => {
 export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
     const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
 
-    return fetch(URL).then(
+    return fetch(URL, {
+        ...corsParams
+    }).then(
         response => response.json(),
         error => console.error('Error fetching searched playlists', error)
     );
