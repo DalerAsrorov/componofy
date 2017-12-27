@@ -18,7 +18,6 @@ import {
     footerStyle,
     searchStyle
 } from '../../utils/constants';
-import { filterSearchPlaylist } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -56,7 +55,6 @@ class PublicPlaylists extends PureComponent {
         searchPublicPlaylists: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
-        publicPlaylists: PropTypes.object.isRequired,
         logOutUser: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -126,10 +124,7 @@ class PublicPlaylists extends PureComponent {
     _handleLoadMore = event => {
         event.preventDefault();
 
-        const {
-            searchPublicPlaylists,
-            publicPlaylists: { currentOffset }
-        } = this.props;
+        const { searchPublicPlaylists } = this.props;
 
         searchPublicPlaylists(true);
         scroll.scrollToBottom();

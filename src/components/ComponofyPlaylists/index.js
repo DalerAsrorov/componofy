@@ -8,12 +8,10 @@ import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import Dialog from '../../containers/Dialog';
-import { lightBlue } from 'material-ui/colors';
 import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
 import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
-    PLAYLISTS_PROPTYPE,
     MOST_LIGHT_BLUE_COLOR,
     LIGHT_BLUE_COLOR,
     LIGHT_CYAN_COLOR,
@@ -22,15 +20,10 @@ import {
     footerStyle,
     searchStyle
 } from '../../utils/constants';
-import {
-    filterSearchPlaylist,
-    formatPlaylistsData,
-    getAllPlaylistsTrackIds
-} from '../../utils/helpers';
+import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
-import { setNavIndex } from '../../actions/index';
 
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR
@@ -206,18 +199,16 @@ class ComponofyPlaylists extends PureComponent {
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
             finalPlaylistsHasOpenPlaylist,
-            searchTerm,
             classes
         } = this.props;
         const {
             shouldFilterList,
             isOpenModal,
             settingsIsOpen,
-            canScrollUp,
-            anchorEl
+            canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, search, tracks, modalTracklist;
+        let playlistList, search, modalTracklist;
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';

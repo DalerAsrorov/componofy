@@ -181,8 +181,7 @@ class MyPlaylists extends PureComponent {
         const {
             myPlaylists: { currentOffset, isVisited },
             setMyPlaylistVisited,
-            fetchMyPlaylists,
-            user
+            fetchMyPlaylists
         } = this.props;
 
         if (!isVisited) {

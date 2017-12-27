@@ -25,7 +25,6 @@ import {
     MAX_IMAGE_SIZE_LIMIT
 } from '../../utils/constants';
 import { safeBool } from '../../utils/helpers';
-import { createTypographyLink } from '../../common';
 import Loader from '../Loader';
 
 const styles = theme => ({
@@ -207,7 +206,6 @@ class Dialog extends PureComponent {
                 statusText: loaderText,
                 status: shouldShowLoader,
                 playlistName,
-                playlistDesc,
                 isPublic,
                 imageUri
             },
@@ -223,19 +221,18 @@ class Dialog extends PureComponent {
             <div className={classes.loaderWrapper}>{props.children}</div>
         );
 
-        let tracks,
-            playlistImage = imageUri ? (
-                <Avatar
-                    alt="New playlist image cover"
-                    src={imageUri}
-                    classes={{
-                        root: classes.newPlaylistImage,
-                        img: classes.dropImageZoneImg
-                    }}
-                />
-            ) : (
-                <AddAPhoto className={classes.photoUploadIcon} />
-            );
+        let playlistImage = imageUri ? (
+            <Avatar
+                alt="New playlist image cover"
+                src={imageUri}
+                classes={{
+                    root: classes.newPlaylistImage,
+                    img: classes.dropImageZoneImg
+                }}
+            />
+        ) : (
+            <AddAPhoto className={classes.photoUploadIcon} />
+        );
         let modalContent = (
             <form
                 className={classes.formContainer}
