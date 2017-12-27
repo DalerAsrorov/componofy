@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
 import { safeString } from '../../utils/helpers';
 
@@ -38,9 +38,6 @@ class Search extends PureComponent {
             ...rest
         } = this.props;
 
-        let adortmentComponent = adortment ? (
-            <InputAdornment position="start">{adortment}</InputAdornment>
-        ) : null;
         let inputLabelComponent = inputLabel ? (
             <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>
         ) : null;

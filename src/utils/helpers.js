@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 
 const HOST_URL = window.location.origin;
+// eslint-disable-next-line no-unused-vars
 const DEV_SERVER_URL = 'http://localhost:3001';
 
 export const replaceTo = path => {

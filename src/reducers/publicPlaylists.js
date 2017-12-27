@@ -26,6 +26,7 @@ const DEFAULT_STATE = {
 };
 
 export const publicPlaylists = (state = DEFAULT_STATE, action) => {
+    // eslint-disable-next-line no-unused-vars
     let playlists;
 
     switch (action.type) {
