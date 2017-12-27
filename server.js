@@ -184,8 +184,11 @@ const startApp = async () => {
             path: '/api/searchplaylist/{query}/{offset}/{limit}',
             handler: (request, h) => {
                 const { query, offset, limit } = request.params;
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
 
-                return searchPlaylists(query, {
+                return searchPlaylists(userId, query, {
                     offset,
                     limit
                 })
