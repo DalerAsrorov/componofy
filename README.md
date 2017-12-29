@@ -1,6 +1,10 @@
 # componofy
 
-A web app that allows a user to merge multiple playlists into a new one and make various changes.
+A web app that allows a Spotify user to merge multiple (personal, private, and public) playlists into a new awesome playlist.
+
+## Demo
+
+[Watch video](https://www.youtube.com/watch?v=XAF5MUOzKhs&t=17s)
 
 ## Contribution
 
