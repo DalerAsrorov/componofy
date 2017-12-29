@@ -126,6 +126,10 @@ const styles = theme => ({
 const Transition = props => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
+    state = {
+        error: false
+    };
+
     static propTypes = {
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
@@ -142,6 +146,10 @@ class Dialog extends PureComponent {
     };
 
     _handlePlaylistNameChange = event => {
+        if (!R.isEmpty(event.target.value)) {
+            this.setState({ error: false });
+        }
+
         this.props.setNewPlaylistName(event.target.value);
     };
 
@@ -182,12 +190,18 @@ class Dialog extends PureComponent {
     _handleClickSubmit = event => {
         event.preventDefault();
 
-        const { launchPlaylistMerger } = this.props;
+        const {
+            finalPlaylists: { playlistName },
+            launchPlaylistMerger,
+            addErrorToApp
+        } = this.props;
 
-        // ToDo: error handling
+        if (!R.isEmpty(playlistName)) {
+            return launchPlaylistMerger();
+        }
 
-        // if no errors, submit
-        launchPlaylistMerger();
+        this.setState({ error: true });
+        addErrorToApp('Fix errors before submitting again.');
     };
 
     _handleClickBack = event => {
@@ -200,6 +214,7 @@ class Dialog extends PureComponent {
     };
 
     render() {
+        const { error } = this.state;
         const {
             componoform: { finalPlaylistUrl },
             finalPlaylists: {
@@ -252,6 +267,7 @@ class Dialog extends PureComponent {
                 <section className={classes.inputSection}>
                     <TextField
                         id="playlistName"
+                        error={error}
                         onChange={this._handlePlaylistNameChange}
                         margin="normal"
                         InputLabelProps={{
