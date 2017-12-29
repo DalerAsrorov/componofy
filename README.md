@@ -6,6 +6,10 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 [Watch video](https://www.youtube.com/watch?v=XAF5MUOzKhs&t=17s)
 
+## Features Status
+
+You can track the board of features I am working on [here](https://github.com/DalerAsrorov/componofy/projects/2)
+
 ## Contribution
 
 PRs are always welcome! If you want to contribute, you would need to:
