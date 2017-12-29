@@ -146,6 +146,10 @@ class Dialog extends PureComponent {
     };
 
     _handlePlaylistNameChange = event => {
+        if (!R.isEmpty(event.target.value)) {
+            this.setState({ error: false });
+        }
+
         this.props.setNewPlaylistName(event.target.value);
     };
 
