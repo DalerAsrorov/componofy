@@ -54,6 +54,8 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             playlists = clone(state.playlists);
             let trackToAdd = clone(action.track);
 
+            playlist.isOpen = false;
+
             if (
                 playlists.entities &&
                 playlists.entities.playlists[playlist.id]
