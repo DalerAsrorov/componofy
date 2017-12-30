@@ -334,6 +334,7 @@ class Dialog extends PureComponent {
                             <div>
                                 <Button
                                     raised
+                                    component="a"
                                     color="accent"
                                     className={classes.succesButtons}
                                     href={finalPlaylistUrl}
