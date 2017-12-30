@@ -140,18 +140,21 @@ export async function addTracksToPlaylist(
 ) {
     try {
         const stringToAttach = 'spotify:track:';
-        const tracks = R.map(R.concat(stringToAttach), trackIDs);
         const { accessToken, refreshToken } = userMap[userId];
+        let tracks = R.map(R.concat(stringToAttach), trackIDs);
 
         setUpTokens(accessToken, refreshToken);
 
-        const snapshot = await spotifyApi.addTracksToPlaylist(
-            userId,
-            playlistId,
-            tracks,
-            options,
-            callback
-        );
+        while (!R.isEmpty(tracks)) {
+            const tracksToAdd = tracks.splice(0, 100);
+            const snapshot = await spotifyApi.addTracksToPlaylist(
+                userId,
+                playlistId,
+                tracksToAdd,
+                options,
+                callback
+            );
+        }
 
         return snapshot;
     } catch (error) {
