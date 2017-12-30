@@ -32,18 +32,20 @@ const DEFAULT_STATE = {
 
 export const finalPlaylists = (state = DEFAULT_STATE, action) => {
     // eslint-disable-next-line no-unused-vars
-    let playlists;
+    let playlists, receivedAt;
 
     switch (action.type) {
         case ADD_PLAYLIST_TO_FINAL:
-            let { playlist, receivedAt } = action;
+            let playlist = clone(action.playlist);
             let playlists = clone(state.playlists);
+
+            playlist.isOpen = false;
 
             let normalizedPlaylist = normalize(playlist, playlistSchema);
             playlists = mergeDeepLeft(normalizedPlaylist, playlists);
 
             return Object.assign({}, state, {
-                lastUpdated: receivedAt,
+                lastUpdated: action.receivedAt,
                 playlists
             });
         case ADD_PLAYLIST_TRACK_TO_FINAL:
@@ -51,6 +53,8 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             playlist = clone(action.playlist);
             playlists = clone(state.playlists);
             let trackToAdd = clone(action.track);
+
+            playlist.isOpen = false;
 
             if (
                 playlists.entities &&
