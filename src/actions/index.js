@@ -168,6 +168,13 @@ export const clearMyData = () => {
     };
 };
 
+export const CLEAR_PUBLIC_DATA = 'CLEAR_PUBLIC_DATA';
+export const clearPublicData = () => {
+    return {
+        type: CLEAR_PUBLIC_DATA
+    };
+};
+
 export const SET_OPEN_STATUS_MY_PLAYLISTS = 'SET_OPEN_STATUS_MY_PLAYLISTS';
 export const setOpenStatusMyPlaylists = isOpen => {
     return {
@@ -320,6 +327,7 @@ export const finalizeProcessing = finalPlaylistUrl => {
         dispatch(setMergerStatus(false, ''));
         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
         dispatch(clearFinalData());
+        dispatch(clearPublicData());
         dispatch(clearMyData());
     };
 };
