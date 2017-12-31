@@ -168,9 +168,16 @@ class Dialog extends PureComponent {
     };
 
     _handleImageUpload = (acceptedFiles, rejectedFiles) => {
-        const { setFinalPlaylistImageURI } = this.props;
+        const { setFinalPlaylistImageURI, addErrorToApp } = this.props;
 
-        if (!R.isEmpty(acceptedFiles)) {
+        if (!R.isEmpty(rejectedFiles)) {
+            const { name: fileName } = R.head(rejectedFiles);
+
+            addErrorToApp(
+                `${fileName} is too large. Image shouldn't be more than ${MAX_IMAGE_SIZE_LIMIT /
+                    1000}KB.`
+            );
+        } else if (!R.isEmpty(acceptedFiles)) {
             const file = R.head(acceptedFiles);
             const reader = new FileReader();
 
