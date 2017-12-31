@@ -7,7 +7,8 @@ import {
     RECEIVED_PUBLIC_PLAYLIST_TRACKS,
     SET_SEARCH_RESULTS_MESSAGE,
     CLEAN_PUBLIC_SEARCH_RESULTS,
-    SET_OPEN_STATUS_PUBLIC_PLAYLISTS
+    SET_OPEN_STATUS_PUBLIC_PLAYLISTS,
+    CLEAR_PUBLIC_DATA
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
@@ -116,6 +117,8 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 playlists
             });
+        case CLEAR_PUBLIC_DATA:
+            return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;
     }
