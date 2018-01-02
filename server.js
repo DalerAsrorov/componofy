@@ -323,8 +323,6 @@ const startApp = async () => {
             },
             config: {
                 description: 'Starting end point.',
-                notes:
-                    'Can be used for checking if server connection still exists.',
                 tags: ['api', 'index']
             }
         });
@@ -340,9 +338,23 @@ const startApp = async () => {
                 }
             },
             config: {
-                description: 'Starting end point.',
-                notes:
-                    'Can be used for checking if server connection still exists.',
+                description: 'Endpoint for serving static pages.',
+                tags: ['api', 'index']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/assets/{param*}',
+            handler: {
+                directory: {
+                    path: Path.join(__dirname, './build/assets'),
+                    listing: false,
+                    index: true
+                }
+            },
+            config: {
+                description: 'Endpoint for serving images.',
                 tags: ['api', 'index']
             }
         });
