@@ -237,8 +237,6 @@ const startApp = async () => {
                 const session = yar.get('session');
                 const { id: userId } = session;
 
-                console.log('Reorder tracks', playlistId, start, end);
-
                 return reorderPlaylistTracks(userId, playlistId, start, end)
                     .then(data => ({
                         date: Date.now(),

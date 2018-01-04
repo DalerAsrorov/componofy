@@ -119,12 +119,6 @@ export const reorderPlaylistTracks = (playlistId, start, end) => {
     );
 };
 
-reorderPlaylistTracks('3SYaPf7NEjb3zInvl1bE9q', 1, 5)
-    .then(response => {
-        console.log('response', response);
-    })
-    .catch(error => console.error(error));
-
 export const getLogOutUser = () => {
     const URL = `${API_BASE_URL}/logout`;
 
