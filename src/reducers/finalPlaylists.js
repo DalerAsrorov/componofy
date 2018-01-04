@@ -24,7 +24,6 @@ const DEFAULT_STATE = {
     lastUpdated: 0,
     searchTerm: '',
     isVisited: false,
-    playlistName: '',
     playlistDesc: '',
     imageUri: '',
     isPublic: true
@@ -129,10 +128,6 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 status: action.status,
                 statusText: action.statusText
-            });
-        case SET_NEW_PLAYLIST_NAME:
-            return Object.assign({}, state, {
-                playlistName: action.playlistName
             });
         case SET_NEW_PLAYLIST_DESC:
             return Object.assign({}, state, {

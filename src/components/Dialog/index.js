@@ -27,6 +27,8 @@ import {
 import { safeBool } from '../../utils/helpers';
 import Loader from '../Loader';
 
+import './Dialog.css';
+
 const styles = theme => ({
     appBar: {
         position: 'relative'
@@ -134,7 +136,6 @@ class Dialog extends PureComponent {
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
-        setNewPlaylistName: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -146,11 +147,9 @@ class Dialog extends PureComponent {
     };
 
     _handlePlaylistNameChange = event => {
-        if (!R.isEmpty(event.target.value)) {
+        if (!R.isEmpty(this.playlistNameRef.value)) {
             this.setState({ error: false });
         }
-
-        this.props.setNewPlaylistName(event.target.value);
     };
 
     _handlePlaylistDescChange = event => {
@@ -196,15 +195,11 @@ class Dialog extends PureComponent {
 
     _handleClickSubmit = event => {
         event.preventDefault();
-
-        const {
-            finalPlaylists: { playlistName },
-            launchPlaylistMerger,
-            addErrorToApp
-        } = this.props;
+        const { value: playlistName } = this.playlistNameRef;
+        const { launchPlaylistMerger, addErrorToApp } = this.props;
 
         if (!R.isEmpty(playlistName)) {
-            return launchPlaylistMerger();
+            return launchPlaylistMerger(playlistName);
         }
 
         this.setState({ error: true });
@@ -227,7 +222,6 @@ class Dialog extends PureComponent {
             finalPlaylists: {
                 statusText: loaderText,
                 status: shouldShowLoader,
-                playlistName,
                 isPublic,
                 imageUri
             },
@@ -277,9 +271,12 @@ class Dialog extends PureComponent {
                         error={error}
                         onChange={this._handlePlaylistNameChange}
                         margin="normal"
-                        value={playlistName}
+                        defaultValue=""
                         label="Playlist Name"
                         className={classes.textField}
+                        inputRef={input => {
+                            this.playlistNameRef = input;
+                        }}
                         required
                     />
                     <FormControlLabel
