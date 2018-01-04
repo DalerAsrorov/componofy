@@ -229,6 +229,34 @@ const startApp = async () => {
         });
 
         server.route({
+            method: 'GET',
+            path: '/api/reorder-playlist-tracks/{playlistId}/{start}/{end}',
+            handler: (request, h) => {
+                const { yar, params: { playlistId, start, end } } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                console.log('Reorder tracks', playlistId, start, end);
+
+                // return uploadPlaylistCoverImage(userId, playlistId, imageBase64)
+                //     .then(data => ({
+                //         date: Date.now(),
+                //         data
+                //     }))
+                //     .catch(error => ({ error }));
+                return {
+                    success: true
+                };
+            },
+            config: {
+                description: 'Reorder user playlist tracks',
+                notes:
+                    'Needs authenticated user. Both user and playlist IDs are required to fetch data.',
+                tags: ['api', 'user', 'playlists', 'tracks']
+            }
+        });
+
+        server.route({
             method: 'POST',
             path: '/api/createplaylist',
             handler: (request, h) => {

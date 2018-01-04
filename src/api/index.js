@@ -104,6 +104,27 @@ export const uploadPlaylistCoverImage = (
     }).then(response => response.json());
 };
 
+export const reorderPlaylistTracks = (playlistId, start, end) => {
+    const URL = `${API_BASE_URL}/reorder-playlist-tracks/${playlistId}/${start}/${end}`;
+
+    return fetch(URL, {
+        ...corsParams
+    }).then(
+        response => response.json(),
+        error =>
+            console.error(
+                'Error fetching playlist reorder tracks operation',
+                error
+            )
+    );
+};
+
+reorderPlaylistTracks('3SYaPf7NEjb3zInvl1bE9q', 1, 5)
+    .then(response => {
+        console.log('response', response);
+    })
+    .catch(error => console.error(error));
+
 export const getLogOutUser = () => {
     const URL = `${API_BASE_URL}/logout`;
 
