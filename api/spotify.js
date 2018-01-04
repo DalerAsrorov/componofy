@@ -162,6 +162,33 @@ export async function addTracksToPlaylist(
     }
 }
 
+// start - the index of track in the playlist which starts from 0
+// end - the index at which that track should be inserted
+export async function reorderPlaylistTracks(
+    userId,
+    playlistId,
+    start,
+    end,
+    options = {}
+) {
+    try {
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
+        const snapshot = await spotifyApi.reorderTracksInPlaylist(
+            userId,
+            playlistId,
+            parseInt(start),
+            parseInt(end),
+            options
+        );
+
+        return snapshot;
+    } catch (error) {
+        return error;
+    }
+}
+
 export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
     const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
 
@@ -199,5 +226,6 @@ export default {
     getPlaylistTracks,
     getMe,
     createPlaylist,
+    reorderPlaylistTracks,
     uploadPlaylistCoverImage
 };

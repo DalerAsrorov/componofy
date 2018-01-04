@@ -13,6 +13,7 @@ import {
     setUserAndTokens,
     createPlaylist,
     addTracksToPlaylist,
+    reorderPlaylistTracks,
     uploadPlaylistCoverImage
 } from './api/spotify';
 import dotenv from 'dotenv';
@@ -238,12 +239,12 @@ const startApp = async () => {
 
                 console.log('Reorder tracks', playlistId, start, end);
 
-                // return uploadPlaylistCoverImage(userId, playlistId, imageBase64)
-                //     .then(data => ({
-                //         date: Date.now(),
-                //         data
-                //     }))
-                //     .catch(error => ({ error }));
+                return reorderPlaylistTracks(userId, playlistId, start, end)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
                 return {
                     success: true
                 };
