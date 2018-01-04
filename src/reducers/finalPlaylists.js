@@ -132,7 +132,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             });
         case SET_NEW_PLAYLIST_NAME:
             return Object.assign({}, state, {
-                playlistName: action.playlsitName
+                playlistName: action.playlistName
             });
         case SET_NEW_PLAYLIST_DESC:
             return Object.assign({}, state, {

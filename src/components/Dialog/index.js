@@ -277,9 +277,6 @@ class Dialog extends PureComponent {
                         error={error}
                         onChange={this._handlePlaylistNameChange}
                         margin="normal"
-                        InputLabelProps={{
-                            shrink: true
-                        }}
                         value={playlistName}
                         label="Playlist Name"
                         className={classes.textField}
