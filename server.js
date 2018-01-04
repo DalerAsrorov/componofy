@@ -13,6 +13,7 @@ import {
     setUserAndTokens,
     createPlaylist,
     addTracksToPlaylist,
+    reorderTracksInPlaylist,
     uploadPlaylistCoverImage
 } from './api/spotify';
 import dotenv from 'dotenv';
@@ -225,6 +226,32 @@ const startApp = async () => {
                     'Returns playlist tracks given the user and playlist IDs.',
                 notes: 'Both user and playlist IDs are required to fetch data.',
                 tags: ['api', 'playlists']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/api/reorder-playlist-tracks/{playlistId}/{start}/{end}',
+            handler: (request, h) => {
+                const { yar, params: { playlistId, start, end } } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                return reorderTracksInPlaylist(userId, playlistId, start, end)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
+                return {
+                    success: true
+                };
+            },
+            config: {
+                description: 'Reorder user playlist tracks',
+                notes:
+                    'Needs authenticated user. Both user and playlist IDs are required to fetch data.',
+                tags: ['api', 'user', 'playlists', 'tracks']
             }
         });
 

@@ -104,6 +104,21 @@ export const uploadPlaylistCoverImage = (
     }).then(response => response.json());
 };
 
+export const reorderTracksInPlaylist = (playlistId, start, end) => {
+    const URL = `${API_BASE_URL}/reorder-playlist-tracks/${playlistId}/${start}/${end}`;
+
+    return fetch(URL, {
+        ...corsParams
+    }).then(
+        response => response.json(),
+        error =>
+            console.error(
+                'Error fetching playlist reorder tracks operation',
+                error
+            )
+    );
+};
+
 export const getLogOutUser = () => {
     const URL = `${API_BASE_URL}/logout`;
 
