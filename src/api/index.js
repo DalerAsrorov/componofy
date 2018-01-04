@@ -104,7 +104,7 @@ export const uploadPlaylistCoverImage = (
     }).then(response => response.json());
 };
 
-export const reorderPlaylistTracks = (playlistId, start, end) => {
+export const reorderTracksInPlaylist = (playlistId, start, end) => {
     const URL = `${API_BASE_URL}/reorder-playlist-tracks/${playlistId}/${start}/${end}`;
 
     return fetch(URL, {

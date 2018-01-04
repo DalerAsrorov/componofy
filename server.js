@@ -13,7 +13,7 @@ import {
     setUserAndTokens,
     createPlaylist,
     addTracksToPlaylist,
-    reorderPlaylistTracks,
+    reorderTracksInPlaylist,
     uploadPlaylistCoverImage
 } from './api/spotify';
 import dotenv from 'dotenv';
@@ -237,7 +237,7 @@ const startApp = async () => {
                 const session = yar.get('session');
                 const { id: userId } = session;
 
-                return reorderPlaylistTracks(userId, playlistId, start, end)
+                return reorderTracksInPlaylist(userId, playlistId, start, end)
                     .then(data => ({
                         date: Date.now(),
                         data

@@ -164,7 +164,7 @@ export async function addTracksToPlaylist(
 
 // start - the index of track in the playlist which starts from 0
 // end - the index at which that track should be inserted
-export async function reorderPlaylistTracks(
+export async function reorderTracksInPlaylist(
     userId,
     playlistId,
     start,
@@ -226,6 +226,6 @@ export default {
     getPlaylistTracks,
     getMe,
     createPlaylist,
-    reorderPlaylistTracks,
+    reorderTracksInPlaylist,
     uploadPlaylistCoverImage
 };
