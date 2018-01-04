@@ -267,14 +267,6 @@ export const setOpenStatusFinalPlaylists = (isOpen = false) => {
     };
 };
 
-export const SET_NEW_PLAYLIST_NAME = 'SET_NEW_PLAYLIST_NAME';
-export const setNewPlaylistName = playlistName => {
-    return {
-        type: SET_NEW_PLAYLIST_NAME,
-        playlistName
-    };
-};
-
 export const SET_NEW_PLAYLIST_DESC = 'SET_NEW_PLAYLIST_DESC';
 export const setNewPlaylistDesc = playlistDesc => {
     return {
@@ -332,17 +324,18 @@ export const finalizeProcessing = finalPlaylistUrl => {
     };
 };
 
-export const launchPlaylistMerger = () => {
+export const launchPlaylistMerger = playlistName => {
     return (dispatch, getState) => {
         const {
             finalPlaylists: {
-                playlistName,
                 imageUri,
                 isPublic,
                 playlists: { entities: { playlists } }
             }
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
+
+        console.log('playlistName', playlistName);
 
         dispatch(setMergerStatus(true, 'Creating playlist...'));
         createPlaylist(playlistName, { public: isPublic }).then(response => {

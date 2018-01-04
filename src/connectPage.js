@@ -21,7 +21,6 @@ import {
     setFinalPlaylistUrl,
     fetchPlaylistTracks,
     setPublicSearchTerm,
-    setNewPlaylistName,
     setNewPlaylistDesc,
     removeErrorFromApp,
     setFinalSearchTerm,
@@ -212,10 +211,6 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setMySearchTerm(searchTerm));
     },
 
-    setNewPlaylistName(name) {
-        dispatch(setNewPlaylistName(name));
-    },
-
     setNewPlaylistDesc(desc) {
         dispatch(setNewPlaylistDesc(desc));
     },
@@ -232,8 +227,8 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setFinalPlaylistUrl(url));
     },
 
-    launchPlaylistMerger() {
-        dispatch(launchPlaylistMerger());
+    launchPlaylistMerger(playlistName) {
+        dispatch(launchPlaylistMerger(playlistName));
     },
 
     clearFinalData() {
