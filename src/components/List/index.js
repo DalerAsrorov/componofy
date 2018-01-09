@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, { ListSubheader } from 'material-ui/List';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { is } from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
@@ -82,4 +84,4 @@ class List extends PureComponent {
     }
 }
 
-export default withStyles(styles)(List);
+export default DragDropContext(HTML5Backend)(withStyles(styles)(List));

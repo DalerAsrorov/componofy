@@ -1,12 +1,28 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
+import { DragSource } from 'react-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Info from './Info';
 import Preview from './Preview';
+
+const trackSource = {
+    beginDrag(props) {
+        return {
+            text: props.track
+        };
+    }
+};
+
+const collect = (connect, monitor) => {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    };
+};
 
 const styles = theme => ({
     checkmark: {
@@ -38,6 +54,9 @@ class Track extends PureComponent {
         playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
         track: TRACK_PROPTYPE.isRequired,
+        // Injected by React DnD:
+        isDragging: PropTypes.bool.isRequired,
+        connectDragSource: PropTypes.func.isRequired,
         playlist: PLAYLIST_PROPTYPE
     };
 
@@ -60,7 +79,12 @@ class Track extends PureComponent {
     };
 
     render() {
-        const { track, classes, playlistContainsThisTrack } = this.props;
+        const {
+            track,
+            classes,
+            playlistContainsThisTrack,
+            connectDragSource
+        } = this.props;
         const {
             artists,
             name: trackName,
@@ -85,36 +109,40 @@ class Track extends PureComponent {
             );
         }
 
-        return (
-            <ListItem divider>
-                <ListItemIcon>
-                    <Checkbox
-                        className={classes.checkmark}
-                        onClick={this._handleChecked}
-                        checked={playlistContainsThisTrack}
-                    />
-                </ListItemIcon>
-                <ListItemText
-                    primary={
-                        <div className={classes.trackInfoContainer}>
-                            <div className={classes.trackInfo}>
-                                <Info
-                                    trackName={trackName}
-                                    trackUrl={trackUrl}
-                                    artistName={artistName}
-                                    artistUrl={artistUrl}
-                                    albumName={albumName}
-                                    albumUrl={albumUrl}
-                                    isPopular={isPopular}
-                                />
+        return connectDragSource(
+            <div>
+                <ListItem divider>
+                    <ListItemIcon>
+                        <Checkbox
+                            className={classes.checkmark}
+                            onClick={this._handleChecked}
+                            checked={playlistContainsThisTrack}
+                        />
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={
+                            <div className={classes.trackInfoContainer}>
+                                <div className={classes.trackInfo}>
+                                    <Info
+                                        trackName={trackName}
+                                        trackUrl={trackUrl}
+                                        artistName={artistName}
+                                        artistUrl={artistUrl}
+                                        albumName={albumName}
+                                        albumUrl={albumUrl}
+                                        isPopular={isPopular}
+                                    />
+                                </div>
+                                {previewComponent}
                             </div>
-                            {previewComponent}
-                        </div>
-                    }
-                />
-            </ListItem>
+                        }
+                    />
+                </ListItem>
+            </div>
         );
     }
 }
 
-export default withStyles(styles)(Track);
+export default DragSource('track', trackSource, collect)(
+    withStyles(styles)(Track)
+);
