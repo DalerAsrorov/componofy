@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
@@ -9,19 +9,31 @@ import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Info from './Info';
 import Preview from './Preview';
 
-const trackSource = {
+const collectDrag = (connect, monitor) => {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    };
+};
+
+const collectDrop = (connect, monitor) => {
+    return {
+        connectDropTarget: connect.dropTarget()
+    };
+};
+
+const trackItemTarget = {
+    hover(props, monitor, component) {
+        console.log(props, monitor, component);
+    }
+};
+
+const trackItemSource = {
     beginDrag(props) {
         return {
             text: props.track
         };
     }
-};
-
-const collect = (connect, monitor) => {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    };
 };
 
 const styles = theme => ({
@@ -83,7 +95,8 @@ class Track extends PureComponent {
             track,
             classes,
             playlistContainsThisTrack,
-            connectDragSource
+            connectDragSource,
+            connectDropTarget
         } = this.props;
         const {
             artists,
@@ -110,39 +123,43 @@ class Track extends PureComponent {
         }
 
         return connectDragSource(
-            <div>
-                <ListItem divider>
-                    <ListItemIcon>
-                        <Checkbox
-                            className={classes.checkmark}
-                            onClick={this._handleChecked}
-                            checked={playlistContainsThisTrack}
-                        />
-                    </ListItemIcon>
-                    <ListItemText
-                        primary={
-                            <div className={classes.trackInfoContainer}>
-                                <div className={classes.trackInfo}>
-                                    <Info
-                                        trackName={trackName}
-                                        trackUrl={trackUrl}
-                                        artistName={artistName}
-                                        artistUrl={artistUrl}
-                                        albumName={albumName}
-                                        albumUrl={albumUrl}
-                                        isPopular={isPopular}
-                                    />
+            connectDropTarget(
+                <div>
+                    <ListItem divider>
+                        <ListItemIcon>
+                            <Checkbox
+                                className={classes.checkmark}
+                                onClick={this._handleChecked}
+                                checked={playlistContainsThisTrack}
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary={
+                                <div className={classes.trackInfoContainer}>
+                                    <div className={classes.trackInfo}>
+                                        <Info
+                                            trackName={trackName}
+                                            trackUrl={trackUrl}
+                                            artistName={artistName}
+                                            artistUrl={artistUrl}
+                                            albumName={albumName}
+                                            albumUrl={albumUrl}
+                                            isPopular={isPopular}
+                                        />
+                                    </div>
+                                    {previewComponent}
                                 </div>
-                                {previewComponent}
-                            </div>
-                        }
-                    />
-                </ListItem>
-            </div>
+                            }
+                        />
+                    </ListItem>
+                </div>
+            )
         );
     }
 }
 
-export default DragSource('track', trackSource, collect)(
-    withStyles(styles)(Track)
+export default DropTarget('trackItem', trackItemTarget, collectDrop)(
+    DragSource('trackItem', trackItemSource, collectDrag)(
+        withStyles(styles)(Track)
+    )
 );
