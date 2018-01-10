@@ -24,7 +24,8 @@ const collectDrop = (connect, monitor) => {
 
 const trackItemTarget = {
     hover(props, monitor, component) {
-        console.log(props, monitor, component);
+        props.onMoveTrack(monitor.getItem().index, props.index);
+        // console.log('\nDROP', props, monitor, component);
     }
 };
 
@@ -69,6 +70,7 @@ class Track extends PureComponent {
         // Injected by React DnD:
         isDragging: PropTypes.bool.isRequired,
         connectDragSource: PropTypes.func.isRequired,
+        onMoveTrack: PropTypes.func,
         playlist: PLAYLIST_PROPTYPE
     };
 

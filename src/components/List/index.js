@@ -30,6 +30,7 @@ class List extends PureComponent {
         onClickItem: PropTypes.func,
         onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
+        onMoveItem: PropTypes.func,
         subheader: PropTypes.string,
         classes: PropTypes.object,
         keyItem: PropTypes.object,
@@ -46,6 +47,8 @@ class List extends PureComponent {
             onClickItem,
             keyItem,
             showSubItemsOnly,
+            onMoveItem,
+            onMoveTrack,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -61,13 +64,19 @@ class List extends PureComponent {
                           key={playlist.id}
                           playlist={playlist}
                           showTracksOnly={showSubItemsOnly}
+                          onMoveItem={onMoveItem}
                       />
                   ))
                 : [];
         } else {
             listOfItems = is(Array, items)
                 ? items.map(track => (
-                      <Track key={track.id} track={track} playlist={keyItem} />
+                      <Track
+                          key={track.id}
+                          track={track}
+                          playlist={keyItem}
+                          onMoveTrack={onMoveTrack}
+                      />
                   ))
                 : [];
         }

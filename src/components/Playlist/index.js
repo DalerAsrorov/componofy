@@ -27,6 +27,7 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        onMoveItem: PropTypes.func,
         showPlaylist: PropTypes.bool
     };
 
@@ -61,6 +62,7 @@ class Playlist extends PureComponent {
             playlist,
             containsThisPlaylist,
             classes,
+            onMoveItem,
             showTracksOnly
         } = this.props;
         const {
@@ -116,7 +118,11 @@ class Playlist extends PureComponent {
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                    <List keyItem={playlist} items={tracks} />
+                    <List
+                        keyItem={playlist}
+                        items={tracks}
+                        onMoveTrack={onMoveItem}
+                    />
                 </Collapse>
             </div>
         );
