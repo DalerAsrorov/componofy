@@ -70,9 +70,10 @@ class List extends PureComponent {
                 : [];
         } else {
             listOfItems = is(Array, items)
-                ? items.map(track => (
+                ? items.map((track, index) => (
                       <Track
                           key={track.id}
+                          index={index}
                           track={track}
                           playlist={keyItem}
                           onMoveTrack={onMoveTrack}
