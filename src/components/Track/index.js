@@ -24,10 +24,12 @@ const collectDrop = (connect, monitor) => {
 
 const trackItemTarget = {
     hover(props, monitor, component) {
-        const { track, playlist } = monitor.getItem();
+        const { track, playlist, index: dragIndex } = monitor.getItem();
         const { id: trackId } = track;
-        debugger;
+        // debugger;
         // console.log('\nDROP', props, monitor, component);
+
+        console.log(`hoverIndex: ${props.index}, dragIndex: ${dragIndex}`);
     }
 };
 
@@ -35,7 +37,8 @@ const trackItemSource = {
     beginDrag(props) {
         return {
             track: props.track,
-            playlist: props.playlist
+            playlist: props.playlist,
+            index: props.index
         };
     }
 };
