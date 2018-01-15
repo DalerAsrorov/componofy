@@ -25,17 +25,18 @@ const collectDrop = (connect, monitor) => {
 
 const trackItemTarget = {
     hover(props, monitor, component) {
-        const { track, playlist, index: dragIndex } = monitor.getItem();
+        const {
+            track,
+            playlist: { id: playlistId },
+            index: dragIndex
+        } = monitor.getItem();
         const { id: trackId } = track;
         const { index: hoverIndex, onMoveTrack } = props;
 
-        console.log('***hoverIndex', hoverIndex);
         // Don't replace with items themselves
         if (dragIndex === hoverIndex) {
             return;
         }
-
-        console.log('dragIndex: ', dragIndex);
 
         // Determine rectangle on screen
         const hoverBoundingRect = findDOMNode(
@@ -67,7 +68,7 @@ const trackItemTarget = {
         }
 
         // Perform the action
-        onMoveTrack(dragIndex, hoverIndex, playlist);
+        onMoveTrack(dragIndex, hoverIndex, playlistId);
 
         // Note: we're mutating the monitor item here!
         // Generally it's better to avoid mutations,

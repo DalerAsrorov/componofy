@@ -462,3 +462,13 @@ export const logOutUser = () => {
         });
     };
 };
+
+export const REORDER_TRACKS_IN_PLAYLIST = 'REORDER_TRACKS_IN_PLAYLIST';
+export const reorderTracksInPlaylist = (dragIndex, hoverIndex, playlistId) => {
+    return {
+        type: REORDER_TRACKS_IN_PLAYLIST,
+        hoverIndex,
+        dragIndex,
+        playlistId
+    };
+};

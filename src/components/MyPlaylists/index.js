@@ -54,6 +54,7 @@ class MyPlaylists extends PureComponent {
     static propTypes = {
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
+        reorderTracksInPlaylist: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
         myPlaylists: PLAYLISTS_PROPTYPE.isRequired,
@@ -176,10 +177,9 @@ class MyPlaylists extends PureComponent {
     };
 
     _handleMoveTrack = (dragIndex, hoverIndex, playlistId) => {
-        console.log(
-            `\ndragIndex: ${dragIndex}, hoverIndex: ${hoverIndex}\nPlaylist:`,
-            playlistId
-        );
+        const { reorderTracksInPlaylist } = this.props;
+
+        reorderTracksInPlaylist(dragIndex, hoverIndex, playlistId);
     };
 
     componentDidMount() {

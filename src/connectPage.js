@@ -11,6 +11,7 @@ import {
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
     setSearchResultsMessage,
+    reorderTracksInPlaylist,
     setFinalPlaylistPublic,
     searchPublicPlaylists,
     setPublicPlaylistOpen,
@@ -269,6 +270,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removeErrorFromApp(errorId) {
         dispatch(removeErrorFromApp(errorId));
+    },
+
+    reorderTracksInPlaylist(dragIndex, hoverIndex, playlistId) {
+        dispatch(reorderTracksInPlaylist(dragIndex, hoverIndex, playlistId));
     }
 });
 
