@@ -175,8 +175,11 @@ class MyPlaylists extends PureComponent {
         this.searchInputRef.focus();
     };
 
-    _moveTrack = (dragIndex, hoverIndex) => {
-        console.log(`\ndragIndex: ${dragIndex}, hoverIndex: ${hoverIndex}`);
+    _handleMoveTrack = (dragIndex, hoverIndex, playlistId) => {
+        console.log(
+            `\ndragIndex: ${dragIndex}, hoverIndex: ${hoverIndex}\nPlaylist:`,
+            playlistId
+        );
     };
 
     componentDidMount() {
@@ -259,7 +262,7 @@ class MyPlaylists extends PureComponent {
             <List
                 onClickMain={this._handleAddPlaylist}
                 onClickItem={this._handleClickPlaylist}
-                onMoveItem={this._moveTrack}
+                onMoveItem={this._handleMoveTrack}
                 items={playlists}
                 isPlaylist={true}
             />
