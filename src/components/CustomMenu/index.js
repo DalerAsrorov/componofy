@@ -20,23 +20,32 @@ const styles = {
     }
 };
 
+const DefaultButton = props => {
+    const { innerContent, ...restProps } = props;
+
+    return <Button {...restProps}>{innerContent}</Button>;
+};
+
 const CustomMenu = props => {
-    const IconComponent = props.iconComponent;
+    const { iconComponent, customButton } = props;
+
+    let menuButton = customButton ? (
+        customButton
+    ) : (
+        <DefaultButton
+            innerContent={iconComponent}
+            aria-owns={props.isOpen ? 'menu-list' : null}
+            color="primary"
+            className={props.classes.settingsButton}
+            aria-haspopup="true"
+            onClick={props.onClickOptions}
+            fab
+        />
+    );
 
     return (
         <Manager>
-            <Target className={props.classes.buttonTarget}>
-                <Button
-                    aria-owns={props.isOpen ? 'menu-list' : null}
-                    color="primary"
-                    className={props.classes.settingsButton}
-                    aria-haspopup="true"
-                    onClick={props.onClickOptions}
-                    fab
-                >
-                    <IconComponent />
-                </Button>
-            </Target>
+            <Target className={props.classes.buttonTarget}>{menuButton}</Target>
             <Popper
                 eventsEnabled={props.isOpen}
                 className={classNames({
@@ -60,11 +69,12 @@ const CustomMenu = props => {
 
 CustomMenu.propTypes = {
     onClickOptions: PropTypes.func.isRequired,
-    iconComponent: PropTypes.func.isRequired,
+    iconComponent: PropTypes.object.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     menuItems: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    customButton: PropTypes.object,
     anchorEl: PropTypes.object
 };
 
