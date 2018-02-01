@@ -33,7 +33,7 @@ class Settings extends PureComponent {
                 onClickOptions={onClickOptions}
                 anchorEl={anchorEl}
                 onSelectItem={onSelectItem}
-                iconComponent={FlashOn}
+                iconComponent={<FlashOn />}
                 isOpen={isOpen}
                 menuItems={menuItems}
             />
