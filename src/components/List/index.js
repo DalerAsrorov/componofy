@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialList, { ListSubheader } from 'material-ui/List';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { is } from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
@@ -28,6 +30,7 @@ class List extends PureComponent {
         onClickItem: PropTypes.func,
         onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
+        onMoveItem: PropTypes.func,
         subheader: PropTypes.string,
         classes: PropTypes.object,
         keyItem: PropTypes.object,
@@ -44,6 +47,8 @@ class List extends PureComponent {
             onClickItem,
             keyItem,
             showSubItemsOnly,
+            onMoveItem,
+            onMoveTrack,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -59,13 +64,20 @@ class List extends PureComponent {
                           key={playlist.id}
                           playlist={playlist}
                           showTracksOnly={showSubItemsOnly}
+                          onMoveItem={onMoveItem}
                       />
                   ))
                 : [];
         } else {
             listOfItems = is(Array, items)
-                ? items.map(track => (
-                      <Track key={track.id} track={track} playlist={keyItem} />
+                ? items.map((track, index) => (
+                      <Track
+                          key={track.id}
+                          index={index}
+                          track={track}
+                          playlist={keyItem}
+                          onMoveTrack={onMoveTrack}
+                      />
                   ))
                 : [];
         }
@@ -82,4 +94,4 @@ class List extends PureComponent {
     }
 }
 
-export default withStyles(styles)(List);
+export default DragDropContext(HTML5Backend)(withStyles(styles)(List));
