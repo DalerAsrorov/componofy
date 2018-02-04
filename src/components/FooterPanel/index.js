@@ -122,6 +122,7 @@ FooterPanel.propTypes = {
         PropTypes.number,
         PropTypes.object
     ]),
+    menuButtonStyle: PropTypes.object,
     customMenuAnchorEl: PropTypes.object,
     onClickCustomMenuOptions: PropTypes.func,
     shouldShowCircle: PropTypes.bool,

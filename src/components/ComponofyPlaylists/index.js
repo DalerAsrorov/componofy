@@ -17,6 +17,7 @@ import {
     LIGHT_CYAN_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
+    menuButtonStyle,
     footerStyle,
     searchStyle
 } from '../../utils/constants';
@@ -385,6 +386,7 @@ class ComponofyPlaylists extends PureComponent {
                         mainText={mainText}
                         style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
+                        menuButtonStyle={menuButtonStyle}
                     />
                     <Dialog
                         onClickClose={this._handleClickCloseModal}

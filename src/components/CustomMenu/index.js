@@ -27,7 +27,12 @@ const DefaultButton = props => {
 };
 
 const CustomMenu = props => {
-    const { iconComponent, customButton, wrapperClassNames } = props;
+    const {
+        iconComponent,
+        customButton,
+        wrapperClassNames,
+        menuButtonStyle
+    } = props;
 
     let menuButton = customButton ? (
         customButton
@@ -39,11 +44,10 @@ const CustomMenu = props => {
             className={props.classes.settingsButton}
             aria-haspopup="true"
             onClick={props.onClickOptions}
+            style={menuButtonStyle}
             fab
         />
     );
-
-    console.log('wrapperStyle', wrapperClassNames);
 
     return (
         <Manager className={wrapperClassNames}>
@@ -78,6 +82,7 @@ CustomMenu.propTypes = {
     iconComponent: PropTypes.object,
     customButton: PropTypes.object,
     wrapperClassNames: PropTypes.string,
+    menuButtonStyle: PropTypes.object,
     anchorEl: PropTypes.object
 };
 
