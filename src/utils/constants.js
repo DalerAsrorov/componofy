@@ -103,9 +103,7 @@ export const searchStyle = {
     zIndex: '100'
 };
 
-export const menuButtonStyle = {
-    float: 'right'
-};
+export const menuButtonStyle = {};
 
 export const SCROLL_DURATION = 500;
 export const OFFSET_LIMIT = 10;

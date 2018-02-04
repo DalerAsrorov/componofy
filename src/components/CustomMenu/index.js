@@ -30,7 +30,7 @@ const CustomMenu = props => {
     const {
         iconComponent,
         customButton,
-        wrapperClassNames,
+        wrapperStyle,
         menuButtonStyle
     } = props;
 
@@ -50,7 +50,7 @@ const CustomMenu = props => {
     );
 
     return (
-        <Manager className={wrapperClassNames}>
+        <Manager style={wrapperStyle}>
             <Target className={props.classes.buttonTarget}>{menuButton}</Target>
             <Popper
                 eventsEnabled={props.isOpen}
@@ -81,7 +81,7 @@ CustomMenu.propTypes = {
     onClickOptions: PropTypes.func,
     iconComponent: PropTypes.object,
     customButton: PropTypes.object,
-    wrapperClassNames: PropTypes.string,
+    wrapperStyle: PropTypes.object,
     menuButtonStyle: PropTypes.object,
     anchorEl: PropTypes.object
 };

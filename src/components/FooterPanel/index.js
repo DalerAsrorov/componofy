@@ -29,6 +29,11 @@ const styles = theme => ({
         textAlign: 'left'
     },
 
+    settingsWrapper: {
+        flex: '1',
+        float: 'right'
+    },
+
     settings: {},
 
     loaderSection: {
@@ -58,6 +63,8 @@ export const FooterPanel = props => {
         );
     }
 
+    console.log('props.anchorEl', props.anchorEl);
+
     let leftSideComponent = (
         <Button
             onClick={props.onClick}
@@ -79,7 +86,7 @@ export const FooterPanel = props => {
                 customButton={leftSideComponent}
                 isOpen={props.isCustomMenuOpen}
                 menuItems={props.customButtonMenu}
-                wrapperClassNames={props.classes.secondaryBtn}
+                wrapperStyle={{ flex: '1' }}
             />
         );
     }
