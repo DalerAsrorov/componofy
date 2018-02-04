@@ -79,6 +79,7 @@ export const FooterPanel = props => {
                 customButton={leftSideComponent}
                 isOpen={props.isCustomMenuOpen}
                 menuItems={props.customButtonMenu}
+                wrapperClassNames={props.classes.secondaryBtn}
             />
         );
     }

@@ -16,7 +16,7 @@ const styles = {
     settingsButton: {},
 
     buttonTarget: {
-        float: 'right'
+        width: '100%'
     }
 };
 
@@ -27,7 +27,7 @@ const DefaultButton = props => {
 };
 
 const CustomMenu = props => {
-    const { iconComponent, customButton } = props;
+    const { iconComponent, customButton, wrapperClassNames } = props;
 
     let menuButton = customButton ? (
         customButton
@@ -43,8 +43,10 @@ const CustomMenu = props => {
         />
     );
 
+    console.log('wrapperStyle', wrapperClassNames);
+
     return (
-        <Manager>
+        <Manager className={wrapperClassNames}>
             <Target className={props.classes.buttonTarget}>{menuButton}</Target>
             <Popper
                 eventsEnabled={props.isOpen}
@@ -68,13 +70,14 @@ const CustomMenu = props => {
 };
 
 CustomMenu.propTypes = {
-    iconComponent: PropTypes.object.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     menuItems: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onClickOptions: PropTypes.func,
+    iconComponent: PropTypes.object,
     customButton: PropTypes.object,
+    wrapperClassNames: PropTypes.string,
     anchorEl: PropTypes.object
 };
 

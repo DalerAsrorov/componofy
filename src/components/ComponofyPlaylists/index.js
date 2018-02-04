@@ -26,7 +26,8 @@ import List from '../List';
 import Search from '../Search';
 
 const mainButtonStyle = {
-    background: LIGHT_CYAN_COLOR
+    background: LIGHT_CYAN_COLOR,
+    width: '100%'
 };
 
 let scroll = Scroll.animateScroll;
