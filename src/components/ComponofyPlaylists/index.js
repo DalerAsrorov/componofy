@@ -67,6 +67,7 @@ class ComponofyPlaylists extends PureComponent {
     state = {
         shouldFilterList: false,
         isOpenModal: false,
+        isCustomMenuOpen: false,
         settingsIsOpen: false,
         canScrollUp: false,
         anchorEl: null
@@ -152,8 +153,12 @@ class ComponofyPlaylists extends PureComponent {
         });
     };
 
-    _handleComponofy = () => {
+    _handleComponofyCreate = () => {
         this.setState({ isOpenModal: true });
+    };
+
+    _handleComponofyExisting = () => {
+        console.log('clicked on componofy existing');
     };
 
     _handleClickUp = () => {
@@ -175,6 +180,26 @@ class ComponofyPlaylists extends PureComponent {
 
         this.props.navigateTo('/app');
         this.props.setNavIndex(0);
+    };
+
+    _handleClickCustomMenuOptions = event => {
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleSelectCustomMenuItem = () => {
+        this.setState({
+            isCustomMenuOpen: false
+        });
+    };
+
+    _handleCustomMenuClick = event => {
+        this.setState({
+            isCustomMenuOpen: true,
+            customMenuAnchorEl: event.currentTarget
+        });
     };
 
     componentDidMount() {
@@ -205,6 +230,7 @@ class ComponofyPlaylists extends PureComponent {
             shouldFilterList,
             isOpenModal,
             settingsIsOpen,
+            isCustomMenuOpen,
             canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
@@ -285,6 +311,17 @@ class ComponofyPlaylists extends PureComponent {
             </div>
         );
 
+        const customLeftMenu = (
+            <div>
+                <MenuItem onClick={this._handleComponofyCreate}>
+                    Create New Playlist
+                </MenuItem>
+                <MenuItem onClick={this._handleComponofyExisting}>
+                    Add To Existing Playlist
+                </MenuItem>
+            </div>
+        );
+
         const statsComponent = (
             <div className={classes.statsInfo}>
                 <Badge
@@ -334,7 +371,13 @@ class ComponofyPlaylists extends PureComponent {
                         mainButtonColor="primary"
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
-                        onClick={this._handleComponofy}
+                        customButtonMenu={customLeftMenu}
+                        onClick={this._handleCustomMenuClick}
+                        onSelectCustomMenuItem={
+                            this._handleSelectCustomMenuItem
+                        }
+                        customMenuAnchorEl={this.customMenuAnchorEl}
+                        isCustomMenuOpen={isCustomMenuOpen}
                         circleText={statsComponent}
                         isOpen={settingsIsOpen}
                         menuItems={menuItems}

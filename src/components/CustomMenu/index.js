@@ -68,12 +68,12 @@ const CustomMenu = props => {
 };
 
 CustomMenu.propTypes = {
-    onClickOptions: PropTypes.func.isRequired,
     iconComponent: PropTypes.object.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     menuItems: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    onClickOptions: PropTypes.func,
     customButton: PropTypes.object,
     anchorEl: PropTypes.object
 };
