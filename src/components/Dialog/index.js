@@ -7,11 +7,8 @@ import IconButton from 'material-ui/IconButton';
 import MaterialDialog from 'material-ui/Dialog';
 import Avatar from 'material-ui/Avatar';
 import Slide from 'material-ui/transitions/Slide';
-import Switch from 'material-ui/Switch';
-import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import { FormControlLabel } from 'material-ui/Form';
 import { LinearProgress } from 'material-ui/Progress';
 import { AddAPhoto, CheckCircle } from 'material-ui-icons';
 import FaRocket from 'react-icons/lib/fa/rocket';
@@ -26,6 +23,7 @@ import {
 } from '../../utils/constants';
 import { safeBool } from '../../utils/helpers';
 import Loader from '../Loader';
+import CreateForm from './CreateForm';
 
 import './Dialog.css';
 
@@ -92,10 +90,6 @@ const styles = theme => ({
         fontSize: `${theme.spacing.unit * 3}px`
     },
 
-    switchControl: {
-        flex: '0 100px'
-    },
-
     submitButton: {},
 
     successCheck: {
@@ -113,11 +107,6 @@ const styles = theme => ({
 
     topSpace: {
         marginTop: `${theme.spacing.unit * 2}px`
-    },
-
-    textField: {
-        flex: '1',
-        width: '100%'
     },
 
     toolbar: {
@@ -186,8 +175,8 @@ class Dialog extends PureComponent {
                 setFinalPlaylistImageURI(base64URI);
             };
 
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
+            reader.onabort = () => console.warning('file reading was aborted');
+            reader.onerror = () => console.error('file reading has failed');
 
             reader.readAsDataURL(file);
         }
@@ -265,30 +254,19 @@ class Dialog extends PureComponent {
                         {playlistImage}
                     </Dropzone>
                 </section>
-                <section className={classes.inputSection}>
-                    <TextField
-                        id="playlistName"
+                <section
+                    className={classes.inputSection}
+                    data-subform="componofy-inputs"
+                >
+                    <CreateForm
                         error={error}
-                        onChange={this._handlePlaylistNameChange}
-                        margin="normal"
-                        defaultValue=""
-                        label="Playlist Name"
-                        className={classes.textField}
+                        onNameChange={this._handlePlaylistNameChange}
+                        onPublicSwitchClick={this._handlePublicSwitch}
+                        isPublic={isPublic}
+                        switchLabel={switchLabel}
                         inputRef={input => {
                             this.playlistNameRef = input;
                         }}
-                        required
-                    />
-                    <FormControlLabel
-                        className={classes.switchControl}
-                        control={
-                            <Switch
-                                checked={safeBool(isPublic)}
-                                onClick={this._handlePublicSwitch}
-                                aria-label="publicPlaylist"
-                            />
-                        }
-                        label={switchLabel}
                     />
                 </section>
                 <section>{children}</section>
