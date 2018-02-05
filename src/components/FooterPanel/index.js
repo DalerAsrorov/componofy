@@ -104,6 +104,7 @@ export const FooterPanel = props => {
                     isOpen={props.isOpen}
                     className={props.classes.settings}
                     icon={<SettingsIcon />}
+                    settingsWrapperStyle={{ float: 'right' }}
                 />
             </section>
         </Toolbar>
