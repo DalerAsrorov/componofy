@@ -39,7 +39,6 @@ const CustomMenu = props => {
     ) : (
         <DefaultButton
             innerContent={iconComponent}
-            aria-owns={props.isOpen ? 'menu-list' : null}
             color="primary"
             className={props.classes.settingsButton}
             aria-haspopup="true"
@@ -62,7 +61,6 @@ const CustomMenu = props => {
                 <ClickAwayListener onClickAway={props.onSelectItem}>
                     <Grow
                         in={props.isOpen}
-                        id="menu-list"
                         style={{ transformOrigin: '0 0 0' }}
                     >
                         <Paper>{props.menuItems}</Paper>

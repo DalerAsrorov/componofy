@@ -156,10 +156,12 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleComponofyCreate = () => {
+        this._handleSelectCustomMenuItem();
         this.setState({ isOpenModal: true });
     };
 
     _handleComponofyExisting = () => {
+        this._handleSelectCustomMenuItem();
         console.log('clicked on componofy existing');
     };
 
