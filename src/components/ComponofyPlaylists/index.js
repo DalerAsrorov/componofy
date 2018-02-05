@@ -78,6 +78,7 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,

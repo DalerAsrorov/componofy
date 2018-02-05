@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import {
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
+    fetchMyPlaylistsForSelection,
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
@@ -274,6 +275,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setComponofyMode(hasChosenNewCreate) {
         dispatch(setComponofyMode(hasChosenNewCreate));
+    },
+
+    fetchMyPlaylistsForSelection(offset) {
+        dispatch(fetchMyPlaylistsForSelection(offset));
     }
 });
 

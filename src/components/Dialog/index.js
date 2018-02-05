@@ -124,6 +124,7 @@ class Dialog extends PureComponent {
 
     static propTypes = {
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
+        fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
@@ -206,9 +207,15 @@ class Dialog extends PureComponent {
         onReturnToMain();
     };
 
+    _handleFetchPlaylistSelection = () => {
+        const { fetchMyPlaylistsForSelection } = this.props;
+        fetchMyPlaylistsForSelection();
+    };
+
     render() {
         const { error } = this.state;
         const {
+            onFetchPlaylistSelection,
             componoform: { finalPlaylistUrl },
             finalPlaylists: {
                 statusText: loaderText,
@@ -238,10 +245,15 @@ class Dialog extends PureComponent {
             />
         );
 
-        console.log('isCreateMode', isCreateMode);
-
         if (!isCreateMode) {
-            modeForm = <AddExistingForm playlistOptions={playlistOptions} />;
+            modeForm = (
+                <AddExistingForm
+                    onFetchPlaylistSelection={
+                        this._handleFetchPlaylistSelection
+                    }
+                    playlistOptions={playlistOptions}
+                />
+            );
         }
 
         const LoaderWrapper = props => (

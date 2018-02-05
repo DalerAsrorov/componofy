@@ -11,6 +11,7 @@ import {
 } from '../api';
 import { isEmpty } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
+import { OFFSET_LIMIT } from '../utils/constants';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -468,5 +469,31 @@ export const setComponofyMode = hasChosenNewCreate => {
     return {
         type: SET_COMPONOFY_MODE,
         hasChosenNewCreate
+    };
+};
+
+export const REQUEST_MY_PLAYLISTS_FOR_SELECTION =
+    'REQUEST_MY_PLAYLISTS_FOR_SELECTION';
+export const requestMyPlaylistsForSelection = () => ({
+    type: REQUEST_MY_PLAYLISTS_FOR_SELECTION
+});
+
+export const RECEIVE_MY_PLAYLISTS_FOR_SELECTION =
+    'RECEIVE_MY_PLAYLISTS_FOR_SELECTION';
+const receiveMyPlaylistsForSelection = json => {
+    return {
+        type: RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
+        playlists: json.data.body ? json.data.body.items : [],
+        numberOfTracks: json.data.body ? json.data.body.total : 0,
+        receivedAt: Date.now()
+    };
+};
+
+export const fetchMyPlaylistsForSelection = (offset = OFFSET_LIMIT) => {
+    return dispatch => {
+        dispatch(requestMyPlaylistsForSelection());
+        return getMyPlaylists(offset).then(json =>
+            dispatch(receiveMyPlaylistsForSelection(json))
+        );
     };
 };
