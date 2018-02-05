@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
+    setComponoformAddExistingStatus,
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
     fetchMyPlaylistsForSelection,
@@ -9,6 +10,7 @@ import {
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
     setPublicPlaylistsVisited,
+    setComponoformOpenStatus,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
     setSearchResultsMessage,
@@ -279,6 +281,14 @@ export const mapDispatchToProps = dispatch => ({
 
     fetchMyPlaylistsForSelection(offset) {
         dispatch(fetchMyPlaylistsForSelection(offset));
+    },
+
+    setComponoformOpenStatus(wasOpen) {
+        dispatch(setComponoformOpenStatus(wasOpen));
+    },
+
+    setComponoformAddExistingStatus(wasOpen) {
+        dispatch(setComponoformAddExistingStatus(wasOpen));
     }
 });
 

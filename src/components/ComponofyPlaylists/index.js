@@ -78,6 +78,7 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setComponoformOpenStatus: PropTypes.func.isRequired,
         fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
@@ -158,6 +159,9 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleComponofy = () => {
+        const { setComponoformOpenStatus } = this.props;
+
+        setComponoformOpenStatus(true);
         this._handleSelectCustomMenuItem();
         this.setState({ isOpenModal: true });
     };

@@ -1,11 +1,15 @@
 import {
     SET_FINAL_PLAYLIST_URL,
     RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
-    REQUEST_MY_PLAYLISTS_FOR_SELECTION
+    REQUEST_MY_PLAYLISTS_FOR_SELECTION,
+    SET_COMPONOFORM_OPEN_STATUS,
+    SET_COMPONOFORM_ADD_EXISTING_STATUS
 } from '../actions';
 
 const DEFAULT_STATE = {
     isFetching: false,
+    wasOpen: false,
+    wasAddExistingOpen: false,
     listOfMyPlaylists: '',
     finalPlaylistUrl: ''
 };
@@ -32,6 +36,13 @@ export const componoform = (state = DEFAULT_STATE, action) => {
                 listOfMyPlaylists,
                 numberOfTracks,
                 isFetching: false
+            });
+        case SET_COMPONOFORM_OPEN_STATUS:
+            return Object.assign({}, state, { wasOpen: action.wasOpen });
+        case SET_COMPONOFORM_ADD_EXISTING_STATUS:
+            debugger;
+            return Object.assign({}, state, {
+                wasAddExistingOpen: action.wasAddExistingOpen
             });
         default:
             return state;

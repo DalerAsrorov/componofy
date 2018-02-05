@@ -123,8 +123,9 @@ class Dialog extends PureComponent {
     };
 
     static propTypes = {
-        setFinalPlaylistImageURI: PropTypes.func.isRequired,
+        setComponoformAddExistingStatus: PropTypes.func.isRequired,
         fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
+        setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
@@ -135,7 +136,8 @@ class Dialog extends PureComponent {
         addErrorToApp: PropTypes.func.isRequired,
         isCreateMode: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
-        isOpen: PropTypes.bool.isRequired
+        isOpen: PropTypes.bool.isRequired,
+        wasOpen: PropTypes.bool
     };
 
     _handlePlaylistNameChange = event => {
@@ -215,8 +217,8 @@ class Dialog extends PureComponent {
     render() {
         const { error } = this.state;
         const {
-            onFetchPlaylistSelection,
-            componoform: { finalPlaylistUrl },
+            setComponoformAddExistingStatus,
+            componoform: { finalPlaylistUrl, wasAddExistingOpen },
             finalPlaylists: {
                 statusText: loaderText,
                 status: shouldShowLoader,
@@ -230,7 +232,8 @@ class Dialog extends PureComponent {
             classes,
             isOpen,
             title,
-            onClickClose
+            onClickClose,
+            wasOpen
         } = this.props;
         let modeForm = (
             <CreateForm
@@ -248,10 +251,12 @@ class Dialog extends PureComponent {
         if (!isCreateMode) {
             modeForm = (
                 <AddExistingForm
+                    onSetAddExistingOpenStatus={setComponoformAddExistingStatus}
                     onFetchPlaylistSelection={
                         this._handleFetchPlaylistSelection
                     }
                     playlistOptions={playlistOptions}
+                    wasAddExistingOpen={wasAddExistingOpen}
                 />
             );
         }

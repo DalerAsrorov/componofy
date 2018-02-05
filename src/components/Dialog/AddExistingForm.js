@@ -15,20 +15,37 @@ const styles = theme => ({
 
 class AddExistingForm extends PureComponent {
     static propTypes = {
+        onSetAddExistingOpenStatus: PropTypes.func.isRequired,
         onFetchPlaylistSelection: PropTypes.func.isRequired,
         playlistOptions: PropTypes.array.isRequired,
         error: PropTypes.bool.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+        wasAddExistingOpen: PropTypes.bool.isRequired,
+        wasDialogOpen: PropTypes.bool
     };
 
     componentDidMount() {
-        const { onFetchPlaylistSelection } = this.props;
+        const {
+            onFetchPlaylistSelection,
+            onSetAddExistingOpenStatus,
+            wasAddExistingOpen
+        } = this.props;
 
-        onFetchPlaylistSelection(10);
+        if (!wasAddExistingOpen) {
+            onSetAddExistingOpenStatus(true);
+            onFetchPlaylistSelection(10);
+        }
     }
 
     render() {
-        const { playlistOptions, error, classes } = this.props;
+        const {
+            playlistOptions,
+            error,
+            classes,
+            wasAddExistingOpen
+        } = this.props;
+
+        // console.log('wasAddExistingOpen', wasAddExistingOpen);
 
         return (
             <FormControl id="addExistingForm" className={classes.wrapper}>

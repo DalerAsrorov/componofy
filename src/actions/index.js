@@ -497,3 +497,16 @@ export const fetchMyPlaylistsForSelection = (offset = OFFSET_LIMIT) => {
         );
     };
 };
+
+export const SET_COMPONOFORM_OPEN_STATUS = 'SET_COMPONOFORM_OPEN_STATUS';
+export const setComponoformOpenStatus = wasOpen => ({
+    type: SET_COMPONOFORM_OPEN_STATUS,
+    wasOpen
+});
+
+export const SET_COMPONOFORM_ADD_EXISTING_STATUS =
+    'SET_COMPONOFORM_ADD_EXISTING_STATUS';
+export const setComponoformAddExistingStatus = wasAddExistingOpen => ({
+    type: SET_COMPONOFORM_ADD_EXISTING_STATUS,
+    wasAddExistingOpen
+});
