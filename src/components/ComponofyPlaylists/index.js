@@ -233,6 +233,7 @@ class ComponofyPlaylists extends PureComponent {
             isOpenModal,
             settingsIsOpen,
             isCustomMenuOpen,
+            customMenuAnchorEl,
             canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
@@ -378,7 +379,7 @@ class ComponofyPlaylists extends PureComponent {
                         onSelectCustomMenuItem={
                             this._handleSelectCustomMenuItem
                         }
-                        customMenuAnchorEl={this.customMenuAnchorEl}
+                        customMenuAnchorEl={customMenuAnchorEl}
                         isCustomMenuOpen={isCustomMenuOpen}
                         circleText={statsComponent}
                         isOpen={settingsIsOpen}
