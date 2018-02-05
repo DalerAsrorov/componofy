@@ -10,8 +10,14 @@ const styles = theme => ({
         flex: '1',
         width: '100%'
     },
+
     switchControl: {
         flex: '0 100px'
+    },
+
+    wrapper: {
+        display: 'flex',
+        width: '100%'
     }
 });
 
@@ -28,7 +34,7 @@ const CreateForm = props => {
     } = props;
 
     return (
-        <div id="createFormInput" style={wrapperStyle}>
+        <div id="createFormInput" className={props.classes.wrapper}>
             <TextField
                 id="newPlaylistName"
                 error={error}
