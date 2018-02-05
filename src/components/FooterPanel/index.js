@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Settings from '../../containers/Settings';
+import { Settings as SettingsIcon } from 'material-ui-icons';
 
 import './FooterPanel.css';
 
@@ -79,6 +80,7 @@ export const FooterPanel = props => {
                     anchorEl={props.anchorEl}
                     isOpen={props.isOpen}
                     className={props.classes.settings}
+                    icon={<SettingsIcon />}
                 />
             </section>
         </Toolbar>

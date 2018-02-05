@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import CustomMenu from '../CustomMenu';
-import { FlashOn } from 'material-ui-icons';
 
 const styles = theme => ({
     root: {},
@@ -16,6 +15,7 @@ class Settings extends PureComponent {
         onSelectItem: PropTypes.func.isRequired,
         menuItems: PropTypes.object.isRequired,
         isOpen: PropTypes.bool.isRequired,
+        icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
         anchorEl: PropTypes.object
     };
 
@@ -25,7 +25,8 @@ class Settings extends PureComponent {
             onSelectItem,
             menuItems,
             anchorEl,
-            isOpen
+            isOpen,
+            icon
         } = this.props;
 
         return (
@@ -33,7 +34,7 @@ class Settings extends PureComponent {
                 onClickOptions={onClickOptions}
                 anchorEl={anchorEl}
                 onSelectItem={onSelectItem}
-                iconComponent={<FlashOn />}
+                iconComponent={icon}
                 isOpen={isOpen}
                 menuItems={menuItems}
             />
