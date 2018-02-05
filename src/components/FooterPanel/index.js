@@ -63,8 +63,6 @@ export const FooterPanel = props => {
         );
     }
 
-    console.log('props.anchorEl', props.anchorEl);
-
     let leftSideComponent = (
         <Button
             onClick={props.onClick}

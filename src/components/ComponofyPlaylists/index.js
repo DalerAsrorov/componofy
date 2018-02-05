@@ -83,6 +83,7 @@ class ComponofyPlaylists extends PureComponent {
         setFinalPlaylistOpen: PropTypes.func.isRequired,
         setFinalSearchTerm: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
+        setComponofyMode: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
         logOutUser: PropTypes.func.isRequired,
@@ -155,14 +156,19 @@ class ComponofyPlaylists extends PureComponent {
         });
     };
 
-    _handleComponofyCreate = () => {
+    _handleComponofy = () => {
         this._handleSelectCustomMenuItem();
         this.setState({ isOpenModal: true });
     };
 
+    _handleComponofyCreate = () => {
+        this.props.setComponofyMode(true);
+        this._handleComponofy();
+    };
+
     _handleComponofyExisting = () => {
-        this._handleSelectCustomMenuItem();
-        console.log('clicked on componofy existing');
+        this.props.setComponofyMode(false);
+        this._handleComponofy();
     };
 
     _handleClickUp = () => {
@@ -239,7 +245,7 @@ class ComponofyPlaylists extends PureComponent {
             canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, search, modalTracklist;
+        let playlistList, search, modalTracklist, dialog;
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
@@ -249,6 +255,7 @@ class ComponofyPlaylists extends PureComponent {
                 playlists: {
                     entities: { playlists: playlistsMap, tracks: tracksMap }
                 },
+                hasChosenNewCreate,
                 searchTerm
             } = finalPlaylists;
 
@@ -300,6 +307,19 @@ class ComponofyPlaylists extends PureComponent {
                     }}
                     autoFocus
                 />
+            );
+
+            dialog = (
+                <Dialog
+                    onClickClose={this._handleClickCloseModal}
+                    isOpen={isOpenModal}
+                    switchLabel="Public"
+                    title="New playlist info"
+                    onReturnToMain={this._handleReturnToMain}
+                    isCreateMode={hasChosenNewCreate}
+                >
+                    {modalTracklist}
+                </Dialog>
             );
         }
 
@@ -391,15 +411,7 @@ class ComponofyPlaylists extends PureComponent {
                         mainButtonStyle={mainButtonStyle}
                         menuButtonStyle={menuButtonStyle}
                     />
-                    <Dialog
-                        onClickClose={this._handleClickCloseModal}
-                        isOpen={isOpenModal}
-                        switchLabel="Public"
-                        title="New playlist info"
-                        onReturnToMain={this._handleReturnToMain}
-                    >
-                        {modalTracklist}
-                    </Dialog>
+                    {dialog}
                 </div>
             </HotKeys>
         );

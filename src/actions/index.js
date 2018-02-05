@@ -462,3 +462,11 @@ export const logOutUser = () => {
         });
     };
 };
+
+export const SET_COMPONOFY_MODE = 'SET_COMPONOFY_MODE';
+export const setComponofyMode = hasChosenNewCreate => {
+    return {
+        type: SET_COMPONOFY_MODE,
+        hasChosenNewCreate
+    };
+};

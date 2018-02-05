@@ -25,6 +25,7 @@ import {
     removeErrorFromApp,
     setFinalSearchTerm,
     addPlaylistToFinal,
+    setComponofyMode,
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
@@ -269,6 +270,10 @@ export const mapDispatchToProps = dispatch => ({
 
     removeErrorFromApp(errorId) {
         dispatch(removeErrorFromApp(errorId));
+    },
+
+    setComponofyMode(hasChosenNewCreate) {
+        dispatch(setComponofyMode(hasChosenNewCreate));
     }
 });
 

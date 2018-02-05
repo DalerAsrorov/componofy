@@ -13,7 +13,8 @@ import {
     SET_NEW_PLAYLIST_NAME,
     SET_NEW_PLAYLIST_DESC,
     SET_FINAL_PLAYLIST_PUBLIC,
-    SET_FINAL_PLAYLIST_IMAGE_URI
+    SET_FINAL_PLAYLIST_IMAGE_URI,
+    SET_COMPONOFY_MODE
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -26,6 +27,7 @@ const DEFAULT_STATE = {
     isVisited: false,
     playlistDesc: '',
     imageUri: '',
+    hasChosenNewCreate: true,
     isPublic: true
 };
 
@@ -143,6 +145,10 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             playlists = clone(state.playlists);
 
             return Object.assign({}, state, DEFAULT_STATE);
+        case SET_COMPONOFY_MODE:
+            return Object.assign({}, state, {
+                hasChosenNewCreate: action.hasChosenNewCreate
+            });
         default:
             return state;
     }

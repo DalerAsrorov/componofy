@@ -24,6 +24,7 @@ import {
 import { safeBool } from '../../utils/helpers';
 import Loader from '../Loader';
 import CreateForm from './CreateForm';
+import AddExistingForm from './AddExistingForm';
 
 import './Dialog.css';
 
@@ -131,6 +132,7 @@ class Dialog extends PureComponent {
         switchLabel: PropTypes.string.isRequired,
         onClickClose: PropTypes.func.isRequired,
         addErrorToApp: PropTypes.func.isRequired,
+        isCreateMode: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
         isOpen: PropTypes.bool.isRequired
     };
@@ -214,6 +216,8 @@ class Dialog extends PureComponent {
                 isPublic,
                 imageUri
             },
+            myPlaylists: { playlists: playlistOptions },
+            isCreateMode,
             switchLabel,
             children,
             classes,
@@ -221,6 +225,24 @@ class Dialog extends PureComponent {
             title,
             onClickClose
         } = this.props;
+        let modeForm = (
+            <CreateForm
+                error={error}
+                onNameChange={this._handlePlaylistNameChange}
+                onPublicSwitchClick={this._handlePublicSwitch}
+                isPublic={isPublic}
+                switchLabel={switchLabel}
+                inputRef={input => {
+                    this.playlistNameRef = input;
+                }}
+            />
+        );
+
+        console.log('isCreateMode', isCreateMode);
+
+        if (!isCreateMode) {
+            modeForm = <AddExistingForm playlistOptions={playlistOptions} />;
+        }
 
         const LoaderWrapper = props => (
             <div className={classes.loaderWrapper}>{props.children}</div>
@@ -258,16 +280,7 @@ class Dialog extends PureComponent {
                     className={classes.inputSection}
                     data-subform="componofy-inputs"
                 >
-                    <CreateForm
-                        error={error}
-                        onNameChange={this._handlePlaylistNameChange}
-                        onPublicSwitchClick={this._handlePublicSwitch}
-                        isPublic={isPublic}
-                        switchLabel={switchLabel}
-                        inputRef={input => {
-                            this.playlistNameRef = input;
-                        }}
-                    />
+                    {modeForm}
                 </section>
                 <section>{children}</section>
                 <section className={classes.topSpace}>
