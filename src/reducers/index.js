@@ -5,7 +5,6 @@ import { navigation } from './navigation';
 import { componoform } from './componoform';
 import { user } from './user';
 import { errors } from './errors';
-import { componoformAdd } from './componoformadd';
 
 export {
     myPlaylists,
