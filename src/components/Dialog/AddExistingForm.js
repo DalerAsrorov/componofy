@@ -45,8 +45,6 @@ class AddExistingForm extends PureComponent {
             wasAddExistingOpen
         } = this.props;
 
-        // console.log('wasAddExistingOpen', wasAddExistingOpen);
-
         return (
             <FormControl id="addExistingForm" className={classes.wrapper}>
                 <InputLabel htmlFor="playlist-choice">

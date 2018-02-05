@@ -92,7 +92,7 @@ class PublicPlaylists extends PureComponent {
         event.preventDefault();
 
         if (R.isEmpty(searchTerm)) {
-            console.log('search featured/suggested playlists');
+            console.log('TODO::search featured/suggested playlists');
         } else {
             this.props.searchPublicPlaylists();
         }
