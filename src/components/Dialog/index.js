@@ -267,6 +267,7 @@ class Dialog extends PureComponent {
                         inputRef={input => {
                             this.playlistNameRef = input;
                         }}
+                        wrapperStyle={{ display: 'flex', width: '100%' }}
                     />
                 </section>
                 <section>{children}</section>

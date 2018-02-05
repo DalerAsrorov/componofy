@@ -23,13 +23,12 @@ const CreateForm = props => {
         classes,
         isPublic,
         onPublicSwitchClick,
+        wrapperStyle,
         ...restProps
     } = props;
 
-    debugger;
-
     return (
-        <div id="createFormInput">
+        <div id="createFormInput" style={wrapperStyle}>
             <TextField
                 id="newPlaylistName"
                 error={error}
@@ -61,7 +60,8 @@ CreateForm.propTypes = {
     switchLabel: PropTypes.string.isRequired,
     error: PropTypes.bool.isRequired,
     isPublic: PropTypes.bool.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    wrapperStyle: PropTypes.object
 };
 
 export default withStyles(styles)(CreateForm);
