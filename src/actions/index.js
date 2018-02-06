@@ -336,8 +336,6 @@ export const launchPlaylistMerger = playlistName => {
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
 
-        console.log('playlistName', playlistName);
-
         dispatch(setMergerStatus(true, 'Creating playlist...'));
         createPlaylist(playlistName, { public: isPublic }).then(response => {
             dispatch(setMergerStatus(true, 'Adding tracks...'));
