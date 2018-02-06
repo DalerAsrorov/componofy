@@ -26,6 +26,7 @@ SPOTIFY_CLIENT=[your own spotify client key]
 SPOTIFY_CLIENT_SECRET=[your own spotify client secret ke]
 SPOTIFY_REDIRECT_URI=http://localhost:3001/api/callback
 YAR_PASS=[any set of characters (without quotes)]
+DEV_MODE=true
 ```
 
 6. `yarn start:api` in one terminal (window/tab)
