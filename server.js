@@ -31,10 +31,11 @@ const server = new Hapi.Server({
     }
 });
 
-// options for session management module
+const isSecure = process.env.DEV_MODE ? false : true;
 const yarOptions = {
     cookieOptions: {
-        password: process.env.YAR_PASS
+        password: process.env.YAR_PASS,
+        isSecure
     }
 };
 
