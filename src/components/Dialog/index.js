@@ -218,14 +218,17 @@ class Dialog extends PureComponent {
         const { error } = this.state;
         const {
             setComponoformAddExistingStatus,
-            componoform: { finalPlaylistUrl, wasAddExistingOpen },
+            componoform: {
+                finalPlaylistUrl,
+                wasAddExistingOpen,
+                listOfMyPlaylists
+            },
             finalPlaylists: {
                 statusText: loaderText,
                 status: shouldShowLoader,
                 isPublic,
                 imageUri
             },
-            myPlaylists: { playlists: playlistOptions },
             isCreateMode,
             switchLabel,
             children,
@@ -255,7 +258,7 @@ class Dialog extends PureComponent {
                     onFetchPlaylistSelection={
                         this._handleFetchPlaylistSelection
                     }
-                    playlistOptions={playlistOptions}
+                    playlistOptions={listOfMyPlaylists}
                     wasAddExistingOpen={wasAddExistingOpen}
                 />
             );

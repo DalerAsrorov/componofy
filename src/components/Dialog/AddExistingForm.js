@@ -1,13 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
+import Avatar from 'material-ui/Avatar';
 import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
 
 const styles = theme => ({
+    menuItem: {},
+
     wrapper: {
         width: '100%'
     }
@@ -45,6 +50,26 @@ class AddExistingForm extends PureComponent {
             wasAddExistingOpen
         } = this.props;
 
+        const playlistMenuSelects = playlistOptions.map(
+            ({ id, name, images = [] }) => {
+                return (
+                    <MenuItem key={id} value={10} className={classes.menuItem}>
+                        <Avatar
+                            src={head(images).url}
+                            alt={`${name} cover image`}
+                        />
+                        <Typography
+                            align="center"
+                            type="title"
+                            color="secondary"
+                        >
+                            {name}
+                        </Typography>
+                    </MenuItem>
+                );
+            }
+        );
+
         return (
             <FormControl id="addExistingForm" className={classes.wrapper}>
                 <InputLabel htmlFor="playlist-choice">
@@ -58,9 +83,7 @@ class AddExistingForm extends PureComponent {
                         id: 'playlist-choice'
                     }}
                 >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    {playlistMenuSelects}
                 </Select>
             </FormControl>
         );

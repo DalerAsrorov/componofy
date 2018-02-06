@@ -10,7 +10,7 @@ const DEFAULT_STATE = {
     isFetching: false,
     wasOpen: false,
     wasAddExistingOpen: false,
-    listOfMyPlaylists: '',
+    listOfMyPlaylists: [],
     finalPlaylistUrl: ''
 };
 
@@ -40,7 +40,6 @@ export const componoform = (state = DEFAULT_STATE, action) => {
         case SET_COMPONOFORM_OPEN_STATUS:
             return Object.assign({}, state, { wasOpen: action.wasOpen });
         case SET_COMPONOFORM_ADD_EXISTING_STATUS:
-            debugger;
             return Object.assign({}, state, {
                 wasAddExistingOpen: action.wasAddExistingOpen
             });
