@@ -4,6 +4,7 @@ import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Select from 'material-ui/Select';
+import { Divider } from 'material-ui';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import { MenuItem } from 'material-ui/Menu';
@@ -12,6 +13,11 @@ import Input, { InputLabel } from 'material-ui/Input';
 
 const styles = theme => ({
     menuItem: {},
+
+    playlistName: {
+        width: '100%',
+        paddingLeft: `${theme.spacing.unit}px`
+    },
 
     wrapper: {
         width: '100%'
@@ -59,12 +65,13 @@ class AddExistingForm extends PureComponent {
                             alt={`${name} cover image`}
                         />
                         <Typography
-                            align="center"
                             type="title"
                             color="secondary"
+                            className={classes.playlistName}
                         >
                             {name}
                         </Typography>
+                        <Divider />
                     </MenuItem>
                 );
             }

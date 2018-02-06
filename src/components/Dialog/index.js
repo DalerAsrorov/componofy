@@ -43,7 +43,8 @@ const styles = theme => ({
         border: `${theme.spacing.unit / 2}px dotted ${
             theme.palette.common.lightBlack
         }`,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginBottom: `${theme.spacing.unit}px`
     },
 
     dropImageZoneImg: {

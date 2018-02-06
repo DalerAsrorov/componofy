@@ -62,6 +62,10 @@ const styles = theme => ({
         width: '100%',
         lineHeight: '2.5',
         paddingLeft: `${theme.spacing.unit}px`
+    },
+
+    tracklistBox: {
+        margin: `${theme.spacing.unit}px 0`
     }
 });
 
@@ -291,6 +295,7 @@ class ComponofyPlaylists extends PureComponent {
                         maxHeight: '300px',
                         overflow: 'auto'
                     }}
+                    className={classes.tracklistBox}
                 />
             );
 
