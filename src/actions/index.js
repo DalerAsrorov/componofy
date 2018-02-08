@@ -317,8 +317,8 @@ export const removeErrorFromApp = errorId => {
 export const finalizeProcessing = finalPlaylistUrl => {
     return dispatch => {
         debugger;
-        dispatch(setMergerStatus(false, 'Finished!'));
-        dispatch(setMergerStatus(false, ''));
+        dispatch(setMergerStatus(true, 'Finished!'));
+        dispatch(setMergerStatus(false));
         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
         dispatch(clearFinalData());
         dispatch(clearPublicData());
