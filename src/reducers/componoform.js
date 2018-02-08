@@ -3,7 +3,8 @@ import {
     RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
     REQUEST_MY_PLAYLISTS_FOR_SELECTION,
     SET_COMPONOFORM_OPEN_STATUS,
-    SET_COMPONOFORM_ADD_EXISTING_STATUS
+    SET_COMPONOFORM_ADD_EXISTING_STATUS,
+    SET_SELECTED_PLAYLIST
 } from '../actions';
 
 const DEFAULT_STATE = {
@@ -11,7 +12,8 @@ const DEFAULT_STATE = {
     wasOpen: false,
     wasAddExistingOpen: false,
     listOfMyPlaylists: [],
-    finalPlaylistUrl: ''
+    finalPlaylistUrl: '',
+    selectedPlaylistId: ''
 };
 
 export const componoform = (state = DEFAULT_STATE, action) => {
@@ -42,6 +44,10 @@ export const componoform = (state = DEFAULT_STATE, action) => {
         case SET_COMPONOFORM_ADD_EXISTING_STATUS:
             return Object.assign({}, state, {
                 wasAddExistingOpen: action.wasAddExistingOpen
+            });
+        case SET_SELECTED_PLAYLIST:
+            return Object.assign({}, state, {
+                selectedPlaylistId: action.playlistId
             });
         default:
             return state;

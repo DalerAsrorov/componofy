@@ -129,6 +129,7 @@ class Dialog extends PureComponent {
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
+        setSelectedPlaylist: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
@@ -219,11 +220,13 @@ class Dialog extends PureComponent {
         const { error } = this.state;
         const {
             setComponoformAddExistingStatus,
+            setSelectedPlaylist,
             componoform: {
                 finalPlaylistUrl,
                 wasAddExistingOpen,
                 listOfMyPlaylists,
-                isFetchingOptions
+                isFetchingOptions,
+                selectedPlaylistId
             },
             finalPlaylists: {
                 statusText: loaderText,
@@ -263,6 +266,8 @@ class Dialog extends PureComponent {
                     playlistOptions={listOfMyPlaylists}
                     wasAddExistingOpen={wasAddExistingOpen}
                     isFetchingOptions={isFetchingOptions}
+                    onSelectPlaylist={setSelectedPlaylist}
+                    selectedPlaylist={selectedPlaylistId}
                 />
             );
         }

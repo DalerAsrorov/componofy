@@ -22,6 +22,7 @@ import {
     setFinalPlaylistOpen,
     launchPlaylistMerger,
     setFinalPlaylistUrl,
+    setSelectedPlaylist,
     fetchPlaylistTracks,
     setPublicSearchTerm,
     setNewPlaylistDesc,
@@ -289,6 +290,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setComponoformAddExistingStatus(wasOpen) {
         dispatch(setComponoformAddExistingStatus(wasOpen));
+    },
+
+    setSelectedPlaylist(playlistId) {
+        dispatch(setSelectedPlaylist(playlistId));
     }
 });
 

@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
 import Avatar from 'material-ui/Avatar';
 import Select from 'material-ui/Select';
 import { Divider } from 'material-ui';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -18,7 +19,16 @@ const styles = theme => ({
         width: '100%'
     },
 
-    menuItem: {},
+    loaderWrapper: {
+        textAlign: 'center',
+        width: '100%'
+    },
+
+    menuItemWrapper: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 1.5}px`
+    },
 
     playlistName: {
         width: '100%',
@@ -31,7 +41,6 @@ const styles = theme => ({
     },
 
     wrapper: {
-        textAlign: 'center',
         width: '100%'
     }
 });
@@ -40,11 +49,13 @@ class AddExistingForm extends PureComponent {
     static propTypes = {
         onSetAddExistingOpenStatus: PropTypes.func.isRequired,
         onFetchPlaylistSelection: PropTypes.func.isRequired,
+        selectedPlaylist: PropTypes.string.isRequired,
+        wasAddExistingOpen: PropTypes.bool.isRequired,
+        isFetchingOptions: PropTypes.bool.isRequired,
+        onSelectPlaylist: PropTypes.func.isRequired,
         playlistOptions: PropTypes.array.isRequired,
         error: PropTypes.bool.isRequired,
         classes: PropTypes.object.isRequired,
-        wasAddExistingOpen: PropTypes.bool.isRequired,
-        isFetchingOptions: PropTypes.bool.isRequired,
         wasDialogOpen: PropTypes.bool
     };
 
@@ -61,37 +72,49 @@ class AddExistingForm extends PureComponent {
         }
     }
 
+    _handlePlaylistSelect = event => {
+        this.props.onSelectPlaylist(event.target.value);
+    };
+
     render() {
         const {
             playlistOptions,
             error,
             classes,
             wasAddExistingOpen,
-            isFetchingOptions
+            isFetchingOptions,
+            selectedPlaylist
         } = this.props;
         const playlistMenuSelects = playlistOptions.map(
             ({ id, name, images = [] }) => {
+                console.log(id, name, images);
                 return (
-                    <MenuItem key={id} value={10} className={classes.menuItem}>
-                        <Avatar
-                            src={head(images).url}
-                            alt={`${name} cover image`}
+                    <MenuItem key={id} value={id}>
+                        <ListItemIcon className={classes.icon}>
+                            <Avatar
+                                src={head(images).url}
+                                alt={`${name} cover image`}
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary={
+                                <Typography
+                                    type="title"
+                                    color="secondary"
+                                    component="p"
+                                    className={classes.playlistName}
+                                >
+                                    {name}
+                                </Typography>
+                            }
                         />
-                        <Typography
-                            type="title"
-                            color="secondary"
-                            className={classes.playlistName}
-                        >
-                            {name}
-                        </Typography>
-                        <Divider />
                     </MenuItem>
                 );
             }
         );
 
         let contentComponent = (
-            <div className={classes.wrapper}>
+            <div className={classes.loaderWrapper}>
                 <CircularProgress className={classes.progress} thickness={7} />
                 <Typography type="caption" color="secondary">
                     Loading your playlists...
@@ -106,11 +129,11 @@ class AddExistingForm extends PureComponent {
                         Choose Playlist
                     </InputLabel>
                     <Select
-                        value=""
-                        onChange={() => {}}
-                        inputProps={{
-                            name: 'playlist',
-                            id: 'playlist-choice'
+                        value={selectedPlaylist}
+                        onChange={this._handlePlaylistSelect}
+                        name="playlist"
+                        classes={{
+                            select: classes.menuItemWrapper
                         }}
                     >
                         {playlistMenuSelects}

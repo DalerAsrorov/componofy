@@ -508,3 +508,9 @@ export const setComponoformAddExistingStatus = wasAddExistingOpen => ({
     type: SET_COMPONOFORM_ADD_EXISTING_STATUS,
     wasAddExistingOpen
 });
+
+export const SET_SELECTED_PLAYLIST = 'SET_SELECTED_PLAYLIST';
+export const setSelectedPlaylist = playlistId => ({
+    type: SET_SELECTED_PLAYLIST,
+    playlistId
+});
