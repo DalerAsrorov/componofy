@@ -316,6 +316,7 @@ export const removeErrorFromApp = errorId => {
 
 export const finalizeProcessing = finalPlaylistUrl => {
     return dispatch => {
+        debugger;
         dispatch(setMergerStatus(false, 'Finished!'));
         dispatch(setMergerStatus(false, ''));
         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
@@ -328,40 +329,66 @@ export const finalizeProcessing = finalPlaylistUrl => {
 export const launchPlaylistMerger = playlistName => {
     return (dispatch, getState) => {
         const {
+            componoform: { selectedPlaylistId },
             finalPlaylists: {
                 imageUri,
                 isPublic,
+                hasChosenNewCreate,
                 playlists: { entities: { playlists } }
             }
         } = getState();
         const tracks = getAllPlaylistsTrackIds(playlists);
 
-        dispatch(setMergerStatus(true, 'Creating playlist...'));
-        createPlaylist(playlistName, { public: isPublic }).then(response => {
-            dispatch(setMergerStatus(true, 'Adding tracks...'));
-            const {
-                data: {
-                    body: {
-                        id: playlistId,
-                        external_urls: { spotify: finalPlaylistUrl }
-                    }
-                }
-            } = response;
+        if (hasChosenNewCreate) {
+            dispatch(setMergerStatus(true, 'Creating playlist...'));
+            createPlaylist(playlistName, { public: isPublic }).then(
+                response => {
+                    dispatch(setMergerStatus(true, 'Adding tracks...'));
+                    const {
+                        data: {
+                            body: {
+                                id: playlistId,
+                                external_urls: { spotify: finalPlaylistUrl }
+                            }
+                        }
+                    } = response;
 
-            addTracksToPlaylist(playlistId, tracks).then(response => {
-                if (!isEmpty(imageUri)) {
-                    dispatch(setMergerStatus(true, 'Adding cover image...'));
+                    addTracksToPlaylist(playlistId, tracks).then(response => {
+                        if (!isEmpty(imageUri)) {
+                            dispatch(
+                                setMergerStatus(true, 'Adding cover image...')
+                            );
 
-                    uploadPlaylistCoverImage(playlistId, imageUri).then(
-                        response => {
+                            uploadPlaylistCoverImage(playlistId, imageUri).then(
+                                response =>
+                                    dispatch(
+                                        finalizeProcessing(finalPlaylistUrl)
+                                    )
+                            );
+                        } else {
                             dispatch(finalizeProcessing(finalPlaylistUrl));
+                        }
+                    });
+                }
+            );
+        } else {
+            dispatch(setMergerStatus(true, 'Adding tracks...'));
+            addTracksToPlaylist(selectedPlaylistId, tracks).then(response => {
+                if (!isEmpty(imageUri)) {
+                    dispatch(
+                        setMergerStatus(true, 'Adding new cover image...')
+                    );
+
+                    uploadPlaylistCoverImage(selectedPlaylistId, imageUri).then(
+                        response => {
+                            dispatch(finalizeProcessing('finalPlaylistUrl'));
                         }
                     );
                 } else {
-                    dispatch(finalizeProcessing(finalPlaylistUrl));
+                    dispatch(finalizeProcessing('finalPlaylistUrl'));
                 }
             });
-        });
+        }
     };
 };
 

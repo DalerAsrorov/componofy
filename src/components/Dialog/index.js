@@ -191,15 +191,25 @@ class Dialog extends PureComponent {
 
     _handleClickSubmit = event => {
         event.preventDefault();
-        const { value: playlistName } = this.playlistNameRef;
-        const { launchPlaylistMerger, addErrorToApp } = this.props;
+        const {
+            launchPlaylistMerger,
+            isCreateMode,
+            addErrorToApp
+        } = this.props;
 
-        if (!R.isEmpty(playlistName)) {
-            return launchPlaylistMerger(playlistName);
+        if (isCreateMode) {
+            const { value: playlistName } = this.playlistNameRef;
+
+            if (!R.isEmpty(playlistName)) {
+                launchPlaylistMerger(playlistName);
+                return;
+            }
+
+            this.setState({ error: true });
+            addErrorToApp('Fix errors before submitting again.');
+        } else {
+            launchPlaylistMerger();
         }
-
-        this.setState({ error: true });
-        addErrorToApp('Fix errors before submitting again.');
     };
 
     _handleClickBack = event => {
