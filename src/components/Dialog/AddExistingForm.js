@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
+import { CircularProgress } from 'material-ui/Progress';
 import Avatar from 'material-ui/Avatar';
 import Select from 'material-ui/Select';
 import { Divider } from 'material-ui';
@@ -10,8 +11,13 @@ import Typography from 'material-ui/Typography';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
+import { LIGHT_CYAN_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
+    form: {
+        width: '100%'
+    },
+
     menuItem: {},
 
     playlistName: {
@@ -19,7 +25,13 @@ const styles = theme => ({
         paddingLeft: `${theme.spacing.unit}px`
     },
 
+    progress: {
+        margin: `0 ${theme.spacing.unit * 2}px`,
+        color: LIGHT_CYAN_COLOR
+    },
+
     wrapper: {
+        textAlign: 'center',
         width: '100%'
     }
 });
@@ -32,6 +44,7 @@ class AddExistingForm extends PureComponent {
         error: PropTypes.bool.isRequired,
         classes: PropTypes.object.isRequired,
         wasAddExistingOpen: PropTypes.bool.isRequired,
+        isFetchingOptions: PropTypes.bool.isRequired,
         wasDialogOpen: PropTypes.bool
     };
 
@@ -53,9 +66,9 @@ class AddExistingForm extends PureComponent {
             playlistOptions,
             error,
             classes,
-            wasAddExistingOpen
+            wasAddExistingOpen,
+            isFetchingOptions
         } = this.props;
-
         const playlistMenuSelects = playlistOptions.map(
             ({ id, name, images = [] }) => {
                 return (
@@ -77,22 +90,39 @@ class AddExistingForm extends PureComponent {
             }
         );
 
+        let contentComponent = (
+            <div className={classes.wrapper}>
+                <CircularProgress className={classes.progress} thickness={7} />
+                <Typography type="caption" color="secondary">
+                    Loading your playlists...
+                </Typography>
+            </div>
+        );
+
+        if (!isFetchingOptions) {
+            contentComponent = (
+                <FormControl className={classes.form}>
+                    <InputLabel htmlFor="playlist-choice">
+                        Choose Playlist
+                    </InputLabel>
+                    <Select
+                        value=""
+                        onChange={() => {}}
+                        inputProps={{
+                            name: 'playlist',
+                            id: 'playlist-choice'
+                        }}
+                    >
+                        {playlistMenuSelects}
+                    </Select>
+                </FormControl>
+            );
+        }
+
         return (
-            <FormControl id="addExistingForm" className={classes.wrapper}>
-                <InputLabel htmlFor="playlist-choice">
-                    Choose Playlist
-                </InputLabel>
-                <Select
-                    value=""
-                    onChange={() => {}}
-                    inputProps={{
-                        name: 'playlist',
-                        id: 'playlist-choice'
-                    }}
-                >
-                    {playlistMenuSelects}
-                </Select>
-            </FormControl>
+            <div id="addExistingForm" className={classes.wrapper}>
+                {contentComponent}
+            </div>
         );
     }
 }

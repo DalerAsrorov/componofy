@@ -7,7 +7,7 @@ import {
 } from '../actions';
 
 const DEFAULT_STATE = {
-    isFetching: false,
+    isFetchingOptions: false,
     wasOpen: false,
     wasAddExistingOpen: false,
     listOfMyPlaylists: [],
@@ -23,7 +23,7 @@ export const componoform = (state = DEFAULT_STATE, action) => {
                 finalPlaylistUrl: action.url
             });
         case REQUEST_MY_PLAYLISTS_FOR_SELECTION:
-            return Object.assign({}, state, { isFetching: true });
+            return Object.assign({}, state, { isFetchingOptions: true });
         case RECEIVE_MY_PLAYLISTS_FOR_SELECTION:
             listOfMyPlaylists = [
                 ...state.listOfMyPlaylists,
@@ -35,7 +35,7 @@ export const componoform = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 listOfMyPlaylists,
                 numberOfTracks,
-                isFetching: false
+                isFetchingOptions: false
             });
         case SET_COMPONOFORM_OPEN_STATUS:
             return Object.assign({}, state, { wasOpen: action.wasOpen });

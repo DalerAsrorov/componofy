@@ -222,7 +222,8 @@ class Dialog extends PureComponent {
             componoform: {
                 finalPlaylistUrl,
                 wasAddExistingOpen,
-                listOfMyPlaylists
+                listOfMyPlaylists,
+                isFetchingOptions
             },
             finalPlaylists: {
                 statusText: loaderText,
@@ -261,6 +262,7 @@ class Dialog extends PureComponent {
                     }
                     playlistOptions={listOfMyPlaylists}
                     wasAddExistingOpen={wasAddExistingOpen}
+                    isFetchingOptions={isFetchingOptions}
                 />
             );
         }
