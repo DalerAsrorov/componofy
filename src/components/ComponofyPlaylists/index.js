@@ -239,7 +239,11 @@ class ComponofyPlaylists extends PureComponent {
 
     render() {
         const {
-            finalPlaylists,
+            finalPlaylists: {
+                playlists: playlistsFinal,
+                searchTerm,
+                hasChosenNewCreate
+            },
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
             finalPlaylistsHasOpenPlaylist,
@@ -261,12 +265,8 @@ class ComponofyPlaylists extends PureComponent {
 
         if (isNotEmpty) {
             const {
-                playlists: {
-                    entities: { playlists: playlistsMap, tracks: tracksMap }
-                },
-                hasChosenNewCreate,
-                searchTerm
-            } = finalPlaylists;
+                entities: { playlists: playlistsMap, tracks: tracksMap }
+            } = playlistsFinal;
 
             let playlists = formatPlaylistsData(playlistsMap, tracksMap);
 
@@ -317,19 +317,6 @@ class ComponofyPlaylists extends PureComponent {
                     }}
                     autoFocus
                 />
-            );
-
-            dialog = (
-                <Dialog
-                    onClickClose={this._handleClickCloseModal}
-                    isOpen={isOpenModal}
-                    switchLabel="Public"
-                    title="New playlist info"
-                    onReturnToMain={this._handleReturnToMain}
-                    isCreateMode={hasChosenNewCreate}
-                >
-                    {modalTracklist}
-                </Dialog>
             );
         }
 
@@ -382,7 +369,7 @@ class ComponofyPlaylists extends PureComponent {
             focusSearch: this._handleFocusOnSearch
         };
 
-        let pageComponent = (
+        return (
             <HotKeys
                 keyMap={searchKeyMap}
                 handlers={serachHandlers}
@@ -421,12 +408,19 @@ class ComponofyPlaylists extends PureComponent {
                         mainButtonStyle={mainButtonStyle}
                         menuButtonStyle={menuButtonStyle}
                     />
-                    {dialog}
+                    <Dialog
+                        onClickClose={this._handleClickCloseModal}
+                        isOpen={isOpenModal}
+                        switchLabel="Public"
+                        title="New playlist info"
+                        onReturnToMain={this._handleReturnToMain}
+                        isCreateMode={hasChosenNewCreate}
+                    >
+                        {modalTracklist}
+                    </Dialog>
                 </div>
             </HotKeys>
         );
-
-        return pageComponent;
     }
 }
 
