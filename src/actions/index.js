@@ -541,3 +541,8 @@ export const setSelectedPlaylist = playlistId => ({
     type: SET_SELECTED_PLAYLIST,
     playlistId
 });
+
+export const CLEAR_COMPONOFORM_DATA = 'CLEAR_COMPONOFORM_DATA';
+export const clearComponoformData = () => ({
+    type: CLEAR_COMPONOFORM_DATA
+});

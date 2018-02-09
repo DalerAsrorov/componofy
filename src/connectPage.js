@@ -19,6 +19,7 @@ import {
     setPublicPlaylistOpen,
     checkIfAuthenticated,
     setMyPlaylistVisited,
+    clearComponoformData,
     setFinalPlaylistOpen,
     launchPlaylistMerger,
     setFinalPlaylistUrl,
@@ -294,6 +295,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setSelectedPlaylist(playlistId) {
         dispatch(setSelectedPlaylist(playlistId));
+    },
+
+    clearComponoformData() {
+        dispatch(clearComponoformData());
     }
 });
 

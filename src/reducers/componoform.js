@@ -4,7 +4,8 @@ import {
     REQUEST_MY_PLAYLISTS_FOR_SELECTION,
     SET_COMPONOFORM_OPEN_STATUS,
     SET_COMPONOFORM_ADD_EXISTING_STATUS,
-    SET_SELECTED_PLAYLIST
+    SET_SELECTED_PLAYLIST,
+    CLEAR_COMPONOFORM_DATA
 } from '../actions';
 
 const DEFAULT_STATE = {
@@ -49,6 +50,8 @@ export const componoform = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 selectedPlaylistId: action.playlistId
             });
+        case CLEAR_COMPONOFORM_DATA:
+            return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;
     }

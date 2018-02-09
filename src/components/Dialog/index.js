@@ -129,6 +129,7 @@ class Dialog extends PureComponent {
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
+        clearComponoformData: PropTypes.func.isRequired,
         setSelectedPlaylist: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
@@ -215,9 +216,13 @@ class Dialog extends PureComponent {
     _handleClickBack = event => {
         event.preventDefault();
 
-        const { onReturnToMain, setFinalPlaylistUrl } = this.props;
+        const {
+            onReturnToMain,
+            setFinalPlaylistUrl,
+            clearComponoformData
+        } = this.props;
 
-        setFinalPlaylistUrl('');
+        clearComponoformData();
         onReturnToMain();
     };
 
