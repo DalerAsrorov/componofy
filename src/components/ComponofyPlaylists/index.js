@@ -28,7 +28,8 @@ import Search from '../Search';
 
 const mainButtonStyle = {
     background: LIGHT_CYAN_COLOR,
-    width: '100%'
+    width: '100%',
+    height: '100%'
 };
 
 let scroll = Scroll.animateScroll;
@@ -406,7 +407,6 @@ class ComponofyPlaylists extends PureComponent {
                         mainText={mainText}
                         style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
-                        menuButtonStyle={menuButtonStyle}
                     />
                     <Dialog
                         onClickClose={this._handleClickCloseModal}
