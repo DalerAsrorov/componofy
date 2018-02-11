@@ -32,6 +32,11 @@ const mainButtonStyle = {
     height: '100%'
 };
 
+const buttonMenuStyle = {
+    flex: '1',
+    position: 'relative'
+};
+
 let scroll = Scroll.animateScroll;
 
 const styles = theme => ({
@@ -407,6 +412,8 @@ class ComponofyPlaylists extends PureComponent {
                         mainText={mainText}
                         style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
+                        buttonMenuStyle={buttonMenuStyle}
+                        hasFullWidthButtonMenu={true}
                     />
                     <Dialog
                         onClickClose={this._handleClickCloseModal}

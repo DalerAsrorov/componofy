@@ -9,6 +9,12 @@ import classNames from 'classnames';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
 
 const styles = {
+    customMenuPaper: {},
+
+    fullWidthMenu: {
+        width: '100%'
+    },
+
     popperClose: {
         pointerEvents: 'none'
     },
@@ -55,7 +61,8 @@ const CustomMenu = props => {
             <Popper
                 eventsEnabled={props.isOpen}
                 className={classNames({
-                    [props.classes.popperClose]: !props.isOpen
+                    [props.classes.popperClose]: !props.isOpen,
+                    [props.classes.fullWidthMenu]: props.hasFullWidthMenu
                 })}
                 placement="top-start"
             >
@@ -64,7 +71,9 @@ const CustomMenu = props => {
                         in={props.isOpen}
                         style={{ transformOrigin: '0 0 0' }}
                     >
-                        <Paper>{props.menuItems}</Paper>
+                        <Paper className={props.classes.customMenuPaper}>
+                            {props.menuItems}
+                        </Paper>
                     </Grow>
                 </ClickAwayListener>
             </Popper>
@@ -82,6 +91,7 @@ CustomMenu.propTypes = {
     customButton: PropTypes.object,
     wrapperStyle: PropTypes.object,
     menuButtonStyle: PropTypes.object,
+    hasFullWidthMenu: PropTypes.bool,
     anchorEl: PropTypes.object
 };
 

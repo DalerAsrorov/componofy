@@ -84,7 +84,8 @@ export const FooterPanel = props => {
                 customButton={leftSideComponent}
                 isOpen={props.isCustomMenuOpen}
                 menuItems={props.customButtonMenu}
-                wrapperStyle={{ flex: '1' }}
+                wrapperStyle={props.buttonMenuStyle}
+                hasFullWidthMenu={props.hasFullWidthButtonMenu}
             />
         );
     }
@@ -131,8 +132,10 @@ FooterPanel.propTypes = {
     menuButtonStyle: PropTypes.object,
     customMenuAnchorEl: PropTypes.object,
     onClickCustomMenuOptions: PropTypes.func,
+    hasFullWidthButtonMenu: PropTypes.bool,
     shouldShowCircle: PropTypes.bool,
     mainButtonStyle: PropTypes.object,
+    buttonMenuStyle: PropTypes.object,
     style: PropTypes.object
 };
 
