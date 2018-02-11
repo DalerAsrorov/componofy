@@ -310,7 +310,7 @@ class Dialog extends PureComponent {
                 noValidate={false}
                 autoComplete="off"
             >
-                <section>
+                <section id="dropImageZone">
                     <Dropzone
                         accept="image/jpeg"
                         onDrop={this._handleImageUpload}
@@ -319,6 +319,9 @@ class Dialog extends PureComponent {
                     >
                         {playlistImage}
                     </Dropzone>
+                    <Typography align="center" color="secondary" type="caption">
+                        Add playlist cover image (optional)
+                    </Typography>
                 </section>
                 <section
                     className={classes.inputSection}
