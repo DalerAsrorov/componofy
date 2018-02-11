@@ -9,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import Slide from 'material-ui/transitions/Slide';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import Grid from 'material-ui/Grid';
 import { LinearProgress } from 'material-ui/Progress';
 import { AddAPhoto, CheckCircle } from 'material-ui-icons';
 import FaRocket from 'react-icons/lib/fa/rocket';
@@ -108,7 +109,7 @@ const styles = theme => ({
     submitText: {},
 
     topSpace: {
-        marginTop: `${theme.spacing.unit * 2}px`
+        marginTop: `${theme.spacing.unit * 4}px`
     },
 
     toolbar: {
@@ -417,7 +418,11 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div>{modalContent}</div>
+                <Grid container justify="center" spacing={8}>
+                    <Grid item lg={8} xs={12}>
+                        {modalContent}
+                    </Grid>
+                </Grid>
             </MaterialDialog>
         );
     }
