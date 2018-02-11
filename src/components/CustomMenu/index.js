@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Responsive from 'react-responsive';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import Grow from 'material-ui/transitions/Grow';
@@ -33,12 +34,35 @@ const DefaultButton = props => {
     return <Button {...restProps}>{innerContent}</Button>;
 };
 
+const MobileWindow = props => <Responsive {...props} maxWidth={767} />;
+const DefaultWindow = props => <Responsive {...props} minWidth={768} />;
+
+const PopperFactory = props => (
+    <Popper
+        eventsEnabled={props.isOpen}
+        className={classNames({
+            [props.classes.popperClose]: !props.isOpen,
+            [props.classes.fullWidthMenu]: props.hasFullWidthMenu
+        })}
+        placement="top-start"
+    >
+        <ClickAwayListener onClickAway={props.onSelectItem}>
+            <Grow in={props.isOpen} style={{ transformOrigin: '0 0 0' }}>
+                <Paper className={props.classes.customMenuPaper}>
+                    {props.menuItems}
+                </Paper>
+            </Grow>
+        </ClickAwayListener>
+    </Popper>
+);
+
 const CustomMenu = props => {
     const {
         iconComponent,
         customButton,
         wrapperStyle,
-        menuButtonStyle
+        menuButtonStyle,
+        ...restProps
     } = props;
 
     let menuButton = customButton ? (
@@ -58,25 +82,15 @@ const CustomMenu = props => {
     return (
         <Manager style={wrapperStyle}>
             <Target className={props.classes.buttonTarget}>{menuButton}</Target>
-            <Popper
-                eventsEnabled={props.isOpen}
-                className={classNames({
-                    [props.classes.popperClose]: !props.isOpen,
-                    [props.classes.fullWidthMenu]: props.hasFullWidthMenu
-                })}
-                placement="top-start"
-            >
-                <ClickAwayListener onClickAway={props.onSelectItem}>
-                    <Grow
-                        in={props.isOpen}
-                        style={{ transformOrigin: '0 0 0' }}
-                    >
-                        <Paper className={props.classes.customMenuPaper}>
-                            {props.menuItems}
-                        </Paper>
-                    </Grow>
-                </ClickAwayListener>
-            </Popper>
+            <MobileWindow>
+                <PopperFactory {...restProps} hasFullWidthMenu={false} />
+            </MobileWindow>
+            <DefaultWindow>
+                <PopperFactory
+                    {...restProps}
+                    hasFullWidthMenu={props.hasFullWidthMenu}
+                />
+            </DefaultWindow>
         </Manager>
     );
 };
