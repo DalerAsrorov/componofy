@@ -183,7 +183,7 @@ class Dialog extends PureComponent {
                 setFinalPlaylistImageURI(base64URI);
             };
 
-            reader.onabort = () => console.warning('file reading was aborted');
+            reader.onabort = () => console.warn('file reading was aborted');
             reader.onerror = () => console.error('file reading has failed');
 
             reader.readAsDataURL(file);
