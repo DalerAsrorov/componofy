@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Responsive from 'react-responsive';
 import Button from 'material-ui/Button';
+import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Grow from 'material-ui/transitions/Grow';
 import Paper from 'material-ui/Paper';
 import { Manager, Target, Popper } from 'react-popper';
-import classNames from 'classnames';
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+import { DefaultWindow, MobileWindow } from '../common';
 
 const styles = {
     customMenuPaper: {},
@@ -33,9 +33,6 @@ const DefaultButton = props => {
 
     return <Button {...restProps}>{innerContent}</Button>;
 };
-
-const MobileWindow = props => <Responsive {...props} maxWidth={767} />;
-const DefaultWindow = props => <Responsive {...props} minWidth={768} />;
 
 const PopperFactory = props => (
     <Popper
