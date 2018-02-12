@@ -371,7 +371,6 @@ export const launchPlaylistMerger = playlistName => {
                 }
             );
         } else {
-            debugger;
             const { external_urls: { spotify: finalPlaylistUrl } } = find(
                 propEq('id', selectedPlaylistId)
             )(listOfMyPlaylists);
