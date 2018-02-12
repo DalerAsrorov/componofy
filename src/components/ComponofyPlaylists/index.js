@@ -269,7 +269,7 @@ class ComponofyPlaylists extends PureComponent {
             canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, search, modalTracklist, dialog;
+        let playlistList, playlists, search, dialog;
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
@@ -279,7 +279,7 @@ class ComponofyPlaylists extends PureComponent {
                 entities: { playlists: playlistsMap, tracks: tracksMap }
             } = playlistsFinal;
 
-            let playlists = formatPlaylistsData(playlistsMap, tracksMap);
+            playlists = formatPlaylistsData(playlistsMap, tracksMap);
 
             if (shouldFilterList) {
                 playlists = filterSearchPlaylist(searchTerm, playlists);
@@ -291,22 +291,6 @@ class ComponofyPlaylists extends PureComponent {
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
                     isPlaylist={true}
-                />
-            );
-
-            modalTracklist = (
-                <List
-                    onClickMain={this._handleRemovePlaylist}
-                    onClickItem={this._handleClickPlaylist}
-                    subheader="New playlist tracks"
-                    items={playlists}
-                    isPlaylist={true}
-                    showSubItemsOnly={true}
-                    style={{
-                        maxHeight: '300px',
-                        overflow: 'auto'
-                    }}
-                    className={classes.tracklistBox}
                 />
             );
 
@@ -428,7 +412,19 @@ class ComponofyPlaylists extends PureComponent {
                         onReturnToMain={this._handleReturnToMain}
                         isCreateMode={hasChosenNewCreate}
                     >
-                        {modalTracklist}
+                        <List
+                            onClickMain={this._handleRemovePlaylist}
+                            onClickItem={this._handleClickPlaylist}
+                            subheader="New playlist tracks"
+                            items={playlists}
+                            isPlaylist={true}
+                            showSubItemsOnly={true}
+                            style={{
+                                maxHeight: '300px',
+                                overflow: 'auto'
+                            }}
+                            className={classes.tracklistBox}
+                        />
                     </Dialog>
                 </div>
             </HotKeys>
