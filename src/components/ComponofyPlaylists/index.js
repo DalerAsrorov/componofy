@@ -23,6 +23,11 @@ import {
 } from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
+import MaterialList, {
+    ListItem,
+    ListItemIcon,
+    ListItemText
+} from 'material-ui/List';
 import List from '../List';
 import Search from '../Search';
 
@@ -304,6 +309,23 @@ class ComponofyPlaylists extends PureComponent {
                     className={classes.tracklistBox}
                 />
             );
+
+            // let modalTrackList2 = (
+            //     <List component="nav">
+            //         <ListItem button>
+            //             <ListItemIcon>
+            //                 <InboxIcon />
+            //             </ListItemIcon>
+            //             <ListItemText primary="Inbox" />
+            //         </ListItem>
+            //         <ListItem button>
+            //             <ListItemIcon>
+            //                 <DraftsIcon />
+            //             </ListItemIcon>
+            //             <ListItemText primary="Drafts" />
+            //         </ListItem>
+            //     </List>
+            // );
 
             search = (
                 <Search
