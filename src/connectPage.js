@@ -281,8 +281,8 @@ export const mapDispatchToProps = dispatch => ({
         dispatch(setComponofyMode(hasChosenNewCreate));
     },
 
-    fetchMyPlaylistsForSelection(offset) {
-        dispatch(fetchMyPlaylistsForSelection(offset));
+    fetchMyPlaylistsForSelection(offset, limit) {
+        dispatch(fetchMyPlaylistsForSelection(offset, limit));
     },
 
     setComponoformOpenStatus(wasOpen) {

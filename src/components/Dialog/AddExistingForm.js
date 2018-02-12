@@ -15,19 +15,13 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { LIGHT_CYAN_COLOR } from '../../utils/constants';
 
 const styles = theme => ({
-    form: {
+    formControl: {
         width: '100%'
     },
 
     loaderWrapper: {
         textAlign: 'center',
         width: '100%'
-    },
-
-    menuItemWrapper: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 1.5}px`
     },
 
     playlistName: {
@@ -40,10 +34,18 @@ const styles = theme => ({
         color: LIGHT_CYAN_COLOR
     },
 
+    select: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 1.5}px`
+    },
+
     wrapper: {
         width: '100%'
     }
 });
+
+const MAX_PLAYLISTS_OFFSET_LIMIT = 50;
 
 class AddExistingForm extends PureComponent {
     static propTypes = {
@@ -68,7 +70,7 @@ class AddExistingForm extends PureComponent {
 
         if (!wasAddExistingOpen) {
             onSetAddExistingOpenStatus(true);
-            onFetchPlaylistSelection(10);
+            onFetchPlaylistSelection(0, MAX_PLAYLISTS_OFFSET_LIMIT);
         }
     }
 
@@ -87,7 +89,6 @@ class AddExistingForm extends PureComponent {
         } = this.props;
         const playlistMenuSelects = playlistOptions.map(
             ({ id, name, images = [] }) => {
-                console.log(id, name, images);
                 return (
                     <MenuItem key={id} value={id}>
                         <ListItemIcon className={classes.icon}>
@@ -124,7 +125,7 @@ class AddExistingForm extends PureComponent {
 
         if (!isFetchingOptions) {
             contentComponent = (
-                <FormControl className={classes.form}>
+                <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="playlist-choice">
                         Choose Playlist
                     </InputLabel>
@@ -133,7 +134,14 @@ class AddExistingForm extends PureComponent {
                         onChange={this._handlePlaylistSelect}
                         name="playlist"
                         classes={{
-                            select: classes.menuItemWrapper
+                            select: classes.select
+                        }}
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 420
+                                }
+                            }
                         }}
                     >
                         {playlistMenuSelects}

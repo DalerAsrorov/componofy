@@ -18,7 +18,7 @@ const DEFAULT_STATE = {
 };
 
 export const componoform = (state = DEFAULT_STATE, action) => {
-    let listOfMyPlaylists, numberOfTracks;
+    let listOfMyPlaylists;
 
     switch (action.type) {
         case SET_FINAL_PLAYLIST_URL:
@@ -33,11 +33,8 @@ export const componoform = (state = DEFAULT_STATE, action) => {
                 ...action.playlists
             ];
 
-            numberOfTracks = action.numberOfTracks;
-
             return Object.assign({}, state, {
                 listOfMyPlaylists,
-                numberOfTracks,
                 isFetchingOptions: false
             });
         case SET_COMPONOFORM_OPEN_STATUS:

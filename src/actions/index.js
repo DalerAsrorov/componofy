@@ -513,13 +513,11 @@ const receiveMyPlaylistsForSelection = json => {
     };
 };
 
-export const fetchMyPlaylistsForSelection = (offset = OFFSET_LIMIT) => {
-    return dispatch => {
-        dispatch(requestMyPlaylistsForSelection());
-        return getMyPlaylists(offset).then(json =>
-            dispatch(receiveMyPlaylistsForSelection(json))
-        );
-    };
+export const fetchMyPlaylistsForSelection = (offset, limit) => dispatch => {
+    dispatch(requestMyPlaylistsForSelection());
+    return getMyPlaylists(offset, limit).then(json =>
+        dispatch(receiveMyPlaylistsForSelection(json))
+    );
 };
 
 export const SET_COMPONOFORM_OPEN_STATUS = 'SET_COMPONOFORM_OPEN_STATUS';

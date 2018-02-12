@@ -227,9 +227,8 @@ class Dialog extends PureComponent {
         onReturnToMain();
     };
 
-    _handleFetchPlaylistSelection = () => {
-        const { fetchMyPlaylistsForSelection } = this.props;
-        fetchMyPlaylistsForSelection();
+    _handleFetchPlaylistSelection = (offset, limit) => {
+        this.props.fetchMyPlaylistsForSelection(offset, limit);
     };
 
     render() {
