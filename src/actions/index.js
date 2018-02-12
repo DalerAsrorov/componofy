@@ -9,7 +9,7 @@ import {
     searchPlaylists,
     getLogOutUser
 } from '../api';
-import { isEmpty } from 'ramda';
+import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
 
@@ -328,15 +328,15 @@ export const finalizeProcessing = finalPlaylistUrl => {
 export const launchPlaylistMerger = playlistName => {
     return (dispatch, getState) => {
         const {
-            componoform: { selectedPlaylistId },
+            componoform: { selectedPlaylistId, listOfMyPlaylists },
             finalPlaylists: {
                 imageUri,
                 isPublic,
                 hasChosenNewCreate,
-                playlists: { entities: { playlists } }
+                playlists: { entities: { playlists: playlistsMap } }
             }
         } = getState();
-        const tracks = getAllPlaylistsTrackIds(playlists);
+        const tracks = getAllPlaylistsTrackIds(playlistsMap);
 
         if (hasChosenNewCreate) {
             dispatch(setMergerStatus(true, 'Creating playlist...'));
@@ -371,6 +371,11 @@ export const launchPlaylistMerger = playlistName => {
                 }
             );
         } else {
+            debugger;
+            const { external_urls: { spotify: finalPlaylistUrl } } = find(
+                propEq('id', selectedPlaylistId)
+            )(listOfMyPlaylists);
+
             dispatch(setMergerStatus(true, 'Adding tracks...'));
             addTracksToPlaylist(selectedPlaylistId, tracks).then(response => {
                 if (!isEmpty(imageUri)) {
@@ -380,11 +385,11 @@ export const launchPlaylistMerger = playlistName => {
 
                     uploadPlaylistCoverImage(selectedPlaylistId, imageUri).then(
                         response => {
-                            dispatch(finalizeProcessing('finalPlaylistUrl'));
+                            dispatch(finalizeProcessing(finalPlaylistUrl));
                         }
                     );
                 } else {
-                    dispatch(finalizeProcessing('finalPlaylistUrl'));
+                    dispatch(finalizeProcessing(finalPlaylistUrl));
                 }
             });
         }
