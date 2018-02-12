@@ -310,23 +310,6 @@ class ComponofyPlaylists extends PureComponent {
                 />
             );
 
-            // let modalTrackList2 = (
-            //     <List component="nav">
-            //         <ListItem button>
-            //             <ListItemIcon>
-            //                 <InboxIcon />
-            //             </ListItemIcon>
-            //             <ListItemText primary="Inbox" />
-            //         </ListItem>
-            //         <ListItem button>
-            //             <ListItemIcon>
-            //                 <DraftsIcon />
-            //             </ListItemIcon>
-            //             <ListItemText primary="Drafts" />
-            //         </ListItem>
-            //     </List>
-            // );
-
             search = (
                 <Search
                     onChange={this._handleInputChange}
