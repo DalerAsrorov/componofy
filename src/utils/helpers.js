@@ -79,6 +79,55 @@ export const getAllPlaylistsTrackIds = (playlistsMap = {}) => {
     );
 };
 
+export const mergeTuples = (accum, tuple) => {
+    let playlistId = tuple[1];
+    let playlistTrackIds = tuple[0];
+
+    let newTuple = playlistTrackIds.map(trackId => [trackId, playlistId]);
+
+    accum = accum.concat(newTuple);
+    return accum;
+};
+
+// returns a tuple with [trackId, playlistId]
+export const getAllPlaylistTracksTuple = (playlistMap = {}) => {
+    const getTrackPlaylistTuple = playlistObject => [
+        playlistObject.tracks.list,
+        playlistObject.id
+    ];
+
+    return R.pipe(
+        R.values,
+        R.map(getTrackPlaylistTuple),
+        R.reduce(mergeTuples, [])
+    )(playlistMap);
+};
+
+export const getAllPlaylistTracksFromMap = (
+    playlistsState,
+    shouldAssignPlaylist = false
+) => {
+    if (R.isEmpty(playlistsState.entities)) {
+        return;
+    }
+
+    const { entities: { playlists: playlistMap } } = playlistsState;
+    const { entities: { tracks: tracksMap } } = playlistsState;
+
+    const trackPlaylistTuples = getAllPlaylistTracksTuple(playlistMap);
+    const allAddedTracks = trackPlaylistTuples.map(tuple => {
+        let track = tracksMap[tuple[0]];
+
+        if (shouldAssignPlaylist) {
+            track.playlist = playlistMap[tuple[1]];
+        }
+
+        return track;
+    });
+
+    return allAddedTracks;
+};
+
 export const toTop = () => {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
