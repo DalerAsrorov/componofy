@@ -14,6 +14,7 @@ import {
     LIGHT_BLUE_COLOR,
     SCROLL_DURATION,
     OFFSET_LIMIT,
+    menuButtonStyle,
     searchKeyMap,
     footerStyle,
     searchStyle
@@ -56,7 +57,8 @@ class PublicPlaylists extends PureComponent {
         setPublicSearchTerm: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         logOutUser: PropTypes.func.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+        menuButtonStyle: PropTypes.object
     };
 
     state = {
@@ -90,7 +92,7 @@ class PublicPlaylists extends PureComponent {
         event.preventDefault();
 
         if (R.isEmpty(searchTerm)) {
-            console.log('search featured/suggested playlists');
+            console.log('TODO::search featured/suggested playlists');
         } else {
             this.props.searchPublicPlaylists();
         }
@@ -311,6 +313,7 @@ class PublicPlaylists extends PureComponent {
                             anchorEl={anchorEl}
                             menuItems={menuItems}
                             style={footerStyle}
+                            menuButtonStyle={menuButtonStyle}
                         />
                     </form>
                 </div>

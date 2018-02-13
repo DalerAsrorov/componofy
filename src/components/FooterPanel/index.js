@@ -7,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Settings from '../../containers/Settings';
 import { Settings as SettingsIcon } from 'material-ui-icons';
+import CustomMenu from '../CustomMenu';
 
 import './FooterPanel.css';
 
@@ -26,6 +27,11 @@ const styles = theme => ({
     secondaryBtn: {
         flex: '1',
         textAlign: 'left'
+    },
+
+    settingsWrapper: {
+        flex: '1',
+        float: 'right'
     },
 
     settings: {},
@@ -57,19 +63,37 @@ export const FooterPanel = props => {
         );
     }
 
+    let leftSideComponent = (
+        <Button
+            onClick={props.onClick}
+            disabled={!props.shouldShowCircle}
+            raised
+            color={props.mainButtonColor}
+            className={props.classes.loadmore}
+            style={props.mainButtonStyle}
+        >
+            <Typography type="subheading">{props.mainText}</Typography>
+        </Button>
+    );
+
+    if (props.customButtonMenu) {
+        leftSideComponent = (
+            <CustomMenu
+                anchorEl={props.customMenuAnchorEl}
+                onSelectItem={props.onSelectCustomMenuItem}
+                customButton={leftSideComponent}
+                isOpen={props.isCustomMenuOpen}
+                menuItems={props.customButtonMenu}
+                wrapperStyle={props.buttonMenuStyle}
+                hasFullWidthMenu={props.hasFullWidthButtonMenu}
+            />
+        );
+    }
+
     return (
         <Toolbar style={props.style} className={props.classes.root}>
             <section className={props.classes.loaderSection}>
-                <Button
-                    onClick={props.onClick}
-                    disabled={!props.shouldShowCircle}
-                    raised
-                    color={props.mainButtonColor}
-                    className={props.classes.loadmore}
-                    style={props.mainButtonStyle}
-                >
-                    <Typography type="subheading">{props.mainText}</Typography>
-                </Button>
+                {leftSideComponent}
                 {circleTextIcon}
             </section>
             <section className={props.classes.settingsSection}>
@@ -81,6 +105,7 @@ export const FooterPanel = props => {
                     isOpen={props.isOpen}
                     className={props.classes.settings}
                     icon={<SettingsIcon />}
+                    settingsWrapperStyle={{ float: 'right' }}
                 />
             </section>
         </Toolbar>
@@ -95,16 +120,22 @@ FooterPanel.propTypes = {
     mainText: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
         .isRequired,
     classes: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+    customButtonMenu: PropTypes.object,
     anchorEl: PropTypes.object,
     circleText: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
         PropTypes.object
     ]),
+    menuButtonStyle: PropTypes.object,
+    customMenuAnchorEl: PropTypes.object,
+    onClickCustomMenuOptions: PropTypes.func,
+    hasFullWidthButtonMenu: PropTypes.bool,
     shouldShowCircle: PropTypes.bool,
     mainButtonStyle: PropTypes.object,
+    buttonMenuStyle: PropTypes.object,
     style: PropTypes.object
 };
 

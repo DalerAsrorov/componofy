@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from 'material-ui/Checkbox';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
+import { CheckBox } from '../common';
 import Info from './Info';
 import Preview from './Preview';
 
 const styles = theme => ({
-    checkmark: {
-        color: theme.palette.grey[600]
-    },
-
     trackInfoContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -88,8 +84,7 @@ class Track extends PureComponent {
         return (
             <ListItem divider>
                 <ListItemIcon>
-                    <Checkbox
-                        className={classes.checkmark}
+                    <CheckBox
                         onClick={this._handleChecked}
                         checked={playlistContainsThisTrack}
                     />

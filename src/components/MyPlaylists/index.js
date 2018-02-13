@@ -15,6 +15,7 @@ import {
     searchKeyMap,
     footerStyle,
     searchStyle,
+    menuButtonStyle,
     OFFSET_LIMIT,
     LOAD_MORE_STATUS
 } from '../../utils/constants';
@@ -62,7 +63,8 @@ class MyPlaylists extends PureComponent {
         addErrorToApp: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         logOutUser: PropTypes.func.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+        menuButtonStyle: PropTypes.object
     };
 
     state = {
@@ -316,6 +318,7 @@ class MyPlaylists extends PureComponent {
                         anchorEl={anchorEl}
                         menuItems={menuItems}
                         style={footerStyle}
+                        menuButtonStyle={menuButtonStyle}
                     />
                 </div>
             </HotKeys>

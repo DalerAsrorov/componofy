@@ -21,6 +21,8 @@ class Settings extends PureComponent {
 
     render() {
         const {
+            settingsWrapperStyle,
+            menuButtonStyle,
             onClickOptions,
             onSelectItem,
             menuItems,
@@ -37,6 +39,8 @@ class Settings extends PureComponent {
                 iconComponent={icon}
                 isOpen={isOpen}
                 menuItems={menuItems}
+                menuButtonStyle={menuButtonStyle}
+                wrapperStyle={settingsWrapperStyle}
             />
         );
     }

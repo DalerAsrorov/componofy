@@ -12,6 +12,10 @@ const styles = theme => ({
         width: '100%',
         padding: '0',
         background: theme.palette.background.paper
+    },
+
+    listSubheader: {
+        background: '#ffffff'
     }
 });
 
@@ -48,7 +52,11 @@ class List extends PureComponent {
         } = this.props;
         let listOfItems, listSub;
 
-        listSub = subheader ? <ListSubheader>{subheader}</ListSubheader> : null;
+        listSub = subheader ? (
+            <ListSubheader className={classes.listSubheader}>
+                {subheader}
+            </ListSubheader>
+        ) : null;
 
         if (isPlaylist) {
             listOfItems = is(Array, items)

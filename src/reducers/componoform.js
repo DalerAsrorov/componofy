@@ -1,11 +1,54 @@
-import { SET_FINAL_PLAYLIST_URL } from '../actions';
+import {
+    SET_FINAL_PLAYLIST_URL,
+    RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
+    REQUEST_MY_PLAYLISTS_FOR_SELECTION,
+    SET_COMPONOFORM_OPEN_STATUS,
+    SET_COMPONOFORM_ADD_EXISTING_STATUS,
+    SET_SELECTED_PLAYLIST,
+    CLEAR_COMPONOFORM_DATA
+} from '../actions';
 
-export const componoform = (state = { finalPlaylistUrl: '' }, action) => {
+const DEFAULT_STATE = {
+    isFetchingOptions: false,
+    wasOpen: false,
+    wasAddExistingOpen: false,
+    listOfMyPlaylists: [],
+    finalPlaylistUrl: '',
+    selectedPlaylistId: ''
+};
+
+export const componoform = (state = DEFAULT_STATE, action) => {
+    let listOfMyPlaylists;
+
     switch (action.type) {
         case SET_FINAL_PLAYLIST_URL:
             return Object.assign({}, state, {
                 finalPlaylistUrl: action.url
             });
+        case REQUEST_MY_PLAYLISTS_FOR_SELECTION:
+            return Object.assign({}, state, { isFetchingOptions: true });
+        case RECEIVE_MY_PLAYLISTS_FOR_SELECTION:
+            listOfMyPlaylists = [
+                ...state.listOfMyPlaylists,
+                ...action.playlists
+            ];
+
+            return Object.assign({}, state, {
+                listOfMyPlaylists,
+                isFetchingOptions: false
+            });
+        case SET_COMPONOFORM_OPEN_STATUS:
+            return Object.assign({}, state, { wasOpen: action.wasOpen });
+        case SET_COMPONOFORM_ADD_EXISTING_STATUS:
+            return Object.assign({}, state, {
+                wasAddExistingOpen: action.wasAddExistingOpen
+            });
+        case SET_SELECTED_PLAYLIST:
+            return Object.assign({}, state, {
+                selectedPlaylistId: action.playlistId
+            });
+        case CLEAR_COMPONOFORM_DATA:
+            return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;
     }

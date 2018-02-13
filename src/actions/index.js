@@ -9,8 +9,9 @@ import {
     searchPlaylists,
     getLogOutUser
 } from '../api';
-import { isEmpty } from 'ramda';
+import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
+import { OFFSET_LIMIT } from '../utils/constants';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -315,8 +316,8 @@ export const removeErrorFromApp = errorId => {
 
 export const finalizeProcessing = finalPlaylistUrl => {
     return dispatch => {
-        dispatch(setMergerStatus(false, 'Finished!'));
-        dispatch(setMergerStatus(false, ''));
+        dispatch(setMergerStatus(true, 'Finished!'));
+        dispatch(setMergerStatus(false));
         dispatch(setFinalPlaylistUrl(finalPlaylistUrl));
         dispatch(clearFinalData());
         dispatch(clearPublicData());
@@ -327,33 +328,61 @@ export const finalizeProcessing = finalPlaylistUrl => {
 export const launchPlaylistMerger = playlistName => {
     return (dispatch, getState) => {
         const {
+            componoform: { selectedPlaylistId, listOfMyPlaylists },
             finalPlaylists: {
                 imageUri,
                 isPublic,
-                playlists: { entities: { playlists } }
+                hasChosenNewCreate,
+                playlists: { entities: { playlists: playlistsMap } }
             }
         } = getState();
-        const tracks = getAllPlaylistsTrackIds(playlists);
+        const tracks = getAllPlaylistsTrackIds(playlistsMap);
 
-        console.log('playlistName', playlistName);
+        if (hasChosenNewCreate) {
+            dispatch(setMergerStatus(true, 'Creating playlist...'));
+            createPlaylist(playlistName, { public: isPublic }).then(
+                response => {
+                    dispatch(setMergerStatus(true, 'Adding tracks...'));
+                    const {
+                        data: {
+                            body: {
+                                id: playlistId,
+                                external_urls: { spotify: finalPlaylistUrl }
+                            }
+                        }
+                    } = response;
 
-        dispatch(setMergerStatus(true, 'Creating playlist...'));
-        createPlaylist(playlistName, { public: isPublic }).then(response => {
-            dispatch(setMergerStatus(true, 'Adding tracks...'));
-            const {
-                data: {
-                    body: {
-                        id: playlistId,
-                        external_urls: { spotify: finalPlaylistUrl }
-                    }
+                    addTracksToPlaylist(playlistId, tracks).then(response => {
+                        if (!isEmpty(imageUri)) {
+                            dispatch(
+                                setMergerStatus(true, 'Adding cover image...')
+                            );
+
+                            uploadPlaylistCoverImage(playlistId, imageUri).then(
+                                response =>
+                                    dispatch(
+                                        finalizeProcessing(finalPlaylistUrl)
+                                    )
+                            );
+                        } else {
+                            dispatch(finalizeProcessing(finalPlaylistUrl));
+                        }
+                    });
                 }
-            } = response;
+            );
+        } else {
+            const { external_urls: { spotify: finalPlaylistUrl } } = find(
+                propEq('id', selectedPlaylistId)
+            )(listOfMyPlaylists);
 
-            addTracksToPlaylist(playlistId, tracks).then(response => {
+            dispatch(setMergerStatus(true, 'Adding tracks...'));
+            addTracksToPlaylist(selectedPlaylistId, tracks).then(response => {
                 if (!isEmpty(imageUri)) {
-                    dispatch(setMergerStatus(true, 'Adding cover image...'));
+                    dispatch(
+                        setMergerStatus(true, 'Adding new cover image...')
+                    );
 
-                    uploadPlaylistCoverImage(playlistId, imageUri).then(
+                    uploadPlaylistCoverImage(selectedPlaylistId, imageUri).then(
                         response => {
                             dispatch(finalizeProcessing(finalPlaylistUrl));
                         }
@@ -362,7 +391,7 @@ export const launchPlaylistMerger = playlistName => {
                     dispatch(finalizeProcessing(finalPlaylistUrl));
                 }
             });
-        });
+        }
     };
 };
 
@@ -462,3 +491,65 @@ export const logOutUser = () => {
         });
     };
 };
+
+export const SET_COMPONOFY_MODE = 'SET_COMPONOFY_MODE';
+export const setComponofyMode = hasChosenNewCreate => {
+    return {
+        type: SET_COMPONOFY_MODE,
+        hasChosenNewCreate
+    };
+};
+
+export const REQUEST_MY_PLAYLISTS_FOR_SELECTION =
+    'REQUEST_MY_PLAYLISTS_FOR_SELECTION';
+export const requestMyPlaylistsForSelection = () => ({
+    type: REQUEST_MY_PLAYLISTS_FOR_SELECTION
+});
+
+export const RECEIVE_MY_PLAYLISTS_FOR_SELECTION =
+    'RECEIVE_MY_PLAYLISTS_FOR_SELECTION';
+const receiveMyPlaylistsForSelection = json => {
+    return {
+        type: RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
+        playlists: json.data.body ? json.data.body.items : [],
+        numberOfTracks: json.data.body ? json.data.body.total : 0,
+        receivedAt: Date.now()
+    };
+};
+
+export const fetchMyPlaylistsForSelection = (offset, limit) => dispatch => {
+    dispatch(requestMyPlaylistsForSelection());
+    return getMyPlaylists(offset, limit).then(json =>
+        dispatch(receiveMyPlaylistsForSelection(json))
+    );
+};
+
+export const SET_COMPONOFORM_OPEN_STATUS = 'SET_COMPONOFORM_OPEN_STATUS';
+export const setComponoformOpenStatus = wasOpen => ({
+    type: SET_COMPONOFORM_OPEN_STATUS,
+    wasOpen
+});
+
+export const SET_COMPONOFORM_ADD_EXISTING_STATUS =
+    'SET_COMPONOFORM_ADD_EXISTING_STATUS';
+export const setComponoformAddExistingStatus = wasAddExistingOpen => ({
+    type: SET_COMPONOFORM_ADD_EXISTING_STATUS,
+    wasAddExistingOpen
+});
+
+export const SET_SELECTED_PLAYLIST = 'SET_SELECTED_PLAYLIST';
+export const setSelectedPlaylist = playlistId => ({
+    type: SET_SELECTED_PLAYLIST,
+    playlistId
+});
+
+export const CLEAR_COMPONOFORM_DATA = 'CLEAR_COMPONOFORM_DATA';
+export const clearComponoformData = () => ({
+    type: CLEAR_COMPONOFORM_DATA
+});
+
+export const SET_FINAL_TRACKS_SHOW_STATUS = 'SET_FINAL_TRACKS_SHOW_STATUS';
+export const setFinalTracksShowStatus = (shouldShowOnlyTracks = false) => ({
+    type: SET_FINAL_TRACKS_SHOW_STATUS,
+    shouldShowOnlyTracks
+});

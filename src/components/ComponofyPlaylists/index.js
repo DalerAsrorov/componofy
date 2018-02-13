@@ -17,16 +17,29 @@ import {
     LIGHT_CYAN_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
+    menuButtonStyle,
     footerStyle,
     searchStyle
 } from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
+import MaterialList, {
+    ListItem,
+    ListItemIcon,
+    ListItemText
+} from 'material-ui/List';
 import List from '../List';
 import Search from '../Search';
 
 const mainButtonStyle = {
-    background: LIGHT_CYAN_COLOR
+    background: LIGHT_CYAN_COLOR,
+    width: '100%',
+    height: '100%'
+};
+
+const buttonMenuStyle = {
+    flex: '1',
+    position: 'relative'
 };
 
 let scroll = Scroll.animateScroll;
@@ -60,6 +73,10 @@ const styles = theme => ({
         width: '100%',
         lineHeight: '2.5',
         paddingLeft: `${theme.spacing.unit}px`
+    },
+
+    tracklistBox: {
+        margin: `${theme.spacing.unit}px 0`
     }
 });
 
@@ -67,6 +84,7 @@ class ComponofyPlaylists extends PureComponent {
     state = {
         shouldFilterList: false,
         isOpenModal: false,
+        isCustomMenuOpen: false,
         settingsIsOpen: false,
         canScrollUp: false,
         anchorEl: null
@@ -75,11 +93,15 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
+        setComponoformOpenStatus: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
+        setFinalTracksShowStatus: PropTypes.func.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
         setFinalSearchTerm: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
+        setComponofyMode: PropTypes.func.isRequired,
         navigation: PropTypes.object.isRequired,
         setNavIndex: PropTypes.func.isRequired,
         logOutUser: PropTypes.func.isRequired,
@@ -153,7 +175,21 @@ class ComponofyPlaylists extends PureComponent {
     };
 
     _handleComponofy = () => {
+        const { setComponoformOpenStatus } = this.props;
+
+        setComponoformOpenStatus(true);
+        this._handleSelectCustomMenuItem();
         this.setState({ isOpenModal: true });
+    };
+
+    _handleComponofyCreate = () => {
+        this.props.setComponofyMode(true);
+        this._handleComponofy();
+    };
+
+    _handleComponofyExisting = () => {
+        this.props.setComponofyMode(false);
+        this._handleComponofy();
     };
 
     _handleClickUp = () => {
@@ -177,6 +213,37 @@ class ComponofyPlaylists extends PureComponent {
         this.props.setNavIndex(0);
     };
 
+    _handleClickCustomMenuOptions = event => {
+        this.setState({
+            settingsIsOpen: true,
+            anchorEl: event.currentTarget
+        });
+    };
+
+    _handleSelectCustomMenuItem = () => {
+        this.setState({
+            isCustomMenuOpen: false
+        });
+    };
+
+    _handleCustomMenuClick = event => {
+        this.setState({
+            isCustomMenuOpen: true,
+            customMenuAnchorEl: event.currentTarget
+        });
+    };
+
+    _handleSelectShowTracksOnly = () => {
+        this._handleClickOption();
+
+        const {
+            setFinalTracksShowStatus,
+            finalPlaylists: { shouldShowOnlyTracks }
+        } = this.props;
+
+        setFinalTracksShowStatus(!shouldShowOnlyTracks);
+    };
+
     componentDidMount() {
         const {
             navigateTo,
@@ -195,7 +262,12 @@ class ComponofyPlaylists extends PureComponent {
 
     render() {
         const {
-            finalPlaylists,
+            finalPlaylists: {
+                playlists: playlistsFinal,
+                shouldShowOnlyTracks,
+                searchTerm,
+                hasChosenNewCreate
+            },
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
             finalPlaylistsHasOpenPlaylist,
@@ -205,23 +277,22 @@ class ComponofyPlaylists extends PureComponent {
             shouldFilterList,
             isOpenModal,
             settingsIsOpen,
+            isCustomMenuOpen,
+            customMenuAnchorEl,
             canScrollUp
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
-        let playlistList, search, modalTracklist;
+        let playlistList, playlists, search, dialog;
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
-
+        ``;
         if (isNotEmpty) {
             const {
-                playlists: {
-                    entities: { playlists: playlistsMap, tracks: tracksMap }
-                },
-                searchTerm
-            } = finalPlaylists;
+                entities: { playlists: playlistsMap, tracks: tracksMap }
+            } = playlistsFinal;
 
-            let playlists = formatPlaylistsData(playlistsMap, tracksMap);
+            playlists = formatPlaylistsData(playlistsMap, tracksMap);
 
             if (shouldFilterList) {
                 playlists = filterSearchPlaylist(searchTerm, playlists);
@@ -232,22 +303,8 @@ class ComponofyPlaylists extends PureComponent {
                     onClickMain={this._handleRemovePlaylist}
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
+                    showSubItemsOnly={shouldShowOnlyTracks}
                     isPlaylist={true}
-                />
-            );
-
-            modalTracklist = (
-                <List
-                    onClickMain={this._handleRemovePlaylist}
-                    onClickItem={this._handleClickPlaylist}
-                    subheader="New playlist tracks"
-                    items={playlists}
-                    isPlaylist={true}
-                    showSubItemsOnly={true}
-                    style={{
-                        maxHeight: '300px',
-                        overflow: 'auto'
-                    }}
                 />
             );
 
@@ -280,8 +337,22 @@ class ComponofyPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleClickCollapse}>
                     {collapseExpandText}
                 </MenuItem>
+                <MenuItem onClick={this._handleSelectShowTracksOnly}>
+                    {shouldShowOnlyTracks ? 'Hide' : 'View'} Tracks
+                </MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+            </div>
+        );
+
+        const customLeftMenu = (
+            <div>
+                <MenuItem onClick={this._handleComponofyCreate}>
+                    Create New Playlist
+                </MenuItem>
+                <MenuItem onClick={this._handleComponofyExisting}>
+                    Add To Existing Playlist
+                </MenuItem>
             </div>
         );
 
@@ -310,7 +381,7 @@ class ComponofyPlaylists extends PureComponent {
             focusSearch: this._handleFocusOnSearch
         };
 
-        let pageComponent = (
+        return (
             <HotKeys
                 keyMap={searchKeyMap}
                 handlers={serachHandlers}
@@ -334,13 +405,21 @@ class ComponofyPlaylists extends PureComponent {
                         mainButtonColor="primary"
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
-                        onClick={this._handleComponofy}
+                        customButtonMenu={customLeftMenu}
+                        onClick={this._handleCustomMenuClick}
+                        onSelectCustomMenuItem={
+                            this._handleSelectCustomMenuItem
+                        }
+                        customMenuAnchorEl={customMenuAnchorEl}
+                        isCustomMenuOpen={isCustomMenuOpen}
                         circleText={statsComponent}
                         isOpen={settingsIsOpen}
                         menuItems={menuItems}
                         mainText={mainText}
                         style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
+                        buttonMenuStyle={buttonMenuStyle}
+                        hasFullWidthButtonMenu={true}
                     />
                     <Dialog
                         onClickClose={this._handleClickCloseModal}
@@ -348,14 +427,11 @@ class ComponofyPlaylists extends PureComponent {
                         switchLabel="Public"
                         title="New playlist info"
                         onReturnToMain={this._handleReturnToMain}
-                    >
-                        {modalTracklist}
-                    </Dialog>
+                        isCreateMode={hasChosenNewCreate}
+                    />
                 </div>
             </HotKeys>
         );
-
-        return pageComponent;
     }
 }
 

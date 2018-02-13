@@ -13,19 +13,23 @@ import {
     SET_NEW_PLAYLIST_NAME,
     SET_NEW_PLAYLIST_DESC,
     SET_FINAL_PLAYLIST_PUBLIC,
-    SET_FINAL_PLAYLIST_IMAGE_URI
+    SET_FINAL_PLAYLIST_IMAGE_URI,
+    SET_COMPONOFY_MODE,
+    SET_FINAL_TRACKS_SHOW_STATUS
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
 const DEFAULT_STATE = {
     status: false,
     statusText: '',
+    shouldShowOnlyTracks: false,
     playlists: {},
     lastUpdated: 0,
     searchTerm: '',
     isVisited: false,
     playlistDesc: '',
     imageUri: '',
+    hasChosenNewCreate: true,
     isPublic: true
 };
 
@@ -143,6 +147,14 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
             playlists = clone(state.playlists);
 
             return Object.assign({}, state, DEFAULT_STATE);
+        case SET_COMPONOFY_MODE:
+            return Object.assign({}, state, {
+                hasChosenNewCreate: action.hasChosenNewCreate
+            });
+        case SET_FINAL_TRACKS_SHOW_STATUS:
+            return Object.assign({}, state, {
+                shouldShowOnlyTracks: action.shouldShowOnlyTracks
+            });
         default:
             return state;
     }

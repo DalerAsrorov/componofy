@@ -7,11 +7,9 @@ import IconButton from 'material-ui/IconButton';
 import MaterialDialog from 'material-ui/Dialog';
 import Avatar from 'material-ui/Avatar';
 import Slide from 'material-ui/transitions/Slide';
-import Switch from 'material-ui/Switch';
-import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import { FormControlLabel } from 'material-ui/Form';
+import Grid from 'material-ui/Grid';
 import { LinearProgress } from 'material-ui/Progress';
 import { AddAPhoto, CheckCircle } from 'material-ui-icons';
 import FaRocket from 'react-icons/lib/fa/rocket';
@@ -26,6 +24,8 @@ import {
 } from '../../utils/constants';
 import { safeBool } from '../../utils/helpers';
 import Loader from '../Loader';
+import CreateForm from './CreateForm';
+import AddExistingForm from './AddExistingForm';
 
 import './Dialog.css';
 
@@ -44,7 +44,8 @@ const styles = theme => ({
         border: `${theme.spacing.unit / 2}px dotted ${
             theme.palette.common.lightBlack
         }`,
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginBottom: `${theme.spacing.unit}px`
     },
 
     dropImageZoneImg: {
@@ -92,10 +93,6 @@ const styles = theme => ({
         fontSize: `${theme.spacing.unit * 3}px`
     },
 
-    switchControl: {
-        flex: '0 100px'
-    },
-
     submitButton: {},
 
     successCheck: {
@@ -112,12 +109,7 @@ const styles = theme => ({
     submitText: {},
 
     topSpace: {
-        marginTop: `${theme.spacing.unit * 2}px`
-    },
-
-    textField: {
-        flex: '1',
-        width: '100%'
+        marginTop: `${theme.spacing.unit * 4}px`
     },
 
     toolbar: {
@@ -133,17 +125,23 @@ class Dialog extends PureComponent {
     };
 
     static propTypes = {
+        setComponoformAddExistingStatus: PropTypes.func.isRequired,
+        fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setFinalPlaylistImageURI: PropTypes.func.isRequired,
         setFinalPlaylistPublic: PropTypes.func.isRequired,
         launchPlaylistMerger: PropTypes.func.isRequired,
+        clearComponoformData: PropTypes.func.isRequired,
+        setSelectedPlaylist: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
         onReturnToMain: PropTypes.func.isRequired,
         componoform: PropTypes.object.isRequired,
         switchLabel: PropTypes.string.isRequired,
         onClickClose: PropTypes.func.isRequired,
         addErrorToApp: PropTypes.func.isRequired,
+        isCreateMode: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
-        isOpen: PropTypes.bool.isRequired
+        isOpen: PropTypes.bool.isRequired,
+        wasOpen: PropTypes.bool
     };
 
     _handlePlaylistNameChange = event => {
@@ -186,8 +184,8 @@ class Dialog extends PureComponent {
                 setFinalPlaylistImageURI(base64URI);
             };
 
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
+            reader.onabort = () => console.warn('file reading was aborted');
+            reader.onerror = () => console.error('file reading has failed');
 
             reader.readAsDataURL(file);
         }
@@ -195,43 +193,99 @@ class Dialog extends PureComponent {
 
     _handleClickSubmit = event => {
         event.preventDefault();
-        const { value: playlistName } = this.playlistNameRef;
-        const { launchPlaylistMerger, addErrorToApp } = this.props;
+        const {
+            launchPlaylistMerger,
+            isCreateMode,
+            addErrorToApp
+        } = this.props;
 
-        if (!R.isEmpty(playlistName)) {
-            return launchPlaylistMerger(playlistName);
+        if (isCreateMode) {
+            const { value: playlistName } = this.playlistNameRef;
+
+            if (!R.isEmpty(playlistName)) {
+                launchPlaylistMerger(playlistName);
+                return;
+            }
+
+            this.setState({ error: true });
+            addErrorToApp('Fix errors before submitting again.');
+        } else {
+            launchPlaylistMerger();
         }
-
-        this.setState({ error: true });
-        addErrorToApp('Fix errors before submitting again.');
     };
 
     _handleClickBack = event => {
         event.preventDefault();
 
-        const { onReturnToMain, setFinalPlaylistUrl } = this.props;
+        const {
+            onReturnToMain,
+            setFinalPlaylistUrl,
+            clearComponoformData
+        } = this.props;
 
-        setFinalPlaylistUrl('');
+        clearComponoformData();
         onReturnToMain();
+    };
+
+    _handleFetchPlaylistSelection = (offset, limit) => {
+        this.props.fetchMyPlaylistsForSelection(offset, limit);
     };
 
     render() {
         const { error } = this.state;
         const {
-            componoform: { finalPlaylistUrl },
+            setComponoformAddExistingStatus,
+            setSelectedPlaylist,
+            componoform: {
+                finalPlaylistUrl,
+                wasAddExistingOpen,
+                listOfMyPlaylists,
+                isFetchingOptions,
+                selectedPlaylistId
+            },
             finalPlaylists: {
                 statusText: loaderText,
                 status: shouldShowLoader,
                 isPublic,
                 imageUri
             },
+            isCreateMode,
             switchLabel,
             children,
             classes,
             isOpen,
             title,
-            onClickClose
+            onClickClose,
+            wasOpen
         } = this.props;
+        let modeForm = (
+            <CreateForm
+                error={error}
+                onNameChange={this._handlePlaylistNameChange}
+                onPublicSwitchClick={this._handlePublicSwitch}
+                isPublic={isPublic}
+                switchLabel={switchLabel}
+                inputRef={input => {
+                    this.playlistNameRef = input;
+                }}
+            />
+        );
+
+        if (!isCreateMode) {
+            modeForm = (
+                <AddExistingForm
+                    onSetAddExistingOpenStatus={setComponoformAddExistingStatus}
+                    onFetchPlaylistSelection={
+                        this._handleFetchPlaylistSelection
+                    }
+                    playlistOptions={listOfMyPlaylists}
+                    wasAddExistingOpen={wasAddExistingOpen}
+                    isFetchingOptions={isFetchingOptions}
+                    onSelectPlaylist={setSelectedPlaylist}
+                    selectedPlaylist={selectedPlaylistId}
+                />
+            );
+        }
 
         const LoaderWrapper = props => (
             <div className={classes.loaderWrapper}>{props.children}</div>
@@ -255,7 +309,7 @@ class Dialog extends PureComponent {
                 noValidate={false}
                 autoComplete="off"
             >
-                <section>
+                <section id="dropImageZone">
                     <Dropzone
                         accept="image/jpeg"
                         onDrop={this._handleImageUpload}
@@ -264,32 +318,15 @@ class Dialog extends PureComponent {
                     >
                         {playlistImage}
                     </Dropzone>
+                    <Typography align="center" color="secondary" type="caption">
+                        Add playlist cover image (optional)
+                    </Typography>
                 </section>
-                <section className={classes.inputSection}>
-                    <TextField
-                        id="playlistName"
-                        error={error}
-                        onChange={this._handlePlaylistNameChange}
-                        margin="normal"
-                        defaultValue=""
-                        label="Playlist Name"
-                        className={classes.textField}
-                        inputRef={input => {
-                            this.playlistNameRef = input;
-                        }}
-                        required
-                    />
-                    <FormControlLabel
-                        className={classes.switchControl}
-                        control={
-                            <Switch
-                                checked={safeBool(isPublic)}
-                                onClick={this._handlePublicSwitch}
-                                aria-label="publicPlaylist"
-                            />
-                        }
-                        label={switchLabel}
-                    />
+                <section
+                    className={classes.inputSection}
+                    data-subform="componofy-inputs"
+                >
+                    {modeForm}
                 </section>
                 <section>{children}</section>
                 <section className={classes.topSpace}>
@@ -383,7 +420,11 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div>{modalContent}</div>
+                <Grid container justify="center" spacing={8}>
+                    <Grid item lg={8} xs={12}>
+                        {modalContent}
+                    </Grid>
+                </Grid>
             </MaterialDialog>
         );
     }

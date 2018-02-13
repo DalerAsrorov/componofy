@@ -2,12 +2,16 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
+    setComponoformAddExistingStatus,
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
+    fetchMyPlaylistsForSelection,
     setOpenStatusFinalPlaylists,
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
     setPublicPlaylistsVisited,
+    setComponoformOpenStatus,
+    setFinalTracksShowStatus,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
     setSearchResultsMessage,
@@ -16,15 +20,18 @@ import {
     setPublicPlaylistOpen,
     checkIfAuthenticated,
     setMyPlaylistVisited,
+    clearComponoformData,
     setFinalPlaylistOpen,
     launchPlaylistMerger,
     setFinalPlaylistUrl,
+    setSelectedPlaylist,
     fetchPlaylistTracks,
     setPublicSearchTerm,
     setNewPlaylistDesc,
     removeErrorFromApp,
     setFinalSearchTerm,
     addPlaylistToFinal,
+    setComponofyMode,
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
@@ -269,6 +276,34 @@ export const mapDispatchToProps = dispatch => ({
 
     removeErrorFromApp(errorId) {
         dispatch(removeErrorFromApp(errorId));
+    },
+
+    setComponofyMode(hasChosenNewCreate) {
+        dispatch(setComponofyMode(hasChosenNewCreate));
+    },
+
+    fetchMyPlaylistsForSelection(offset, limit) {
+        dispatch(fetchMyPlaylistsForSelection(offset, limit));
+    },
+
+    setComponoformOpenStatus(wasOpen) {
+        dispatch(setComponoformOpenStatus(wasOpen));
+    },
+
+    setComponoformAddExistingStatus(wasOpen) {
+        dispatch(setComponoformAddExistingStatus(wasOpen));
+    },
+
+    setSelectedPlaylist(playlistId) {
+        dispatch(setSelectedPlaylist(playlistId));
+    },
+
+    clearComponoformData() {
+        dispatch(clearComponoformData());
+    },
+
+    setFinalTracksShowStatus(shouldShowOnlyTracks) {
+        dispatch(setFinalTracksShowStatus(shouldShowOnlyTracks));
     }
 });
 
