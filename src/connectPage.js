@@ -11,6 +11,7 @@ import {
     setFinalPlaylistImageURI,
     setPublicPlaylistsVisited,
     setComponoformOpenStatus,
+    setFinalTracksShowStatus,
     addPlaylistTrackToFinal,
     removePlaylistFromFinal,
     setSearchResultsMessage,
@@ -299,6 +300,10 @@ export const mapDispatchToProps = dispatch => ({
 
     clearComponoformData() {
         dispatch(clearComponoformData());
+    },
+
+    setFinalTracksShowStatus(shouldShowOnlyTracks) {
+        dispatch(setFinalTracksShowStatus(shouldShowOnlyTracks));
     }
 });
 

@@ -547,3 +547,9 @@ export const CLEAR_COMPONOFORM_DATA = 'CLEAR_COMPONOFORM_DATA';
 export const clearComponoformData = () => ({
     type: CLEAR_COMPONOFORM_DATA
 });
+
+export const SET_FINAL_TRACKS_SHOW_STATUS = 'SET_FINAL_TRACKS_SHOW_STATUS';
+export const setFinalTracksShowStatus = (shouldShowOnlyTracks = false) => ({
+    type: SET_FINAL_TRACKS_SHOW_STATUS,
+    shouldShowOnlyTracks
+});

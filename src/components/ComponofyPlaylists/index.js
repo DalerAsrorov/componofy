@@ -93,10 +93,11 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
-        setComponoformOpenStatus: PropTypes.func.isRequired,
         fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
+        setComponoformOpenStatus: PropTypes.func.isRequired,
         numberOfFinalPlaylists: PropTypes.number.isRequired,
+        setFinalTracksShowStatus: PropTypes.func.isRequired,
         setFinalPlaylistOpen: PropTypes.func.isRequired,
         setFinalSearchTerm: PropTypes.func.isRequired,
         finalPlaylists: PropTypes.object.isRequired,
@@ -232,6 +233,17 @@ class ComponofyPlaylists extends PureComponent {
         });
     };
 
+    _handleSelectShowTracksOnly = () => {
+        this._handleClickOption();
+
+        const {
+            setFinalTracksShowStatus,
+            finalPlaylists: { shouldShowOnlyTracks }
+        } = this.props;
+
+        setFinalTracksShowStatus(!shouldShowOnlyTracks);
+    };
+
     componentDidMount() {
         const {
             navigateTo,
@@ -252,6 +264,7 @@ class ComponofyPlaylists extends PureComponent {
         const {
             finalPlaylists: {
                 playlists: playlistsFinal,
+                shouldShowOnlyTracks,
                 searchTerm,
                 hasChosenNewCreate
             },
@@ -273,7 +286,7 @@ class ComponofyPlaylists extends PureComponent {
         let collapseExpandText = finalPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
-
+        ``;
         if (isNotEmpty) {
             const {
                 entities: { playlists: playlistsMap, tracks: tracksMap }
@@ -290,6 +303,7 @@ class ComponofyPlaylists extends PureComponent {
                     onClickMain={this._handleRemovePlaylist}
                     onClickItem={this._handleClickPlaylist}
                     items={playlists}
+                    showSubItemsOnly={shouldShowOnlyTracks}
                     isPlaylist={true}
                 />
             );
@@ -322,6 +336,9 @@ class ComponofyPlaylists extends PureComponent {
                 </MenuItem>
                 <MenuItem onClick={this._handleClickCollapse}>
                     {collapseExpandText}
+                </MenuItem>
+                <MenuItem onClick={this._handleSelectShowTracksOnly}>
+                    {shouldShowOnlyTracks ? 'Hide' : 'View'} Tracks
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
@@ -411,21 +428,7 @@ class ComponofyPlaylists extends PureComponent {
                         title="New playlist info"
                         onReturnToMain={this._handleReturnToMain}
                         isCreateMode={hasChosenNewCreate}
-                    >
-                        <List
-                            onClickMain={this._handleRemovePlaylist}
-                            onClickItem={this._handleClickPlaylist}
-                            subheader="New playlist tracks"
-                            items={playlists}
-                            isPlaylist={true}
-                            showSubItemsOnly={true}
-                            style={{
-                                maxHeight: '300px',
-                                overflow: 'auto'
-                            }}
-                            className={classes.tracklistBox}
-                        />
-                    </Dialog>
+                    />
                 </div>
             </HotKeys>
         );
