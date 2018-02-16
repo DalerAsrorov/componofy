@@ -38,6 +38,10 @@ const styles = theme => ({
         marginBottom: `${theme.spacing.unit}px`
     },
 
+    dialogContainer: {
+        width: 'inherit'
+    },
+
     dropImageZone: {
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
@@ -441,7 +445,12 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Grid container justify="center" spacing={8}>
+                <Grid
+                    className={classes.dialogContainer}
+                    container
+                    justify="center"
+                    spacing={8}
+                >
                     <Grid item lg={8} xs={12}>
                         {modalContent}
                     </Grid>
