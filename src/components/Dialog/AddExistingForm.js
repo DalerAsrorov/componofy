@@ -75,7 +75,9 @@ class AddExistingForm extends PureComponent {
     }
 
     _handlePlaylistSelect = event => {
-        this.props.onSelectPlaylist(event.target.value);
+        const { onSelectPlaylist } = this.props;
+
+        onSelectPlaylist(event.target.value);
     };
 
     render() {
@@ -125,7 +127,7 @@ class AddExistingForm extends PureComponent {
 
         if (!isFetchingOptions) {
             contentComponent = (
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} error={error}>
                     <InputLabel htmlFor="playlist-choice">
                         Choose Playlist
                     </InputLabel>

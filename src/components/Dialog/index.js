@@ -38,6 +38,10 @@ const styles = theme => ({
         marginBottom: `${theme.spacing.unit}px`
     },
 
+    dialogContainer: {
+        width: 'inherit'
+    },
+
     dropImageZone: {
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
@@ -121,7 +125,8 @@ const Transition = props => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
     state = {
-        error: false
+        error: false,
+        hasAddExistingError: false
     };
 
     static propTypes = {
@@ -142,6 +147,18 @@ class Dialog extends PureComponent {
         title: PropTypes.string.isRequired,
         isOpen: PropTypes.bool.isRequired,
         wasOpen: PropTypes.bool
+    };
+
+    _handlePlaylistSelect = selectedPlaylistId => {
+        const { setSelectedPlaylist } = this.props;
+
+        if (!R.isEmpty(setSelectedPlaylist)) {
+            this.setState({
+                hasAddExistingError: false
+            });
+        }
+
+        setSelectedPlaylist(selectedPlaylistId);
     };
 
     _handlePlaylistNameChange = event => {
@@ -196,7 +213,8 @@ class Dialog extends PureComponent {
         const {
             launchPlaylistMerger,
             isCreateMode,
-            addErrorToApp
+            addErrorToApp,
+            componoform: { selectedPlaylistId }
         } = this.props;
 
         if (isCreateMode) {
@@ -208,10 +226,16 @@ class Dialog extends PureComponent {
             }
 
             this.setState({ error: true });
-            addErrorToApp('Fix errors before submitting again.');
         } else {
-            launchPlaylistMerger();
+            if (!R.isEmpty(selectedPlaylistId)) {
+                launchPlaylistMerger();
+                return;
+            }
+
+            this.setState({ hasAddExistingError: true });
         }
+
+        addErrorToApp('Fix errors before submitting again.');
     };
 
     _handleClickBack = event => {
@@ -232,7 +256,7 @@ class Dialog extends PureComponent {
     };
 
     render() {
-        const { error } = this.state;
+        const { error, hasAddExistingError } = this.state;
         const {
             setComponoformAddExistingStatus,
             setSelectedPlaylist,
@@ -278,10 +302,11 @@ class Dialog extends PureComponent {
                     onFetchPlaylistSelection={
                         this._handleFetchPlaylistSelection
                     }
+                    error={hasAddExistingError}
                     playlistOptions={listOfMyPlaylists}
                     wasAddExistingOpen={wasAddExistingOpen}
                     isFetchingOptions={isFetchingOptions}
-                    onSelectPlaylist={setSelectedPlaylist}
+                    onSelectPlaylist={this._handlePlaylistSelect}
                     selectedPlaylist={selectedPlaylistId}
                 />
             );
@@ -420,7 +445,12 @@ class Dialog extends PureComponent {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Grid container justify="center" spacing={8}>
+                <Grid
+                    className={classes.dialogContainer}
+                    container
+                    justify="center"
+                    spacing={8}
+                >
                     <Grid item lg={8} xs={12}>
                         {modalContent}
                     </Grid>
