@@ -145,7 +145,7 @@ class AddExistingForm extends PureComponent {
             </div>
         );
 
-        if (!isFetchingOptions || currentOffset >= 20) {
+        if (!isFetchingOptions || currentOffset >= PLAYLIST_OFFSET_LIMIT) {
             contentComponent = (
                 <FormControl className={classes.formControl} error={error}>
                     <InputLabel htmlFor="playlist-choice">

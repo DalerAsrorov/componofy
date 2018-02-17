@@ -11,7 +11,7 @@ import {
 } from '../api';
 import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
-import { OFFSET_LIMIT } from '../utils/constants';
+import { OFFSET_LIMIT, PLAYLIST_OFFSET_LIMIT } from '../utils/constants';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -555,7 +555,7 @@ export const setFinalTracksShowStatus = (shouldShowOnlyTracks = false) => ({
 });
 
 export const SET_CURRENT_SELECTION_OFFSET = 'SET_CURRENT_SELECTION_OFFSET';
-export const setCurrentSelectionOffset = (offset = 20) => ({
+export const setCurrentSelectionOffset = (offset = PLAYLIST_OFFSET_LIMIT) => ({
     type: SET_CURRENT_SELECTION_OFFSET,
     offset
 });
