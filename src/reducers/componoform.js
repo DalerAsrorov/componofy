@@ -5,7 +5,8 @@ import {
     SET_COMPONOFORM_OPEN_STATUS,
     SET_COMPONOFORM_ADD_EXISTING_STATUS,
     SET_SELECTED_PLAYLIST,
-    CLEAR_COMPONOFORM_DATA
+    CLEAR_COMPONOFORM_DATA,
+    SET_CURRENT_SELECTION_OFFSET
 } from '../actions';
 
 const DEFAULT_STATE = {
@@ -14,7 +15,9 @@ const DEFAULT_STATE = {
     wasAddExistingOpen: false,
     listOfMyPlaylists: [],
     finalPlaylistUrl: '',
-    selectedPlaylistId: ''
+    selectedPlaylistId: '',
+    totalNumberOfPlaylists: 0,
+    currentOffset: 0
 };
 
 export const componoform = (state = DEFAULT_STATE, action) => {
@@ -35,7 +38,8 @@ export const componoform = (state = DEFAULT_STATE, action) => {
 
             return Object.assign({}, state, {
                 listOfMyPlaylists,
-                isFetchingOptions: false
+                isFetchingOptions: false,
+                totalNumberOfPlaylists: action.totalNumberOfPlaylists
             });
         case SET_COMPONOFORM_OPEN_STATUS:
             return Object.assign({}, state, { wasOpen: action.wasOpen });
@@ -49,6 +53,8 @@ export const componoform = (state = DEFAULT_STATE, action) => {
             });
         case CLEAR_COMPONOFORM_DATA:
             return Object.assign({}, state, DEFAULT_STATE);
+        case SET_CURRENT_SELECTION_OFFSET:
+            return Object.assign({}, state, { currentOffset: action.offset });
         default:
             return state;
     }

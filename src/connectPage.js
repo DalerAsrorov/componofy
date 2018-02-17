@@ -7,9 +7,10 @@ import {
     setOpenStatusPublicPlaylists,
     fetchMyPlaylistsForSelection,
     setOpenStatusFinalPlaylists,
+    setCurrentSelectionOffset,
+    setPublicPlaylistsVisited,
     setOpenStatusMyPlaylists,
     setFinalPlaylistImageURI,
-    setPublicPlaylistsVisited,
     setComponoformOpenStatus,
     setFinalTracksShowStatus,
     addPlaylistTrackToFinal,
@@ -304,6 +305,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setFinalTracksShowStatus(shouldShowOnlyTracks) {
         dispatch(setFinalTracksShowStatus(shouldShowOnlyTracks));
+    },
+
+    setCurrentSelectionOffset(offset) {
+        dispatch(setCurrentSelectionOffset(offset));
     }
 });
 

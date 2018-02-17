@@ -11,7 +11,7 @@ import {
 } from '../api';
 import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
-import { OFFSET_LIMIT } from '../utils/constants';
+import { OFFSET_LIMIT, PLAYLIST_OFFSET_LIMIT } from '../utils/constants';
 
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
@@ -512,7 +512,7 @@ const receiveMyPlaylistsForSelection = json => {
     return {
         type: RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
         playlists: json.data.body ? json.data.body.items : [],
-        numberOfTracks: json.data.body ? json.data.body.total : 0,
+        totalNumberOfPlaylists: json.data.body ? json.data.body.total : 0,
         receivedAt: Date.now()
     };
 };
@@ -552,4 +552,10 @@ export const SET_FINAL_TRACKS_SHOW_STATUS = 'SET_FINAL_TRACKS_SHOW_STATUS';
 export const setFinalTracksShowStatus = (shouldShowOnlyTracks = false) => ({
     type: SET_FINAL_TRACKS_SHOW_STATUS,
     shouldShowOnlyTracks
+});
+
+export const SET_CURRENT_SELECTION_OFFSET = 'SET_CURRENT_SELECTION_OFFSET';
+export const setCurrentSelectionOffset = (offset = PLAYLIST_OFFSET_LIMIT) => ({
+    type: SET_CURRENT_SELECTION_OFFSET,
+    offset
 });

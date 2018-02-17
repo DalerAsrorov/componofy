@@ -1,18 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Waypoint from 'react-waypoint';
 import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import Select from 'material-ui/Select';
 import { Divider } from 'material-ui';
+import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
+import Select from 'material-ui/Select';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
-import { LIGHT_CYAN_COLOR } from '../../utils/constants';
+import { LIGHT_CYAN_COLOR, PLAYLIST_OFFSET_LIMIT } from '../../utils/constants';
 
 const styles = theme => ({
     formControl: {
@@ -45,32 +46,50 @@ const styles = theme => ({
     }
 });
 
-const MAX_PLAYLISTS_OFFSET_LIMIT = 50;
-
 class AddExistingForm extends PureComponent {
     static propTypes = {
         onSetAddExistingOpenStatus: PropTypes.func.isRequired,
         onFetchPlaylistSelection: PropTypes.func.isRequired,
+        totalNumberOfPlaylists: PropTypes.number.isRequired,
         selectedPlaylist: PropTypes.string.isRequired,
         wasAddExistingOpen: PropTypes.bool.isRequired,
+        onSetCurrentOffset: PropTypes.func.isRequired,
         isFetchingOptions: PropTypes.bool.isRequired,
         onSelectPlaylist: PropTypes.func.isRequired,
         playlistOptions: PropTypes.array.isRequired,
-        error: PropTypes.bool.isRequired,
+        currentOffset: PropTypes.number.isRequired,
         classes: PropTypes.object.isRequired,
+        error: PropTypes.bool.isRequired,
         wasDialogOpen: PropTypes.bool
+    };
+
+    _handleSelectionFetch = () => {
+        const {
+            onSetCurrentOffset,
+            onFetchPlaylistSelection,
+            totalNumberOfPlaylists,
+            currentOffset
+        } = this.props;
+
+        if (currentOffset < totalNumberOfPlaylists) {
+            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+            onSetCurrentOffset(currentOffset + PLAYLIST_OFFSET_LIMIT);
+        }
     };
 
     componentDidMount() {
         const {
             onFetchPlaylistSelection,
             onSetAddExistingOpenStatus,
-            wasAddExistingOpen
+            onSetCurrentOffset,
+            wasAddExistingOpen,
+            currentOffset
         } = this.props;
 
         if (!wasAddExistingOpen) {
             onSetAddExistingOpenStatus(true);
-            onFetchPlaylistSelection(0, MAX_PLAYLISTS_OFFSET_LIMIT);
+            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+            onSetCurrentOffset(PLAYLIST_OFFSET_LIMIT);
         }
     }
 
@@ -87,7 +106,8 @@ class AddExistingForm extends PureComponent {
             classes,
             wasAddExistingOpen,
             isFetchingOptions,
-            selectedPlaylist
+            selectedPlaylist,
+            currentOffset
         } = this.props;
         const playlistMenuSelects = playlistOptions.map(
             ({ id, name, images = [] }) => {
@@ -125,7 +145,7 @@ class AddExistingForm extends PureComponent {
             </div>
         );
 
-        if (!isFetchingOptions) {
+        if (!isFetchingOptions || currentOffset >= PLAYLIST_OFFSET_LIMIT) {
             contentComponent = (
                 <FormControl className={classes.formControl} error={error}>
                     <InputLabel htmlFor="playlist-choice">
@@ -147,6 +167,11 @@ class AddExistingForm extends PureComponent {
                         }}
                     >
                         {playlistMenuSelects}
+                        <Waypoint
+                            onEnter={() => {
+                                this._handleSelectionFetch();
+                            }}
+                        />
                     </Select>
                 </FormControl>
             );
