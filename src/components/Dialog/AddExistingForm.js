@@ -45,19 +45,19 @@ const styles = theme => ({
     }
 });
 
-
-
 class AddExistingForm extends PureComponent {
     static propTypes = {
         onSetAddExistingOpenStatus: PropTypes.func.isRequired,
         onFetchPlaylistSelection: PropTypes.func.isRequired,
         selectedPlaylist: PropTypes.string.isRequired,
         wasAddExistingOpen: PropTypes.bool.isRequired,
+        onSetCurrentOffset: PropTypes.func.isRequired,
         isFetchingOptions: PropTypes.bool.isRequired,
         onSelectPlaylist: PropTypes.func.isRequired,
         playlistOptions: PropTypes.array.isRequired,
-        error: PropTypes.bool.isRequired,
+        currentOffset: PropTypes.number.isRequired,
         classes: PropTypes.object.isRequired,
+        error: PropTypes.bool.isRequired,
         wasDialogOpen: PropTypes.bool
     };
 
@@ -65,12 +65,15 @@ class AddExistingForm extends PureComponent {
         const {
             onFetchPlaylistSelection,
             onSetAddExistingOpenStatus,
-            wasAddExistingOpen
+            onSetCurrentOffset,
+            wasAddExistingOpen,
+            currentOffset
         } = this.props;
 
         if (!wasAddExistingOpen) {
             onSetAddExistingOpenStatus(true);
-            onFetchPlaylistSelection(0, PLAYLIST_OFFSET_LIMIT);
+            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+            onSetCurrentOffset(PLAYLIST_OFFSET_LIMIT);
         }
     }
 

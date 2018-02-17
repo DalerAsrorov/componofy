@@ -259,13 +259,15 @@ class Dialog extends PureComponent {
         const { error, hasAddExistingError } = this.state;
         const {
             setComponoformAddExistingStatus,
+            setCurrentSelectionOffset,
             setSelectedPlaylist,
             componoform: {
                 finalPlaylistUrl,
                 wasAddExistingOpen,
                 listOfMyPlaylists,
                 isFetchingOptions,
-                selectedPlaylistId
+                selectedPlaylistId,
+                currentOffset
             },
             finalPlaylists: {
                 statusText: loaderText,
@@ -308,6 +310,8 @@ class Dialog extends PureComponent {
                     isFetchingOptions={isFetchingOptions}
                     onSelectPlaylist={this._handlePlaylistSelect}
                     selectedPlaylist={selectedPlaylistId}
+                    onSetCurrentOffset={setCurrentSelectionOffset}
+                    currentOffset={currentOffset}
                 />
             );
         }

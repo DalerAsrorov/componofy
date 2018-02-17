@@ -553,3 +553,9 @@ export const setFinalTracksShowStatus = (shouldShowOnlyTracks = false) => ({
     type: SET_FINAL_TRACKS_SHOW_STATUS,
     shouldShowOnlyTracks
 });
+
+export const SET_CURRENT_SELECTION_OFFSET = 'SET_CURRENT_SELECTION_OFFSET';
+export const setCurrentSelectionOffset = (offset = 20) => ({
+    type: SET_CURRENT_SELECTION_OFFSET,
+    offset
+});
