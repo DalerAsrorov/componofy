@@ -107,6 +107,7 @@ export const menuButtonStyle = {};
 
 export const SCROLL_DURATION = 500;
 export const OFFSET_LIMIT = 10;
+export const PLAYLIST_OFFSET_LIMIT = 20;
 
 // Max image size is 256KB
 // https://developer.spotify.com/web-api/upload-a-custom-playlist-cover-image/

@@ -12,7 +12,7 @@ import { ListItemIcon, ListItemText } from 'material-ui/List';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
-import { LIGHT_CYAN_COLOR } from '../../utils/constants';
+import { LIGHT_CYAN_COLOR, PLAYLIST_OFFSET_LIMIT } from '../../utils/constants';
 
 const styles = theme => ({
     formControl: {
@@ -45,7 +45,7 @@ const styles = theme => ({
     }
 });
 
-const MAX_PLAYLISTS_OFFSET_LIMIT = 50;
+
 
 class AddExistingForm extends PureComponent {
     static propTypes = {
@@ -70,7 +70,7 @@ class AddExistingForm extends PureComponent {
 
         if (!wasAddExistingOpen) {
             onSetAddExistingOpenStatus(true);
-            onFetchPlaylistSelection(0, MAX_PLAYLISTS_OFFSET_LIMIT);
+            onFetchPlaylistSelection(0, PLAYLIST_OFFSET_LIMIT);
         }
     }
 
