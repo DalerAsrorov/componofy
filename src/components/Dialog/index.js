@@ -267,6 +267,7 @@ class Dialog extends PureComponent {
                 listOfMyPlaylists,
                 isFetchingOptions,
                 selectedPlaylistId,
+                totalNumberOfPlaylists,
                 currentOffset
             },
             finalPlaylists: {
@@ -312,6 +313,7 @@ class Dialog extends PureComponent {
                     selectedPlaylist={selectedPlaylistId}
                     onSetCurrentOffset={setCurrentSelectionOffset}
                     currentOffset={currentOffset}
+                    totalNumberOfPlaylists={totalNumberOfPlaylists}
                 />
             );
         }

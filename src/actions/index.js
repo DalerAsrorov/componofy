@@ -512,7 +512,7 @@ const receiveMyPlaylistsForSelection = json => {
     return {
         type: RECEIVE_MY_PLAYLISTS_FOR_SELECTION,
         playlists: json.data.body ? json.data.body.items : [],
-        numberOfTracks: json.data.body ? json.data.body.total : 0,
+        totalNumberOfPlaylists: json.data.body ? json.data.body.total : 0,
         receivedAt: Date.now()
     };
 };

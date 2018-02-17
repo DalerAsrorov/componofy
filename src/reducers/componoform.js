@@ -16,6 +16,7 @@ const DEFAULT_STATE = {
     listOfMyPlaylists: [],
     finalPlaylistUrl: '',
     selectedPlaylistId: '',
+    totalNumberOfPlaylists: 0,
     currentOffset: 0
 };
 
@@ -37,7 +38,8 @@ export const componoform = (state = DEFAULT_STATE, action) => {
 
             return Object.assign({}, state, {
                 listOfMyPlaylists,
-                isFetchingOptions: false
+                isFetchingOptions: false,
+                totalNumberOfPlaylists: action.totalNumberOfPlaylists
             });
         case SET_COMPONOFORM_OPEN_STATUS:
             return Object.assign({}, state, { wasOpen: action.wasOpen });

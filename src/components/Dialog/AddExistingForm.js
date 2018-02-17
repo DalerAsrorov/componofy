@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Waypoint from 'react-waypoint';
 import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import Select from 'material-ui/Select';
 import { Divider } from 'material-ui';
+import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
+import Select from 'material-ui/Select';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
@@ -49,6 +50,7 @@ class AddExistingForm extends PureComponent {
     static propTypes = {
         onSetAddExistingOpenStatus: PropTypes.func.isRequired,
         onFetchPlaylistSelection: PropTypes.func.isRequired,
+        totalNumberOfPlaylists: PropTypes.number.isRequired,
         selectedPlaylist: PropTypes.string.isRequired,
         wasAddExistingOpen: PropTypes.bool.isRequired,
         onSetCurrentOffset: PropTypes.func.isRequired,
@@ -59,6 +61,26 @@ class AddExistingForm extends PureComponent {
         classes: PropTypes.object.isRequired,
         error: PropTypes.bool.isRequired,
         wasDialogOpen: PropTypes.bool
+    };
+
+    _handleSelectionFetch = () => {
+        const {
+            onSetCurrentOffset,
+            onFetchPlaylistSelection,
+            totalNumberOfPlaylists,
+            currentOffset
+        } = this.props;
+
+        if (currentOffset < totalNumberOfPlaylists) {
+            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+            onSetCurrentOffset(currentOffset + PLAYLIST_OFFSET_LIMIT);
+        }
+
+        console.log(
+            currentOffset,
+            totalNumberOfPlaylists,
+            ' should start fetching'
+        );
     };
 
     componentDidMount() {
@@ -150,6 +172,11 @@ class AddExistingForm extends PureComponent {
                         }}
                     >
                         {playlistMenuSelects}
+                        <Waypoint
+                            onEnter={() => {
+                                this._handleSelectionFetch();
+                            }}
+                        />
                     </Select>
                 </FormControl>
             );
