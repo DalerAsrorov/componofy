@@ -75,12 +75,6 @@ class AddExistingForm extends PureComponent {
             onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
             onSetCurrentOffset(currentOffset + PLAYLIST_OFFSET_LIMIT);
         }
-
-        console.log(
-            currentOffset,
-            totalNumberOfPlaylists,
-            ' should start fetching'
-        );
     };
 
     componentDidMount() {
@@ -112,7 +106,8 @@ class AddExistingForm extends PureComponent {
             classes,
             wasAddExistingOpen,
             isFetchingOptions,
-            selectedPlaylist
+            selectedPlaylist,
+            currentOffset
         } = this.props;
         const playlistMenuSelects = playlistOptions.map(
             ({ id, name, images = [] }) => {
@@ -150,7 +145,7 @@ class AddExistingForm extends PureComponent {
             </div>
         );
 
-        if (!isFetchingOptions) {
+        if (!isFetchingOptions || currentOffset >= 20) {
             contentComponent = (
                 <FormControl className={classes.formControl} error={error}>
                     <InputLabel htmlFor="playlist-choice">
