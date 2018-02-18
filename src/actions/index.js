@@ -6,6 +6,7 @@ import {
     createPlaylist,
     addTracksToPlaylist,
     uploadPlaylistCoverImage,
+    reorderTracksInPlaylist,
     searchPlaylists,
     getLogOutUser
 } from '../api';
@@ -573,3 +574,31 @@ export const reorderPlaylistTracks = (
     startPosition,
     endPosition
 });
+
+export const SET_PLAYLIST_DRAG_STATUS = 'SET_PLAYLIST_DRAG_STATUS';
+export const setPlaylistDragStatus = (
+    playlistId,
+    hasReorderRequest = false
+) => ({
+    type: SET_PLAYLIST_DRAG_STATUS,
+    playlistId,
+    hasReorderRequest
+});
+
+export const startPlaylistTracksReorderProcess = (
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+) => dispatch => {
+    dispatch(setPlaylistDragStatus(playlistId, true));
+    dispatch(
+        reorderPlaylistTracks(playlistId, trackId, startPosition, endPosition)
+    );
+
+    reorderTracksInPlaylist(playlistId, startPosition, endPosition).then(
+        response => {
+            dispatch(setPlaylistDragStatus(playlistId, false));
+        }
+    );
+};

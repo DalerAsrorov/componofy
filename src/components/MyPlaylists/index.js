@@ -53,9 +53,11 @@ let scroll = Scroll.animateScroll;
 
 class MyPlaylists extends PureComponent {
     static propTypes = {
+        startPlaylistTracksReorderProcess: PropTypes.func.isRequired,
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         reorderPlaylistTracks: PropTypes.func.isRequired,
+        setPlaylistDragStatus: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
         myPlaylists: PLAYLISTS_PROPTYPE.isRequired,
@@ -179,8 +181,13 @@ class MyPlaylists extends PureComponent {
     };
 
     _handlePlaylistTracksReorder = (playlistId, trackId, startPos, endPos) => {
-        const { reorderPlaylistTracks } = this.props;
-        reorderPlaylistTracks(playlistId, trackId, startPos, endPos);
+        const { startPlaylistTracksReorderProcess } = this.props;
+        startPlaylistTracksReorderProcess(
+            playlistId,
+            trackId,
+            startPos,
+            endPos
+        );
     };
 
     componentDidMount() {

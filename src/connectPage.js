@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
 import {
+    startPlaylistTracksReorderProcess,
     setComponoformAddExistingStatus,
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
@@ -25,6 +26,7 @@ import {
     clearComponoformData,
     setFinalPlaylistOpen,
     launchPlaylistMerger,
+    setPlaylistDragStatus,
     setFinalPlaylistUrl,
     setSelectedPlaylist,
     fetchPlaylistTracks,
@@ -34,6 +36,7 @@ import {
     setFinalSearchTerm,
     addPlaylistToFinal,
     setComponofyMode,
+    startDragAndDrop,
     fetchMyPlaylists,
     setPlaylistOpen,
     setMySearchTerm,
@@ -314,6 +317,21 @@ export const mapDispatchToProps = dispatch => ({
 
     reorderPlaylistTracks(playlistId, trackId, startPos, endPos) {
         dispatch(reorderPlaylistTracks(playlistId, trackId, startPos, endPos));
+    },
+
+    setPlaylistDragStatus(playlistId, hasReorderRequest) {
+        dispatch(setPlaylistDragStatus(playlistId, hasReorderRequest));
+    },
+
+    startPlaylistTracksReorderProcess(playlistId, trackId, startPos, endPos) {
+        dispatch(
+            startPlaylistTracksReorderProcess(
+                playlistId,
+                trackId,
+                startPos,
+                endPos
+            )
+        );
     }
 });
 
