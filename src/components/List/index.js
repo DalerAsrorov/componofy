@@ -60,31 +60,18 @@ class List extends PureComponent {
             </ListSubheader>
         ) : null;
 
-        if (isPlaylist) {
-            listOfItems = is(Array, items)
-                ? items.map(playlist => (
-                      <Playlist
-                          onClickIcon={onClickMain}
-                          onClickPlaylist={onClickItem}
-                          key={playlist.id}
-                          playlist={playlist}
-                          showTracksOnly={showSubItemsOnly}
-                          onDragAndDrop={onDragAndDrop}
-                      />
-                  ))
-                : [];
-        } else {
-            listOfItems = is(Array, items)
-                ? items.map((track, index) => (
-                      <Track
-                          key={track.id}
-                          track={track}
-                          playlist={keyItem}
-                          index={index}
-                      />
-                  ))
-                : [];
-        }
+        listOfItems = is(Array, items)
+            ? items.map(playlist => (
+                  <Playlist
+                      onClickIcon={onClickMain}
+                      onClickPlaylist={onClickItem}
+                      key={playlist.id}
+                      playlist={playlist}
+                      showTracksOnly={showSubItemsOnly}
+                      onDragAndDrop={onDragAndDrop}
+                  />
+              ))
+            : [];
 
         return (
             <MaterialList

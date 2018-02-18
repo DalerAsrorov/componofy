@@ -9,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import classNames from 'classnames';
 import * as R from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import TrackList from './TrackList';
 import List from '../List';
 
 import './Playlist.css';
@@ -133,7 +134,10 @@ class Playlist extends PureComponent {
                         <Droppable droppableId={playlist.id}>
                             {(provided, snapshot) => (
                                 <div ref={provided.innerRef}>
-                                    <List keyItem={playlist} items={tracks} />
+                                    <TrackList
+                                        tracks={tracks}
+                                        playlist={playlist}
+                                    />
                                     {provided.placeholder}
                                 </div>
                             )}
