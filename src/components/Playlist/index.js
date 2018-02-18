@@ -61,6 +61,13 @@ class Playlist extends PureComponent {
 
     _handleDragEnd = result => {
         const { onDragAndDrop } = this.props;
+
+        // If the track was not dragged to
+        // the new desires order don't do anything
+        if (!result.destination) {
+            return;
+        }
+
         const {
             droppableId: trackId,
             source: { droppableId: playlistId, index: startPos } = {},
