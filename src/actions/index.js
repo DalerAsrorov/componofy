@@ -596,9 +596,16 @@ export const startPlaylistTracksReorderProcess = (
         reorderPlaylistTracks(playlistId, trackId, startPosition, endPosition)
     );
 
-    reorderTracksInPlaylist(playlistId, startPosition, endPosition).then(
-        response => {
-            dispatch(setPlaylistDragStatus(playlistId, false));
-        }
-    );
+    // The API request accepts the index after which
+    // the targeted track should be placed while the UI
+    // places it right before the track with end position
+    if (endPosition > startPosition) {
+        endPosition += 1;
+    }
+
+    reorderTracksInPlaylist(playlistId, startPosition, endPosition)
+        .then(response => dispatch(setPlaylistDragStatus(playlistId, false)))
+        .catch(error => {
+            console.error('Error making playlist tracks re-order', error);
+        });
 };
