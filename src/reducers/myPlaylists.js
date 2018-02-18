@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import {
     REQUEST_PLAYLISTS,
     RECEIVE_PLAYLISTS,
@@ -7,7 +8,9 @@ import {
     RECEIVED_PLAYLIST_TRACKS,
     SET_OPEN_STATUS_MY_PLAYLISTS,
     SET_MY_SEARCH_TERM,
-    CLEAR_MY_DATA
+    CLEAR_MY_DATA,
+    REORDER_PLAYLIST_TRACKS,
+    SET_PLAYLIST_DRAG_STATUS
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
@@ -96,6 +99,20 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 playlists: myPlaylists
             });
+        case SET_PLAYLIST_DRAG_STATUS:
+            myPlaylists = Array.from(state.playlists);
+
+            myPlaylists = myPlaylists.map(playlist => {
+                if (playlist.id === action.playlistId) {
+                    playlist.hasReorderRequest = action.hasReorderRequest;
+                }
+                return playlist;
+            });
+
+            return Object.assign({}, state, {
+                playlists: myPlaylists
+            });
+
         case SET_MY_PLAYLIST_VISITED:
             return Object.assign({}, state, {
                 isVisited: action.isVisited
@@ -117,6 +134,19 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
             });
         case SET_MY_SEARCH_TERM:
             return Object.assign({}, state, { searchTerm: action.searchTerm });
+        case REORDER_PLAYLIST_TRACKS:
+            const { playlistId, startPosition, endPosition } = action;
+            playlists = Array.from(state.playlists);
+
+            let { tracks: { list: tracklist } } = R.find(
+                R.propEq('id', playlistId),
+                playlists
+            );
+
+            const [removed] = tracklist.splice(startPosition, 1);
+            tracklist.splice(endPosition, 0, removed);
+
+            return Object.assign({}, state, { playlists });
         case CLEAR_MY_DATA:
             return Object.assign({}, state, DEFAULT_STATE);
         default:

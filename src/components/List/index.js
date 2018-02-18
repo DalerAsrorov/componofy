@@ -29,6 +29,7 @@ class List extends PureComponent {
                 PropTypes.object
             )
         ]).isRequired,
+        onDragAndDrop: PropTypes.func,
         onClickItem: PropTypes.func,
         onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
@@ -41,13 +42,14 @@ class List extends PureComponent {
     render() {
         const {
             items,
-            subheader,
+            keyItem,
             classes,
+            subheader,
+            showSubItemsOnly,
             isPlaylist,
             onClickMain,
             onClickItem,
-            keyItem,
-            showSubItemsOnly,
+            onDragAndDrop,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -58,25 +60,18 @@ class List extends PureComponent {
             </ListSubheader>
         ) : null;
 
-        if (isPlaylist) {
-            listOfItems = is(Array, items)
-                ? items.map(playlist => (
-                      <Playlist
-                          onClickIcon={onClickMain}
-                          onClickPlaylist={onClickItem}
-                          key={playlist.id}
-                          playlist={playlist}
-                          showTracksOnly={showSubItemsOnly}
-                      />
-                  ))
-                : [];
-        } else {
-            listOfItems = is(Array, items)
-                ? items.map(track => (
-                      <Track key={track.id} track={track} playlist={keyItem} />
-                  ))
-                : [];
-        }
+        listOfItems = is(Array, items)
+            ? items.map(playlist => (
+                  <Playlist
+                      onClickIcon={onClickMain}
+                      onClickPlaylist={onClickItem}
+                      key={playlist.id}
+                      playlist={playlist}
+                      showTracksOnly={showSubItemsOnly}
+                      onDragAndDrop={onDragAndDrop}
+                  />
+              ))
+            : [];
 
         return (
             <MaterialList

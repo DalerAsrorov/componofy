@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
@@ -8,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import classNames from 'classnames';
 import * as R from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import TrackList from './TrackList';
 import List from '../List';
 
 import './Playlist.css';
@@ -27,6 +29,7 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
     };
 
@@ -54,6 +57,23 @@ class Playlist extends PureComponent {
         if (onClickIcon) {
             onClickIcon(playlist, containsThisPlaylist);
         }
+    };
+
+    _handleDragEnd = result => {
+        const { onDragAndDrop } = this.props;
+
+        // don't do anything if position is the same
+        if (!result.destination) {
+            return;
+        }
+
+        const {
+            droppableId: trackId,
+            source: { droppableId: playlistId, index: startPos } = {},
+            destination: { index: endPos } = {}
+        } = result;
+
+        onDragAndDrop(playlistId, trackId, startPos, endPos);
     };
 
     render() {
@@ -116,7 +136,19 @@ class Playlist extends PureComponent {
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                    <List keyItem={playlist} items={tracks} />
+                    <DragDropContext onDragEnd={this._handleDragEnd}>
+                        <Droppable droppableId={playlist.id}>
+                            {(provided, snapshot) => (
+                                <div ref={provided.innerRef}>
+                                    <TrackList
+                                        tracks={tracks}
+                                        playlist={playlist}
+                                    />
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </Collapse>
             </div>
         );

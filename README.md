@@ -6,9 +6,11 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 [Watch video](https://www.youtube.com/watch?v=XAF5MUOzKhs&t=17s)
 
-## Features Status
+## New Feature Details
 
-You can track the board of features I am working on [here](https://github.com/DalerAsrorov/componofy/projects/3)
+* Each release has its own set of new features. You can find the details in
+  the [releases section](https://github.com/DalerAsrorov/componofy/releases)
+* You can also track the board of features I am working on in this [project board](https://github.com/DalerAsrorov/componofy/projects/5)
 
 ## Contribution
 
@@ -23,7 +25,7 @@ PRs are always welcome! If you want to contribute, you would need to:
 ```
 APP_CLIENT_URL=http://localhost:3000
 SPOTIFY_CLIENT=[your own spotify client key]
-SPOTIFY_CLIENT_SECRET=[your own spotify client secret ke]
+SPOTIFY_CLIENT_SECRET=[your own spotify client secret key]
 SPOTIFY_REDIRECT_URI=http://localhost:3001/api/callback
 YAR_PASS=[any set of characters (without quotes)]
 DEV_MODE=true
@@ -31,9 +33,9 @@ DEV_MODE=true
 
 6. `yarn start:api` in one terminal (window/tab)
 1. `yarn start:dev` in another terminal (window/tab)
-1. Go to `localhost:3000` in your favorite browser (hopefully not IE :D)
+1. Go to `localhost:3000` in your favorite browser
 
-Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section.
+Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section
 
 ## License
 

@@ -6,6 +6,7 @@ import {
     createPlaylist,
     addTracksToPlaylist,
     uploadPlaylistCoverImage,
+    reorderTracksInPlaylist,
     searchPlaylists,
     getLogOutUser
 } from '../api';
@@ -559,3 +560,52 @@ export const setCurrentSelectionOffset = (offset = PLAYLIST_OFFSET_LIMIT) => ({
     type: SET_CURRENT_SELECTION_OFFSET,
     offset
 });
+
+export const REORDER_PLAYLIST_TRACKS = 'REORDER_PLAYLIST_TRACKS';
+export const reorderPlaylistTracks = (
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+) => ({
+    type: REORDER_PLAYLIST_TRACKS,
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+});
+
+export const SET_PLAYLIST_DRAG_STATUS = 'SET_PLAYLIST_DRAG_STATUS';
+export const setPlaylistDragStatus = (
+    playlistId,
+    hasReorderRequest = false
+) => ({
+    type: SET_PLAYLIST_DRAG_STATUS,
+    playlistId,
+    hasReorderRequest
+});
+
+export const startPlaylistTracksReorderProcess = (
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+) => dispatch => {
+    dispatch(setPlaylistDragStatus(playlistId, true));
+    dispatch(
+        reorderPlaylistTracks(playlistId, trackId, startPosition, endPosition)
+    );
+
+    // The API request accepts the index after which
+    // the targeted track should be placed while the UI
+    // places it right before the track with end position
+    if (endPosition > startPosition) {
+        endPosition += 1;
+    }
+
+    reorderTracksInPlaylist(playlistId, startPosition, endPosition)
+        .then(response => dispatch(setPlaylistDragStatus(playlistId, false)))
+        .catch(error => {
+            console.error('Error making playlist tracks re-order', error);
+        });
+};
