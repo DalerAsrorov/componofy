@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
@@ -54,6 +55,10 @@ class Playlist extends PureComponent {
         if (onClickIcon) {
             onClickIcon(playlist, containsThisPlaylist);
         }
+    };
+
+    _handleDragEnd = result => {
+        console.log('drag end result:', result);
     };
 
     render() {
@@ -116,7 +121,16 @@ class Playlist extends PureComponent {
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
                 <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                    <List keyItem={playlist} items={tracks} />
+                    <DragDropContext onDragEnd={this._handleDragEnd}>
+                        <Droppable droppableId={playlist.id}>
+                            {(provided, snapshot) => (
+                                <div ref={provided.innerRef}>
+                                    <List keyItem={playlist} items={tracks} />
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </Collapse>
             </div>
         );

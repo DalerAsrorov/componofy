@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Draggable } from 'react-beautiful-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
@@ -33,6 +34,7 @@ class Track extends PureComponent {
         removePlaylistTrackFromFinal: PropTypes.func.isRequired,
         playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
+        index: PropTypes.number.isRequired,
         track: TRACK_PROPTYPE.isRequired,
         playlist: PLAYLIST_PROPTYPE
     };
@@ -56,8 +58,9 @@ class Track extends PureComponent {
     };
 
     render() {
-        const { track, classes, playlistContainsThisTrack } = this.props;
+        const { track, classes, playlistContainsThisTrack, index } = this.props;
         const {
+            id: trackId,
             artists,
             name: trackName,
             album: { name: albumName, external_urls: { spotify: albumUrl } },
@@ -82,32 +85,50 @@ class Track extends PureComponent {
         }
 
         return (
-            <ListItem divider>
-                <ListItemIcon>
-                    <CheckBox
-                        onClick={this._handleChecked}
-                        checked={playlistContainsThisTrack}
-                    />
-                </ListItemIcon>
-                <ListItemText
-                    primary={
-                        <div className={classes.trackInfoContainer}>
-                            <div className={classes.trackInfo}>
-                                <Info
-                                    trackName={trackName}
-                                    trackUrl={trackUrl}
-                                    artistName={artistName}
-                                    artistUrl={artistUrl}
-                                    albumName={albumName}
-                                    albumUrl={albumUrl}
-                                    isPopular={isPopular}
+            <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
+                {(provided, snapshot) => (
+                    <div>
+                        <div
+                            ref={provided.innerRef}
+                            style={provided.draggableStyle}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                        >
+                            <ListItem divider>
+                                <ListItemIcon>
+                                    <CheckBox
+                                        onClick={this._handleChecked}
+                                        checked={playlistContainsThisTrack}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <div
+                                            className={
+                                                classes.trackInfoContainer
+                                            }
+                                        >
+                                            <div className={classes.trackInfo}>
+                                                <Info
+                                                    trackName={trackName}
+                                                    trackUrl={trackUrl}
+                                                    artistName={artistName}
+                                                    artistUrl={artistUrl}
+                                                    albumName={albumName}
+                                                    albumUrl={albumUrl}
+                                                    isPopular={isPopular}
+                                                />
+                                            </div>
+                                            {previewComponent}
+                                        </div>
+                                    }
                                 />
-                            </div>
-                            {previewComponent}
+                            </ListItem>
                         </div>
-                    }
-                />
-            </ListItem>
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Draggable>
         );
     }
 }
