@@ -23,7 +23,7 @@ PRs are always welcome! If you want to contribute, you would need to:
 ```
 APP_CLIENT_URL=http://localhost:3000
 SPOTIFY_CLIENT=[your own spotify client key]
-SPOTIFY_CLIENT_SECRET=[your own spotify client secret ke]
+SPOTIFY_CLIENT_SECRET=[your own spotify client secret key]
 SPOTIFY_REDIRECT_URI=http://localhost:3001/api/callback
 YAR_PASS=[any set of characters (without quotes)]
 DEV_MODE=true
@@ -31,7 +31,7 @@ DEV_MODE=true
 
 6. `yarn start:api` in one terminal (window/tab)
 1. `yarn start:dev` in another terminal (window/tab)
-1. Go to `localhost:3000` in your favorite browser (hopefully not IE :D)
+1. Go to `localhost:3000` in your favorite browser
 
 Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section.
 
