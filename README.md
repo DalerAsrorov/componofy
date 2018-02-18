@@ -6,9 +6,11 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 [Watch video](https://www.youtube.com/watch?v=XAF5MUOzKhs&t=17s)
 
-## Features Status
+## New Feature Details
 
-You can track the board of features I am working on [here](https://github.com/DalerAsrorov/componofy/projects/3)
+* Each release has its own set of new features. You can find the details in
+  the [releases section](https://github.com/DalerAsrorov/componofy/projects/4)
+* You can also track the board of features I am working on in this [project board](https://github.com/DalerAsrorov/componofy/projects/4)
 
 ## Contribution
 
@@ -33,7 +35,7 @@ DEV_MODE=true
 1. `yarn start:dev` in another terminal (window/tab)
 1. Go to `localhost:3000` in your favorite browser
 
-Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section.
+Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section
 
 ## License
 
