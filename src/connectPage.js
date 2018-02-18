@@ -19,6 +19,7 @@ import {
     setFinalPlaylistPublic,
     searchPublicPlaylists,
     setPublicPlaylistOpen,
+    reorderPlaylistTracks,
     checkIfAuthenticated,
     setMyPlaylistVisited,
     clearComponoformData,
@@ -309,6 +310,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setCurrentSelectionOffset(offset) {
         dispatch(setCurrentSelectionOffset(offset));
+    },
+
+    reorderPlaylistTracks(playlistId, trackId, startPos, endPos) {
+        dispatch(reorderPlaylistTracks(playlistId, trackId, startPos, endPos));
     }
 });
 

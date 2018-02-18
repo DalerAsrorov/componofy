@@ -28,6 +28,7 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
     };
 
@@ -58,7 +59,14 @@ class Playlist extends PureComponent {
     };
 
     _handleDragEnd = result => {
-        console.log('drag end result:', result);
+        const { onDragAndDrop } = this.props;
+        const {
+            droppableId: trackId,
+            source: { droppableId: playlistId, index: startPos } = {},
+            destination: { index: endPos } = {}
+        } = result;
+
+        onDragAndDrop(playlistId, trackId, startPos, endPos);
     };
 
     render() {

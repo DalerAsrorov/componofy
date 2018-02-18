@@ -559,3 +559,17 @@ export const setCurrentSelectionOffset = (offset = PLAYLIST_OFFSET_LIMIT) => ({
     type: SET_CURRENT_SELECTION_OFFSET,
     offset
 });
+
+export const REORDER_PLAYLIST_TRACKS = 'REORDER_PLAYLIST_TRACKS';
+export const reorderPlaylistTracks = (
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+) => ({
+    type: REORDER_PLAYLIST_TRACKS,
+    playlistId,
+    trackId,
+    startPosition,
+    endPosition
+});

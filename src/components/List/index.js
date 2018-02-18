@@ -29,6 +29,7 @@ class List extends PureComponent {
                 PropTypes.object
             )
         ]).isRequired,
+        onDragAndDrop: PropTypes.func,
         onClickItem: PropTypes.func,
         onCheckboxActive: PropTypes.func,
         onClickMain: PropTypes.func,
@@ -41,13 +42,14 @@ class List extends PureComponent {
     render() {
         const {
             items,
-            subheader,
+            keyItem,
             classes,
+            subheader,
+            showSubItemsOnly,
             isPlaylist,
             onClickMain,
             onClickItem,
-            keyItem,
-            showSubItemsOnly,
+            onDragAndDrop,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -67,6 +69,7 @@ class List extends PureComponent {
                           key={playlist.id}
                           playlist={playlist}
                           showTracksOnly={showSubItemsOnly}
+                          onDragAndDrop={onDragAndDrop}
                       />
                   ))
                 : [];

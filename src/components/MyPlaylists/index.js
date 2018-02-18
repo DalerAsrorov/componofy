@@ -55,6 +55,7 @@ class MyPlaylists extends PureComponent {
     static propTypes = {
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
+        reorderPlaylistTracks: PropTypes.func.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         fetchMyPlaylists: PropTypes.func.isRequired,
         myPlaylists: PLAYLISTS_PROPTYPE.isRequired,
@@ -177,6 +178,11 @@ class MyPlaylists extends PureComponent {
         this.searchInputRef.focus();
     };
 
+    _handlePlaylistTracksReorder = (playlistId, trackId, startPos, endPos) => {
+        const { reorderPlaylistTracks } = this.props;
+        reorderPlaylistTracks(playlistId, trackId, startPos, endPos);
+    };
+
     componentDidMount() {
         toTop();
 
@@ -253,14 +259,6 @@ class MyPlaylists extends PureComponent {
             </div>
         );
 
-        const ListOfMyPlaylists = (
-            <List
-                onClickMain={this._handleAddPlaylist}
-                onClickItem={this._handleClickPlaylist}
-                items={playlists}
-                isPlaylist={true}
-            />
-        );
         const playlistCounter = (
             <div className={classes.playlistRemaining}>
                 {playlistsRemaining}
@@ -300,7 +298,13 @@ class MyPlaylists extends PureComponent {
                             this._handleCanScrollUp(false);
                         }}
                     />
-                    {ListOfMyPlaylists}
+                    <List
+                        onClickMain={this._handleAddPlaylist}
+                        onClickItem={this._handleClickPlaylist}
+                        items={playlists}
+                        isPlaylist={true}
+                        onDragAndDrop={this._handlePlaylistTracksReorder}
+                    />
                     <Waypoint
                         onEnter={() => {
                             this._handleCanScrollUp(true);
