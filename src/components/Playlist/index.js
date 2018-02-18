@@ -62,8 +62,7 @@ class Playlist extends PureComponent {
     _handleDragEnd = result => {
         const { onDragAndDrop } = this.props;
 
-        // If the track was not dragged to
-        // the new desires order don't do anything
+        // don't do anything if position is the same
         if (!result.destination) {
             return;
         }
