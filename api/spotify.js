@@ -142,12 +142,13 @@ export async function addTracksToPlaylist(
         const stringToAttach = 'spotify:track:';
         const { accessToken, refreshToken } = userMap[userId];
         let tracks = R.map(R.concat(stringToAttach), trackIDs);
+        let snapshot;
 
         setUpTokens(accessToken, refreshToken);
 
         while (!R.isEmpty(tracks)) {
             const tracksToAdd = tracks.splice(0, 100);
-            const snapshot = await spotifyApi.addTracksToPlaylist(
+            snapshot = await spotifyApi.addTracksToPlaylist(
                 userId,
                 playlistId,
                 tracksToAdd,
@@ -208,12 +209,10 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
             'Content-Type': 'image/jpeg'
         }
     })
-        .then(data => {
-            return {
-                status: data.status,
-                statusText: data.statusText
-            };
-        })
+        .then(data => ({
+            status: data.status,
+            statusText: data.statusText
+        }))
         .catch(error => error);
 };
 

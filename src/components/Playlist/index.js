@@ -15,6 +15,11 @@ import List from '../List';
 import './Playlist.css';
 
 const styles = theme => ({
+    collapse: {
+        maxHeight: '420px',
+        overflowY: 'auto'
+    },
+
     playlistAvatar: {},
 
     nested: {
@@ -135,7 +140,12 @@ class Playlist extends PureComponent {
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                <Collapse
+                    in={isOpen}
+                    className={classes.collapse}
+                    timeout="auto"
+                    unmountOnExit
+                >
                     <DragDropContext onDragEnd={this._handleDragEnd}>
                         <Droppable droppableId={playlist.id}>
                             {(provided, snapshot) => (
