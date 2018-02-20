@@ -1,6 +1,6 @@
 {
     "name": "componofy",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Web application that helps user merge the user's and public playlists.",
     "engines": {
         "node": ">=8.9.3",
