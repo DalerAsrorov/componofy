@@ -213,7 +213,8 @@ class PublicPlaylists extends PureComponent {
                 searchResultsMessage,
                 canLoadMore,
                 isFetching,
-                playlistsRemaining
+                playlistsRemaining,
+                areAllOpen
             },
             publicPlaylistsHasOpenPlaylist,
             classes
@@ -233,6 +234,7 @@ class PublicPlaylists extends PureComponent {
                     items={playlists}
                     subheader={searchResultsMessage}
                     isPlaylist={true}
+                    collapseHasFixedHeight={!areAllOpen}
                 />
             );
         }

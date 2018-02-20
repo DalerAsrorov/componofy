@@ -267,7 +267,8 @@ class ComponofyPlaylists extends PureComponent {
                 playlists: playlistsFinal,
                 shouldShowOnlyTracks,
                 searchTerm,
-                hasChosenNewCreate
+                hasChosenNewCreate,
+                areAllOpen
             },
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
@@ -306,6 +307,7 @@ class ComponofyPlaylists extends PureComponent {
                     items={playlists}
                     showSubItemsOnly={shouldShowOnlyTracks}
                     isPlaylist={true}
+                    collapseHasFixedHeight={!areAllOpen}
                 />
             );
 
