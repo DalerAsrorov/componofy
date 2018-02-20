@@ -5,6 +5,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { head } from 'ramda';
 import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
+import { NO_TRACK_ID_ERROR } from '../../utils/errorMessages';
 import { CheckBox } from '../common';
 import Info from './Info';
 import Preview from './Preview';
@@ -74,6 +75,10 @@ class Track extends PureComponent {
             addErrorToApp,
             index
         } = this.props;
+
+        if (!track.id) {
+            return null;
+        }
 
         const {
             id: trackId,
