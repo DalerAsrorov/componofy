@@ -34,10 +34,19 @@ class Track extends PureComponent {
         removePlaylistTrackFromFinal: PropTypes.func.isRequired,
         playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
+        addErrorToApp: PropTypes.func.isRequired,
         index: PropTypes.number.isRequired,
         track: TRACK_PROPTYPE.isRequired,
         playlist: PLAYLIST_PROPTYPE
     };
+
+    componentDidMount() {
+        const { track } = this.props;
+
+        if (!track.id) {
+            return;
+        }
+    }
 
     _handleChecked = event => {
         const {
@@ -58,11 +67,13 @@ class Track extends PureComponent {
     };
 
     render() {
-        const { track, classes, playlistContainsThisTrack, index } = this.props;
-
-        if (!track.id) {
-            return null;
-        }
+        const {
+            track,
+            classes,
+            playlistContainsThisTrack,
+            addErrorToApp,
+            index
+        } = this.props;
 
         const {
             id: trackId,
