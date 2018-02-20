@@ -34,6 +34,7 @@ class Track extends PureComponent {
         removePlaylistTrackFromFinal: PropTypes.func.isRequired,
         playlistContainsThisTrack: PropTypes.bool.isRequired,
         addPlaylistTrackToFinal: PropTypes.func.isRequired,
+        addErrorToApp: PropTypes.func.isRequired,
         index: PropTypes.number.isRequired,
         track: TRACK_PROPTYPE.isRequired,
         playlist: PLAYLIST_PROPTYPE
@@ -59,6 +60,11 @@ class Track extends PureComponent {
 
     render() {
         const { track, classes, playlistContainsThisTrack, index } = this.props;
+
+        if (!track.id) {
+            return null;
+        }
+
         const {
             id: trackId,
             artists,

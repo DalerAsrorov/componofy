@@ -74,9 +74,13 @@ export const safeString = (str = '') => str;
 export const safeBool = (bool = true) => bool;
 
 export const getAllPlaylistsTrackIds = (playlistsMap = {}) => {
-    return R.pipe(R.values, R.map(R.path(['tracks', 'list'])), R.flatten)(
-        playlistsMap
-    );
+    return R.pipe(
+        R.values,
+        R.map(R.path(['tracks', 'list'])),
+        R.flatten,
+        // filter undefined and null values
+        R.filter(item => item)
+    )(playlistsMap);
 };
 
 export const mergeTuples = (accum, tuple) => {
