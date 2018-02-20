@@ -42,6 +42,7 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        collapseHasFixedHeight: PropTypes.bool,
         onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
     };
@@ -94,7 +95,8 @@ class Playlist extends PureComponent {
             playlist,
             containsThisPlaylist,
             classes,
-            showTracksOnly
+            showTracksOnly,
+            collapseHasFixedHeight
         } = this.props;
         const {
             tracks: { list: tracks },
@@ -164,7 +166,14 @@ class Playlist extends PureComponent {
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                <Collapse
+                    in={isOpen}
+                    className={classNames({
+                        [classes.collapse]: collapseHasFixedHeight
+                    })}
+                    timeout="auto"
+                    unmountOnExit
+                >
                     <DragDropContext onDragEnd={this._handleDragEnd}>
                         <Droppable droppableId={playlist.id}>
                             {(provided, snapshot) => (

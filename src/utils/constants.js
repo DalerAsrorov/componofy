@@ -69,6 +69,7 @@ export const PLAYLISTS_PROPTYPE = PropTypes.shape({
     numberOfTracks: PropTypes.number.isRequired,
     currentOffset: PropTypes.number.isRequired,
     playlistsRemaining: PropTypes.number.isRequired,
+    areAllOpen: PropTypes.bool.isRequired,
     canLoadMore: PropTypes.bool.isRequired,
     isVisited: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number

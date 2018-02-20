@@ -36,6 +36,7 @@ class List extends PureComponent {
         subheader: PropTypes.string,
         classes: PropTypes.object,
         keyItem: PropTypes.object,
+        collapseHasFixedHeight: PropTypes.bool,
         showSubItemsOnly: PropTypes.bool
     };
 
@@ -50,6 +51,7 @@ class List extends PureComponent {
             onClickMain,
             onClickItem,
             onDragAndDrop,
+            collapseHasFixedHeight,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -69,6 +71,7 @@ class List extends PureComponent {
                       playlist={playlist}
                       showTracksOnly={showSubItemsOnly}
                       onDragAndDrop={onDragAndDrop}
+                      collapseHasFixedHeight={collapseHasFixedHeight}
                   />
               ))
             : [];

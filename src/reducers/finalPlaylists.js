@@ -28,6 +28,7 @@ const DEFAULT_STATE = {
     searchTerm: '',
     isVisited: false,
     playlistDesc: '',
+    areAllOpen: false,
     imageUri: '',
     hasChosenNewCreate: true,
     isPublic: true
@@ -127,7 +128,10 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
                 playlistMap[playlistId].isOpen = action.isOpen;
             }
 
-            return Object.assign({}, state, { playlists });
+            return Object.assign({}, state, {
+                areAllOpen: action.isOpen,
+                playlists
+            });
         case SET_MERGER_STATUS:
             return Object.assign({}, state, {
                 status: action.status,

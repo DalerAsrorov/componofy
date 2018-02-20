@@ -25,6 +25,7 @@ const DEFAULT_STATE = {
     currentOffset: 0,
     playlistsRemaining: 0,
     canLoadMore: true,
+    areAllOpen: false,
     isVisited: false
 };
 
@@ -130,6 +131,7 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
             });
 
             return Object.assign({}, state, {
+                areAllOpen: action.isOpen,
                 playlists: myPlaylists
             });
         case SET_MY_SEARCH_TERM:

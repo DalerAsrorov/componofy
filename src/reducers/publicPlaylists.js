@@ -15,6 +15,7 @@ import { OFFSET_LIMIT } from '../utils/constants';
 
 const DEFAULT_STATE = {
     isFetching: false,
+    areAllOpen: false,
     searchTerm: '',
     searchResultsMessage: '',
     playlists: [],
@@ -115,6 +116,7 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
             });
 
             return Object.assign({}, state, {
+                areAllOpen: action.isOpen,
                 playlists
             });
         case CLEAR_PUBLIC_DATA:

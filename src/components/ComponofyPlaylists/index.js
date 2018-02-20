@@ -93,6 +93,7 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         setComponoformOpenStatus: PropTypes.func.isRequired,
@@ -266,7 +267,8 @@ class ComponofyPlaylists extends PureComponent {
                 playlists: playlistsFinal,
                 shouldShowOnlyTracks,
                 searchTerm,
-                hasChosenNewCreate
+                hasChosenNewCreate,
+                areAllOpen
             },
             numberOfFinalPlaylists,
             numberOfTracksInFinalPlaylist,
@@ -305,6 +307,7 @@ class ComponofyPlaylists extends PureComponent {
                     items={playlists}
                     showSubItemsOnly={shouldShowOnlyTracks}
                     isPlaylist={true}
+                    collapseHasFixedHeight={!areAllOpen}
                 />
             );
 

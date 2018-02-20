@@ -185,6 +185,29 @@ export const setOpenStatusMyPlaylists = isOpen => {
     };
 };
 
+// May use this method in the future to
+// make routing share the same open status
+// but not needed for now
+export const setOpenStatusForAllPlaylists = isOpen => (dispatch, getState) => {
+    const {
+        router: { location: { pathname } },
+        navigation: { indexToRouteMap }
+    } = getState();
+
+    switch (pathname) {
+        case indexToRouteMap[0]:
+            dispatch(setOpenStatusMyPlaylists(isOpen));
+            break;
+        case indexToRouteMap[1]:
+            dispatch(setOpenStatusPublicPlaylists(isOpen));
+            break;
+        case indexToRouteMap[2]:
+            dispatch(setOpenStatusFinalPlaylists(isOpen));
+        default:
+            break;
+    }
+};
+
 export const ADD_PLAYLIST_TO_FINAL = 'ADD_PLAYLIST_TO_FINAL';
 export const addPlaylistToFinal = playlist => {
     return {

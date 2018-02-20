@@ -48,13 +48,14 @@ class PublicPlaylists extends PureComponent {
     static propTypes = {
         publicPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         setOpenStatusPublicPlaylists: PropTypes.func.isRequired,
+        setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         setPublicPlaylistsVisited: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         setSearchResultsMessage: PropTypes.func.isRequired,
-        publicPlaylists: PLAYLISTS_PROPTYPE.isRequired,
         setPublicPlaylistOpen: PropTypes.func.isRequired,
         searchPublicPlaylists: PropTypes.func.isRequired,
         setPublicSearchTerm: PropTypes.func.isRequired,
+        publicPlaylists: PLAYLISTS_PROPTYPE.isRequired,
         addPlaylistToFinal: PropTypes.func.isRequired,
         logOutUser: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
@@ -151,8 +152,8 @@ class PublicPlaylists extends PureComponent {
 
     _handleClickCollapse = () => {
         const {
-            setOpenStatusPublicPlaylists,
-            publicPlaylistsHasOpenPlaylist
+            publicPlaylistsHasOpenPlaylist,
+            setOpenStatusPublicPlaylists
         } = this.props;
 
         this._handleClickOption();
@@ -212,7 +213,8 @@ class PublicPlaylists extends PureComponent {
                 searchResultsMessage,
                 canLoadMore,
                 isFetching,
-                playlistsRemaining
+                playlistsRemaining,
+                areAllOpen
             },
             publicPlaylistsHasOpenPlaylist,
             classes
@@ -232,6 +234,7 @@ class PublicPlaylists extends PureComponent {
                     items={playlists}
                     subheader={searchResultsMessage}
                     isPlaylist={true}
+                    collapseHasFixedHeight={!areAllOpen}
                 />
             );
         }
