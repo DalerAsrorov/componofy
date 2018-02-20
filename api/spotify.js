@@ -127,9 +127,6 @@ export async function getPlaylistTracks(userId, playlistId, options = {}) {
 
         response.body.items = payload;
 
-        console.log('response.body.items:', response.body.items.length);
-        console.log('payload:', payload);
-
         return response;
     } catch (error) {
         return error;
