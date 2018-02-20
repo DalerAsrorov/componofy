@@ -15,6 +15,11 @@ import List from '../List';
 import './Playlist.css';
 
 const styles = theme => ({
+    collapse: {
+        maxHeight: '420px',
+        overflowY: 'auto'
+    },
+
     playlistAvatar: {},
 
     nested: {

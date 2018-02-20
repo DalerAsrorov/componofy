@@ -445,7 +445,7 @@ export const cleanPublicSearchResults = () => {
     };
 };
 
-export const searchPublicPlaylists = shouldLoadMore => {
+export const searchPublicPlaylists = (shouldLoadMore = false) => {
     return (dispatch, getState) => {
         const { publicPlaylists: { searchTerm, currentOffset } } = getState();
 
@@ -458,7 +458,8 @@ export const searchPublicPlaylists = shouldLoadMore => {
         }
 
         dispatch(cleanPublicSearchResults());
-        return searchPlaylists(searchTerm, currentOffset).then(json => {
+        // start from 0 offset if the search request is different
+        return searchPlaylists(searchTerm, 0).then(json => {
             dispatch(receivedSearchedPlaylists(json));
             dispatch(setSearchResultsMessage(`Results for "${searchTerm}"`));
         });

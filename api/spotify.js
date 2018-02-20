@@ -99,9 +99,35 @@ export async function searchPlaylists(userId, query, options = {}) {
     }
 }
 
-export async function getPlaylistTracks(userID, playlistID, options = {}) {
+export async function getPlaylistTracks(userId, playlistId, options = {}) {
     try {
-        return await spotifyApi.getPlaylistTracks(userID, playlistID, options);
+        const LIMIT = 100;
+        let currentOffset = -1,
+            tracksCount = 0,
+            nextOffset = 0,
+            payload = [],
+            response;
+
+        while (currentOffset < tracksCount) {
+            response = await spotifyApi.getPlaylistTracks(
+                userId,
+                playlistId,
+                options
+            );
+
+            payload = [...payload, ...response.body.items];
+            currentOffset = response.body.offset + LIMIT;
+            tracksCount = response.body.total;
+
+            options = {
+                offset: currentOffset,
+                limit: LIMIT
+            };
+        }
+
+        response.body.items = payload;
+
+        return response;
     } catch (error) {
         return error;
     }
@@ -142,12 +168,13 @@ export async function addTracksToPlaylist(
         const stringToAttach = 'spotify:track:';
         const { accessToken, refreshToken } = userMap[userId];
         let tracks = R.map(R.concat(stringToAttach), trackIDs);
+        let snapshot;
 
         setUpTokens(accessToken, refreshToken);
 
         while (!R.isEmpty(tracks)) {
             const tracksToAdd = tracks.splice(0, 100);
-            const snapshot = await spotifyApi.addTracksToPlaylist(
+            snapshot = await spotifyApi.addTracksToPlaylist(
                 userId,
                 playlistId,
                 tracksToAdd,
@@ -208,12 +235,10 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
             'Content-Type': 'image/jpeg'
         }
     })
-        .then(data => {
-            return {
-                status: data.status,
-                statusText: data.statusText
-            };
-        })
+        .then(data => ({
+            status: data.status,
+            statusText: data.statusText
+        }))
         .catch(error => error);
 };
 
