@@ -115,8 +115,6 @@ export async function getPlaylistTracks(userId, playlistId, options = {}) {
                 options
             );
 
-            console.log('in the loop');
-
             payload = [...payload, ...response.body.items];
             currentOffset = response.body.offset + LIMIT;
             tracksCount = response.body.total;
@@ -129,7 +127,7 @@ export async function getPlaylistTracks(userId, playlistId, options = {}) {
 
         response.body.items = payload;
 
-        console.log('response.body.items:', response.body.items);
+        console.log('response.body.items:', response.body.items.length);
         console.log('payload:', payload);
 
         return response;
