@@ -140,12 +140,7 @@ class Playlist extends PureComponent {
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
                 </ListItem>
-                <Collapse
-                    in={isOpen}
-                    className={classes.collapse}
-                    timeout="auto"
-                    unmountOnExit
-                >
+                <Collapse in={isOpen} timeout="auto" unmountOnExit>
                     <DragDropContext onDragEnd={this._handleDragEnd}>
                         <Droppable droppableId={playlist.id}>
                             {(provided, snapshot) => (

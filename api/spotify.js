@@ -99,9 +99,40 @@ export async function searchPlaylists(userId, query, options = {}) {
     }
 }
 
-export async function getPlaylistTracks(userID, playlistID, options = {}) {
+export async function getPlaylistTracks(userId, playlistId, options = {}) {
     try {
-        return await spotifyApi.getPlaylistTracks(userID, playlistID, options);
+        const LIMIT = 100;
+        let currentOffset = -1,
+            tracksCount = 0,
+            nextOffset = 0,
+            payload = [],
+            response;
+
+        while (currentOffset < tracksCount) {
+            response = await spotifyApi.getPlaylistTracks(
+                userId,
+                playlistId,
+                options
+            );
+
+            console.log('in the loop');
+
+            payload = [...payload, ...response.body.items];
+            currentOffset = response.body.offset + LIMIT;
+            tracksCount = response.body.total;
+
+            options = {
+                offset: currentOffset,
+                limit: LIMIT
+            };
+        }
+
+        response.body.items = payload;
+
+        console.log('response.body.items:', response.body.items);
+        console.log('payload:', payload);
+
+        return response;
     } catch (error) {
         return error;
     }
