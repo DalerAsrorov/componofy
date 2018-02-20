@@ -72,8 +72,7 @@ const styles = theme => ({
     loaderWrapper: {
         width: '80%',
         margin: '0 auto',
-        marginTop: '200px',
-        textAlign: 'center'
+        marginTop: '200px'
     },
 
     newPlaylistImage: {
