@@ -337,7 +337,6 @@ export const launchPlaylistMerger = playlistName => (dispatch, getState) => {
         }
     } = getState();
     const trackIds = getAllPlaylistsTrackIds(playlistsMap);
-    debugger;
 
     if (hasChosenNewCreate) {
         dispatch(setMergerStatus(true, 'Creating playlist...'));
