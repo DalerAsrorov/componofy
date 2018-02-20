@@ -41,14 +41,6 @@ class Track extends PureComponent {
         playlist: PLAYLIST_PROPTYPE
     };
 
-    componentDidMount() {
-        const { track } = this.props;
-
-        if (!track.id) {
-            return;
-        }
-    }
-
     _handleChecked = event => {
         const {
             track,
