@@ -4,9 +4,11 @@
 
 * Major feature: ability to reorder tracks in a playlist owned by the user
 * Also includes fixes like:
-  * Fetch all playlist tracks with no limit (before it was <= 100)
+  * Fetch all playlist tracks with no limit (before it was <= 100).
   * New search resets the offset properly. It means that on new search, the first 10 playlists will not be missed.
-* The rest of thea features/fixes can be found in [v1.1.0 Feature Board](https://github.com/DalerAsrorov/componofy/projects/4).
+  * Show loader until all playlist tracks are fetched.
+  * If playlists has a lot of playlists, the max height will be applied to not make the user scroll the page.
+* The rest of thea features/fixes can be found in [v1.1.0 Feature Board](https://github.com/DalerAsrorov/componofy/projects/5).
 
 ### v1.0.1
 
