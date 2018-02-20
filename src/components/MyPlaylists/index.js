@@ -314,7 +314,7 @@ class MyPlaylists extends PureComponent {
                         items={playlists}
                         isPlaylist={true}
                         onDragAndDrop={this._handlePlaylistTracksReorder}
-                        collapseHasFixedHeight={areAllOpen}
+                        collapseHasFixedHeight={!areAllOpen}
                     />
                     <Waypoint
                         onEnter={() => {
