@@ -10,7 +10,8 @@ const styles = theme => ({
     },
 
     wrapper: {
-        width: '100%'
+        width: '100%',
+        textAlign: 'center'
     }
 });
 

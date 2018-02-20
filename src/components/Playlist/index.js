@@ -1,15 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
+import Typography from 'material-ui/Typography';
+import Avatar from 'material-ui/Avatar';
+import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
 import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
-import Avatar from 'material-ui/Avatar';
+import { CircularProgress } from 'material-ui/Progress';
 import classNames from 'classnames';
 import * as R from 'ramda';
-import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import { PLAYLIST_PROPTYPE, LIGHT_CYAN_COLOR } from '../../utils/constants';
 import TrackList from './TrackList';
+import Loader from '../Loader';
 import List from '../List';
 
 import './Playlist.css';
@@ -21,6 +24,11 @@ const styles = theme => ({
     },
 
     playlistAvatar: {},
+
+    progress: {
+        margin: `0 ${theme.spacing.unit * 2}px`,
+        color: LIGHT_CYAN_COLOR
+    },
 
     nested: {
         paddingLeft: theme.spacing.unit * 4
@@ -95,11 +103,27 @@ class Playlist extends PureComponent {
         } = playlist;
         let playlistClassName = classNames({ 'no-display': showTracksOnly });
         let isOpen = showTracksOnly ? true : playlistIsOpen;
-
         let playlistIconComponent = containsThisPlaylist ? (
             <PlaylistAddCheck />
         ) : (
             <PlaylistAdd />
+        );
+        let tracklist = tracks ? (
+            <TrackList tracks={tracks} playlist={playlist} />
+        ) : (
+            <Loader
+                text={
+                    <Typography type="subheading" color="secondary">
+                        Loading tracks...
+                    </Typography>
+                }
+                icon={
+                    <CircularProgress
+                        thickness={7}
+                        className={classes.progress}
+                    />
+                }
+            />
         );
 
         let playlistImage = (
@@ -145,10 +169,7 @@ class Playlist extends PureComponent {
                         <Droppable droppableId={playlist.id}>
                             {(provided, snapshot) => (
                                 <div ref={provided.innerRef}>
-                                    <TrackList
-                                        tracks={tracks}
-                                        playlist={playlist}
-                                    />
+                                    {tracklist}
                                     {provided.placeholder}
                                 </div>
                             )}
