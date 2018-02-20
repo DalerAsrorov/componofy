@@ -59,13 +59,7 @@ class Track extends PureComponent {
     };
 
     render() {
-        const {
-            track,
-            classes,
-            playlistContainsThisTrack,
-            addErrorToApp,
-            index
-        } = this.props;
+        const { track, classes, playlistContainsThisTrack, index } = this.props;
 
         if (!track.id) {
             return null;
