@@ -56,6 +56,7 @@ class MyPlaylists extends PureComponent {
         startPlaylistTracksReorderProcess: PropTypes.func.isRequired,
         setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         reorderPlaylistTracks: PropTypes.func.isRequired,
         setPlaylistDragStatus: PropTypes.func.isRequired,
@@ -153,12 +154,12 @@ class MyPlaylists extends PureComponent {
 
     _handleClickCollapse = () => {
         const {
-            setOpenStatusForAllPlaylists,
+            setOpenStatusMyPlaylists,
             myPlaylistsHasOpenPlaylist
         } = this.props;
 
         this._handleClickOption();
-        setOpenStatusForAllPlaylists(!myPlaylistsHasOpenPlaylist);
+        setOpenStatusMyPlaylists(!myPlaylistsHasOpenPlaylist);
     };
 
     _handleInputChange = event => {

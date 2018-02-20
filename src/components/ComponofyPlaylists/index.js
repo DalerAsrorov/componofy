@@ -140,12 +140,12 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleClickCollapse = () => {
         const {
-            setOpenStatusForAllPlaylists,
+            setOpenStatusFinalPlaylists,
             finalPlaylistsHasOpenPlaylist
         } = this.props;
 
         this._handleClickOption();
-        setOpenStatusForAllPlaylists(!finalPlaylistsHasOpenPlaylist);
+        setOpenStatusFinalPlaylists(!finalPlaylistsHasOpenPlaylist);
     };
 
     _handleFocusOnSearch = event => {

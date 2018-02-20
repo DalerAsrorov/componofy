@@ -153,11 +153,11 @@ class PublicPlaylists extends PureComponent {
     _handleClickCollapse = () => {
         const {
             publicPlaylistsHasOpenPlaylist,
-            setOpenStatusForAllPlaylists
+            setOpenStatusPublicPlaylists
         } = this.props;
 
         this._handleClickOption();
-        setOpenStatusForAllPlaylists(!publicPlaylistsHasOpenPlaylist);
+        setOpenStatusPublicPlaylists(!publicPlaylistsHasOpenPlaylist);
     };
 
     _handleFocusOnSearch = event => {

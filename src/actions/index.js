@@ -185,6 +185,9 @@ export const setOpenStatusMyPlaylists = isOpen => {
     };
 };
 
+// May use this method in the future to
+// make routing share the same open status
+// but not needed for now
 export const setOpenStatusForAllPlaylists = isOpen => (dispatch, getState) => {
     const {
         router: { location: { pathname } },
