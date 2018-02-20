@@ -93,6 +93,7 @@ class ComponofyPlaylists extends PureComponent {
     static propTypes = {
         numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
         finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
         setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
         setComponoformOpenStatus: PropTypes.func.isRequired,
@@ -139,12 +140,12 @@ class ComponofyPlaylists extends PureComponent {
 
     _handleClickCollapse = () => {
         const {
-            setOpenStatusFinalPlaylists,
+            setOpenStatusForAllPlaylists,
             finalPlaylistsHasOpenPlaylist
         } = this.props;
 
         this._handleClickOption();
-        setOpenStatusFinalPlaylists(!finalPlaylistsHasOpenPlaylist);
+        setOpenStatusForAllPlaylists(!finalPlaylistsHasOpenPlaylist);
     };
 
     _handleFocusOnSearch = event => {

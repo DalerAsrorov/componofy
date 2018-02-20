@@ -54,6 +54,7 @@ let scroll = Scroll.animateScroll;
 class MyPlaylists extends PureComponent {
     static propTypes = {
         startPlaylistTracksReorderProcess: PropTypes.func.isRequired,
+        setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         reorderPlaylistTracks: PropTypes.func.isRequired,
@@ -152,12 +153,12 @@ class MyPlaylists extends PureComponent {
 
     _handleClickCollapse = () => {
         const {
-            setOpenStatusMyPlaylists,
+            setOpenStatusForAllPlaylists,
             myPlaylistsHasOpenPlaylist
         } = this.props;
 
         this._handleClickOption();
-        setOpenStatusMyPlaylists(!myPlaylistsHasOpenPlaylist);
+        setOpenStatusForAllPlaylists(!myPlaylistsHasOpenPlaylist);
     };
 
     _handleInputChange = event => {
@@ -232,6 +233,7 @@ class MyPlaylists extends PureComponent {
             myPlaylists: {
                 playlistsRemaining,
                 canLoadMore,
+                areAllOpen,
                 isFetching,
                 searchTerm,
                 playlists
@@ -311,6 +313,7 @@ class MyPlaylists extends PureComponent {
                         items={playlists}
                         isPlaylist={true}
                         onDragAndDrop={this._handlePlaylistTracksReorder}
+                        collapseHasFixedHeight={areAllOpen}
                     />
                     <Waypoint
                         onEnter={() => {

@@ -42,6 +42,7 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        collapseHasFixedHeight: PropTypes.bool,
         onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
     };

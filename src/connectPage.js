@@ -7,6 +7,7 @@ import {
     removePlaylistTrackFromFinal,
     setOpenStatusPublicPlaylists,
     fetchMyPlaylistsForSelection,
+    setOpenStatusForAllPlaylists,
     setOpenStatusFinalPlaylists,
     setCurrentSelectionOffset,
     setPublicPlaylistsVisited,
@@ -321,6 +322,10 @@ export const mapDispatchToProps = dispatch => ({
 
     setPlaylistDragStatus(playlistId, hasReorderRequest) {
         dispatch(setPlaylistDragStatus(playlistId, hasReorderRequest));
+    },
+
+    setOpenStatusForAllPlaylists(isOpen) {
+        dispatch(setOpenStatusForAllPlaylists(isOpen));
     },
 
     startPlaylistTracksReorderProcess(playlistId, trackId, startPos, endPos) {
