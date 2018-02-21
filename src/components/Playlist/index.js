@@ -6,7 +6,12 @@ import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { PlaylistAdd, PlaylistAddCheck, LibraryMusic } from 'material-ui-icons';
+import {
+    PlaylistAdd,
+    PlaylistAddCheck,
+    LibraryMusic,
+    AccessTime
+} from 'material-ui-icons';
 import { CircularProgress } from 'material-ui/Progress';
 import classNames from 'classnames';
 import * as R from 'ramda';
@@ -110,6 +115,11 @@ class Playlist extends PureComponent {
         ) : (
             <PlaylistAdd />
         );
+
+        if (!tracks) {
+            playlistIconComponent = <AccessTime />;
+        }
+
         let tracklist = tracks ? (
             <TrackList tracks={tracks} playlist={playlist} />
         ) : (
