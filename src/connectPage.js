@@ -1,51 +1,7 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import * as R from 'ramda';
-import {
-    startPlaylistTracksReorderProcess,
-    setComponoformAddExistingStatus,
-    removePlaylistTrackFromFinal,
-    setOpenStatusPublicPlaylists,
-    fetchMyPlaylistsForSelection,
-    setOpenStatusForAllPlaylists,
-    setOpenStatusFinalPlaylists,
-    setCurrentSelectionOffset,
-    setPublicPlaylistsVisited,
-    setOpenStatusMyPlaylists,
-    setFinalPlaylistImageURI,
-    setComponoformOpenStatus,
-    setFinalTracksShowStatus,
-    addPlaylistTrackToFinal,
-    removePlaylistFromFinal,
-    setSearchResultsMessage,
-    setFinalPlaylistPublic,
-    searchPublicPlaylists,
-    setPublicPlaylistOpen,
-    reorderPlaylistTracks,
-    checkIfAuthenticated,
-    setMyPlaylistVisited,
-    clearComponoformData,
-    setFinalPlaylistOpen,
-    launchPlaylistMerger,
-    setPlaylistDragStatus,
-    setFinalPlaylistUrl,
-    setSelectedPlaylist,
-    fetchPlaylistTracks,
-    setPublicSearchTerm,
-    setNewPlaylistDesc,
-    removeErrorFromApp,
-    setFinalSearchTerm,
-    addPlaylistToFinal,
-    setComponofyMode,
-    startDragAndDrop,
-    fetchMyPlaylists,
-    setPlaylistOpen,
-    setMySearchTerm,
-    clearFinalData,
-    addErrorToApp,
-    setNavIndex,
-    logOutUser
-} from './actions';
+import * as actions from './actions';
 
 const isIn = (data, ownProps, key) => {
     let containsData = false;
@@ -182,11 +138,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 export const mapDispatchToProps = dispatch => ({
     fetchMyPlaylists(offset) {
-        dispatch(fetchMyPlaylists(offset));
+        dispatch(actions.fetchMyPlaylists(offset));
     },
 
     fetchPlaylistTracks(playlistID, tracks) {
-        dispatch(fetchPlaylistTracks(playlistID, tracks));
+        dispatch(actions.fetchPlaylistTracks(playlistID, tracks));
     },
 
     navigateTo(path) {
@@ -194,164 +150,166 @@ export const mapDispatchToProps = dispatch => ({
     },
 
     checkIfAuthenticated() {
-        dispatch(checkIfAuthenticated());
+        dispatch(actions.checkIfAuthenticated());
     },
 
     setOpenStatusMyPlaylists(isOpen) {
-        dispatch(setOpenStatusMyPlaylists(isOpen));
+        dispatch(actions.setOpenStatusMyPlaylists(isOpen));
     },
 
     setPlaylistOpen(playlistID, isOpen) {
-        dispatch(setPlaylistOpen(playlistID, isOpen));
+        dispatch(actions.setPlaylistOpen(playlistID, isOpen));
     },
 
     setFinalPlaylistOpen(playlistID, isOpen) {
-        dispatch(setFinalPlaylistOpen(playlistID, isOpen));
+        dispatch(actions.setFinalPlaylistOpen(playlistID, isOpen));
     },
 
     setFinalSearchTerm(searchTerm) {
-        dispatch(setFinalSearchTerm(searchTerm));
+        dispatch(actions.setFinalSearchTerm(searchTerm));
     },
 
     setMyPlaylistVisited(isVisited) {
-        dispatch(setMyPlaylistVisited(isVisited));
+        dispatch(actions.setMyPlaylistVisited(isVisited));
     },
 
     addPlaylistToFinal(playlist = {}) {
-        dispatch(addPlaylistToFinal(playlist));
+        dispatch(actions.addPlaylistToFinal(playlist));
     },
 
     addPlaylistTrackToFinal(track, playlist) {
-        dispatch(addPlaylistTrackToFinal(track, playlist));
+        dispatch(actions.addPlaylistTrackToFinal(track, playlist));
     },
 
     removePlaylistFromFinal(playlist) {
-        dispatch(removePlaylistFromFinal(playlist));
+        dispatch(actions.removePlaylistFromFinal(playlist));
     },
 
     removePlaylistTrackFromFinal(track, playlist) {
-        dispatch(removePlaylistTrackFromFinal(track, playlist));
+        dispatch(actions.removePlaylistTrackFromFinal(track, playlist));
     },
 
     setOpenStatusFinalPlaylists(isOpen) {
-        dispatch(setOpenStatusFinalPlaylists(isOpen));
+        dispatch(actions.setOpenStatusFinalPlaylists(isOpen));
     },
 
     setNavIndex(index) {
-        dispatch(setNavIndex(index));
+        dispatch(actions.setNavIndex(index));
     },
 
     setMySearchTerm(searchTerm) {
-        dispatch(setMySearchTerm(searchTerm));
+        dispatch(actions.setMySearchTerm(searchTerm));
     },
 
     setNewPlaylistDesc(desc) {
-        dispatch(setNewPlaylistDesc(desc));
+        dispatch(actions.setNewPlaylistDesc(desc));
     },
 
     setFinalPlaylistPublic(isPublic) {
-        dispatch(setFinalPlaylistPublic(isPublic));
+        dispatch(actions.setFinalPlaylistPublic(isPublic));
     },
 
     setFinalPlaylistImageURI(imageUri) {
-        dispatch(setFinalPlaylistImageURI(imageUri));
+        dispatch(actions.setFinalPlaylistImageURI(imageUri));
     },
 
     setFinalPlaylistUrl(url) {
-        dispatch(setFinalPlaylistUrl(url));
+        dispatch(actions.setFinalPlaylistUrl(url));
     },
 
     launchPlaylistMerger(playlistName) {
-        dispatch(launchPlaylistMerger(playlistName));
+        dispatch(actions.launchPlaylistMerger(playlistName));
     },
 
     clearFinalData() {
-        dispatch(clearFinalData());
+        dispatch(actions.clearFinalData());
     },
 
     setPublicSearchTerm(searchTerm) {
-        dispatch(setPublicSearchTerm(searchTerm));
+        dispatch(actions.setPublicSearchTerm(searchTerm));
     },
 
     setPublicPlaylistsVisited(isVisited) {
-        dispatch(setPublicPlaylistsVisited(isVisited));
+        dispatch(actions.setPublicPlaylistsVisited(isVisited));
     },
 
     searchPublicPlaylists(shouldLoadMore) {
-        dispatch(searchPublicPlaylists(shouldLoadMore));
+        dispatch(actions.searchPublicPlaylists(shouldLoadMore));
     },
 
     setPublicPlaylistOpen(playlistId, isOpen) {
-        dispatch(setPublicPlaylistOpen(playlistId, isOpen));
+        dispatch(actions.setPublicPlaylistOpen(playlistId, isOpen));
     },
 
     setSearchResultsMessage(message) {
-        dispatch(setSearchResultsMessage(message));
+        dispatch(actions.setSearchResultsMessage(message));
     },
 
     setOpenStatusPublicPlaylists(hasOpenPlaylist) {
-        dispatch(setOpenStatusPublicPlaylists(hasOpenPlaylist));
+        dispatch(actions.setOpenStatusPublicPlaylists(hasOpenPlaylist));
     },
 
     logOutUser() {
-        dispatch(logOutUser());
+        dispatch(actions.logOutUser());
     },
 
     addErrorToApp(error, errorId) {
-        dispatch(addErrorToApp(error, errorId));
+        dispatch(actions.addErrorToApp(error, errorId));
     },
 
     removeErrorFromApp(errorId) {
-        dispatch(removeErrorFromApp(errorId));
+        dispatch(actions.removeErrorFromApp(errorId));
     },
 
     setComponofyMode(hasChosenNewCreate) {
-        dispatch(setComponofyMode(hasChosenNewCreate));
+        dispatch(actions.setComponofyMode(hasChosenNewCreate));
     },
 
     fetchMyPlaylistsForSelection(offset, limit) {
-        dispatch(fetchMyPlaylistsForSelection(offset, limit));
+        dispatch(actions.fetchMyPlaylistsForSelection(offset, limit));
     },
 
     setComponoformOpenStatus(wasOpen) {
-        dispatch(setComponoformOpenStatus(wasOpen));
+        dispatch(actions.setComponoformOpenStatus(wasOpen));
     },
 
     setComponoformAddExistingStatus(wasOpen) {
-        dispatch(setComponoformAddExistingStatus(wasOpen));
+        dispatch(actions.setComponoformAddExistingStatus(wasOpen));
     },
 
     setSelectedPlaylist(playlistId) {
-        dispatch(setSelectedPlaylist(playlistId));
+        dispatch(actions.setSelectedPlaylist(playlistId));
     },
 
     clearComponoformData() {
-        dispatch(clearComponoformData());
+        dispatch(actions.clearComponoformData());
     },
 
     setFinalTracksShowStatus(shouldShowOnlyTracks) {
-        dispatch(setFinalTracksShowStatus(shouldShowOnlyTracks));
+        dispatch(actions.setFinalTracksShowStatus(shouldShowOnlyTracks));
     },
 
     setCurrentSelectionOffset(offset) {
-        dispatch(setCurrentSelectionOffset(offset));
+        dispatch(actions.setCurrentSelectionOffset(offset));
     },
 
     reorderPlaylistTracks(playlistId, trackId, startPos, endPos) {
-        dispatch(reorderPlaylistTracks(playlistId, trackId, startPos, endPos));
+        dispatch(
+            actions.reorderPlaylistTracks(playlistId, trackId, startPos, endPos)
+        );
     },
 
     setPlaylistDragStatus(playlistId, hasReorderRequest) {
-        dispatch(setPlaylistDragStatus(playlistId, hasReorderRequest));
+        dispatch(actions.setPlaylistDragStatus(playlistId, hasReorderRequest));
     },
 
     setOpenStatusForAllPlaylists(isOpen) {
-        dispatch(setOpenStatusForAllPlaylists(isOpen));
+        dispatch(actions.setOpenStatusForAllPlaylists(isOpen));
     },
 
     startPlaylistTracksReorderProcess(playlistId, trackId, startPos, endPos) {
         dispatch(
-            startPlaylistTracksReorderProcess(
+            actions.startPlaylistTracksReorderProcess(
                 playlistId,
                 trackId,
                 startPos,
