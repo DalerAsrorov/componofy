@@ -37,7 +37,8 @@ class List extends PureComponent {
         classes: PropTypes.object,
         keyItem: PropTypes.object,
         collapseHasFixedHeight: PropTypes.bool,
-        showSubItemsOnly: PropTypes.bool
+        showSubItemsOnly: PropTypes.bool,
+        shouldShowTracksIncludedValue: PropTypes.bool
     };
 
     render() {
@@ -52,6 +53,7 @@ class List extends PureComponent {
             onClickItem,
             onDragAndDrop,
             collapseHasFixedHeight,
+            shouldShowTracksIncludedValue,
             ...restProps
         } = this.props;
         let listOfItems, listSub;
@@ -72,6 +74,9 @@ class List extends PureComponent {
                       showTracksOnly={showSubItemsOnly}
                       onDragAndDrop={onDragAndDrop}
                       collapseHasFixedHeight={collapseHasFixedHeight}
+                      shouldShowTracksIncludedValue={
+                          shouldShowTracksIncludedValue
+                      }
                   />
               ))
             : [];

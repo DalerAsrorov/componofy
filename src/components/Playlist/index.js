@@ -21,7 +21,11 @@ import {
 import { CircularProgress } from 'material-ui/Progress';
 import classNames from 'classnames';
 import * as R from 'ramda';
-import { PLAYLIST_PROPTYPE, LIGHT_CYAN_COLOR } from '../../utils/constants';
+import {
+    PLAYLIST_PROPTYPE,
+    LIGHT_CYAN_COLOR,
+    SUCCESS_COLOR
+} from '../../utils/constants';
 import TrackList from './TrackList';
 import Loader from '../Loader';
 import List from '../List';
@@ -29,6 +33,8 @@ import List from '../List';
 import './Playlist.css';
 
 const styles = theme => ({
+    badgeSet: {},
+
     collapse: {
         maxHeight: '420px',
         overflowY: 'auto'
@@ -38,6 +44,13 @@ const styles = theme => ({
         color: theme.palette.background.paper,
         backgroundColor: theme.palette.secondary[500],
         padding: theme.spacing.unit / 4
+    },
+
+    includedTracksBadge: {
+        color: SUCCESS_COLOR,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing.unit / 4,
+        border: `1px solid ${SUCCESS_COLOR}`
     },
 
     margin: {
@@ -63,6 +76,8 @@ class Playlist extends PureComponent {
         playlist: PLAYLIST_PROPTYPE.isRequired,
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
+        numberOfAddedTracksFromThisPlaylist: PropTypes.number,
+        shouldShowTracksIncludedValue: PropTypes.bool,
         collapseHasFixedHeight: PropTypes.bool,
         onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
@@ -117,7 +132,9 @@ class Playlist extends PureComponent {
             containsThisPlaylist,
             classes,
             showTracksOnly,
-            collapseHasFixedHeight
+            collapseHasFixedHeight,
+            numberOfAddedTracksFromThisPlaylist,
+            shouldShowTracksIncludedValue
         } = this.props;
         const {
             tracks: { list: tracks },
@@ -132,9 +149,26 @@ class Playlist extends PureComponent {
         ) : (
             <PlaylistAdd />
         );
+        let badgeForAddedTracks;
 
         if (!tracks) {
             playlistIconComponent = <AccessTime />;
+        }
+        if (
+            numberOfAddedTracksFromThisPlaylist &&
+            shouldShowTracksIncludedValue
+        ) {
+            badgeForAddedTracks = (
+                <Badge
+                    badgeContent={numberOfAddedTracksFromThisPlaylist}
+                    className={classes.margin}
+                    classes={{
+                        badge: classes.includedTracksBadge
+                    }}
+                >
+                    <span />
+                </Badge>
+            );
         }
 
         let tracklist = tracks ? (
@@ -192,16 +226,18 @@ class Playlist extends PureComponent {
                     </ListItemIcon>
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
-                    <Badge
-                        color="default"
-                        badgeContent={nTracks}
-                        className={classes.margin}
-                        classes={{
-                            badge: classes.trackBadge
-                        }}
-                    >
-                        <span />
-                    </Badge>
+                    <div className={classes.badgeSet}>
+                        {badgeForAddedTracks}
+                        <Badge
+                            badgeContent={nTracks}
+                            className={classes.margin}
+                            classes={{
+                                badge: classes.trackBadge
+                            }}
+                        >
+                            <span />
+                        </Badge>
+                    </div>
                 </ListItem>
                 <Collapse
                     in={isOpen}
