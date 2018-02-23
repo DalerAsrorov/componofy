@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
+import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import {
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    ListItemSecondaryAction
+} from 'material-ui/List';
 import {
     PlaylistAdd,
     PlaylistAddCheck,
@@ -28,15 +34,25 @@ const styles = theme => ({
         overflowY: 'auto'
     },
 
+    trackBadge: {
+        color: theme.palette.background.paper,
+        backgroundColor: theme.palette.secondary[500],
+        padding: theme.spacing.unit / 4
+    },
+
+    margin: {
+        margin: theme.spacing.unit * 2
+    },
+
+    nested: {
+        paddingLeft: theme.spacing.unit * 4
+    },
+
     playlistAvatar: {},
 
     progress: {
         margin: `0 ${theme.spacing.unit * 2}px`,
         color: LIGHT_CYAN_COLOR
-    },
-
-    nested: {
-        paddingLeft: theme.spacing.unit * 4
     }
 });
 
@@ -108,6 +124,7 @@ class Playlist extends PureComponent {
             images: playlistImages,
             isOpen: playlistIsOpen
         } = playlist;
+        const nTracks = tracks ? tracks.length : <AccessTime />;
         let playlistClassName = classNames({ 'no-display': showTracksOnly });
         let isOpen = showTracksOnly ? true : playlistIsOpen;
         let playlistIconComponent = containsThisPlaylist ? (
@@ -175,6 +192,16 @@ class Playlist extends PureComponent {
                     </ListItemIcon>
                     {playlistImage}
                     <ListItemText inset primary={playlist.name} />
+                    <Badge
+                        color="default"
+                        badgeContent={nTracks}
+                        className={classes.margin}
+                        classes={{
+                            badge: classes.trackBadge
+                        }}
+                    >
+                        <span />
+                    </Badge>
                 </ListItem>
                 <Collapse
                     in={isOpen}

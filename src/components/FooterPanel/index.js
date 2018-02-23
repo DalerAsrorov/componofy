@@ -15,7 +15,8 @@ const styles = theme => ({
     root: {
         paddingTop: `${theme.spacing.unit}px`,
         paddingBottom: `${theme.spacing.unit}px`,
-        display: 'flex'
+        display: 'flex',
+        zIndex: theme.zIndex.navDrawer
     },
 
     maintext: {},
