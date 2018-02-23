@@ -235,6 +235,7 @@ class PublicPlaylists extends PureComponent {
                     subheader={searchResultsMessage}
                     isPlaylist={true}
                     collapseHasFixedHeight={!areAllOpen}
+                    shouldShowTracksIncludedValue={true}
                 />
             );
         }

@@ -77,6 +77,7 @@ class Playlist extends PureComponent {
         onClickIcon: PropTypes.func.isRequired,
         classes: PropTypes.object.isRequired,
         numberOfAddedTracksFromThisPlaylist: PropTypes.number,
+        shouldShowTracksIncludedValue: PropTypes.bool,
         collapseHasFixedHeight: PropTypes.bool,
         onDragAndDrop: PropTypes.func,
         showPlaylist: PropTypes.bool
@@ -132,7 +133,8 @@ class Playlist extends PureComponent {
             classes,
             showTracksOnly,
             collapseHasFixedHeight,
-            numberOfAddedTracksFromThisPlaylist
+            numberOfAddedTracksFromThisPlaylist,
+            shouldShowTracksIncludedValue
         } = this.props;
         const {
             tracks: { list: tracks },
@@ -152,7 +154,10 @@ class Playlist extends PureComponent {
         if (!tracks) {
             playlistIconComponent = <AccessTime />;
         }
-        if (numberOfAddedTracksFromThisPlaylist) {
+        if (
+            numberOfAddedTracksFromThisPlaylist &&
+            shouldShowTracksIncludedValue
+        ) {
             badgeForAddedTracks = (
                 <Badge
                     badgeContent={numberOfAddedTracksFromThisPlaylist}
