@@ -130,6 +130,23 @@ const hasOpenPlaylist = playlistState => {
     );
 };
 
+const getNumberOfAddedTracksFromPlaylist = (finalPlaylists, ownProps) => {
+    if (!ownProps.playlist || R.isEmpty(finalPlaylists)) {
+        return;
+    }
+
+    const { playlist: { id: playlistId } } = ownProps;
+    const { entities: { playlists } = {} } = finalPlaylists;
+    let numberOfAddedTracks = 0;
+
+    if (!R.isEmpty(playlists) && playlists[playlistId]) {
+        let { tracks: { list: tracklist } } = playlists[playlistId];
+        numberOfAddedTracks = tracklist.length;
+    }
+
+    return numberOfAddedTracks;
+};
+
 const mapStateToProps = (state, ownProps) => ({
     finalPlaylists: state.finalPlaylists,
     myPlaylists: state.myPlaylists,
@@ -143,6 +160,10 @@ const mapStateToProps = (state, ownProps) => ({
     ),
     numberOfTracksInFinalPlaylist: getNumberOfTracks(
         getPlaylistsData(state.finalPlaylists.playlists, 'playlists')
+    ),
+    numberOfAddedTracksFromThisPlaylist: getNumberOfAddedTracksFromPlaylist(
+        state.finalPlaylists.playlists,
+        ownProps
     ),
     componoform: state.componoform,
     containsThisPlaylist: playlistIsIn(
