@@ -17,22 +17,30 @@ const styles = theme => ({
 });
 
 const Expand = props => {
+    const {
+        onClick,
+        classes,
+        showUpArrow,
+        isStickyBottom,
+        isStickyTop,
+        ...restProps
+    } = props;
+
     return (
         <footer
             className={classNames(
-                props.classes.wrapper,
-                { 'sticky-bottom': props.isStickyBottom },
-                { 'sticky-top': props.isStickyTop }
+                classes.wrapper,
+                { 'sticky-bottom': isStickyBottom },
+                { 'sticky-top': isStickyTop }
             )}
         >
             <Button
-                fab
-                color="accent"
+                onClick={onClick}
+                className={classes.button}
                 aria-label="expand"
-                onClick={props.onClick}
-                className={props.classes.button}
+                {...restProps}
             >
-                {props.showUpArrow ? <ExpandLess /> : <ExpandMore />}
+                {showUpArrow ? <ExpandLess /> : <ExpandMore />}
             </Button>
         </footer>
     );
