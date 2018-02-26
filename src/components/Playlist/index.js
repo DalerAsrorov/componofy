@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar';
 import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import Scroll from 'react-scroll';
+import { Link, Element } from 'react-scroll';
 import {
     ListItem,
     ListItemIcon,
@@ -33,9 +33,6 @@ import Loader from '../Loader';
 import List from '../List';
 
 import './Playlist.css';
-
-const Link = Scroll.Link;
-const Element = Scroll.Element;
 
 const styles = theme => ({
     badgeSet: {},
