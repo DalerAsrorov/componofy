@@ -17,8 +17,7 @@ import {
     LIGHT_CYAN_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
-    menuButtonStyle,
-    searchStyle
+    menuButtonStyle
 } from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
@@ -314,7 +313,6 @@ class ComponofyPlaylists extends PureComponent {
                 <Search
                     onChange={this._handleInputChange}
                     inputId="myPlaylistsSearch"
-                    style={searchStyle}
                     value={searchTerm}
                     startAdornment={
                         <SearchIcon

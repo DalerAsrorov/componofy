@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Input, { InputLabel } from 'material-ui/Input';
+import classNames from 'classnames';
 import { FormControl } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
 import { safeString } from '../../utils/helpers';
 
 import './Search.css';
+import '../common/common.css';
 
 const styles = theme => ({
     formControl: {
-        background: `${theme.palette.common.fullWhite}`
+        background: `${theme.palette.common.fullWhite}`,
+        zIndex: theme.zIndex.navDrawer,
+        display: 'flex'
     },
 
     searchInput: {
@@ -23,7 +27,8 @@ class Search extends PureComponent {
         classes: PropTypes.object.isRequired,
         onChange: PropTypes.func.isRequired,
         inputLabel: PropTypes.string,
-        value: PropTypes.string
+        value: PropTypes.string,
+        style: PropTypes.object
     };
 
     render() {
@@ -44,9 +49,10 @@ class Search extends PureComponent {
 
         return (
             <FormControl
-                style={style}
                 fullWidth
-                className={classes.formControl}
+                classes={{
+                    root: classNames(classes.formControl, 'sticky-top')
+                }}
             >
                 {inputLabelComponent}
                 <Input

@@ -13,7 +13,6 @@ import {
     LIGHT_BLUE_COLOR,
     SCROLL_DURATION,
     searchKeyMap,
-    searchStyle,
     menuButtonStyle,
     OFFSET_LIMIT,
     LOAD_MORE_STATUS
@@ -288,7 +287,6 @@ class MyPlaylists extends PureComponent {
                     <Search
                         onChange={this._handleInputChange}
                         inputId="myPlaylistsSearch"
-                        style={searchStyle}
                         value={searchTerm}
                         startAdornment={
                             <SearchIcon

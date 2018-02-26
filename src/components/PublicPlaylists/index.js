@@ -15,8 +15,7 @@ import {
     SCROLL_DURATION,
     OFFSET_LIMIT,
     menuButtonStyle,
-    searchKeyMap,
-    searchStyle
+    searchKeyMap
 } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -283,7 +282,6 @@ class PublicPlaylists extends PureComponent {
                         <Search
                             onChange={this._handleInputChange}
                             inputId="publicPlaylistsSearch"
-                            style={searchStyle}
                             value={searchTerm}
                             startAdornment={
                                 <SearchIcon

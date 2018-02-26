@@ -92,12 +92,6 @@ export const LIGHT_BLUE_COLOR = lightBlue[600];
 export const LIGHT_CYAN_COLOR = cyan[500];
 export const SUCCESS_COLOR = green[600];
 
-export const searchStyle = {
-    position: 'sticky',
-    top: '0',
-    zIndex: '100'
-};
-
 export const menuButtonStyle = {};
 
 export const SCROLL_DURATION = 500;
