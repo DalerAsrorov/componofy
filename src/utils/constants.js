@@ -92,12 +92,6 @@ export const LIGHT_BLUE_COLOR = lightBlue[600];
 export const LIGHT_CYAN_COLOR = cyan[500];
 export const SUCCESS_COLOR = green[600];
 
-export const footerStyle = {
-    background: LIGHT_BLUE_COLOR,
-    position: 'sticky',
-    bottom: '0'
-};
-
 export const searchStyle = {
     position: 'sticky',
     top: '0',

@@ -16,7 +16,6 @@ import {
     OFFSET_LIMIT,
     menuButtonStyle,
     searchKeyMap,
-    footerStyle,
     searchStyle
 } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
@@ -316,7 +315,6 @@ class PublicPlaylists extends PureComponent {
                             mainText={status}
                             anchorEl={anchorEl}
                             menuItems={menuItems}
-                            style={footerStyle}
                             menuButtonStyle={menuButtonStyle}
                         />
                     </form>

@@ -18,7 +18,6 @@ import {
     SCROLL_DURATION,
     searchKeyMap,
     menuButtonStyle,
-    footerStyle,
     searchStyle
 } from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
@@ -419,7 +418,6 @@ class ComponofyPlaylists extends PureComponent {
                         isOpen={settingsIsOpen}
                         menuItems={menuItems}
                         mainText={mainText}
-                        style={footerStyle}
                         mainButtonStyle={mainButtonStyle}
                         buttonMenuStyle={buttonMenuStyle}
                         hasFullWidthButtonMenu={true}
