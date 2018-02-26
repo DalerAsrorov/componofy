@@ -183,7 +183,7 @@ class Playlist extends PureComponent {
 
             if (isExpanded) {
                 expandButton = (
-                    <Link to={isExpanded ? playlist.id : null} spy={true}>
+                    <Link to={playlist.id} spy={true}>
                         {expandButton}
                     </Link>
                 );
