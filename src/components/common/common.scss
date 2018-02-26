@@ -1,1 +1,14 @@
+@mixin sticky {
+    position: -webkit-sticky; // required for Safari
+    position: sticky;
+}
 
+.sticky-top {
+    @include sticky;
+    top: 0;
+}
+
+.sticky-bottom {
+    @include sticky;
+    bottom: 0;
+}

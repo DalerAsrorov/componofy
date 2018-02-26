@@ -26,6 +26,7 @@ import {
     LIGHT_CYAN_COLOR,
     SUCCESS_COLOR
 } from '../../utils/constants';
+import Expand from './Expand';
 import TrackList from './TrackList';
 import Loader from '../Loader';
 import List from '../List';
@@ -83,6 +84,10 @@ class Playlist extends PureComponent {
         showPlaylist: PropTypes.bool
     };
 
+    state = {
+        isExpanded: false
+    };
+
     componentDidMount = () => {
         const {
             playlist: { id: playlistID, owner: { id: userId } },
@@ -90,6 +95,14 @@ class Playlist extends PureComponent {
         } = this.props;
 
         fetchPlaylistTracks(userId, playlistID);
+    };
+
+    _handleExpandMore = event => {
+        const { isExpanded } = this.state;
+
+        this.setState({
+            isExpanded: !isExpanded
+        });
     };
 
     _handleClick = event => {
@@ -127,6 +140,7 @@ class Playlist extends PureComponent {
     };
 
     render() {
+        const { isExpanded } = this.state;
         const {
             playlist,
             containsThisPlaylist,
@@ -149,11 +163,22 @@ class Playlist extends PureComponent {
         ) : (
             <PlaylistAdd />
         );
-        let badgeForAddedTracks;
+        let badgeForAddedTracks, expandButton;
 
         if (!tracks) {
             playlistIconComponent = <AccessTime />;
         }
+
+        if (collapseHasFixedHeight && tracks && tracks.length > 4) {
+            expandButton = (
+                <Expand
+                    isStickyBottom={true}
+                    showUpArrow={isExpanded}
+                    onClick={this._handleExpandMore}
+                />
+            );
+        }
+
         if (
             numberOfAddedTracksFromThisPlaylist &&
             shouldShowTracksIncludedValue
@@ -242,7 +267,8 @@ class Playlist extends PureComponent {
                 <Collapse
                     in={isOpen}
                     className={classNames({
-                        [classes.collapse]: collapseHasFixedHeight
+                        [classes.collapse]:
+                            collapseHasFixedHeight && !isExpanded
                     })}
                     timeout="auto"
                     unmountOnExit
@@ -257,6 +283,7 @@ class Playlist extends PureComponent {
                             )}
                         </Droppable>
                     </DragDropContext>
+                    {expandButton}
                 </Collapse>
             </div>
         );
