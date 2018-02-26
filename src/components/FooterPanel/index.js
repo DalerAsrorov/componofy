@@ -1,22 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import Settings from '../../containers/Settings';
 import { Settings as SettingsIcon } from 'material-ui-icons';
+import Settings from '../../containers/Settings';
 import CustomMenu from '../CustomMenu';
+import { LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 import './FooterPanel.css';
+import '../common/common.css';
 
 const styles = theme => ({
     root: {
         paddingTop: `${theme.spacing.unit}px`,
         paddingBottom: `${theme.spacing.unit}px`,
         display: 'flex',
-        zIndex: theme.zIndex.navDrawer
+        zIndex: theme.zIndex.navDrawer,
+        background: LIGHT_BLUE_COLOR
     },
 
     maintext: {},
@@ -92,7 +96,12 @@ export const FooterPanel = props => {
     }
 
     return (
-        <Toolbar style={props.style} className={props.classes.root}>
+        <Toolbar
+            style={props.style}
+            classes={{
+                root: classNames(props.classes.root, 'sticky-bottom')
+            }}
+        >
             <section className={props.classes.loaderSection}>
                 {leftSideComponent}
                 {circleTextIcon}

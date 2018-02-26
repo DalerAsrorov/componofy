@@ -15,9 +15,7 @@ import {
     SCROLL_DURATION,
     OFFSET_LIMIT,
     menuButtonStyle,
-    searchKeyMap,
-    footerStyle,
-    searchStyle
+    searchKeyMap
 } from '../../utils/constants';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -284,7 +282,6 @@ class PublicPlaylists extends PureComponent {
                         <Search
                             onChange={this._handleInputChange}
                             inputId="publicPlaylistsSearch"
-                            style={searchStyle}
                             value={searchTerm}
                             startAdornment={
                                 <SearchIcon
@@ -316,7 +313,6 @@ class PublicPlaylists extends PureComponent {
                             mainText={status}
                             anchorEl={anchorEl}
                             menuItems={menuItems}
-                            style={footerStyle}
                             menuButtonStyle={menuButtonStyle}
                         />
                     </form>
