@@ -152,7 +152,6 @@ export async function getMyTopArtists(
         setUpTokens(accessToken, refreshToken);
 
         const result = await spotifyApi.getMyTopArtists();
-        console.log(result);
 
         return result;
     } catch (error) {
@@ -262,14 +261,14 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
 };
 
 // info object contains expires_in, userId, accessToken, and refreshToken
-export const startCheckingForRefreshToken = (yar, info = {}) => {
-    const myTokenExpirationTime = info.expires_in * 1000;
+export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
+    const myTokenExpirationTime = sessionState.expires_in * 1000;
     const timeToRefresh = myTokenExpirationTime / 2;
 
     let tokenRefreshInterval = setInterval(() => {
-        setUpTokens(info.accessToken, info.refreshToken);
+        setUpTokens(sessionState.accessToken, sessionState.refreshToken);
 
-        (async info => {
+        (async oldSessionState => {
             try {
                 const response = await spotifyApi.refreshAccessToken();
 
@@ -279,21 +278,24 @@ export const startCheckingForRefreshToken = (yar, info = {}) => {
                     );
                 }
 
-                let { accessToken, ...restProps } = yar.get('session');
-                yar.set('session', {
+                console.log(spotifyApi);
+
+                let { accessToken, ...restProps } = oldSessionState;
+                const newSessionState = {
                     accessToken: response.body.access_token,
                     ...restProps
-                });
+                };
 
-                console.log('\nresponse access token:', response);
-                console.log('\nsession data', yar.get('session'));
+                callback(newSessionState);
             } catch (error) {
                 clearInterval(tokenRefreshInterval);
                 return error;
             }
-        })(info);
+        })(sessionState);
     }, 10000);
 };
+
+export const getMySpotifyTokens = () => {};
 
 export default {
     setUserAndTokens,

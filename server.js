@@ -142,12 +142,19 @@ const startApp = async () => {
 
                                 setUserAndTokens(id, accessToken, refreshToken);
 
-                                startCheckingForRefreshToken(request.yar, {
-                                    userId: id,
-                                    accessToken,
-                                    refreshToken,
-                                    expiresIn
-                                });
+                                startCheckingForRefreshToken(
+                                    sessionState,
+                                    newSessionState => {
+                                        request.yar.set(
+                                            'session',
+                                            newSessionState
+                                        );
+                                        console.log(
+                                            'new session set',
+                                            request.yar.get('session')
+                                        );
+                                    }
+                                );
 
                                 request.yar.set('session', sessionState);
 
