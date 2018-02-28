@@ -1,15 +1,18 @@
 {
     "name": "componofy",
-    "version": "1.1.0",
-    "description": "Web application that helps user merge the user's and public playlists.",
+    "version": "1.2.0",
+    "description":
+        "Web application that helps user merge the user's and public playlists.",
     "engines": {
         "node": ">=8.9.3",
         "npm": ">=5.5.1",
         "yarn": ">=1.3.2"
     },
     "scripts": {
-        "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-        "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+        "build-css":
+            "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+        "watch-css":
+            "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "start-js": "cross-env react-scripts start",
         "start": "yarn start:api",
         "start:dev": "npm-run-all -p watch-css start-js",

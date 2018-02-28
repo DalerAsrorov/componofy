@@ -7,8 +7,8 @@ dotenv.config();
 
 const DEV_HOST = 'http://localhost:3000';
 const SCOPES_STR =
-    'user-library-read user-read-email playlist-read-private playlist-read-collaborative playlist-modif' +
-    'y-public playlist-modify-private user-library-read ugc-image-upload';
+    'user-library-read playlist-read-private playlist-read-collaborative playlist-modif' +
+    'y-public playlist-modify-private user-library-read ugc-image-upload user-top-read';
 const SCOPE_LIST = SCOPES_STR.split(' ');
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 const spotifyApi = new SpotifyWebApi({
@@ -141,6 +141,24 @@ export async function getMe() {
     }
 }
 
+export async function getMyTopArtists(
+    userId,
+    options = {},
+    callback = () => {}
+) {
+    try {
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
+        const result = await spotifyApi.getMyTopArtists();
+        console.log(result);
+
+        return result;
+    } catch (error) {
+        return error;
+    }
+}
+
 export async function createPlaylist(userId, playlistName, options, callback) {
     try {
         const { accessToken, refreshToken } = userMap[userId];
@@ -250,6 +268,7 @@ export default {
     getMyPlaylists,
     getPlaylistTracks,
     getMe,
+    getMyTopArtists,
     createPlaylist,
     reorderTracksInPlaylist,
     uploadPlaylistCoverImage

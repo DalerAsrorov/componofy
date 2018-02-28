@@ -14,7 +14,8 @@ import {
     createPlaylist,
     addTracksToPlaylist,
     reorderTracksInPlaylist,
-    uploadPlaylistCoverImage
+    uploadPlaylistCoverImage,
+    getMyTopArtists
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -165,12 +166,33 @@ const startApp = async () => {
                     offset,
                     limit
                 })
-                    .then(data => {
-                        return {
-                            date: Date.now(),
-                            data
-                        };
-                    })
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                description: 'Return the authenticated user playlist.',
+                notes:
+                    'Should be authenticated first to have access to this information',
+                tags: ['api', 'playlists', 'user']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/api/mytopartists',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                return getMyTopArtists(userId)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
                     .catch(error => ({ error }));
             },
             config: {
