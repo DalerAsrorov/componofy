@@ -17,6 +17,7 @@ const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.SPOTIFY_REDIRECT_URI
 });
 const { APP_CLIENT_URL } = process.env;
+const INTERVAL_PERIOD = 5000;
 
 let userMap = {};
 
@@ -258,6 +259,23 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
             statusText: data.statusText
         }))
         .catch(error => error);
+};
+
+// info object contains expires_in, userId, accessToken, and refreshToken
+export const startCheckingForRefreshToken = (info = {}) => {
+    const myTokenExpirationTime = info.expires_in * 1000;
+    const timeToRefresh = myTokenExpirationTime / 2;
+
+    setInterval(() => {
+        setUpTokens(info.accessToken, info.refreshToken);
+
+        (async info => {
+            const payload = await spotifyApi.refreshAccessToken();
+
+            console.log('\nRefresh token payload', payload);
+            console.log('\nInfo', info);
+        })(info);
+    }, 10000);
 };
 
 export default {

@@ -15,7 +15,8 @@ import {
     addTracksToPlaylist,
     reorderTracksInPlaylist,
     uploadPlaylistCoverImage,
-    getMyTopArtists
+    getMyTopArtists,
+    startCheckingForRefreshToken
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -122,23 +123,38 @@ const startApp = async () => {
                 const { query: { code } } = request;
 
                 return authorizationCodeGrant(code)
-                    .then(({ clientAppURL, accessToken, refreshToken }) => {
-                        return getMe().then(({ body: { id, email } }) => {
-                            const sessionState = {
-                                lastVisit: Date.now(),
-                                accessToken,
-                                refreshToken,
-                                email,
-                                id
-                            };
+                    .then(
+                        ({
+                            clientAppURL,
+                            accessToken,
+                            refreshToken,
+                            expiresIn
+                        }) => {
+                            return getMe().then(({ body: { id, email } }) => {
+                                const sessionState = {
+                                    lastVisit: Date.now(),
+                                    accessToken,
+                                    refreshToken,
+                                    expiresIn,
+                                    email,
+                                    id
+                                };
 
-                            setUserAndTokens(id, accessToken, refreshToken);
+                                setUserAndTokens(id, accessToken, refreshToken);
 
-                            request.yar.set('session', sessionState);
+                                startCheckingForRefreshToken({
+                                    userId: id,
+                                    accessToken,
+                                    refreshToken,
+                                    expiresIn
+                                });
 
-                            return h.redirect(clientAppURL);
-                        });
-                    })
+                                request.yar.set('session', sessionState);
+
+                                return h.redirect(clientAppURL);
+                            });
+                        }
+                    )
                     .catch(error => console.error(error));
             },
             config: {
