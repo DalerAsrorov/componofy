@@ -142,7 +142,7 @@ const startApp = async () => {
 
                                 setUserAndTokens(id, accessToken, refreshToken);
 
-                                startCheckingForRefreshToken({
+                                startCheckingForRefreshToken(request.yar, {
                                     userId: id,
                                     accessToken,
                                     refreshToken,

@@ -262,18 +262,35 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
 };
 
 // info object contains expires_in, userId, accessToken, and refreshToken
-export const startCheckingForRefreshToken = (info = {}) => {
+export const startCheckingForRefreshToken = (yar, info = {}) => {
     const myTokenExpirationTime = info.expires_in * 1000;
     const timeToRefresh = myTokenExpirationTime / 2;
 
-    setInterval(() => {
+    let tokenRefreshInterval = setInterval(() => {
         setUpTokens(info.accessToken, info.refreshToken);
 
         (async info => {
-            const payload = await spotifyApi.refreshAccessToken();
+            try {
+                const response = await spotifyApi.refreshAccessToken();
 
-            console.log('\nRefresh token payload', payload);
-            console.log('\nInfo', info);
+                if (R.isEmpty(response.body)) {
+                    throw new Error(
+                        'The response body appears to be empty or undefined'
+                    );
+                }
+
+                let { accessToken, ...restProps } = yar.get('session');
+                yar.set('session', {
+                    accessToken: response.body.access_token,
+                    ...restProps
+                });
+
+                console.log('\nresponse access token:', response);
+                console.log('\nsession data', yar.get('session'));
+            } catch (error) {
+                clearInterval(tokenRefreshInterval);
+                return error;
+            }
         })(info);
     }, 10000);
 };
