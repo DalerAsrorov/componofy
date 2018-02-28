@@ -39,6 +39,15 @@ export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
     );
 };
 
+export const getMyTopArtists = () => {
+    const URL = `${API_BASE_URL}/mytopartists`;
+
+    return fetch(URL, { ...corsParams }).then(
+        response => response.json(),
+        error => console.error('Error fetching my playlists', error)
+    );
+};
+
 export const getPlaylistTracks = (
     userID,
     playlistID,
