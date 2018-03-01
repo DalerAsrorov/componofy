@@ -1,6 +1,9 @@
 # componofy
 
 [![GitHub version](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy.svg)](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy)
+[![Maintenance Status](https://img.shields.io/badge/status-maintained-brightgreen.svg)](https://github.com/dalerasrorov/componofy/pulse)
+[![license](https://img.shields.io/github/license/dalerasrorov/componofy.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 A web app that allows a Spotify user to merge multiple (personal, private, and public) playlists into a new awesome playlist.
 
