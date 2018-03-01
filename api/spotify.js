@@ -210,7 +210,8 @@ export async function addTracksToPlaylist(
     }
 }
 
-// Refreshes access token and returns it as a Promise
+// Using refresh token, generates a new access token
+// and returns it back as Promise
 export async function updateMyRefreshToken(userId) {
     try {
         const { accessToken, refreshToken } = userMap[userId];
