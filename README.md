@@ -1,5 +1,7 @@
 # componofy
 
+[![GitHub version](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy.svg)](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy)
+
 A web app that allows a Spotify user to merge multiple (personal, private, and public) playlists into a new awesome playlist.
 
 ## Demo
