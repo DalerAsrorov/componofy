@@ -628,7 +628,7 @@ export const startPlaylistTracksReorderProcess = (
 export const RECEIVE_NEW_API_ACCESS_TOKEN = 'RECEIVE_NEW_API_ACCESS_TOKEN';
 export const receiveNewApiAccessToken = accessToken => ({
     type: RECEIVE_NEW_API_ACCESS_TOKEN,
-    tokenLastRefreshed: Date.now(),
+    tokenLastRefreshTime: Date.now(),
     accessToken
 });
 
