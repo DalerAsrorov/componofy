@@ -8,7 +8,8 @@ import {
     uploadPlaylistCoverImage,
     reorderTracksInPlaylist,
     searchPlaylists,
-    getLogOutUser
+    getLogOutUser,
+    requestRefreshToken
 } from '../api';
 import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
@@ -621,5 +622,23 @@ export const startPlaylistTracksReorderProcess = (
         .then(response => dispatch(setPlaylistDragStatus(playlistId, false)))
         .catch(error => {
             console.error('Error making playlist tracks re-order', error);
+        });
+};
+
+export const RECEIVE_NEW_API_ACCESS_TOKEN = 'RECEIVE_NEW_API_ACCESS_TOKEN';
+export const receiveNewApiAccessToken = accessToken => ({
+    type: RECEIVE_NEW_API_ACCESS_TOKEN,
+    lastUpdated: Date.now(),
+    accessToken
+});
+
+export const generateRefreshToken = () => dispatch => {
+    requestRefreshToken()
+        .then(({ data: { accessToken } }) => {
+            console.log('accessToken', accessToken);
+            dispatch(receiveNewApiAccessToken(accessToken));
+        })
+        .catch(error => {
+            dispatch(addErrorToApp('Could not get the new token.'));
         });
 };

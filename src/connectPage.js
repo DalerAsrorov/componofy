@@ -316,6 +316,10 @@ export const mapDispatchToProps = dispatch => ({
                 endPos
             )
         );
+    },
+
+    generateRefreshToken() {
+        dispatch(actions.generateRefreshToken());
     }
 });
 

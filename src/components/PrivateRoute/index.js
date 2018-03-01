@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router';
 import { values, isEmpty } from 'ramda';
 import ErrorSnackBar from '../ErrorSnackBar';
+import { REFRESH_TOKEN_UPDATE_TIME } from '../../utils/constants';
 
 import './PrivateRoute.css';
 
@@ -14,9 +15,19 @@ export default class PrivateRoute extends PureComponent {
     };
 
     componentDidMount() {
-        const { checkIfAuthenticated } = this.props;
+        const { checkIfAuthenticated, generateRefreshToken } = this.props;
 
         checkIfAuthenticated();
+
+        if (!this.generateRefreshTokenInterval) {
+            this.generateRefreshTokenInterval = setInterval(() => {
+                generateRefreshToken();
+            }, REFRESH_TOKEN_UPDATE_TIME);
+        }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.generateRefreshTokenInterval);
     }
 
     render() {
