@@ -207,6 +207,49 @@ export async function addTracksToPlaylist(
     }
 }
 
+// Refreshes access token and returns it as a Promise
+export async function updateMyRefreshToken(userId) {
+    try {
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
+        console.log(spotifyApi);
+
+        const response = await spotifyApi.refreshAccessToken();
+
+        if (R.isEmpty(response.body)) {
+            throw new Error(
+                'The response body appears to be empty or undefined'
+            );
+        }
+
+        const { body: { access_token: newAccessToken } } = response;
+
+        return newAccessToken;
+    } catch (error) {
+        return error;
+    }
+}
+
+// sessionState object contains expires_in, userId, accessToken, and refreshToken
+export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
+    const myTokenExpirationTime = sessionState.expires_in * 1000;
+    const timeToRefresh = myTokenExpirationTime / 2;
+
+    let tokenRefreshInterval = setInterval(() => {
+        setUpTokens(sessionState.accessToken, sessionState.refreshToken);
+
+        updateMyRefreshToken(sessionState.id)
+            .then(newAccessToken => {
+                callback(newAccessToken);
+            })
+            .catch(error => {
+                console.log('error', error);
+                clearInterval(tokenRefreshInterval);
+            });
+    }, 10000);
+};
+
 // start - the index of track in the playlist which starts from 0
 // end - the index at which that track should be inserted
 export async function reorderTracksInPlaylist(
@@ -260,43 +303,6 @@ export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
         .catch(error => error);
 };
 
-// info object contains expires_in, userId, accessToken, and refreshToken
-export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
-    const myTokenExpirationTime = sessionState.expires_in * 1000;
-    const timeToRefresh = myTokenExpirationTime / 2;
-
-    let tokenRefreshInterval = setInterval(() => {
-        setUpTokens(sessionState.accessToken, sessionState.refreshToken);
-
-        (async oldSessionState => {
-            try {
-                const response = await spotifyApi.refreshAccessToken();
-
-                if (R.isEmpty(response.body)) {
-                    throw new Error(
-                        'The response body appears to be empty or undefined'
-                    );
-                }
-
-                console.log(spotifyApi);
-
-                let { accessToken, ...restProps } = oldSessionState;
-                const newSessionState = {
-                    accessToken: response.body.access_token,
-                    ...restProps
-                };
-
-                callback(newSessionState);
-            } catch (error) {
-                clearInterval(tokenRefreshInterval);
-                return error;
-            }
-        })(sessionState);
-    }, 10000);
-};
-
-export const getMySpotifyTokens = () => {};
-
 export default {
     setUserAndTokens,
     deleteUserData,
@@ -308,5 +314,6 @@ export default {
     getMyTopArtists,
     createPlaylist,
     reorderTracksInPlaylist,
-    uploadPlaylistCoverImage
+    uploadPlaylistCoverImage,
+    updateMyRefreshToken
 };
