@@ -215,7 +215,6 @@ export async function updateMyRefreshToken(userId) {
     try {
         const { accessToken, refreshToken } = userMap[userId];
         setUpTokens(accessToken, refreshToken);
-        console.log('spotify 1', spotifyApi);
 
         const response = await spotifyApi.refreshAccessToken();
 
@@ -229,8 +228,6 @@ export async function updateMyRefreshToken(userId) {
 
         setUpTokens(newAccessToken, refreshToken);
         setUserAndTokens(userId, newAccessToken);
-
-        console.log('spotify 2', spotifyApi);
 
         return newAccessToken;
     } catch (error) {

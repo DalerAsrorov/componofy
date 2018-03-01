@@ -143,10 +143,19 @@ export const getLogOutUser = () => {
     );
 };
 
-setInterval(() => {
-    requestRefreshToken()
-        .then(data => {
-            console.log('after the response', data);
-        })
-        .catch(error => console.log('error', error));
-}, 10000);
+// TODO:
+// - Plug this code into PrivateComponent
+// along with the checkIfAuthenticated()
+// - Have an interval that triggers an action
+// that requests the refreshToken starts requesting
+// tokens in PrivateComponent
+// setInterval(() => {
+//     requestRefreshToken()
+//         .then(({accessToken}) => {
+//             dispatch(updateAccessToken(accessToken));
+//         })
+//         .catch(error => {
+//                addErrorToApp('Could not refresh the token');
+//                console.log('error', error)
+//          });
+// }, 10000);
