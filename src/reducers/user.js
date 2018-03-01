@@ -8,7 +8,8 @@ export const user = (
         sessionID: '',
         isAuthenticated: false,
         expiresIn: 0,
-        lastVisit: 0
+        lastVisit: 0,
+        tokenLastRefreshed: 0
     },
     action
 ) => {
@@ -17,7 +18,8 @@ export const user = (
             return Object.assign({}, state, action.userInfo);
         case RECEIVE_NEW_API_ACCESS_TOKEN:
             return Object.assign({}, state, {
-                accessToken: action.accessToken
+                accessToken: action.accessToken,
+                tokenLastRefreshed: action.tokenLastRefreshed
             });
         default:
             return state;

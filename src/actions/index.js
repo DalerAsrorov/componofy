@@ -628,17 +628,23 @@ export const startPlaylistTracksReorderProcess = (
 export const RECEIVE_NEW_API_ACCESS_TOKEN = 'RECEIVE_NEW_API_ACCESS_TOKEN';
 export const receiveNewApiAccessToken = accessToken => ({
     type: RECEIVE_NEW_API_ACCESS_TOKEN,
-    lastUpdated: Date.now(),
+    tokenLastRefreshed: Date.now(),
     accessToken
 });
 
 export const generateRefreshToken = () => dispatch => {
     requestRefreshToken()
-        .then(({ data: { accessToken } }) => {
-            console.log('accessToken', accessToken);
+        .then(({ data: { accessToken } = {} }) => {
+            if (!accessToken) {
+                dispatch(
+                    addErrorToApp('Could not get the new token from data.')
+                );
+                return;
+            }
+
             dispatch(receiveNewApiAccessToken(accessToken));
         })
         .catch(error => {
-            dispatch(addErrorToApp('Could not get the new token.'));
+            dispatch(addErrorToApp('Failed to request the new token.'));
         });
 };
