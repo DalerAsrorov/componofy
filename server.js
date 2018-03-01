@@ -16,7 +16,8 @@ import {
     reorderTracksInPlaylist,
     uploadPlaylistCoverImage,
     getMyTopArtists,
-    startCheckingForRefreshToken
+    startCheckingForRefreshToken,
+    updateMyRefreshToken
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -142,19 +143,19 @@ const startApp = async () => {
 
                                 setUserAndTokens(id, accessToken, refreshToken);
 
-                                startCheckingForRefreshToken(
-                                    sessionState,
-                                    newSessionState => {
-                                        request.yar.set(
-                                            'session',
-                                            newSessionState
-                                        );
-                                        console.log(
-                                            'new session set',
-                                            request.yar.get('session')
-                                        );
-                                    }
-                                );
+                                // startCheckingForRefreshToken(
+                                //     sessionState,
+                                //     newSessionState => {
+                                //         request.yar.set(
+                                //             'session',
+                                //             newSessionState
+                                //         );
+                                //         console.log(
+                                //             'new session set',
+                                //             request.yar.get('session')
+                                //         );
+                                //     }
+                                // );
 
                                 request.yar.set('session', sessionState);
 
@@ -356,6 +357,41 @@ const startApp = async () => {
                 notes:
                     'The playlist ID is required. Tracks received from data is an array of track IDs.',
                 tags: ['api', 'playlists', 'action', 'tracks']
+            }
+        });
+
+        server.route({
+            method: 'POST',
+            path: '/api/update-token',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                return updateMyRefreshToken(userId)
+                    .then(accessToken => {
+                        yar.set('session', {
+                            ...session,
+                            accessToken
+                        });
+
+                        return {
+                            date: Date.now(),
+                            data: {
+                                accessToken
+                            }
+                        };
+                    })
+                    .catch(error => ({ error }));
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Accepts request of refreshing a token and returns the new one back to client',
+                notes: 'The refresh token should be present.',
+                tags: ['api', 'auth']
             }
         });
 
