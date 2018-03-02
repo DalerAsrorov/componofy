@@ -15,6 +15,20 @@ import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
 import { OFFSET_LIMIT, PLAYLIST_OFFSET_LIMIT } from '../utils/constants';
 
+export const ADD_ERROR_TO_APP = 'ADD_ERROR_TO_APP';
+export const addErrorToApp = (
+    message = '',
+    timeout = 10000,
+    errorId = Date.now()
+) => {
+    return {
+        type: ADD_ERROR_TO_APP,
+        errorId,
+        timeout,
+        message
+    };
+};
+
 export const REQUEST_PLAYLISTS = 'REQUEST_PLAYLISTS';
 const requestPlaylists = () => {
     return {
@@ -51,18 +65,18 @@ const receivedAuthState = userInfo => {
 
 export const checkIfAuthenticated = () => {
     return dispatch => {
-        return getMyStatus()
-            .then(userInfo => {
+        return getMyStatus().then(
+            userInfo => {
                 const { isAuthenticated } = userInfo;
                 dispatch(receivedAuthState(userInfo));
 
                 if (!isAuthenticated) {
                     dispatch(push('/'));
                 }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+            },
+            error =>
+                addErrorToApp(`Failed to get the user's authentication status.`)
+        );
     };
 };
 
@@ -314,20 +328,6 @@ export const setFinalPlaylistImageURI = imageUri => {
     return {
         type: SET_FINAL_PLAYLIST_IMAGE_URI,
         imageUri
-    };
-};
-
-export const ADD_ERROR_TO_APP = 'ADD_ERROR_TO_APP';
-export const addErrorToApp = (
-    message = '',
-    timeout = 10000,
-    errorId = Date.now()
-) => {
-    return {
-        type: ADD_ERROR_TO_APP,
-        errorId,
-        timeout,
-        message
     };
 };
 
@@ -618,11 +618,15 @@ export const startPlaylistTracksReorderProcess = (
         endPosition += 1;
     }
 
-    reorderTracksInPlaylist(playlistId, startPosition, endPosition)
-        .then(response => dispatch(setPlaylistDragStatus(playlistId, false)))
-        .catch(error => {
-            console.error('Error making playlist tracks re-order', error);
-        });
+    reorderTracksInPlaylist(playlistId, startPosition, endPosition).then(
+        response => dispatch(setPlaylistDragStatus(playlistId, false)),
+        error =>
+            dispatch(
+                addErrorToApp(
+                    'Failed request of changing order of tracks in playlist'
+                )
+            )
+    );
 };
 
 export const RECEIVE_NEW_API_ACCESS_TOKEN = 'RECEIVE_NEW_API_ACCESS_TOKEN';
@@ -633,8 +637,8 @@ export const receiveNewApiAccessToken = accessToken => ({
 });
 
 export const generateRefreshToken = () => dispatch => {
-    requestRefreshToken()
-        .then(({ data: { accessToken } = {} }) => {
+    requestRefreshToken().then(
+        ({ data: { accessToken } = {} }) => {
             if (!accessToken) {
                 dispatch(
                     addErrorToApp('Could not get the new token from data.')
@@ -643,8 +647,7 @@ export const generateRefreshToken = () => dispatch => {
             }
 
             dispatch(receiveNewApiAccessToken(accessToken));
-        })
-        .catch(error => {
-            dispatch(addErrorToApp('Failed to request the new token.'));
-        });
+        },
+        error => dispatch(addErrorToApp('Failed to request the new token.'))
+    );
 };
