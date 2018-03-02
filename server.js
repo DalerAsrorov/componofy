@@ -15,7 +15,9 @@ import {
     addTracksToPlaylist,
     reorderTracksInPlaylist,
     uploadPlaylistCoverImage,
-    getMyTopArtists
+    getMyTopArtists,
+    startCheckingForRefreshToken,
+    updateMyRefreshToken
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -122,23 +124,31 @@ const startApp = async () => {
                 const { query: { code } } = request;
 
                 return authorizationCodeGrant(code)
-                    .then(({ clientAppURL, accessToken, refreshToken }) => {
-                        return getMe().then(({ body: { id, email } }) => {
-                            const sessionState = {
-                                lastVisit: Date.now(),
-                                accessToken,
-                                refreshToken,
-                                email,
-                                id
-                            };
+                    .then(
+                        ({
+                            clientAppURL,
+                            accessToken,
+                            refreshToken,
+                            expiresIn
+                        }) => {
+                            return getMe().then(({ body: { id, email } }) => {
+                                const sessionState = {
+                                    lastVisit: Date.now(),
+                                    accessToken,
+                                    refreshToken,
+                                    expiresIn,
+                                    email,
+                                    id
+                                };
 
-                            setUserAndTokens(id, accessToken, refreshToken);
+                                setUserAndTokens(id, accessToken, refreshToken);
 
-                            request.yar.set('session', sessionState);
+                                request.yar.set('session', sessionState);
 
-                            return h.redirect(clientAppURL);
-                        });
-                    })
+                                return h.redirect(clientAppURL);
+                            });
+                        }
+                    )
                     .catch(error => console.error(error));
             },
             config: {
@@ -333,6 +343,41 @@ const startApp = async () => {
                 notes:
                     'The playlist ID is required. Tracks received from data is an array of track IDs.',
                 tags: ['api', 'playlists', 'action', 'tracks']
+            }
+        });
+
+        server.route({
+            method: 'POST',
+            path: '/api/update-token',
+            handler: (request, h) => {
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                return updateMyRefreshToken(userId)
+                    .then(accessToken => {
+                        yar.set('session', {
+                            ...session,
+                            accessToken
+                        });
+
+                        return {
+                            date: Date.now(),
+                            data: {
+                                accessToken
+                            }
+                        };
+                    })
+                    .catch(error => ({ error }));
+            },
+            config: {
+                cors: {
+                    credentials: true
+                },
+                description:
+                    'Accepts request of refreshing a token and returns the new one back to client',
+                notes: 'The refresh token should be present.',
+                tags: ['api', 'auth']
             }
         });
 

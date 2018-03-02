@@ -2,8 +2,10 @@
 
 [![GitHub version](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy.svg)](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy)
 [![Maintenance Status](https://img.shields.io/badge/status-maintained-brightgreen.svg)](https://github.com/dalerasrorov/componofy/pulse)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![license](https://img.shields.io/github/license/dalerasrorov/componofy.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Join chat!](https://img.shields.io/badge/%E2%8A%AA%20GITTER%20-JOIN%20CHAT%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/daler-asrorov/componofy)
 
 A web app that allows a Spotify user to merge multiple (personal, private, and public) playlists into a new awesome playlist.
 
@@ -17,9 +19,15 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
   the [releases section](https://github.com/DalerAsrorov/componofy/releases)
 * You can also track the board of features I am working on in this [project board](https://github.com/DalerAsrorov/componofy/projects/7)
 
-## Contribution
+## Contributions
 
-PRs are always welcome! If you want to contribute, you would need to:
+PRs are always welcome! If there is a bug or a new feature that you can add to this app,
+I would appreciate it a lot! Read the [contribution guide](CONTRIBUTING.md) to have you up and running. If you
+find the guide confusing, create an issue or [join chat](https://gitter.im/daler-asrorov/componofy).
+
+## Run project locally
+
+To run the project on your local machine:
 
 1. `git clone https://github.com/DalerAsrorov/componofy.git`
 1. `cd ./componofy`

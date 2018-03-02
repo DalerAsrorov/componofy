@@ -17,6 +17,7 @@ const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.SPOTIFY_REDIRECT_URI
 });
 const { APP_CLIENT_URL } = process.env;
+const INTERVAL_PERIOD = 5000;
 
 let userMap = {};
 
@@ -28,7 +29,10 @@ const setUpTokens = (accessToken, refreshToken) => {
 export const setUserAndTokens = (userId, accessToken, refreshToken) => {
     userMap[userId] = {
         accessToken,
-        refreshToken
+        refreshToken:
+            userMap[userId] && !refreshToken
+                ? userMap[userId].refreshToken
+                : refreshToken
     };
 };
 
@@ -151,7 +155,6 @@ export async function getMyTopArtists(
         setUpTokens(accessToken, refreshToken);
 
         const result = await spotifyApi.getMyTopArtists();
-        console.log(result);
 
         return result;
     } catch (error) {
@@ -206,6 +209,51 @@ export async function addTracksToPlaylist(
         return error;
     }
 }
+
+// Using refresh token, generates a new access token
+// and returns it back as Promise
+export async function updateMyRefreshToken(userId) {
+    try {
+        const { accessToken, refreshToken } = userMap[userId];
+        setUpTokens(accessToken, refreshToken);
+
+        const response = await spotifyApi.refreshAccessToken();
+
+        if (R.isEmpty(response.body)) {
+            throw new Error(
+                'The response body appears to be empty or undefined'
+            );
+        }
+
+        const { body: { access_token: newAccessToken } } = response;
+
+        setUpTokens(newAccessToken, refreshToken);
+        setUserAndTokens(userId, newAccessToken);
+
+        return newAccessToken;
+    } catch (error) {
+        return error;
+    }
+}
+
+// sessionState object contains expires_in, userId, accessToken, and refreshToken
+export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
+    const myTokenExpirationTime = sessionState.expires_in * 1000;
+    const timeToRefresh = myTokenExpirationTime / 2;
+
+    let tokenRefreshInterval = setInterval(() => {
+        setUpTokens(sessionState.accessToken, sessionState.refreshToken);
+
+        updateMyRefreshToken(sessionState.id)
+            .then(newAccessToken => {
+                callback(newAccessToken);
+            })
+            .catch(error => {
+                console.log('error', error);
+                clearInterval(tokenRefreshInterval);
+            });
+    }, 10000);
+};
 
 // start - the index of track in the playlist which starts from 0
 // end - the index at which that track should be inserted
@@ -271,5 +319,6 @@ export default {
     getMyTopArtists,
     createPlaylist,
     reorderTracksInPlaylist,
-    uploadPlaylistCoverImage
+    uploadPlaylistCoverImage,
+    updateMyRefreshToken
 };

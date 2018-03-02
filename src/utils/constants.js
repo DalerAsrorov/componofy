@@ -101,6 +101,8 @@ export const PLAYLIST_OFFSET_LIMIT = 20;
 // Max image size is 256KB
 // https://developer.spotify.com/web-api/upload-a-custom-playlist-cover-image/
 export const MAX_IMAGE_SIZE_LIMIT = 256000;
+// make request for refresh token every 10 seconds
+export const REFRESH_TOKEN_UPDATE_TIME = 10000;
 
 export const LOAD_MORE_STATUS = {
     // There is no tracks to load

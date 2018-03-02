@@ -121,6 +121,17 @@ export const reorderTracksInPlaylist = (playlistId, start, end) => {
     }).then(response => response.json(), error => error);
 };
 
+export const requestRefreshToken = () => {
+    const URL = `${API_BASE_URL}/update-token`;
+
+    return fetch(URL, {
+        method: 'post',
+        ...corsParams
+    })
+        .then(response => response.json())
+        .catch(error => error);
+};
+
 export const getLogOutUser = () => {
     const URL = `${API_BASE_URL}/logout`;
 
