@@ -223,8 +223,9 @@ class PublicPlaylists extends PureComponent {
             ? 'Collapse All'
             : 'Expand All';
         let listOfPlaylistsComponent, pageComponent;
+        let hasPlaylists = !R.isEmpty(playlists);
 
-        if (!R.isEmpty(playlists)) {
+        if (hasPlaylists) {
             listOfPlaylistsComponent = (
                 <List
                     onClickMain={this._handleAddPlaylist}
@@ -303,6 +304,7 @@ class PublicPlaylists extends PureComponent {
                             }}
                         />
                         <FooterPanel
+                            shouldHideShowButton={!hasPlaylists}
                             shouldShowCircle={loadMoreButtonIsEnabled}
                             mainButtonColor="accent"
                             onClickOptions={this._handleClickOptions}
