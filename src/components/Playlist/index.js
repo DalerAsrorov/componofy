@@ -170,24 +170,23 @@ class Playlist extends PureComponent {
             playlistIconComponent = <AccessTime />;
         }
 
-        if (collapseHasFixedHeight && tracks && tracks.length > 4) {
+        if (
+            collapseHasFixedHeight &&
+            tracks &&
+            tracks.length > 4 &&
+            !showTracksOnly
+        ) {
             expandButton = (
-                <Expand
-                    isStickyBottom={true}
-                    showUpArrow={isExpanded}
-                    onClick={this._handleExpandMore}
-                    color="accent"
-                    raised
-                />
+                <Link to={playlist.id} spy={true}>
+                    <Expand
+                        isStickyBottom={true}
+                        showUpArrow={isExpanded}
+                        onClick={this._handleExpandMore}
+                        color="accent"
+                        raised
+                    />
+                </Link>
             );
-
-            if (isExpanded) {
-                expandButton = (
-                    <Link to={playlist.id} spy={true}>
-                        {expandButton}
-                    </Link>
-                );
-            }
         }
 
         if (
@@ -284,7 +283,9 @@ class Playlist extends PureComponent {
                     in={isOpen}
                     className={classNames({
                         [classes.collapse]:
-                            collapseHasFixedHeight && !isExpanded
+                            collapseHasFixedHeight &&
+                            !isExpanded &&
+                            !showTracksOnly
                     })}
                     timeout="auto"
                     unmountOnExit
