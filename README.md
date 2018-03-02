@@ -2,6 +2,7 @@
 
 [![GitHub version](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy.svg)](https://badge.fury.io/gh/dalerasrorov%2Fcomponofy)
 [![Maintenance Status](https://img.shields.io/badge/status-maintained-brightgreen.svg)](https://github.com/dalerasrorov/componofy/pulse)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![license](https://img.shields.io/github/license/dalerasrorov/componofy.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
