@@ -22,7 +22,7 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 ## Contributions
 PRs are always welcome! If there is a bug or a new feature that you can add to this app, 
 I would appreciate it a lot! Read the [contribution guide](CONTRIBUTING.md) to have you up and running. If you
-find the guide confusing, create an issue or 
+find the guide confusing, create an issue or [join chat](https://gitter.im/daler-asrorov/componofy).
 
 ## Run project locally
 
