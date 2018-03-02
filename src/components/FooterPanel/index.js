@@ -53,7 +53,7 @@ const styles = theme => ({
 });
 
 export const FooterPanel = props => {
-    let circleTextIcon;
+    let circleTextIcon, leftSideComponent;
 
     if (props.shouldShowCircle) {
         circleTextIcon = (
@@ -68,31 +68,33 @@ export const FooterPanel = props => {
         );
     }
 
-    let leftSideComponent = (
-        <Button
-            onClick={props.onClick}
-            disabled={!props.shouldShowCircle}
-            raised
-            color={props.mainButtonColor}
-            className={props.classes.loadmore}
-            style={props.mainButtonStyle}
-        >
-            <Typography type="subheading">{props.mainText}</Typography>
-        </Button>
-    );
-
-    if (props.customButtonMenu) {
+    if (!props.shouldHideShowButton) {
         leftSideComponent = (
-            <CustomMenu
-                anchorEl={props.customMenuAnchorEl}
-                onSelectItem={props.onSelectCustomMenuItem}
-                customButton={leftSideComponent}
-                isOpen={props.isCustomMenuOpen}
-                menuItems={props.customButtonMenu}
-                wrapperStyle={props.buttonMenuStyle}
-                hasFullWidthMenu={props.hasFullWidthButtonMenu}
-            />
+            <Button
+                onClick={props.onClick}
+                disabled={!props.shouldShowCircle}
+                raised
+                color={props.mainButtonColor}
+                className={props.classes.loadmore}
+                style={props.mainButtonStyle}
+            >
+                <Typography type="subheading">{props.mainText}</Typography>
+            </Button>
         );
+
+        if (props.customButtonMenu) {
+            leftSideComponent = (
+                <CustomMenu
+                    anchorEl={props.customMenuAnchorEl}
+                    onSelectItem={props.onSelectCustomMenuItem}
+                    customButton={leftSideComponent}
+                    isOpen={props.isCustomMenuOpen}
+                    menuItems={props.customButtonMenu}
+                    wrapperStyle={props.buttonMenuStyle}
+                    hasFullWidthMenu={props.hasFullWidthButtonMenu}
+                />
+            );
+        }
     }
 
     return (
@@ -143,6 +145,7 @@ FooterPanel.propTypes = {
     customMenuAnchorEl: PropTypes.object,
     onClickCustomMenuOptions: PropTypes.func,
     hasFullWidthButtonMenu: PropTypes.bool,
+    shouldShowMainButton: PropTypes.bool,
     shouldShowCircle: PropTypes.bool,
     mainButtonStyle: PropTypes.object,
     buttonMenuStyle: PropTypes.object,
