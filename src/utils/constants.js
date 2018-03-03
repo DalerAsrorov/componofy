@@ -37,20 +37,19 @@ export const TRACK_PROPTYPE = PropTypes.shape({
 });
 
 export const PLAYLIST_PROPTYPE = PropTypes.shape({
-    external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     id: PropTypes.string.isRequired,
     href: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(IMAGE_PROPTYPE),
     name: PropTypes.string.isRequired,
+    external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     tracks: PropTypes.shape({ list: PropTypes.array }).isRequired,
     owner: PropTypes.shape({
         id: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired
     }).isRequired,
+    images: PropTypes.arrayOf(IMAGE_PROPTYPE),
     type: PropTypes.string,
     public: PropTypes.bool,
-    // If true, shows playlist tracks
-    // Default: false
+    // If true, the list of playlist tracks will be expanded
     isOpen: PropTypes.bool
 });
 

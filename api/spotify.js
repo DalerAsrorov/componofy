@@ -162,22 +162,37 @@ export async function getMyTopArtists(
 
 export async function getMyTopTracks(userId, nTracks) {
     try {
+        nTracks = parseInt(nTracks);
+
         const { accessToken, refreshToken } = userMap[userId];
-        let currentOffset = 20;
-        let tracks;
+        const MAX_LIMIT = 20;
+        let currentOffset = 0,
+            currentLimit = MAX_LIMIT;
+        let tracklist = [];
 
         setUpTokens(accessToken, refreshToken);
 
-        while (currentOffset <= nTracks) {
-            tracks = await spotifyApi.getMyTopTracks({ offset: currentOffset });
+        while (currentOffset < nTracks) {
+            const response = await spotifyApi.getMyTopTracks({
+                offset: currentOffset,
+                limit: currentLimit,
+                time_range: 'medium_term'
+            });
 
-            currentOffset = 300;
+            const { body: { items = [], total, offset } = {} } = response;
+
+            tracklist = [...tracklist, ...items];
+            nTracks = total;
+
+            currentOffset += MAX_LIMIT;
+
+            if (nTracks - currentOffset <= currentLimit) {
+                currentLimit = nTracks - currentOffset;
+            }
         }
 
-        console.log('tracks response', tracks);
-        return tracks;
+        return tracklist;
     } catch (error) {
-        console.log('error', error);
         return error;
     }
 }

@@ -668,7 +668,7 @@ export const generateSuggestedPlaylists = numberOfTracks => dispatch => {
     dispatch(requestMyTopTracks());
 
     getMyTopTracks(numberOfTracks).then(
-        tracks => dispatch(receivedMyTopTracks(tracks)),
+        ({ data: tracks }) => dispatch(receivedMyTopTracks(tracks)),
         error =>
             dispatch(
                 addErrorToApp('Failed request of fetching your top tracks')
