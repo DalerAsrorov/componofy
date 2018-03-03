@@ -71,7 +71,7 @@ export const PLAYLISTS_PROPTYPE = PropTypes.shape({
     areAllOpen: PropTypes.bool.isRequired,
     canLoadMore: PropTypes.bool.isRequired,
     isVisited: PropTypes.bool.isRequired,
-    suggestedPlaylist: PropTypes.object,
+    suggestedPlaylist: PropTypes.array,
     lastUpdated: PropTypes.number
 });
 
