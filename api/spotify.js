@@ -169,14 +169,15 @@ export async function getMyTopTracks(userId, nTracks) {
         setUpTokens(accessToken, refreshToken);
 
         while (currentOffset <= nTracks) {
-            tracks = spotifyApi.getMyTopTracks({ currentOffset });
+            tracks = await spotifyApi.getMyTopTracks({ offset: currentOffset });
 
-            currentOffset = 100;
+            currentOffset = 300;
         }
 
         console.log('tracks response', tracks);
         return tracks;
     } catch (error) {
+        console.log('error', error);
         return error;
     }
 }

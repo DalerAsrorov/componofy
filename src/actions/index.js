@@ -665,7 +665,7 @@ export const receivedMyTopTracks = tracks => ({
 });
 
 export const generateSuggestedPlaylists = numberOfTracks => dispatch => {
-    dispatch(requestMyTopTracks);
+    dispatch(requestMyTopTracks());
 
     getMyTopTracks(numberOfTracks).then(
         tracks => dispatch(receivedMyTopTracks(tracks)),
