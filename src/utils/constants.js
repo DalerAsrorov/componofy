@@ -18,7 +18,7 @@ export const ARTIST_PROPTYPE = PropTypes.shape({
 });
 
 export const ALBUM_PROPTYPE = PropTypes.shape({
-    artists: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
+    artists: PropTypes.arrayOf(ARTIST_PROPTYPE),
     name: PropTypes.string.isRequired,
     external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     album_type: PropTypes.string,
@@ -112,3 +112,20 @@ export const LOAD_MORE_STATUS = {
     // Is true during data request
     2: 'Loading...'
 };
+
+export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
+    id: 'suggestedPlaylist',
+    href: '#suggestedPlaylist',
+    isCustom: true,
+    name: 'Componofy Suggested Playlist <3',
+    owner: {
+        id: '',
+        type: ''
+    },
+    tracks: {
+        list: [...tracks]
+    },
+    external_urls: {
+        spotify: ''
+    }
+});

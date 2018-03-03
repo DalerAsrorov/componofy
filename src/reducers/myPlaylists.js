@@ -15,24 +15,12 @@ import {
     RECEIVED_MY_TOP_TRACKS
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
-import { OFFSET_LIMIT } from '../utils/constants';
+import {
+    OFFSET_LIMIT,
+    SUGGESTED_PLAYLIST_PLACEHOLDER
+} from '../utils/constants';
 
 const DEFAULT_STATE = {
-    suggestedPlaylist: {
-        id: 'suggestedPlaylist',
-        href: '#suggestedPlaylist',
-        name: 'suggestedPlaylist',
-        owner: {
-            id: '',
-            type: ''
-        },
-        tracks: {
-            list: []
-        },
-        external_urls: {
-            spotify: ''
-        }
-    },
     tracksFetching: false,
     searchTerm: '',
     playlists: [],
@@ -170,15 +158,15 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
         case REQUEST_MY_TOP_TRACKS:
             return Object.assign({}, state, { isFetchingMyTopTracks: true });
         case RECEIVED_MY_TOP_TRACKS:
-            let suggestedPlaylist = R.clone(state.suggestedPlaylist);
-
-            suggestedPlaylist.tracks.list = [...action.tracks];
-
-            debugger;
+            playlists = R.clone(state.playlists);
+            playlists = [
+                { ...SUGGESTED_PLAYLIST_PLACEHOLDER(action.tracks) },
+                ...playlists
+            ];
 
             return Object.assign({}, state, {
                 isFetchingMyTopTracks: false,
-                suggestedPlaylist
+                playlists
             });
         case CLEAR_MY_DATA:
             return Object.assign({}, state, DEFAULT_STATE);
