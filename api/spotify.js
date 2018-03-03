@@ -183,7 +183,6 @@ export async function getMyTopTracks(userId, nTracks) {
 
             tracklist = [...tracklist, ...items];
             nTracks = total;
-
             currentOffset += MAX_LIMIT;
 
             if (nTracks - currentOffset <= currentLimit) {

@@ -33,7 +33,7 @@ export const getMyTopTracks = (numberOfTracks = 100) => {
 
     return fetch(URL, { ...corsParams }).then(
         response => response.json(),
-        error => console.error('Error fetching my playlists', error)
+        error => console.error('Error fetching my top tracks', error)
     );
 };
 
@@ -42,7 +42,7 @@ export const getMyTopArtists = () => {
 
     return fetch(URL, { ...corsParams }).then(
         response => response.json(),
-        error => console.error('Error fetching my playlists', error)
+        error => console.error('Error fetching my top artists', error)
     );
 };
 
