@@ -154,9 +154,28 @@ export async function getMyTopArtists(
         const { accessToken, refreshToken } = userMap[userId];
         setUpTokens(accessToken, refreshToken);
 
-        const result = await spotifyApi.getMyTopArtists();
+        return await spotifyApi.getMyTopArtists();
+    } catch (error) {
+        return error;
+    }
+}
 
-        return result;
+export async function getMyTopTracks(userId, nTracks) {
+    try {
+        const { accessToken, refreshToken } = userMap[userId];
+        let currentOffset = 20;
+        let tracks;
+
+        setUpTokens(accessToken, refreshToken);
+
+        while (currentOffset <= nTracks) {
+            tracks = spotifyApi.getMyTopTracks({ currentOffset });
+
+            currentOffset = 100;
+        }
+
+        console.log('tracks response', tracks);
+        return tracks;
     } catch (error) {
         return error;
     }
