@@ -222,7 +222,7 @@ class PublicPlaylists extends PureComponent {
         const collapseText = publicPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
-        let listOfPlaylistsComponent, pageComponent;
+        let listOfPlaylistsComponent;
         let hasPlaylists = !R.isEmpty(playlists);
 
         if (hasPlaylists) {
@@ -263,7 +263,7 @@ class PublicPlaylists extends PureComponent {
             focusSearch: this._handleFocusOnSearch
         };
 
-        pageComponent = (
+        return (
             <HotKeys
                 keyMap={searchKeyMap}
                 handlers={serachHandlers}
@@ -321,8 +321,6 @@ class PublicPlaylists extends PureComponent {
                 </div>
             </HotKeys>
         );
-
-        return pageComponent;
     }
 }
 
