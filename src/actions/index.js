@@ -9,7 +9,8 @@ import {
     reorderTracksInPlaylist,
     searchPlaylists,
     getLogOutUser,
-    requestRefreshToken
+    requestRefreshToken,
+    getMyTopTracks
 } from '../api';
 import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
@@ -649,5 +650,28 @@ export const generateRefreshToken = () => dispatch => {
             dispatch(receiveNewApiAccessToken(accessToken));
         },
         error => dispatch(addErrorToApp('Failed to request the new token.'))
+    );
+};
+
+export const REQUEST_MY_TOP_TRACKS = 'REQUEST_MY_TOP_TRACKS';
+export const requestMyTopTracks = () => ({
+    type: REQUEST_MY_TOP_TRACKS
+});
+
+export const RECEIVED_MY_TOP_TRACKS = 'RECEIVED_MY_TOP_TRACKS';
+export const receivedMyTopTracks = tracks => ({
+    type: RECEIVED_MY_TOP_TRACKS,
+    tracks
+});
+
+export const generateSuggestedPlaylists = numberOfTracks => dispatch => {
+    dispatch(requestMyTopTracks);
+
+    getMyTopTracks(numberOfTracks).then(
+        tracks => dispatch(receivedMyTopTracks(tracks)),
+        error =>
+            dispatch(
+                addErrorToApp('Failed request of fetching your top tracks')
+            )
     );
 };

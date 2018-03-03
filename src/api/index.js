@@ -29,7 +29,7 @@ export const getMyPlaylists = (offset = 0, limit = 10) => {
 };
 
 export const getMyTopTracks = (numberOfTracks = 100) => {
-    const URL = `${API_BASE_URL}/mytoptracks/numberOfTracks`;
+    const URL = `${API_BASE_URL}/mytoptracks/${numberOfTracks}`;
 
     return fetch(URL, { ...corsParams }).then(
         response => response.json(),
