@@ -46,7 +46,7 @@ export const getMyTopArtists = () => {
     );
 };
 
-export const searchPlaylists = (query = '') => {
+export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
     const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
 
     return fetch(URL, {
