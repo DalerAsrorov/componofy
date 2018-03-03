@@ -17,6 +17,7 @@ import {
     PlaylistAdd,
     PlaylistAddCheck,
     LibraryMusic,
+    FavoriteBorder,
     AccessTime
 } from 'material-ui-icons';
 import { CircularProgress } from 'material-ui/Progress';
@@ -25,7 +26,8 @@ import * as R from 'ramda';
 import {
     PLAYLIST_PROPTYPE,
     LIGHT_CYAN_COLOR,
-    SUCCESS_COLOR
+    SUCCESS_COLOR,
+    SUGGESTED_PLAYLIST_PLACEHOLDER
 } from '../../utils/constants';
 import Expand from './Expand';
 import TrackList from './TrackList';
@@ -91,11 +93,13 @@ class Playlist extends PureComponent {
 
     componentDidMount = () => {
         const {
-            playlist: { id: playlistID, owner: { id: userId } },
+            playlist: { id: playlistID, owner: { id: userId }, isCustom },
             fetchPlaylistTracks
         } = this.props;
 
-        fetchPlaylistTracks(userId, playlistID);
+        if (!isCustom) {
+            fetchPlaylistTracks(userId, playlistID);
+        }
     };
 
     _handleExpandMore = event => {
@@ -233,7 +237,17 @@ class Playlist extends PureComponent {
             </Avatar>
         );
 
-        if (!R.isEmpty(playlistImages)) {
+        if (R.equals(playlist.id, SUGGESTED_PLAYLIST_PLACEHOLDER().id)) {
+            playlistImage = (
+                <Avatar
+                    alt={`${playlist.name} playlist cover`}
+                    style={{ backgroundColor: LIGHT_CYAN_COLOR }}
+                    className={classes.playlistAvatar}
+                >
+                    <FavoriteBorder />
+                </Avatar>
+            );
+        } else if (!R.isEmpty(playlistImages)) {
             const avatar = R.head(playlistImages);
             playlistImage = (
                 <Avatar

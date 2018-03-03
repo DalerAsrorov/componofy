@@ -18,7 +18,7 @@ export const ARTIST_PROPTYPE = PropTypes.shape({
 });
 
 export const ALBUM_PROPTYPE = PropTypes.shape({
-    artists: PropTypes.arrayOf(ARTIST_PROPTYPE).isRequired,
+    artists: PropTypes.arrayOf(ARTIST_PROPTYPE),
     name: PropTypes.string.isRequired,
     external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     album_type: PropTypes.string,
@@ -37,20 +37,19 @@ export const TRACK_PROPTYPE = PropTypes.shape({
 });
 
 export const PLAYLIST_PROPTYPE = PropTypes.shape({
-    external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     id: PropTypes.string.isRequired,
     href: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(IMAGE_PROPTYPE),
     name: PropTypes.string.isRequired,
+    external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
     tracks: PropTypes.shape({ list: PropTypes.array }).isRequired,
     owner: PropTypes.shape({
         id: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired
     }).isRequired,
+    images: PropTypes.arrayOf(IMAGE_PROPTYPE),
     type: PropTypes.string,
     public: PropTypes.bool,
-    // If true, shows playlist tracks
-    // Default: false
+    // If true, the list of playlist tracks will be expanded
     isOpen: PropTypes.bool
 });
 
@@ -72,6 +71,7 @@ export const PLAYLISTS_PROPTYPE = PropTypes.shape({
     areAllOpen: PropTypes.bool.isRequired,
     canLoadMore: PropTypes.bool.isRequired,
     isVisited: PropTypes.bool.isRequired,
+    suggestedPlaylist: PropTypes.array,
     lastUpdated: PropTypes.number
 });
 
@@ -112,3 +112,20 @@ export const LOAD_MORE_STATUS = {
     // Is true during data request
     2: 'Loading...'
 };
+
+export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
+    id: 'suggestedPlaylist',
+    href: '#suggestedPlaylist',
+    isCustom: true,
+    name: 'Componofy Suggested Playlist <3',
+    owner: {
+        id: '',
+        type: ''
+    },
+    tracks: {
+        list: [...tracks]
+    },
+    external_urls: {
+        spotify: ''
+    }
+});

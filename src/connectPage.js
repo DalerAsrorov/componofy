@@ -320,6 +320,10 @@ export const mapDispatchToProps = dispatch => ({
 
     generateRefreshToken() {
         dispatch(actions.generateRefreshToken());
+    },
+
+    generateSuggestedPlaylists(nTracks) {
+        dispatch(actions.generateSuggestedPlaylists(nTracks));
     }
 });
 

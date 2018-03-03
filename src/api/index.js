@@ -28,14 +28,12 @@ export const getMyPlaylists = (offset = 0, limit = 10) => {
     );
 };
 
-export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
-    const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
+export const getMyTopTracks = (numberOfTracks = 100) => {
+    const URL = `${API_BASE_URL}/mytoptracks/${numberOfTracks}`;
 
-    return fetch(URL, {
-        ...corsParams
-    }).then(
+    return fetch(URL, { ...corsParams }).then(
         response => response.json(),
-        error => console.error('Error fetching searched playlists', error)
+        error => console.error('Error fetching my top tracks', error)
     );
 };
 
@@ -44,7 +42,18 @@ export const getMyTopArtists = () => {
 
     return fetch(URL, { ...corsParams }).then(
         response => response.json(),
-        error => console.error('Error fetching my playlists', error)
+        error => console.error('Error fetching my top artists', error)
+    );
+};
+
+export const searchPlaylists = (query = '', offset = 0, limit = 10) => {
+    const URL = `${API_BASE_URL}/searchplaylist/${query}/${offset}/${limit}`;
+
+    return fetch(URL, {
+        ...corsParams
+    }).then(
+        response => response.json(),
+        error => console.error('Error fetching searched playlists', error)
     );
 };
 

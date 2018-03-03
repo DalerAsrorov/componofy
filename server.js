@@ -17,7 +17,8 @@ import {
     uploadPlaylistCoverImage,
     getMyTopArtists,
     startCheckingForRefreshToken,
-    updateMyRefreshToken
+    updateMyRefreshToken,
+    getMyTopTracks
 } from './api/spotify';
 import dotenv from 'dotenv';
 
@@ -206,10 +207,32 @@ const startApp = async () => {
                     .catch(error => ({ error }));
             },
             config: {
-                description: 'Return the authenticated user playlist.',
-                notes:
-                    'Should be authenticated first to have access to this information',
-                tags: ['api', 'playlists', 'user']
+                description: `Return the list of user's top artists`,
+                notes: 'User should be authenticated.',
+                tags: ['api', 'artists', 'user']
+            }
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/api/mytoptracks/{nTracks}',
+            handler: (request, h) => {
+                const { nTracks } = request.params;
+                const { yar } = request;
+                const session = yar.get('session');
+                const { id: userId } = session;
+
+                return getMyTopTracks(userId, nTracks)
+                    .then(data => ({
+                        date: Date.now(),
+                        data
+                    }))
+                    .catch(error => ({ error }));
+            },
+            config: {
+                description: `Returns the list of user's top tracks`,
+                notes: 'User should be authenticated',
+                tags: ['api', 'tracks', 'user']
             }
         });
 

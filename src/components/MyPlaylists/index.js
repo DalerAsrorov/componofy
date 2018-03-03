@@ -54,6 +54,7 @@ class MyPlaylists extends PureComponent {
         startPlaylistTracksReorderProcess: PropTypes.func.isRequired,
         setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
         myPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+        generateSuggestedPlaylists: PropTypes.func.isRequired,
         setOpenStatusMyPlaylists: PropTypes.func.isRequired,
         removePlaylistFromFinal: PropTypes.func.isRequired,
         reorderPlaylistTracks: PropTypes.func.isRequired,
@@ -195,12 +196,14 @@ class MyPlaylists extends PureComponent {
 
         const {
             myPlaylists: { currentOffset, isVisited },
-            setMyPlaylistVisited,
-            fetchMyPlaylists
+            generateSuggestedPlaylists,
+            fetchMyPlaylists,
+            setMyPlaylistVisited
         } = this.props;
 
         if (!isVisited) {
             fetchMyPlaylists(currentOffset);
+            generateSuggestedPlaylists();
             setMyPlaylistVisited(true);
         }
     }

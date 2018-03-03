@@ -154,9 +154,43 @@ export async function getMyTopArtists(
         const { accessToken, refreshToken } = userMap[userId];
         setUpTokens(accessToken, refreshToken);
 
-        const result = await spotifyApi.getMyTopArtists();
+        return await spotifyApi.getMyTopArtists();
+    } catch (error) {
+        return error;
+    }
+}
 
-        return result;
+export async function getMyTopTracks(userId, nTracks) {
+    try {
+        nTracks = parseInt(nTracks);
+
+        const { accessToken, refreshToken } = userMap[userId];
+        const MAX_LIMIT = 20;
+        let currentOffset = 0,
+            currentLimit = MAX_LIMIT;
+        let tracklist = [];
+
+        setUpTokens(accessToken, refreshToken);
+
+        while (currentOffset < nTracks) {
+            const response = await spotifyApi.getMyTopTracks({
+                offset: currentOffset,
+                limit: currentLimit,
+                time_range: 'medium_term'
+            });
+
+            const { body: { items = [], total, offset } = {} } = response;
+
+            tracklist = [...tracklist, ...items];
+            nTracks = total;
+            currentOffset += MAX_LIMIT;
+
+            if (nTracks - currentOffset <= currentLimit) {
+                currentLimit = nTracks - currentOffset;
+            }
+        }
+
+        return tracklist;
     } catch (error) {
         return error;
     }

@@ -10,13 +10,17 @@ import {
     SET_MY_SEARCH_TERM,
     CLEAR_MY_DATA,
     REORDER_PLAYLIST_TRACKS,
-    SET_PLAYLIST_DRAG_STATUS
+    SET_PLAYLIST_DRAG_STATUS,
+    REQUEST_MY_TOP_TRACKS,
+    RECEIVED_MY_TOP_TRACKS
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
-import { OFFSET_LIMIT } from '../utils/constants';
+import {
+    OFFSET_LIMIT,
+    SUGGESTED_PLAYLIST_PLACEHOLDER
+} from '../utils/constants';
 
 const DEFAULT_STATE = {
-    isFetching: false,
     tracksFetching: false,
     searchTerm: '',
     playlists: [],
@@ -26,7 +30,9 @@ const DEFAULT_STATE = {
     playlistsRemaining: 0,
     canLoadMore: true,
     areAllOpen: false,
-    isVisited: false
+    isFetching: false,
+    isVisited: false,
+    isFetchingMyTopTracks: false
 };
 
 export const myPlaylists = (state = DEFAULT_STATE, action) => {
@@ -149,6 +155,19 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
             tracklist.splice(endPosition, 0, removed);
 
             return Object.assign({}, state, { playlists });
+        case REQUEST_MY_TOP_TRACKS:
+            return Object.assign({}, state, { isFetchingMyTopTracks: true });
+        case RECEIVED_MY_TOP_TRACKS:
+            playlists = R.clone(state.playlists);
+            playlists = [
+                { ...SUGGESTED_PLAYLIST_PLACEHOLDER(action.tracks) },
+                ...playlists
+            ];
+
+            return Object.assign({}, state, {
+                isFetchingMyTopTracks: false,
+                playlists
+            });
         case CLEAR_MY_DATA:
             return Object.assign({}, state, DEFAULT_STATE);
         default:
