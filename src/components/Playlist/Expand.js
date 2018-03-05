@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore, ExpandLess } from 'material-ui-icons';
+import { Link } from 'react-scroll';
 import classNames from 'classnames';
 import '../common/common.css';
 
@@ -23,6 +24,8 @@ const Expand = props => {
         showUpArrow,
         isStickyBottom,
         isStickyTop,
+        to,
+        shouldSpy,
         ...restProps
     } = props;
 
@@ -34,14 +37,16 @@ const Expand = props => {
                 { 'sticky-top': isStickyTop }
             )}
         >
-            <Button
-                onClick={onClick}
-                className={classes.button}
-                aria-label="expand"
-                {...restProps}
-            >
-                {showUpArrow ? <ExpandLess /> : <ExpandMore />}
-            </Button>
+            <Link to={to} spy={shouldSpy}>
+                <Button
+                    onClick={onClick}
+                    className={classes.button}
+                    aria-label="expand"
+                    {...restProps}
+                >
+                    {showUpArrow ? <ExpandLess /> : <ExpandMore />}
+                </Button>
+            </Link>
         </footer>
     );
 };
@@ -49,6 +54,8 @@ const Expand = props => {
 Expand.propTypes = {
     onClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
+    to: PropTypes.string.isRequired,
+    spy: PropTypes.bool,
     showUpArrow: PropTypes.bool,
     isStickyBottom: PropTypes.bool,
     isStickyTop: PropTypes.bool

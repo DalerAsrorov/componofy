@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar';
 import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Link, Element } from 'react-scroll';
+import { Element } from 'react-scroll';
 import {
     ListItem,
     ListItemIcon,
@@ -181,15 +181,15 @@ class Playlist extends PureComponent {
             !showTracksOnly
         ) {
             expandButton = (
-                <Link to={playlist.id} spy={true}>
-                    <Expand
-                        isStickyBottom={true}
-                        showUpArrow={isExpanded}
-                        onClick={this._handleExpandMore}
-                        color="accent"
-                        raised
-                    />
-                </Link>
+                <Expand
+                    to={playlist.id}
+                    shouldSpy={true}
+                    isStickyBottom={true}
+                    showUpArrow={isExpanded}
+                    onClick={this._handleExpandMore}
+                    color="accent"
+                    raised
+                />
             );
         }
 
