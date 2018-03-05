@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
 import './Loader.css';
@@ -11,18 +12,18 @@ const styles = theme => ({
 
     wrapper: {
         width: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
+        height: '100%'
     }
 });
 
 const Loader = props => {
+    const { wrapper, text, icon, classes, ...restProps } = props;
     return (
-        <div className={props.classes.wrapper}>
-            <section> {props.text} </section>
-            <section className={props.classes.loaderSection}>
-                {props.icon}
-            </section>
-        </div>
+        <Paper classes={{ root: classes.wrapper }} {...restProps}>
+            <section> {text} </section>
+            <section className={classes.loaderSection}>{icon}</section>
+        </Paper>
     );
 };
 
