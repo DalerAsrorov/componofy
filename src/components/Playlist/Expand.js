@@ -29,6 +29,8 @@ const Expand = props => {
         ...restProps
     } = props;
 
+    console.log(shouldSpy, to);
+
     return (
         <footer
             className={classNames(
@@ -55,7 +57,7 @@ Expand.propTypes = {
     onClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     to: PropTypes.string.isRequired,
-    spy: PropTypes.bool,
+    shouldSpy: PropTypes.bool.isRequired,
     showUpArrow: PropTypes.bool,
     isStickyBottom: PropTypes.bool,
     isStickyTop: PropTypes.bool
