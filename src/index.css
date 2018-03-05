@@ -35,3 +35,11 @@ video {
   /* 1 */
   vertical-align: baseline;
   /* 2 */ }
+
+/**
+* Removes the outline after element is clicked
+* The blue-ish outline shows up after adding 
+* or deleting a track.
+*/
+*:focus {
+  outline: none; }
