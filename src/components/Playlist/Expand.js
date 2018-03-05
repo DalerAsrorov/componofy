@@ -29,8 +29,6 @@ const Expand = props => {
         ...restProps
     } = props;
 
-    console.log(shouldSpy, to);
-
     return (
         <footer
             className={classNames(

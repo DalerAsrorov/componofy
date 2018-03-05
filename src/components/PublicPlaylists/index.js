@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
+import Typography from 'material-ui/Typography';
 import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import { CircularProgress } from 'material-ui/Progress';
 import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
@@ -20,10 +22,15 @@ import {
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
+import Loader from '../Loader';
 
 const styles = theme => ({
     hotKeys: {
         outline: 'none'
+    },
+
+    loaderWrapper: {
+        display: 'flex'
     },
 
     playlistRemaining: {
@@ -37,6 +44,10 @@ const styles = theme => ({
         top: `${theme.spacing.unit / 2}px`,
         marginRight: `${theme.spacing.unit}px`,
         color: LIGHT_BLUE_COLOR
+    },
+
+    searchLoader: {
+        padding: `${theme.spacing.unit * 4}px`
     }
 });
 
@@ -222,11 +233,11 @@ class PublicPlaylists extends PureComponent {
         const collapseText = publicPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
-        let listOfPlaylistsComponent;
+        let publicPlaylists;
         let hasPlaylists = !R.isEmpty(playlists);
 
         if (hasPlaylists) {
-            listOfPlaylistsComponent = (
+            publicPlaylists = (
                 <List
                     onClickMain={this._handleAddPlaylist}
                     onClickItem={this._handleClickPlaylist}
@@ -236,6 +247,27 @@ class PublicPlaylists extends PureComponent {
                     collapseHasFixedHeight={!areAllOpen}
                     shouldShowTracksIncludedValue={true}
                 />
+            );
+        } else if (isFetching) {
+            publicPlaylists = (
+                <section className={classes.loaderWrapper}>
+                    <Loader
+                        text={
+                            <Typography type="display1" color="secondary">
+                                Searching playlists...
+                            </Typography>
+                        }
+                        icon={
+                            <CircularProgress
+                                style={{ width: '60px', height: '60px' }}
+                                thickness={8}
+                                color="accent"
+                            />
+                        }
+                        className={classes.searchLoader}
+                        square={true}
+                    />
+                </section>
             );
         }
 
@@ -297,7 +329,7 @@ class PublicPlaylists extends PureComponent {
                             autoComplete="off"
                             autoFocus
                         />
-                        {listOfPlaylistsComponent}
+                        {publicPlaylists}
                         <Waypoint
                             onEnter={() => {
                                 this._handleCanScrollUp(true);

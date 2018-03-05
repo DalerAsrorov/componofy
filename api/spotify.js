@@ -283,7 +283,6 @@ export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
                 callback(newAccessToken);
             })
             .catch(error => {
-                console.log('error', error);
                 clearInterval(tokenRefreshInterval);
             });
     }, 10000);
