@@ -11,7 +11,7 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 ## Demo
 
-[Watch video](https://www.youtube.com/watch?v=XAF5MUOzKhs&t=17s)
+[Watch video](https://www.youtube.com/watch?v=vqu--WP9gpA)
 
 ## New Feature Details
 
