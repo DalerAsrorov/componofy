@@ -37,7 +37,7 @@ Depending on the type of the feature, there are different places in the project 
 
 1. Create a new folder with the component name in [`./src/components`](src/components).
    The name of the folder should be capitalized and camel case.
-1. Add two new files `index.js` and `[NameOfTheComponentFolder].scss`.
+2. Add two new files `index.js` and `[NameOfTheComponentFolder].scss`.
    Save the `.scss` file. `yarn start:dev` script will generate `[NameOfTheComponentFolder].css` file which you can
    import in `index.js` like
 
@@ -45,21 +45,19 @@ Depending on the type of the feature, there are different places in the project 
 import './[NameOfTheComponentFolder].css'
 ```
 
-1. To keep the look and feel of the app consistent, use Material UI react framework
+3. To keep the look and feel of the app consistent, use Material UI react framework
    that is used and is encouraged.
-1. See [`src/components/FooterPanel`](src/components/FooterPanel) as an example.
-1. Once the component is implemented, you will use it in one of the base components:
+4. See [`src/components/FooterPanel`](src/components/FooterPanel) as an example.
+5. Once the component is implemented, you will use it in one of the base components:
 
 * [`src/components/MyPlaylists/index.js`](src/components/MyPlaylists/index.js)
 * [`src/components/PublicPlalists/index.js`](src/components/PublicPlaylists/index.js)
 * [`src/components/ComponofyPlaylists/index.js`](src/components/ComponofyPlaylists/index.js)
 
-- If component should be used in the dialog window (final step of the app)
+- If component should be used in the Dialog - final step:
   * [`src/components/Dialog/index.js`](src/components/Dialog/index.js)
 
 ### Adding new action/reducer/prop
-
-#### Adding action and reducer
 
 1. Add new public module function in [`src/actions/index.js`](src/actions/index.js)
 2. Connect that action in one of the reducers in [`src/reducers`](src/reducers)
