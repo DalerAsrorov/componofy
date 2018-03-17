@@ -22,7 +22,6 @@ import {
     SUCCESS_COLOR,
     MAX_IMAGE_SIZE_LIMIT
 } from '../../utils/constants';
-import { safeBool } from '../../utils/helpers';
 import Loader from '../Loader';
 import CreateForm from './CreateForm';
 import AddExistingForm from './AddExistingForm';
