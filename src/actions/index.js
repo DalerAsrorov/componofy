@@ -117,14 +117,12 @@ export const receivedPlaylistTracks = (playlistID, tracks) => {
 
 export const RECEIVED_PUBLIC_PLAYLIST_TRACKS =
     'RECEIVED_PUBLIC_PLAYLIST_TRACKS';
-export const receivedPublicPlaylistTracks = (playlistId, tracks) => {
-    return {
+export const receivedPublicPlaylistTracks = (playlistId, tracks) => ({
         type: RECEIVED_PUBLIC_PLAYLIST_TRACKS,
         receivedTracksAt: Date.now(),
         tracks: formatTracks(tracks),
         playlistId
-    };
-};
+});
 
 export const fetchPlaylistTracks = (userId, playlistId) => {
     return (dispatch, getState) => {
