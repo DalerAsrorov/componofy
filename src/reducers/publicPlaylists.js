@@ -1,15 +1,4 @@
-import {
-    SET_PUBLIC_SEARCH_TERM,
-    SET_PUBLIC_PLAYLISTS_VISITED,
-    RECEIVED_SEARCHED_PLAYLISTS,
-    REQUEST_SEARCHED_PLAYLISTS,
-    SET_PUBLIC_PLAYLIST_OPEN,
-    RECEIVED_PUBLIC_PLAYLIST_TRACKS,
-    SET_SEARCH_RESULTS_MESSAGE,
-    CLEAN_PUBLIC_SEARCH_RESULTS,
-    SET_OPEN_STATUS_PUBLIC_PLAYLISTS,
-    CLEAR_PUBLIC_DATA
-} from '../actions';
+import * as actions from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 import { OFFSET_LIMIT } from '../utils/constants';
 
@@ -23,6 +12,7 @@ const DEFAULT_STATE = {
     lastUpdated: 0,
     currentOffset: 0,
     playlistsRemaining: 0,
+    hasReceivedResponse: false,
     canLoadMore: true,
     isVisited: false
 };
@@ -32,7 +22,7 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
     let playlists;
 
     switch (action.type) {
-        case RECEIVED_SEARCHED_PLAYLISTS:
+        case actions.RECEIVED_SEARCHED_PLAYLISTS:
             let playlists = [...state.playlists, ...action.playlists];
             let { currentOffset, playlistsRemaining, canLoadMore } = state;
             let { numberOfTracks } = action;
@@ -54,6 +44,7 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
 
             return Object.assign({}, state, {
                 lastUpdated: action.receivedAt,
+                hasReceivedResponse: true,
                 isFetching: false,
                 playlistsRemaining,
                 numberOfTracks,
@@ -61,11 +52,12 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
                 canLoadMore,
                 playlists
             });
-        case REQUEST_SEARCHED_PLAYLISTS:
+        case actions.REQUEST_SEARCHED_PLAYLISTS:
             return Object.assign({}, state, {
-                isFetching: true
+                isFetching: true,
+                hasReceivedResponse: false
             });
-        case RECEIVED_PUBLIC_PLAYLIST_TRACKS:
+        case actions.RECEIVED_PUBLIC_PLAYLIST_TRACKS:
             playlists = state.playlists.map(playlist => {
                 if (playlist.id === action.playlistId) {
                     playlist.tracks.list = removeDuplicates(
@@ -79,11 +71,11 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 playlists
             });
-        case SET_PUBLIC_SEARCH_TERM:
+        case actions.SET_PUBLIC_SEARCH_TERM:
             return Object.assign({}, state, { searchTerm: action.searchTerm });
-        case SET_PUBLIC_PLAYLISTS_VISITED:
+        case actions.SET_PUBLIC_PLAYLISTS_VISITED:
             return Object.assign({}, state, { isVisited: action.isVisited });
-        case SET_PUBLIC_PLAYLIST_OPEN:
+        case actions.SET_PUBLIC_PLAYLIST_OPEN:
             playlists = state.playlists.map(playlist => {
                 if (playlist.id === action.playlistId) {
                     playlist.isOpen = action.isOpen;
@@ -95,11 +87,11 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
             return Object.assign({}, state, {
                 playlists
             });
-        case SET_SEARCH_RESULTS_MESSAGE:
+        case actions.SET_SEARCH_RESULTS_MESSAGE:
             return Object.assign({}, state, {
                 searchResultsMessage: action.message
             });
-        case CLEAN_PUBLIC_SEARCH_RESULTS:
+        case actions.CLEAN_PUBLIC_SEARCH_RESULTS:
             return Object.assign({}, state, {
                 searchResultsMessage: '',
                 playlists: [],
@@ -109,7 +101,7 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
                 currentOffset: 0,
                 canLoadMore: true
             });
-        case SET_OPEN_STATUS_PUBLIC_PLAYLISTS:
+        case actions.SET_OPEN_STATUS_PUBLIC_PLAYLISTS:
             playlists = state.playlists.map(playlist => {
                 playlist.isOpen = action.isOpen;
                 return playlist;
@@ -119,7 +111,7 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
                 areAllOpen: action.isOpen,
                 playlists
             });
-        case CLEAR_PUBLIC_DATA:
+        case actions.CLEAR_PUBLIC_DATA:
             return Object.assign({}, state, DEFAULT_STATE);
         default:
             return state;

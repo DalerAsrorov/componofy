@@ -8,12 +8,13 @@ import { MenuItem } from 'material-ui/Menu';
 import { Divider } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
-import { Search as SearchIcon } from 'material-ui-icons';
+import { Extension, Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
 import {
     PLAYLISTS_PROPTYPE,
     LOAD_MORE_STATUS,
     LIGHT_BLUE_COLOR,
+    LIGHT_CYAN_COLOR,
     SCROLL_DURATION,
     OFFSET_LIMIT,
     menuButtonStyle,
@@ -31,6 +32,12 @@ const styles = theme => ({
 
     loaderWrapper: {
         display: 'flex'
+    },
+
+    notFoundIcon: {
+        width: `${theme.spacing.unit * 10}px`,
+        height: `${theme.spacing.unit * 15}px`,
+        color: `${LIGHT_CYAN_COLOR}`
     },
 
     playlistRemaining: {
@@ -223,6 +230,7 @@ class PublicPlaylists extends PureComponent {
                 canLoadMore,
                 isFetching,
                 playlistsRemaining,
+                hasReceivedResponse,
                 areAllOpen
             },
             publicPlaylistsHasOpenPlaylist,
@@ -233,11 +241,11 @@ class PublicPlaylists extends PureComponent {
         const collapseText = publicPlaylistsHasOpenPlaylist
             ? 'Collapse All'
             : 'Expand All';
-        let publicPlaylists;
+        let publicPlaylistsContent;
         let hasPlaylists = !R.isEmpty(playlists);
 
         if (hasPlaylists) {
-            publicPlaylists = (
+            publicPlaylistsContent = (
                 <List
                     onClickMain={this._handleAddPlaylist}
                     onClickItem={this._handleClickPlaylist}
@@ -249,7 +257,7 @@ class PublicPlaylists extends PureComponent {
                 />
             );
         } else if (isFetching) {
-            publicPlaylists = (
+            publicPlaylistsContent = (
                 <section className={classes.loaderWrapper}>
                     <Loader
                         text={
@@ -269,13 +277,23 @@ class PublicPlaylists extends PureComponent {
                     />
                 </section>
             );
+        } else if (!hasPlaylists && hasReceivedResponse) {
+            publicPlaylistsContent = (
+                <section className={classes.loaderWrapper}>
+                    <Loader
+                        text={
+                            <Typography type="headline" color="secondary">
+                                No {searchResultsMessage} found. Try to search
+                                using a different query.
+                            </Typography>
+                        }
+                        icon={<Extension className={classes.notFoundIcon} />}
+                        className={classes.searchLoader}
+                        square={true}
+                    />
+                </section>
+            );
         }
-
-        const playlistCounter = (
-            <div className={classes.playlistRemaining}>
-                {playlistsRemaining}
-            </div>
-        );
 
         const menuItems = (
             <div>
@@ -329,7 +347,7 @@ class PublicPlaylists extends PureComponent {
                             autoComplete="off"
                             autoFocus
                         />
-                        {publicPlaylists}
+                        {publicPlaylistsContent}
                         <Waypoint
                             onEnter={() => {
                                 this._handleCanScrollUp(true);
@@ -341,7 +359,11 @@ class PublicPlaylists extends PureComponent {
                             mainButtonColor="accent"
                             onClickOptions={this._handleClickOptions}
                             onSelectItem={this._handleClickOption}
-                            circleText={playlistCounter}
+                            circleText={
+                                <div className={classes.playlistRemaining}>
+                                    {playlistsRemaining}
+                                </div>
+                            }
                             onClick={this._handleLoadMore}
                             isOpen={settingsIsOpen}
                             mainText={status}
