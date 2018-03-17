@@ -14,7 +14,7 @@ import {
 } from '../api';
 import { isEmpty, find, propEq } from 'ramda';
 import { formatTracks, getAllPlaylistsTrackIds } from '../utils/helpers';
-import { OFFSET_LIMIT, PLAYLIST_OFFSET_LIMIT } from '../utils/constants';
+import { PLAYLIST_OFFSET_LIMIT } from '../utils/constants';
 
 export const ADD_ERROR_TO_APP = 'ADD_ERROR_TO_APP';
 export const addErrorToApp = (

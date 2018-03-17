@@ -21,11 +21,6 @@ import {
 } from '../../utils/constants';
 import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import MaterialList, {
-    ListItem,
-    ListItemIcon,
-    ListItemText
-} from 'material-ui/List';
 import List from '../List';
 import Search from '../Search';
 
