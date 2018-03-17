@@ -23,12 +23,10 @@
         "eject": "react-scripts eject"
     },
     "dependencies": {
-        "babel-cli": "^6.26.0",
         "babel-preset-es2015": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
         "classnames": "^2.2.5",
         "dotenv": "^4.0.0",
-        "enzyme-adapter-react-15": "^1.0.5",
         "hapi": "^17.1",
         "history": "^4.7.2",
         "inert": "^5.0.1",
@@ -37,7 +35,6 @@
         "node-fetch": "^1.7.3",
         "node-sass-chokidar": "^0.0.3",
         "normalizr": "^3.2.4",
-        "npm-run-all": "^4.0.2",
         "prop-types": "^15.6.0",
         "ramda": "^0.25.0",
         "react": "^15.6.1",
@@ -59,12 +56,15 @@
         "react-test-renderer": "^15.6.1",
         "react-waypoint": "^7.3.1",
         "redux": "^3.7.2",
-        "redux-logger": "^3.0.6",
         "redux-thunk": "^2.2.0",
         "spotify-web-api-node": "^2.4.0",
         "yar": "^9.0.1"
     },
     "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "npm-run-all": "^4.0.2",
+        "redux-logger": "^3.0.6",
+        "enzyme-adapter-react-15": "^1.0.5",
         "cross-env": "^5.0.5",
         "enzyme": "^3.1.1",
         "jest": "^21.2.1",
