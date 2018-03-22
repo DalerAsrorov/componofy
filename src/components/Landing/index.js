@@ -59,8 +59,8 @@ class Landing extends PureComponent {
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
                         <Typography
-                            type="display3"
-                            color="accent"
+                            type="title"
+                            color="textSecondary"
                             component="h1"
                         >
                             {title}
@@ -78,12 +78,13 @@ class Landing extends PureComponent {
                     <Grid item xs={XS} className={classes.authBtn}>
                         <Button
                             onClick={this._handleAuthentication}
-                            raised
                             color="primary"
+                            variant="raised"
                         >
                             <span className={classes.icon}>{children}</span>
                             <Typography
                                 type="button"
+                                color="inherit"
                                 className={classes.iconText}
                             >
                                 {iconText}
