@@ -44,15 +44,14 @@ const styles = theme => ({
     dropImageZone: {
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
-        border: `${theme.spacing.unit / 2}px dotted ${
-            theme.palette.common.lightBlack
-        }`,
+        border: `${theme.spacing.unit / 2}px dotted ${theme.palette.grey[400]}`,
         cursor: 'pointer',
         marginBottom: `${theme.spacing.unit}px`
     },
 
     dropImageZoneImg: {
-        height: '100%'
+        height: '100%',
+        width: 'auto'
     },
 
     flex: {
