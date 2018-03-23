@@ -58,7 +58,7 @@ class ErrorSnackBar extends PureComponent {
                     <IconButton
                         key="close"
                         aria-label="Close"
-                        variant="inherit"
+                        color="inherit"
                         className={classes.close}
                         onClick={this._handleClose}
                     >

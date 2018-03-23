@@ -187,7 +187,6 @@ class Playlist extends PureComponent {
                     isStickyBottom={true}
                     showUpArrow={isExpanded}
                     onClick={this._handleExpandMore}
-                    color="textSecondary"
                     variant="raised"
                 />
             );
