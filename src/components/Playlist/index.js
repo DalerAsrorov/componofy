@@ -215,7 +215,7 @@ class Playlist extends PureComponent {
         ) : (
             <Loader
                 text={
-                    <Typography type="subheading" color="secondary">
+                    <Typography variant="subheading" color="textSecondary">
                         Loading tracks...
                     </Typography>
                 }

@@ -347,7 +347,11 @@ class Dialog extends PureComponent {
                     >
                         {playlistImage}
                     </Dropzone>
-                    <Typography align="center" color="secondary" type="caption">
+                    <Typography
+                        align="center"
+                        color="textSecondary"
+                        variant="caption"
+                    >
                         Add playlist cover image (optional)
                     </Typography>
                 </section>
@@ -367,7 +371,7 @@ class Dialog extends PureComponent {
                         color="accent"
                     >
                         <Typography
-                            type="headline"
+                            variant="headline"
                             className={classes.submitText}
                             color="inherit"
                         >
@@ -385,7 +389,7 @@ class Dialog extends PureComponent {
                     <Loader
                         icon={<LinearProgress color="accent" />}
                         text={
-                            <Typography type="title" color="secondary">
+                            <Typography variant="title" color="textSecondary">
                                 {loaderText}
                             </Typography>
                         }
@@ -407,7 +411,10 @@ class Dialog extends PureComponent {
                                     href={finalPlaylistUrl}
                                     target="__blank"
                                 >
-                                    <Typography type="headline" color="inherit">
+                                    <Typography
+                                        variant="headline"
+                                        color="inherit"
+                                    >
                                         See your playlist
                                     </Typography>
                                 </Button>
@@ -417,7 +424,10 @@ class Dialog extends PureComponent {
                                     className={classes.succesButtons}
                                     onClick={this._handleClickBack}
                                 >
-                                    <Typography type="headline" color="inherit">
+                                    <Typography
+                                        variant="headline"
+                                        color="inherit"
+                                    >
                                         Back to app
                                     </Typography>
                                 </Button>
@@ -444,7 +454,7 @@ class Dialog extends PureComponent {
                         >
                             <CloseIcon />
                         </IconButton>
-                        <Typography type="title" className={classes.flex}>
+                        <Typography variant="title" className={classes.flex}>
                             {title}
                         </Typography>
                     </Toolbar>

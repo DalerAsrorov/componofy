@@ -285,7 +285,10 @@ class PublicPlaylists extends PureComponent {
                 <section className={classes.loaderWrapper}>
                     <Loader
                         text={
-                            <Typography type="headline" color="secondary">
+                            <Typography
+                                variant="headline"
+                                color="textSecondary"
+                            >
                                 No {searchResultsMessage} found. Try to search
                                 using a different query.
                             </Typography>

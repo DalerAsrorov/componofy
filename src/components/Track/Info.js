@@ -27,10 +27,10 @@ const styles = theme => ({
     }
 });
 
-const createTypographyLink = (content, type, href) => (
+const createTypographyLink = (content, variant, href) => (
     <Typography
         className="link-default"
-        type={type}
+        variant={variant}
         component="a"
         href={href}
         target="__blank"
@@ -44,7 +44,7 @@ const Info = props => {
 
     if (props.isPopular) {
         const labelComponent = (
-            <Typography type="caption" color="default">
+            <Typography variant="caption" color="default">
                 Popular
             </Typography>
         );

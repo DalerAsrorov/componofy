@@ -10,10 +10,10 @@ const styles = theme => ({
     }
 });
 
-export const createTypographyLink = (content, type, href, color) => (
+export const createTypographyLink = (content, variant, href, color) => (
     <Typography
         className="link-default"
-        type={type}
+        variant={variant}
         component="a"
         href={href}
         color={color}
