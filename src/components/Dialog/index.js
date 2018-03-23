@@ -367,8 +367,8 @@ class Dialog extends PureComponent {
                         onClick={this._handleClickSubmit}
                         type="submit"
                         className={classes.photoUploadIcon}
-                        raised
-                        color="accent"
+                        variant="raised"
+                        color="secondary"
                     >
                         <Typography
                             variant="headline"
@@ -387,7 +387,7 @@ class Dialog extends PureComponent {
             modalContent = (
                 <LoaderWrapper>
                     <Loader
-                        icon={<LinearProgress color="accent" />}
+                        icon={<LinearProgress color="secondary" />}
                         text={
                             <Typography variant="title" color="textSecondary">
                                 {loaderText}
@@ -448,7 +448,7 @@ class Dialog extends PureComponent {
                 <AppBar className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
                         <IconButton
-                            color="contrast"
+                            color="inherit"
                             onClick={onClickClose}
                             aria-label="Close"
                         >
