@@ -19,7 +19,7 @@ const styles = theme => ({
         paddingTop: `${theme.spacing.unit}px`,
         paddingBottom: `${theme.spacing.unit}px`,
         display: 'flex',
-        zIndex: theme.zIndex.navDrawer,
+        zIndex: theme.zIndex.drawer,
         background: LIGHT_BLUE_COLOR
     },
 

@@ -11,8 +11,8 @@ import '../common/common.css';
 
 const styles = theme => ({
     formControl: {
-        background: `${theme.palette.common.fullWhite}`,
-        zIndex: theme.zIndex.navDrawer,
+        background: `${theme.palette.common.white}`,
+        zIndex: theme.zIndex.drawer,
         display: 'flex'
     },
 
