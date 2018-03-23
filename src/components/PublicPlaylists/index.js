@@ -356,7 +356,6 @@ class PublicPlaylists extends PureComponent {
                         <FooterPanel
                             shouldHideShowButton={!hasPlaylists}
                             shouldShowCircle={loadMoreButtonIsEnabled}
-                            mainButtonColor="accent"
                             onClickOptions={this._handleClickOptions}
                             onSelectItem={this._handleClickOption}
                             circleText={
