@@ -72,7 +72,7 @@ const CustomMenu = props => {
             aria-haspopup="true"
             onClick={props.onClickOptions}
             style={menuButtonStyle}
-            fab
+            variant="fab"
         />
     );
 

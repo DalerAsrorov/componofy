@@ -261,7 +261,10 @@ class PublicPlaylists extends PureComponent {
                 <section className={classes.loaderWrapper}>
                     <Loader
                         text={
-                            <Typography type="display1" color="secondary">
+                            <Typography
+                                variant="display1"
+                                color="textSecondary"
+                            >
                                 Searching playlists...
                             </Typography>
                         }
@@ -269,7 +272,7 @@ class PublicPlaylists extends PureComponent {
                             <CircularProgress
                                 style={{ width: '60px', height: '60px' }}
                                 thickness={8}
-                                color="accent"
+                                color="secondary"
                             />
                         }
                         className={classes.searchLoader}

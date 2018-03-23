@@ -139,7 +139,7 @@ class AddExistingForm extends PureComponent {
         let contentComponent = (
             <div className={classes.loaderWrapper}>
                 <CircularProgress className={classes.progress} thickness={7} />
-                <Typography type="caption" color="secondary">
+                <Typography variant="caption" color="textSecondary">
                     Loading your playlists...
                 </Typography>
             </div>
