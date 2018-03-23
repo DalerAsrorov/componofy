@@ -57,7 +57,7 @@ class Nav extends PureComponent {
                 <Badge
                     className="number-badge"
                     badgeContent={numberOfFinalPlaylists}
-                    color="accent"
+                    color="secondary"
                 >
                     <FlashOn />
                 </Badge>
