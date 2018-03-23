@@ -44,15 +44,14 @@ const styles = theme => ({
     dropImageZone: {
         color: LIGHT_BLUE_COLOR,
         height: `${theme.spacing.unit * 18}px`,
-        border: `${theme.spacing.unit / 2}px dotted ${
-            theme.palette.common.lightBlack
-        }`,
+        border: `${theme.spacing.unit / 2}px dotted ${theme.palette.grey[400]}`,
         cursor: 'pointer',
         marginBottom: `${theme.spacing.unit}px`
     },
 
     dropImageZoneImg: {
-        height: '100%'
+        height: '100%',
+        width: 'auto'
     },
 
     flex: {
@@ -347,7 +346,11 @@ class Dialog extends PureComponent {
                     >
                         {playlistImage}
                     </Dropzone>
-                    <Typography align="center" color="secondary" type="caption">
+                    <Typography
+                        align="center"
+                        color="textSecondary"
+                        variant="caption"
+                    >
                         Add playlist cover image (optional)
                     </Typography>
                 </section>
@@ -363,11 +366,11 @@ class Dialog extends PureComponent {
                         onClick={this._handleClickSubmit}
                         type="submit"
                         className={classes.photoUploadIcon}
-                        raised
-                        color="accent"
+                        variant="raised"
+                        color="secondary"
                     >
                         <Typography
-                            type="headline"
+                            variant="headline"
                             className={classes.submitText}
                             color="inherit"
                         >
@@ -383,9 +386,9 @@ class Dialog extends PureComponent {
             modalContent = (
                 <LoaderWrapper>
                     <Loader
-                        icon={<LinearProgress color="accent" />}
+                        icon={<LinearProgress color="secondary" />}
                         text={
-                            <Typography type="title" color="secondary">
+                            <Typography variant="title" color="textSecondary">
                                 {loaderText}
                             </Typography>
                         }
@@ -402,12 +405,15 @@ class Dialog extends PureComponent {
                                 <Button
                                     raised
                                     component="a"
-                                    color="accent"
+                                    color="secondary"
                                     className={classes.succesButtons}
                                     href={finalPlaylistUrl}
                                     target="__blank"
                                 >
-                                    <Typography type="headline" color="inherit">
+                                    <Typography
+                                        variant="headline"
+                                        color="inherit"
+                                    >
                                         See your playlist
                                     </Typography>
                                 </Button>
@@ -417,7 +423,10 @@ class Dialog extends PureComponent {
                                     className={classes.succesButtons}
                                     onClick={this._handleClickBack}
                                 >
-                                    <Typography type="headline" color="inherit">
+                                    <Typography
+                                        variant="headline"
+                                        color="inherit"
+                                    >
                                         Back to app
                                     </Typography>
                                 </Button>
@@ -438,13 +447,13 @@ class Dialog extends PureComponent {
                 <AppBar className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
                         <IconButton
-                            color="contrast"
+                            color="inherit"
                             onClick={onClickClose}
                             aria-label="Close"
                         >
                             <CloseIcon />
                         </IconButton>
-                        <Typography type="title" className={classes.flex}>
+                        <Typography variant="title" className={classes.flex}>
                             {title}
                         </Typography>
                     </Toolbar>

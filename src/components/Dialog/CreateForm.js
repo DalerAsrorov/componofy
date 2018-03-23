@@ -52,6 +52,7 @@ const CreateForm = props => {
                         checked={isPublic}
                         onClick={onPublicSwitchClick}
                         aria-label="isNewPlaylistPublic"
+                        color="primary"
                     />
                 }
                 label={switchLabel}

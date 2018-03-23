@@ -397,7 +397,6 @@ class ComponofyPlaylists extends PureComponent {
                     />
                     <FooterPanel
                         shouldShowCircle={isNotEmpty}
-                        mainButtonColor="primary"
                         onClickOptions={this._handleClickOptions}
                         onSelectItem={this._handleClickOption}
                         customButtonMenu={customLeftMenu}

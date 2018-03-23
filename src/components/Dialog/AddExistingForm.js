@@ -109,7 +109,7 @@ class AddExistingForm extends PureComponent {
             selectedPlaylist,
             currentOffset
         } = this.props;
-        const playlistMenuSelects = playlistOptions.map(
+        const playlistMenuOptions = playlistOptions.map(
             ({ id, name, images = [] }) => {
                 return (
                     <MenuItem key={id} value={id}>
@@ -122,8 +122,8 @@ class AddExistingForm extends PureComponent {
                         <ListItemText
                             primary={
                                 <Typography
-                                    type="title"
-                                    color="secondary"
+                                    variant="title"
+                                    color="textSecondary"
                                     component="p"
                                     className={classes.playlistName}
                                 >
@@ -139,7 +139,7 @@ class AddExistingForm extends PureComponent {
         let contentComponent = (
             <div className={classes.loaderWrapper}>
                 <CircularProgress className={classes.progress} thickness={7} />
-                <Typography type="caption" color="secondary">
+                <Typography variant="caption" color="textSecondary">
                     Loading your playlists...
                 </Typography>
             </div>
@@ -166,7 +166,7 @@ class AddExistingForm extends PureComponent {
                             }
                         }}
                     >
-                        {playlistMenuSelects}
+                        {playlistMenuOptions}
                         <Waypoint
                             onEnter={() => {
                                 this._handleSelectionFetch();

@@ -16,8 +16,13 @@ const styles = theme => ({
     root: {
         margin: 0,
         width: '100%',
-        padding: '3.5em',
+        padding: `${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px
+        ${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px`,
         textAlign: 'center'
+    },
+
+    subheader: {
+        fontStyle: 'italic'
     },
 
     authBtn: {
@@ -59,16 +64,16 @@ class Landing extends PureComponent {
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
                         <Typography
-                            type="display3"
-                            color="accent"
+                            variant="display2"
+                            color="secondary"
                             component="h1"
                         >
                             {title}
                         </Typography>
                         <Typography
-                            className="sub-header"
-                            type="body1"
-                            color="secondary"
+                            variant="subheading"
+                            className={classes.subheader}
+                            color="textSecondary"
                             component="p"
                         >
                             {subTitle}
@@ -78,12 +83,12 @@ class Landing extends PureComponent {
                     <Grid item xs={XS} className={classes.authBtn}>
                         <Button
                             onClick={this._handleAuthentication}
-                            raised
                             color="primary"
+                            variant="raised"
                         >
                             <span className={classes.icon}>{children}</span>
                             <Typography
-                                type="button"
+                                variant="button"
                                 className={classes.iconText}
                             >
                                 {iconText}
