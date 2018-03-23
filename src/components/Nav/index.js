@@ -69,7 +69,7 @@ class Nav extends PureComponent {
                 <Tabs
                     className={classes.tabContainer}
                     onChange={this._handleChange}
-                    indicatorColor="accent"
+                    indicatorColor="secondary"
                     value={currentTabIndex}
                     fullWidth
                     centered
