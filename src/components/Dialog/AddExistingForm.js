@@ -109,7 +109,7 @@ class AddExistingForm extends PureComponent {
             selectedPlaylist,
             currentOffset
         } = this.props;
-        const playlistMenuSelects = playlistOptions.map(
+        const playlistMenuOptions = playlistOptions.map(
             ({ id, name, images = [] }) => {
                 return (
                     <MenuItem key={id} value={id}>
@@ -166,7 +166,7 @@ class AddExistingForm extends PureComponent {
                             }
                         }}
                     >
-                        {playlistMenuSelects}
+                        {playlistMenuOptions}
                         <Waypoint
                             onEnter={() => {
                                 this._handleSelectionFetch();
