@@ -12,7 +12,14 @@ const styles = theme => ({
     root: {
         width: '100%',
         position: 'relative',
-        transform: 'translateY(50%)'
+        transform: 'translateY(50%)',
+        margin: '0'
+    },
+
+    subRoot: {
+        flex: 'inherit',
+        paddingLeft: '0 !important',
+        paddingRight: '0 !important'
     }
 });
 
@@ -30,7 +37,7 @@ class Login extends PureComponent {
 
         return (
             <Grid className={classes.root} container justify="center">
-                <Grid item>
+                <Grid item className={classes.subRoot}>
                     <Landing
                         iconText="Start"
                         title="Componofy"

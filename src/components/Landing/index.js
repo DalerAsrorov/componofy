@@ -16,7 +16,8 @@ const styles = theme => ({
     root: {
         margin: 0,
         width: '100%',
-        padding: '3.5em',
+        padding: `${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px
+        ${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px`,
         textAlign: 'center'
     },
 
