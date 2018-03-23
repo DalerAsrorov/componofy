@@ -46,7 +46,7 @@ const styles = theme => ({
 
     trackBadge: {
         color: theme.palette.background.paper,
-        backgroundColor: theme.palette.secondary[500],
+        backgroundColor: theme.palette.secondary.light,
         padding: theme.spacing.unit / 4
     },
 
@@ -187,8 +187,8 @@ class Playlist extends PureComponent {
                     isStickyBottom={true}
                     showUpArrow={isExpanded}
                     onClick={this._handleExpandMore}
-                    color="accent"
-                    raised
+                    color="textSecondary"
+                    variant="raised"
                 />
             );
         }

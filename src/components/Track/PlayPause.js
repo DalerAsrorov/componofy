@@ -23,7 +23,7 @@ class PlayPause extends PureComponent {
         }
 
         return (
-            <IconButton color={color || ''} onClick={this._handlePlayPause}>
+            <IconButton color={color} onClick={this._handlePlayPause}>
                 {playPauseIcon}
             </IconButton>
         );

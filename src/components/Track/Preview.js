@@ -20,7 +20,7 @@ const Preview = props => (
             <div className={props.classes.mediaPlayer}>
                 <Player src={props.url} />
             </div>
-            <PlayPause color="accent" />
+            <PlayPause color="secondary" />
         </div>
     </Media>
 );
