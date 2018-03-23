@@ -20,6 +20,10 @@ const styles = theme => ({
         textAlign: 'center'
     },
 
+    subheader: {
+        fontStyle: 'italic'
+    },
+
     authBtn: {
         marginTop: '25px'
     },
@@ -59,16 +63,16 @@ class Landing extends PureComponent {
                 <Grid container className={classes.root}>
                     <Grid item xs={XS}>
                         <Typography
-                            type="title"
-                            color="textSecondary"
+                            variant="display2"
+                            color="secondary"
                             component="h1"
                         >
                             {title}
                         </Typography>
                         <Typography
-                            className="sub-header"
-                            type="body1"
-                            color="secondary"
+                            variant="subheading"
+                            className={classes.subheader}
+                            color="textSecondary"
                             component="p"
                         >
                             {subTitle}
@@ -83,8 +87,7 @@ class Landing extends PureComponent {
                         >
                             <span className={classes.icon}>{children}</span>
                             <Typography
-                                type="button"
-                                color="inherit"
+                                variant="button"
                                 className={classes.iconText}
                             >
                                 {iconText}
