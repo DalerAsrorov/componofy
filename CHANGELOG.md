@@ -1,4 +1,19 @@
 # CHANEGLOG
+### v1.3.0
+Some of the major features/changes are:
+* Loader message if no playlists found
+* Fixed some UI responsiveness bugs and improved render time of DIalog
+* Show suggested custom playlist based on user's preferences
+* Upgraded Material UI to beta 38
+
+To see the full list checkout [v1.3 Release Project Board](https://github.com/DalerAsrorov/componofy/projects/7)
+
+### v1.2.0
+* In this release experience for showing a particular playlist has been improved - the user can decide whether to expand the playlist tracklist fully or not.
+* Search and footer `sticky` position now works for Safari and other `webkit` type of browsers.
+* Number of playlist tracks indicated on the right
+* Number of added tracks from playlist shows up to the left of the badge described above
+View more in the [v1.2.0 release project board](https://github.com/DalerAsrorov/componofy/projects/6)
 
 ### v1.1.0
 
