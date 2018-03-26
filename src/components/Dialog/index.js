@@ -103,7 +103,6 @@ const styles = theme => ({
     },
 
     succesButtons: {
-        color: MOST_LIGHT_BLUE_COLOR,
         margin: theme.spacing.unit
     },
 
@@ -403,7 +402,7 @@ class Dialog extends PureComponent {
                         text={
                             <div>
                                 <Button
-                                    raised
+                                    variant="raised"
                                     component="a"
                                     color="secondary"
                                     className={classes.succesButtons}
@@ -418,7 +417,7 @@ class Dialog extends PureComponent {
                                     </Typography>
                                 </Button>
                                 <Button
-                                    raised
+                                    variant="raised"
                                     color="primary"
                                     className={classes.succesButtons}
                                     onClick={this._handleClickBack}
