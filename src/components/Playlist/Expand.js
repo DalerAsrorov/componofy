@@ -12,7 +12,12 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit
     },
 
+    linkTo: {
+        display: 'block'
+    },
+
     wrapper: {
+        zIndex: theme.zIndex.drawer,
         textAlign: 'center'
     }
 });
@@ -37,7 +42,7 @@ const Expand = props => {
                 { 'sticky-top': isStickyTop }
             )}
         >
-            <Link to={to} spy={shouldSpy}>
+            <Link className={classes.linkTo} to={to} spy={shouldSpy}>
                 <Button
                     onClick={onClick}
                     className={classes.button}
