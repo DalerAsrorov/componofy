@@ -4,6 +4,9 @@ import { Route, Switch } from 'react-router';
 // import mainTheme from './themes/main.theme';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import PrivateRoute from './containers/PrivateRoute';
+import Typography from 'material-ui/Typography';
+import Loader from './components/Loader';
+import { DoNotDisturb } from 'material-ui-icons';
 import Main from './components/Main';
 import Login from './components/Login';
 
@@ -11,10 +14,17 @@ import './App.css';
 
 const theme = createMuiTheme();
 
-const Notfound = () => (
-    <div>
-        <span>Wrong route</span>
-    </div>
+const NotFound = () => (
+    <Loader
+        text={
+            <Typography variant="display3" color="textSecondary">
+                This page does not exist
+            </Typography>
+        }
+        icon={<DoNotDisturb />}
+        className="not-found-page"
+        shouldShowShadows
+    />
 );
 
 const App = () => (
@@ -22,7 +32,7 @@ const App = () => (
         <Switch>
             <Route exact path="/" component={Login} />
             <PrivateRoute path="/app" component={Main} />
-            <Route component={Notfound} />
+            <Route component={NotFound} />
         </Switch>
     </MuiThemeProvider>
 );
