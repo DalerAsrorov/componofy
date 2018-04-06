@@ -38,7 +38,7 @@
         "normalizr": "^3.2.4",
         "prop-types": "^15.6.0",
         "ramda": "^0.25.0",
-        "react": "^16.0.0",
+        "react": "^16.0.3",
         "react-beautiful-dnd": "^4.0.1",
         "react-dom": "^16.0.0",
         "react-dropzone": "^4.2.3",

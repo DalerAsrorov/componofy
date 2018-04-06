@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
@@ -258,7 +258,7 @@ class PublicPlaylists extends PureComponent {
             );
         } else if (isFetching) {
             publicPlaylistsContent = (
-                <section className={classes.loaderWrapper}>
+                <div className={classes.loaderWrapper}>
                     <Loader
                         text={
                             <Typography
@@ -278,7 +278,7 @@ class PublicPlaylists extends PureComponent {
                         className={classes.searchLoader}
                         square={true}
                     />
-                </section>
+                </div>
             );
         } else if (!hasPlaylists && hasReceivedResponse) {
             publicPlaylistsContent = (
@@ -302,7 +302,7 @@ class PublicPlaylists extends PureComponent {
         }
 
         const menuItems = (
-            <div>
+            <Fragment>
                 <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
                     Up
                 </MenuItem>
@@ -312,7 +312,7 @@ class PublicPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
-            </div>
+            </Fragment>
         );
 
         const serachHandlers = {
