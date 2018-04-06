@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
@@ -257,7 +257,7 @@ class MyPlaylists extends PureComponent {
         }
 
         const menuItems = (
-            <div>
+            <Fragment>
                 <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
                     Up
                 </MenuItem>
@@ -267,7 +267,7 @@ class MyPlaylists extends PureComponent {
                 <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-            </div>
+            </Fragment>
         );
 
         const playlistCounter = (

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
@@ -341,14 +341,14 @@ class ComponofyPlaylists extends PureComponent {
         );
 
         const customLeftMenu = (
-            <div>
+            <Fragment>
                 <MenuItem onClick={this._handleComponofyCreate}>
                     Create New Playlist
                 </MenuItem>
                 <MenuItem onClick={this._handleComponofyExisting}>
                     Add To Existing Playlist
                 </MenuItem>
-            </div>
+            </Fragment>
         );
 
         const statsComponent = (
