@@ -13,7 +13,8 @@ import './Nav.css';
 const styles = theme => ({
     root: {
         width: '100%',
-        backgroundColor: theme.palette.background.paper
+        backgroundColor: theme.palette.background.paper,
+        marginBottom: `${theme.spacing.unit}px`
     },
 
     tabContainer: {}
