@@ -20,6 +20,7 @@ import {
     menuButtonStyle,
     searchKeyMap
 } from '../../utils/constants';
+import { getExpandStatusText } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -238,9 +239,9 @@ class PublicPlaylists extends PureComponent {
         } = this.props;
         const loadMoreButtonIsEnabled =
             canLoadMore && !isFetching && !R.isEmpty(playlists);
-        const collapseText = publicPlaylistsHasOpenPlaylist
-            ? 'Collapse All'
-            : 'Expand All';
+        const collapseText = getExpandStatusText(
+            publicPlaylistsHasOpenPlaylist
+        );
         let publicPlaylistsContent;
         let hasPlaylists = !R.isEmpty(playlists);
 
