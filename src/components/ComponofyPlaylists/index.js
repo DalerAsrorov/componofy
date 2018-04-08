@@ -19,7 +19,11 @@ import {
     searchKeyMap,
     menuButtonStyle
 } from '../../utils/constants';
-import { filterSearchPlaylist, formatPlaylistsData } from '../../utils/helpers';
+import {
+    filterSearchPlaylist,
+    formatPlaylistsData,
+    getExpandStatusText
+} from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -278,10 +282,10 @@ class ComponofyPlaylists extends PureComponent {
         } = this.state;
         const isNotEmpty = numberOfFinalPlaylists > 0;
         let playlistList, playlists, search, dialog;
-        let collapseExpandText = finalPlaylistsHasOpenPlaylist
-            ? 'Collapse All'
-            : 'Expand All';
-        ``;
+        let collapseExpandText = getExpandStatusText(
+            finalPlaylistsHasOpenPlaylist
+        );
+
         if (isNotEmpty) {
             const {
                 entities: { playlists: playlistsMap, tracks: tracksMap }
@@ -333,7 +337,7 @@ class ComponofyPlaylists extends PureComponent {
                     {collapseExpandText}
                 </MenuItem>
                 <MenuItem onClick={this._handleSelectShowTracksOnly}>
-                    {shouldShowOnlyTracks ? 'Hide' : 'View'} Tracks
+                    {shouldShowOnlyTracks ? 'Hide' : 'View'}
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>

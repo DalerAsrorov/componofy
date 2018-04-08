@@ -17,7 +17,11 @@ import {
     OFFSET_LIMIT,
     LOAD_MORE_STATUS
 } from '../../utils/constants';
-import { filterSearchPlaylist, toTop } from '../../utils/helpers';
+import {
+    filterSearchPlaylist,
+    toTop,
+    getExpandStatusText
+} from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
@@ -246,11 +250,7 @@ class MyPlaylists extends PureComponent {
         const loadMoreButtonIsEnabled =
             canLoadMore && !isFetching && !isEmpty(playlists);
 
-        let collapseText = myPlaylistsHasOpenPlaylist
-            ? 'Collapse All'
-            : 'Expand All';
-        playlistsRemaining =
-            playlistsRemaining !== 0 ? playlistsRemaining : null;
+        let collapseText = getExpandStatusText(myPlaylistsHasOpenPlaylist);
 
         if (shouldFilterList) {
             playlists = filterSearchPlaylist(searchTerm, playlists);
