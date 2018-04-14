@@ -1,9 +1,10 @@
 import React from 'react';
-import { configure, shallow, render, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Enzyme from 'enzyme';
+import { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Nav from './';
 
-configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });
 
 // props used throughout test
 const navigateTo = jest.fn();
