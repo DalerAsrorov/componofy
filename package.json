@@ -25,6 +25,7 @@
         "babel-preset-stage-2": "^6.24.1",
         "classnames": "^2.2.5",
         "dotenv": "^5.0.1",
+        "enzyme-to-json": "^3.3.3",
         "hapi": "^17.1",
         "history": "^4.7.2",
         "inert": "^5.0.1",

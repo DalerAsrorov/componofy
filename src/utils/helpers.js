@@ -115,8 +115,12 @@ export const getAllPlaylistTracksFromMap = (
         return;
     }
 
-    const { entities: { playlists: playlistMap } } = playlistsState;
-    const { entities: { tracks: tracksMap } } = playlistsState;
+    const {
+        entities: { playlists: playlistMap }
+    } = playlistsState;
+    const {
+        entities: { tracks: tracksMap }
+    } = playlistsState;
 
     const trackPlaylistTuples = getAllPlaylistTracksTuple(playlistMap);
     const allAddedTracks = trackPlaylistTuples.map(tuple => {
