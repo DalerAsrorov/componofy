@@ -2,24 +2,7 @@ import Hapi from 'hapi';
 import Yar from 'yar';
 import Inert from 'inert';
 import Path from 'path';
-import {
-  createAuthorizeURL,
-  deleteUserData,
-  authorizationCodeGrant,
-  getMe,
-  getMyPlaylists,
-  searchPlaylists,
-  getPlaylistTracks,
-  setUserAndTokens,
-  createPlaylist,
-  addTracksToPlaylist,
-  reorderTracksInPlaylist,
-  uploadPlaylistCoverImage,
-  getMyTopArtists,
-  startCheckingForRefreshToken,
-  updateMyRefreshToken,
-  getMyTopTracks
-} from './api/spotify';
+import * as SpotifyApi from './api/spotify';
 import dotenv from 'dotenv';
 
 // allow server to import environment variables
@@ -81,7 +64,7 @@ const startApp = async () => {
       handler: (request, h) => {
         const { yar } = request;
 
-        deleteUserData(yar.get('session').id);
+        SpotifyApi.deleteUserData(yar.get('session').id);
         yar.reset();
 
         return {
@@ -100,7 +83,7 @@ const startApp = async () => {
       method: 'GET',
       path: '/api/auth',
       handler: (request, h) => {
-        const { authUrl } = createAuthorizeURL();
+        const { authUrl } = SpotifyApi.createAuthorizeURL();
 
         return h.redirect(authUrl);
       },
@@ -123,9 +106,9 @@ const startApp = async () => {
           query: { code }
         } = request;
 
-        return authorizationCodeGrant(code)
+        return SpotifyApi.authorizationCodeGrant(code)
           .then(({ clientAppURL, accessToken, refreshToken, expiresIn }) => {
-            return getMe().then(({ body: { id, email } }) => {
+            return SpotifyApi.getMe().then(({ body: { id, email } }) => {
               const sessionState = {
                 lastVisit: Date.now(),
                 accessToken,
@@ -135,7 +118,7 @@ const startApp = async () => {
                 id
               };
 
-              setUserAndTokens(id, accessToken, refreshToken);
+              SpotifyApi.setUserAndTokens(id, accessToken, refreshToken);
 
               request.yar.set('session', sessionState);
 
@@ -165,7 +148,7 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return getMyPlaylists(userId, {
+        return SpotifyApi.getMyPlaylists(userId, {
           offset,
           limit
         })
@@ -191,7 +174,7 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return getMyTopArtists(userId)
+        return SpotifyApi.getMyTopArtists(userId)
           .then(data => ({
             date: Date.now(),
             data
@@ -214,7 +197,7 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return getMyTopTracks(userId, nTracks)
+        return SpotifyApi.getMyTopTracks(userId, nTracks)
           .then(data => ({
             date: Date.now(),
             data
@@ -237,7 +220,7 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return searchPlaylists(userId, query, {
+        return SpotifyApi.searchPlaylists(userId, query, {
           offset,
           limit
         })
@@ -262,7 +245,10 @@ const startApp = async () => {
       handler: (request, h) => {
         const { offset, limit, userID, playlistID } = request.params;
 
-        return getPlaylistTracks(userID, playlistID, { offset, limit })
+        return SpotifyApi.getPlaylistTracks(userID, playlistID, {
+          offset,
+          limit
+        })
           .then(data => ({
             date: Date.now(),
             data
@@ -287,7 +273,12 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return reorderTracksInPlaylist(userId, playlistId, start, end)
+        return SpotifyApi.reorderTracksInPlaylist(
+          userId,
+          playlistId,
+          start,
+          end
+        )
           .then(data => ({
             date: Date.now(),
             data
@@ -315,7 +306,7 @@ const startApp = async () => {
         const payload = JSON.parse(request.payload);
         const { playlistName, options } = payload;
 
-        return createPlaylist(userId, playlistName, options)
+        return SpotifyApi.createPlaylist(userId, playlistName, options)
           .then(data => ({
             date: Date.now(),
             data
@@ -344,7 +335,12 @@ const startApp = async () => {
         const payload = JSON.parse(request.payload);
         const { playlistID, tracks, options } = payload;
 
-        return addTracksToPlaylist(userID, playlistID, tracks, options)
+        return SpotifyApi.addTracksToPlaylist(
+          userID,
+          playlistID,
+          tracks,
+          options
+        )
           .then(data => ({
             date: Date.now(),
             data
@@ -370,7 +366,7 @@ const startApp = async () => {
         const session = yar.get('session');
         const { id: userId } = session;
 
-        return updateMyRefreshToken(userId)
+        return SpotifyApi.updateMyRefreshToken(userId)
           .then(accessToken => {
             yar.set('session', {
               ...session,
@@ -407,7 +403,11 @@ const startApp = async () => {
         const payload = JSON.parse(request.payload);
         const { playlistId, imageBase64 } = payload;
 
-        return uploadPlaylistCoverImage(userId, playlistId, imageBase64)
+        return SpotifyApi.uploadPlaylistCoverImage(
+          userId,
+          playlistId,
+          imageBase64
+        )
           .then(data => ({
             date: Date.now(),
             data
