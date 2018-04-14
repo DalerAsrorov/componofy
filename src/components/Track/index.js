@@ -69,7 +69,10 @@ class Track extends PureComponent {
             id: trackId,
             artists,
             name: trackName,
-            album: { name: albumName, external_urls: { spotify: albumUrl } },
+            album: {
+                name: albumName,
+                external_urls: { spotify: albumUrl }
+            },
             external_urls: { spotify: trackUrl },
             preview_url,
             popularity
@@ -93,45 +96,38 @@ class Track extends PureComponent {
         return (
             <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
                 {(provided, snapshot) => (
-                    <div>
-                        <div
-                            ref={provided.innerRef}
-                            style={provided.draggableStyle}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                        >
-                            <ListItem divider>
-                                <ListItemIcon>
-                                    <CheckBox
-                                        onClick={this._handleChecked}
-                                        checked={playlistContainsThisTrack}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={
-                                        <div
-                                            className={
-                                                classes.trackInfoContainer
-                                            }
-                                        >
-                                            <div className={classes.trackInfo}>
-                                                <Info
-                                                    trackName={trackName}
-                                                    trackUrl={trackUrl}
-                                                    artistName={artistName}
-                                                    artistUrl={artistUrl}
-                                                    albumName={albumName}
-                                                    albumUrl={albumUrl}
-                                                    isPopular={isPopular}
-                                                />
-                                            </div>
-                                            {previewComponent}
-                                        </div>
-                                    }
+                    <div
+                        ref={provided.innerRef}
+                        style={provided.draggableStyle}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                    >
+                        <ListItem divider>
+                            <ListItemIcon>
+                                <CheckBox
+                                    onClick={this._handleChecked}
+                                    checked={playlistContainsThisTrack}
                                 />
-                            </ListItem>
-                        </div>
-                        {provided.placeholder}
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={
+                                    <div className={classes.trackInfoContainer}>
+                                        <div className={classes.trackInfo}>
+                                            <Info
+                                                trackName={trackName}
+                                                trackUrl={trackUrl}
+                                                artistName={artistName}
+                                                artistUrl={artistUrl}
+                                                albumName={albumName}
+                                                albumUrl={albumUrl}
+                                                isPopular={isPopular}
+                                            />
+                                        </div>
+                                        {previewComponent}
+                                    </div>
+                                }
+                            />
+                        </ListItem>
                     </div>
                 )}
             </Draggable>
