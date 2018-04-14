@@ -18,7 +18,7 @@ const Preview = props => (
     <Media>
         <div className={props.classes.media}>
             <div className={props.classes.mediaPlayer}>
-                <Player src={props.url} />
+                <Player src={props.url} vendor="audio" />
             </div>
             <PlayPause color="secondary" />
         </div>
