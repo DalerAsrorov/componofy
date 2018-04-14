@@ -7,14 +7,14 @@ dotenv.config();
 
 const DEV_HOST = 'http://localhost:3000';
 const SCOPES_STR =
-    'user-library-read playlist-read-private playlist-read-collaborative playlist-modif' +
-    'y-public playlist-modify-private user-library-read ugc-image-upload user-top-read';
+  'user-library-read playlist-read-private playlist-read-collaborative playlist-modif' +
+  'y-public playlist-modify-private user-library-read ugc-image-upload user-top-read';
 const SCOPE_LIST = SCOPES_STR.split(' ');
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 const spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    redirectUri: process.env.SPOTIFY_REDIRECT_URI
+  clientId: process.env.SPOTIFY_CLIENT,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.SPOTIFY_REDIRECT_URI
 });
 const { APP_CLIENT_URL } = process.env;
 const INTERVAL_PERIOD = 5000;
@@ -22,336 +22,336 @@ const INTERVAL_PERIOD = 5000;
 let userMap = {};
 
 const setUpTokens = (accessToken, refreshToken) => {
-    spotifyApi.setAccessToken(accessToken);
-    spotifyApi.setRefreshToken(refreshToken);
+  spotifyApi.setAccessToken(accessToken);
+  spotifyApi.setRefreshToken(refreshToken);
 };
 
 export const setUserAndTokens = (userId, accessToken, refreshToken) => {
-    userMap[userId] = {
-        accessToken,
-        refreshToken:
-            userMap[userId] && !refreshToken
-                ? userMap[userId].refreshToken
-                : refreshToken
-    };
+  userMap[userId] = {
+    accessToken,
+    refreshToken:
+      userMap[userId] && !refreshToken
+        ? userMap[userId].refreshToken
+        : refreshToken
+  };
 };
 
 export const deleteUserData = userId => {
-    delete userMap[userId];
+  delete userMap[userId];
 };
 
 export const createAuthorizeURL = (
-    scopes = SCOPE_LIST,
-    state = 'spotify-auth'
+  scopes = SCOPE_LIST,
+  state = 'spotify-auth'
 ) => {
-    const authUrl = spotifyApi.createAuthorizeURL(scopes, state);
+  const authUrl = spotifyApi.createAuthorizeURL(scopes, state);
 
-    return {
-        authUrl,
-        ...arguments
-    };
+  return {
+    authUrl,
+    ...arguments
+  };
 };
 export async function authorizationCodeGrant(code) {
-    let params = {
-        clientAppURL: `${APP_CLIENT_URL || DEV_HOST}/app`
-    };
+  let params = {
+    clientAppURL: `${APP_CLIENT_URL || DEV_HOST}/app`
+  };
 
-    try {
-        const payload = await spotifyApi.authorizationCodeGrant(code);
-        const {
-            body: {
-                access_token: accessToken,
-                refresh_token: refreshToken,
-                expires_in: expiresIn
-            }
-        } = payload;
+  try {
+    const payload = await spotifyApi.authorizationCodeGrant(code);
+    const {
+      body: {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        expires_in: expiresIn
+      }
+    } = payload;
 
-        setUpTokens(accessToken, refreshToken);
+    setUpTokens(accessToken, refreshToken);
 
-        params['accessToken'] = accessToken;
-        params['refreshToken'] = refreshToken;
-        params['expiresIn'] = expiresIn;
-
-        return params;
-    } catch (error) {
-        return error;
-    }
+    params['accessToken'] = accessToken;
+    params['refreshToken'] = refreshToken;
+    params['expiresIn'] = expiresIn;
 
     return params;
+  } catch (error) {
+    return error;
+  }
+
+  return params;
 }
 
 export async function getMyPlaylists(userId, options = {}) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
+  try {
+    const { accessToken, refreshToken } = userMap[userId];
 
-        setUpTokens(accessToken, refreshToken);
+    setUpTokens(accessToken, refreshToken);
 
-        return await spotifyApi.getUserPlaylists(undefined, options);
-    } catch (error) {
-        return error;
-    }
+    return await spotifyApi.getUserPlaylists(undefined, options);
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function searchPlaylists(userId, query, options = {}) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
-        setUpTokens(accessToken, refreshToken);
+  try {
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
-        return await spotifyApi.searchPlaylists(query, options);
-    } catch (error) {
-        return error;
-    }
+    return await spotifyApi.searchPlaylists(query, options);
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function getPlaylistTracks(userId, playlistId, options = {}) {
-    try {
-        const LIMIT = 100;
-        let currentOffset = -1,
-            tracksCount = 0,
-            nextOffset = 0,
-            payload = [],
-            response;
+  try {
+    const LIMIT = 100;
+    let currentOffset = -1,
+      tracksCount = 0,
+      nextOffset = 0,
+      payload = [],
+      response;
 
-        while (currentOffset < tracksCount) {
-            response = await spotifyApi.getPlaylistTracks(
-                userId,
-                playlistId,
-                options
-            );
+    while (currentOffset < tracksCount) {
+      response = await spotifyApi.getPlaylistTracks(
+        userId,
+        playlistId,
+        options
+      );
 
-            payload = [...payload, ...response.body.items];
-            currentOffset = response.body.offset + LIMIT;
-            tracksCount = response.body.total;
+      payload = [...payload, ...response.body.items];
+      currentOffset = response.body.offset + LIMIT;
+      tracksCount = response.body.total;
 
-            options = {
-                offset: currentOffset,
-                limit: LIMIT
-            };
-        }
-
-        response.body.items = payload;
-
-        return response;
-    } catch (error) {
-        return error;
+      options = {
+        offset: currentOffset,
+        limit: LIMIT
+      };
     }
+
+    response.body.items = payload;
+
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function getMe() {
-    try {
-        return await spotifyApi.getMe();
-    } catch (error) {
-        return error;
-    }
+  try {
+    return await spotifyApi.getMe();
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function getMyTopArtists(
-    userId,
-    options = {},
-    callback = () => {}
+  userId,
+  options = {},
+  callback = () => {}
 ) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
-        setUpTokens(accessToken, refreshToken);
+  try {
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
-        return await spotifyApi.getMyTopArtists();
-    } catch (error) {
-        return error;
-    }
+    return await spotifyApi.getMyTopArtists();
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function getMyTopTracks(userId, nTracks) {
-    try {
-        nTracks = parseInt(nTracks);
+  try {
+    nTracks = parseInt(nTracks);
 
-        const { accessToken, refreshToken } = userMap[userId];
-        const MAX_LIMIT = 20;
-        let currentOffset = 0,
-            currentLimit = MAX_LIMIT;
-        let tracklist = [];
+    const { accessToken, refreshToken } = userMap[userId];
+    const MAX_LIMIT = 20;
+    let currentOffset = 0,
+      currentLimit = MAX_LIMIT;
+    let tracklist = [];
 
-        setUpTokens(accessToken, refreshToken);
+    setUpTokens(accessToken, refreshToken);
 
-        while (currentOffset < nTracks) {
-            const response = await spotifyApi.getMyTopTracks({
-                offset: currentOffset,
-                limit: currentLimit,
-                time_range: 'medium_term'
-            });
+    while (currentOffset < nTracks) {
+      const response = await spotifyApi.getMyTopTracks({
+        offset: currentOffset,
+        limit: currentLimit,
+        time_range: 'medium_term'
+      });
 
-            const { body: { items = [], total, offset } = {} } = response;
+      const { body: { items = [], total, offset } = {} } = response;
 
-            tracklist = [...tracklist, ...items];
-            nTracks = total;
-            currentOffset += MAX_LIMIT;
+      tracklist = [...tracklist, ...items];
+      nTracks = total;
+      currentOffset += MAX_LIMIT;
 
-            if (nTracks - currentOffset <= currentLimit) {
-                currentLimit = nTracks - currentOffset;
-            }
-        }
-
-        return tracklist;
-    } catch (error) {
-        return error;
+      if (nTracks - currentOffset <= currentLimit) {
+        currentLimit = nTracks - currentOffset;
+      }
     }
+
+    return tracklist;
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function createPlaylist(userId, playlistName, options, callback) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
-        setUpTokens(accessToken, refreshToken);
+  try {
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
-        return await spotifyApi.createPlaylist(
-            userId,
-            playlistName,
-            options,
-            callback
-        );
-    } catch (error) {
-        return error;
-    }
+    return await spotifyApi.createPlaylist(
+      userId,
+      playlistName,
+      options,
+      callback
+    );
+  } catch (error) {
+    return error;
+  }
 }
 
 export async function addTracksToPlaylist(
-    userId,
-    playlistId,
-    trackIDs,
-    options,
-    callback
+  userId,
+  playlistId,
+  trackIDs,
+  options,
+  callback
 ) {
-    try {
-        const stringToAttach = 'spotify:track:';
-        const { accessToken, refreshToken } = userMap[userId];
-        let tracks = R.map(R.concat(stringToAttach), trackIDs);
-        let snapshot;
+  try {
+    const stringToAttach = 'spotify:track:';
+    const { accessToken, refreshToken } = userMap[userId];
+    let tracks = R.map(R.concat(stringToAttach), trackIDs);
+    let snapshot;
 
-        setUpTokens(accessToken, refreshToken);
+    setUpTokens(accessToken, refreshToken);
 
-        while (!R.isEmpty(tracks)) {
-            const tracksToAdd = tracks.splice(0, 100);
-            snapshot = await spotifyApi.addTracksToPlaylist(
-                userId,
-                playlistId,
-                tracksToAdd,
-                options,
-                callback
-            );
-        }
-
-        return snapshot;
-    } catch (error) {
-        return error;
+    while (!R.isEmpty(tracks)) {
+      const tracksToAdd = tracks.splice(0, 100);
+      snapshot = await spotifyApi.addTracksToPlaylist(
+        userId,
+        playlistId,
+        tracksToAdd,
+        options,
+        callback
+      );
     }
+
+    return snapshot;
+  } catch (error) {
+    return error;
+  }
 }
 
 // Using refresh token, generates a new access token
 // and returns it back as Promise
 export async function updateMyRefreshToken(userId) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
-        setUpTokens(accessToken, refreshToken);
+  try {
+    const { accessToken, refreshToken } = userMap[userId];
+    setUpTokens(accessToken, refreshToken);
 
-        const response = await spotifyApi.refreshAccessToken();
+    const response = await spotifyApi.refreshAccessToken();
 
-        if (R.isEmpty(response.body)) {
-            throw new Error(
-                'The response body appears to be empty or undefined'
-            );
-        }
-
-        const { body: { access_token: newAccessToken } } = response;
-
-        setUpTokens(newAccessToken, refreshToken);
-        setUserAndTokens(userId, newAccessToken);
-
-        return newAccessToken;
-    } catch (error) {
-        return error;
+    if (R.isEmpty(response.body)) {
+      throw new Error('The response body appears to be empty or undefined');
     }
+
+    const {
+      body: { access_token: newAccessToken }
+    } = response;
+
+    setUpTokens(newAccessToken, refreshToken);
+    setUserAndTokens(userId, newAccessToken);
+
+    return newAccessToken;
+  } catch (error) {
+    return error;
+  }
 }
 
 // sessionState object contains expires_in, userId, accessToken, and refreshToken
 export const startCheckingForRefreshToken = (sessionState = {}, callback) => {
-    const myTokenExpirationTime = sessionState.expires_in * 1000;
-    const timeToRefresh = myTokenExpirationTime / 2;
+  const myTokenExpirationTime = sessionState.expires_in * 1000;
+  const timeToRefresh = myTokenExpirationTime / 2;
 
-    let tokenRefreshInterval = setInterval(() => {
-        setUpTokens(sessionState.accessToken, sessionState.refreshToken);
+  let tokenRefreshInterval = setInterval(() => {
+    setUpTokens(sessionState.accessToken, sessionState.refreshToken);
 
-        updateMyRefreshToken(sessionState.id)
-            .then(newAccessToken => {
-                callback(newAccessToken);
-            })
-            .catch(error => {
-                clearInterval(tokenRefreshInterval);
-            });
-    }, 10000);
+    updateMyRefreshToken(sessionState.id)
+      .then(newAccessToken => {
+        callback(newAccessToken);
+      })
+      .catch(error => {
+        clearInterval(tokenRefreshInterval);
+      });
+  }, 10000);
 };
 
 // start - the index of track in the playlist which starts from 0
 // end - the index at which that track should be inserted
 export async function reorderTracksInPlaylist(
-    userId,
-    playlistId,
-    start,
-    end,
-    options = {}
+  userId,
+  playlistId,
+  start,
+  end,
+  options = {}
 ) {
-    try {
-        const { accessToken, refreshToken } = userMap[userId];
-        setUpTokens(accessToken, refreshToken);
-
-        const snapshot = await spotifyApi.reorderTracksInPlaylist(
-            userId,
-            playlistId,
-            parseInt(start),
-            parseInt(end),
-            options
-        );
-
-        return snapshot;
-    } catch (error) {
-        return error;
-    }
-}
-
-export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
-    const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
-
+  try {
     const { accessToken, refreshToken } = userMap[userId];
     setUpTokens(accessToken, refreshToken);
 
-    imageData =
-        imageData.indexOf('data') > -1
-            ? imageData.substring(imageData.indexOf(',') + 1)
-            : imageData;
+    const snapshot = await spotifyApi.reorderTracksInPlaylist(
+      userId,
+      playlistId,
+      parseInt(start),
+      parseInt(end),
+      options
+    );
 
-    return fetch(URL, {
-        method: 'put',
-        body: imageData,
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'image/jpeg'
-        }
-    })
-        .then(data => ({
-            status: data.status,
-            statusText: data.statusText
-        }))
-        .catch(error => error);
+    return snapshot;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const uploadPlaylistCoverImage = (userId, playlistId, imageData) => {
+  const URL = `${SPOTIFY_API_URL}/users/${userId}/playlists/${playlistId}/images`;
+
+  const { accessToken, refreshToken } = userMap[userId];
+  setUpTokens(accessToken, refreshToken);
+
+  imageData =
+    imageData.indexOf('data') > -1
+      ? imageData.substring(imageData.indexOf(',') + 1)
+      : imageData;
+
+  return fetch(URL, {
+    method: 'put',
+    body: imageData,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'image/jpeg'
+    }
+  })
+    .then(data => ({
+      status: data.status,
+      statusText: data.statusText
+    }))
+    .catch(error => error);
 };
 
 export default {
-    setUserAndTokens,
-    deleteUserData,
-    createAuthorizeURL,
-    authorizationCodeGrant,
-    getMyPlaylists,
-    getPlaylistTracks,
-    getMe,
-    getMyTopArtists,
-    createPlaylist,
-    reorderTracksInPlaylist,
-    uploadPlaylistCoverImage,
-    updateMyRefreshToken
+  setUserAndTokens,
+  deleteUserData,
+  createAuthorizeURL,
+  authorizationCodeGrant,
+  getMyPlaylists,
+  getPlaylistTracks,
+  getMe,
+  getMyTopArtists,
+  createPlaylist,
+  reorderTracksInPlaylist,
+  uploadPlaylistCoverImage,
+  updateMyRefreshToken
 };

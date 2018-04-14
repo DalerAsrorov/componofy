@@ -5,29 +5,29 @@ import { PlayArrow, Pause } from 'material-ui-icons';
 import { withMediaProps } from 'react-media-player';
 
 class PlayPause extends PureComponent {
-    static propTypes = {
-        media: PropTypes.object.isRequired,
-        color: PropTypes.string
-    };
+  static propTypes = {
+    media: PropTypes.object.isRequired,
+    color: PropTypes.string
+  };
 
-    _handlePlayPause = () => {
-        this.props.media.playPause();
-    };
+  _handlePlayPause = () => {
+    this.props.media.playPause();
+  };
 
-    render() {
-        const { media, color } = this.props;
-        let playPauseIcon = <Pause />;
+  render() {
+    const { media, color } = this.props;
+    let playPauseIcon = <Pause />;
 
-        if (!media.isPlaying) {
-            playPauseIcon = <PlayArrow />;
-        }
-
-        return (
-            <IconButton color={color} onClick={this._handlePlayPause}>
-                {playPauseIcon}
-            </IconButton>
-        );
+    if (!media.isPlaying) {
+      playPauseIcon = <PlayArrow />;
     }
+
+    return (
+      <IconButton color={color} onClick={this._handlePlayPause}>
+        {playPauseIcon}
+      </IconButton>
+    );
+  }
 }
 
 export default withMediaProps(PlayPause);

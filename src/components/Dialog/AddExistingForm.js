@@ -16,173 +16,168 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { LIGHT_CYAN_COLOR, PLAYLIST_OFFSET_LIMIT } from '../../utils/constants';
 
 const styles = theme => ({
-    formControl: {
-        width: '100%'
-    },
+  formControl: {
+    width: '100%'
+  },
 
-    loaderWrapper: {
-        textAlign: 'center',
-        width: '100%'
-    },
+  loaderWrapper: {
+    textAlign: 'center',
+    width: '100%'
+  },
 
-    playlistName: {
-        width: '100%',
-        paddingLeft: `${theme.spacing.unit}px`
-    },
+  playlistName: {
+    width: '100%',
+    paddingLeft: `${theme.spacing.unit}px`
+  },
 
-    progress: {
-        margin: `0 ${theme.spacing.unit * 2}px`,
-        color: LIGHT_CYAN_COLOR
-    },
+  progress: {
+    margin: `0 ${theme.spacing.unit * 2}px`,
+    color: LIGHT_CYAN_COLOR
+  },
 
-    select: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 1.5}px`
-    },
+  select: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 1.5}px`
+  },
 
-    wrapper: {
-        width: '100%'
-    }
+  wrapper: {
+    width: '100%'
+  }
 });
 
 class AddExistingForm extends PureComponent {
-    static propTypes = {
-        onSetAddExistingOpenStatus: PropTypes.func.isRequired,
-        onFetchPlaylistSelection: PropTypes.func.isRequired,
-        totalNumberOfPlaylists: PropTypes.number.isRequired,
-        selectedPlaylist: PropTypes.string.isRequired,
-        wasAddExistingOpen: PropTypes.bool.isRequired,
-        onSetCurrentOffset: PropTypes.func.isRequired,
-        isFetchingOptions: PropTypes.bool.isRequired,
-        onSelectPlaylist: PropTypes.func.isRequired,
-        playlistOptions: PropTypes.array.isRequired,
-        currentOffset: PropTypes.number.isRequired,
-        classes: PropTypes.object.isRequired,
-        error: PropTypes.bool.isRequired,
-        wasDialogOpen: PropTypes.bool
-    };
+  static propTypes = {
+    onSetAddExistingOpenStatus: PropTypes.func.isRequired,
+    onFetchPlaylistSelection: PropTypes.func.isRequired,
+    totalNumberOfPlaylists: PropTypes.number.isRequired,
+    selectedPlaylist: PropTypes.string.isRequired,
+    wasAddExistingOpen: PropTypes.bool.isRequired,
+    onSetCurrentOffset: PropTypes.func.isRequired,
+    isFetchingOptions: PropTypes.bool.isRequired,
+    onSelectPlaylist: PropTypes.func.isRequired,
+    playlistOptions: PropTypes.array.isRequired,
+    currentOffset: PropTypes.number.isRequired,
+    classes: PropTypes.object.isRequired,
+    error: PropTypes.bool.isRequired,
+    wasDialogOpen: PropTypes.bool
+  };
 
-    _handleSelectionFetch = () => {
-        const {
-            onSetCurrentOffset,
-            onFetchPlaylistSelection,
-            totalNumberOfPlaylists,
-            currentOffset
-        } = this.props;
+  _handleSelectionFetch = () => {
+    const {
+      onSetCurrentOffset,
+      onFetchPlaylistSelection,
+      totalNumberOfPlaylists,
+      currentOffset
+    } = this.props;
 
-        if (currentOffset < totalNumberOfPlaylists) {
-            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
-            onSetCurrentOffset(currentOffset + PLAYLIST_OFFSET_LIMIT);
-        }
-    };
-
-    componentDidMount() {
-        const {
-            onFetchPlaylistSelection,
-            onSetAddExistingOpenStatus,
-            onSetCurrentOffset,
-            wasAddExistingOpen,
-            currentOffset
-        } = this.props;
-
-        if (!wasAddExistingOpen) {
-            onSetAddExistingOpenStatus(true);
-            onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
-            onSetCurrentOffset(PLAYLIST_OFFSET_LIMIT);
-        }
+    if (currentOffset < totalNumberOfPlaylists) {
+      onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+      onSetCurrentOffset(currentOffset + PLAYLIST_OFFSET_LIMIT);
     }
+  };
 
-    _handlePlaylistSelect = event => {
-        const { onSelectPlaylist } = this.props;
+  componentDidMount() {
+    const {
+      onFetchPlaylistSelection,
+      onSetAddExistingOpenStatus,
+      onSetCurrentOffset,
+      wasAddExistingOpen,
+      currentOffset
+    } = this.props;
 
-        onSelectPlaylist(event.target.value);
-    };
+    if (!wasAddExistingOpen) {
+      onSetAddExistingOpenStatus(true);
+      onFetchPlaylistSelection(currentOffset, PLAYLIST_OFFSET_LIMIT);
+      onSetCurrentOffset(PLAYLIST_OFFSET_LIMIT);
+    }
+  }
 
-    render() {
-        const {
-            playlistOptions,
-            error,
-            classes,
-            wasAddExistingOpen,
-            isFetchingOptions,
-            selectedPlaylist,
-            currentOffset
-        } = this.props;
-        const playlistMenuOptions = playlistOptions.map(
-            ({ id, name, images = [] }) => {
-                return (
-                    <MenuItem key={id} value={id}>
-                        <ListItemIcon className={classes.icon}>
-                            <Avatar
-                                src={head(images).url}
-                                alt={`${name} cover image`}
-                            />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={
-                                <Typography
-                                    variant="title"
-                                    color="textSecondary"
-                                    component="p"
-                                    className={classes.playlistName}
-                                >
-                                    {name}
-                                </Typography>
-                            }
-                        />
-                    </MenuItem>
-                );
-            }
-        );
+  _handlePlaylistSelect = event => {
+    const { onSelectPlaylist } = this.props;
 
-        let contentComponent = (
-            <div className={classes.loaderWrapper}>
-                <CircularProgress className={classes.progress} thickness={7} />
-                <Typography variant="caption" color="textSecondary">
-                    Loading your playlists...
-                </Typography>
-            </div>
-        );
+    onSelectPlaylist(event.target.value);
+  };
 
-        if (!isFetchingOptions || currentOffset >= PLAYLIST_OFFSET_LIMIT) {
-            contentComponent = (
-                <FormControl className={classes.formControl} error={error}>
-                    <InputLabel htmlFor="playlist-choice">
-                        Choose Playlist
-                    </InputLabel>
-                    <Select
-                        value={selectedPlaylist}
-                        onChange={this._handlePlaylistSelect}
-                        name="playlist"
-                        classes={{
-                            select: classes.select
-                        }}
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: 420
-                                }
-                            }
-                        }}
-                    >
-                        {playlistMenuOptions}
-                        <Waypoint
-                            onEnter={() => {
-                                this._handleSelectionFetch();
-                            }}
-                        />
-                    </Select>
-                </FormControl>
-            );
-        }
-
+  render() {
+    const {
+      playlistOptions,
+      error,
+      classes,
+      wasAddExistingOpen,
+      isFetchingOptions,
+      selectedPlaylist,
+      currentOffset
+    } = this.props;
+    const playlistMenuOptions = playlistOptions.map(
+      ({ id, name, images = [] }) => {
         return (
-            <div id="addExistingForm" className={classes.wrapper}>
-                {contentComponent}
-            </div>
+          <MenuItem key={id} value={id}>
+            <ListItemIcon className={classes.icon}>
+              <Avatar src={head(images).url} alt={`${name} cover image`} />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  variant="title"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.playlistName}
+                >
+                  {name}
+                </Typography>
+              }
+            />
+          </MenuItem>
         );
+      }
+    );
+
+    let contentComponent = (
+      <div className={classes.loaderWrapper}>
+        <CircularProgress className={classes.progress} thickness={7} />
+        <Typography variant="caption" color="textSecondary">
+          Loading your playlists...
+        </Typography>
+      </div>
+    );
+
+    if (!isFetchingOptions || currentOffset >= PLAYLIST_OFFSET_LIMIT) {
+      contentComponent = (
+        <FormControl className={classes.formControl} error={error}>
+          <InputLabel htmlFor="playlist-choice">Choose Playlist</InputLabel>
+          <Select
+            value={selectedPlaylist}
+            onChange={this._handlePlaylistSelect}
+            name="playlist"
+            classes={{
+              select: classes.select
+            }}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 420
+                }
+              }
+            }}
+          >
+            {playlistMenuOptions}
+            <Waypoint
+              onEnter={() => {
+                this._handleSelectionFetch();
+              }}
+            />
+          </Select>
+        </FormControl>
+      );
     }
+
+    return (
+      <div id="addExistingForm" className={classes.wrapper}>
+        {contentComponent}
+      </div>
+    );
+  }
 }
 
 export default withStyles(styles)(AddExistingForm);
