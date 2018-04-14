@@ -1,14 +1,14 @@
 @mixin sticky {
-    position: -webkit-sticky !important; // required for Safari
-    position: sticky !important;
+  position: -webkit-sticky !important; // required for Safari
+  position: sticky !important;
 }
 
 .sticky-top {
-    @include sticky;
-    top: 0 !important;
+  @include sticky;
+  top: 0 !important;
 }
 
 .sticky-bottom {
-    @include sticky;
-    bottom: 0 !important;
+  @include sticky;
+  bottom: 0 !important;
 }

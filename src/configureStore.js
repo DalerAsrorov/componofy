@@ -9,27 +9,27 @@ export const history = createHistory();
 const routeMiddleware = routerMiddleware(history);
 
 const rootReducer = combineReducers({
-    ...reducers,
-    router: routerReducer
+  ...reducers,
+  router: routerReducer
 });
 
 const configureStore = () => {
-    const store = createStore(
-        rootReducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-            window.__REDUX_DEVTOOLS_EXTENSION__(),
-        applyMiddleware(routeMiddleware, thunkMiddleware)
-    );
+  const store = createStore(
+    rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
+    applyMiddleware(routeMiddleware, thunkMiddleware)
+  );
 
-    if (process.env.NODE_ENV !== 'production') {
-        if (module.hot) {
-            module.hot.accept('./reducers', () => {
-                store.replaceReducer(rootReducer);
-            });
-        }
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer);
+      });
     }
+  }
 
-    return store;
+  return store;
 };
 
 export default configureStore;

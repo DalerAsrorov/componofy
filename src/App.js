@@ -15,26 +15,26 @@ import './App.css';
 const theme = createMuiTheme();
 
 const NotFound = () => (
-    <Loader
-        text={
-            <Typography variant="display3" color="textSecondary">
-                This page does not exist
-            </Typography>
-        }
-        icon={<DoNotDisturb />}
-        className="not-found-page"
-        shouldShowShadows
-    />
+  <Loader
+    text={
+      <Typography variant="display3" color="textSecondary">
+        This page does not exist
+      </Typography>
+    }
+    icon={<DoNotDisturb />}
+    className="not-found-page"
+    shouldShowShadows
+  />
 );
 
 const App = () => (
-    <MuiThemeProvider theme={theme}>
-        <Switch>
-            <Route exact path="/" component={Login} />
-            <PrivateRoute path="/app" component={Main} />
-            <Route component={NotFound} />
-        </Switch>
-    </MuiThemeProvider>
+  <MuiThemeProvider theme={theme}>
+    <Switch>
+      <Route exact path="/" component={Login} />
+      <PrivateRoute path="/app" component={Main} />
+      <Route component={NotFound} />
+    </Switch>
+  </MuiThemeProvider>
 );
 
 export default App;

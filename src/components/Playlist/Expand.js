@@ -8,62 +8,62 @@ import classNames from 'classnames';
 import '../common/common.css';
 
 const styles = theme => ({
-    button: {
-        marginBottom: theme.spacing.unit
-    },
+  button: {
+    marginBottom: theme.spacing.unit
+  },
 
-    linkTo: {
-        display: 'block'
-    },
+  linkTo: {
+    display: 'block'
+  },
 
-    wrapper: {
-        zIndex: theme.zIndex.drawer,
-        textAlign: 'center'
-    }
+  wrapper: {
+    zIndex: theme.zIndex.drawer,
+    textAlign: 'center'
+  }
 });
 
 const Expand = props => {
-    const {
-        onClick,
-        classes,
-        showUpArrow,
-        isStickyBottom,
-        isStickyTop,
-        to,
-        shouldSpy,
-        ...restProps
-    } = props;
+  const {
+    onClick,
+    classes,
+    showUpArrow,
+    isStickyBottom,
+    isStickyTop,
+    to,
+    shouldSpy,
+    ...restProps
+  } = props;
 
-    return (
-        <footer
-            className={classNames(
-                classes.wrapper,
-                { 'sticky-bottom': isStickyBottom },
-                { 'sticky-top': isStickyTop }
-            )}
+  return (
+    <footer
+      className={classNames(
+        classes.wrapper,
+        { 'sticky-bottom': isStickyBottom },
+        { 'sticky-top': isStickyTop }
+      )}
+    >
+      <Link className={classes.linkTo} to={to} spy={shouldSpy}>
+        <Button
+          onClick={onClick}
+          className={classes.button}
+          aria-label="expand"
+          {...restProps}
         >
-            <Link className={classes.linkTo} to={to} spy={shouldSpy}>
-                <Button
-                    onClick={onClick}
-                    className={classes.button}
-                    aria-label="expand"
-                    {...restProps}
-                >
-                    {showUpArrow ? <ExpandLess /> : <ExpandMore />}
-                </Button>
-            </Link>
-        </footer>
-    );
+          {showUpArrow ? <ExpandLess /> : <ExpandMore />}
+        </Button>
+      </Link>
+    </footer>
+  );
 };
 
 Expand.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
-    to: PropTypes.string.isRequired,
-    shouldSpy: PropTypes.bool.isRequired,
-    showUpArrow: PropTypes.bool,
-    isStickyBottom: PropTypes.bool,
-    isStickyTop: PropTypes.bool
+  onClick: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  to: PropTypes.string.isRequired,
+  shouldSpy: PropTypes.bool.isRequired,
+  showUpArrow: PropTypes.bool,
+  isStickyBottom: PropTypes.bool,
+  isStickyTop: PropTypes.bool
 };
 
 export default withStyles(styles)(Expand);

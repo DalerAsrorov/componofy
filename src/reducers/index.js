@@ -7,11 +7,11 @@ import { user } from './user';
 import { errors } from './errors';
 
 export {
-    myPlaylists,
-    user,
-    finalPlaylists,
-    navigation,
-    componoform,
-    publicPlaylists,
-    errors
+  myPlaylists,
+  user,
+  finalPlaylists,
+  navigation,
+  componoform,
+  publicPlaylists,
+  errors
 };

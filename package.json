@@ -28,7 +28,6 @@
         "babel-preset-stage-2": "^6.24.1",
         "classnames": "^2.2.5",
         "dotenv": "^5.0.1",
-        "enzyme-to-json": "^3.3.3",
         "hapi": "^17.1",
         "history": "^4.7.2",
         "inert": "^5.0.1",
@@ -61,6 +60,7 @@
         "yar": "^9.0.1"
     },
     "devDependencies": {
+        "enzyme-to-json": "^3.3.3",
         "cross-env": "^5.0.5",
         "enzyme": "^3.3.0",
         "enzyme-adapter-react-16": "^1.1.1",

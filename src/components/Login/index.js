@@ -9,47 +9,47 @@ import Landing from '../Landing';
 import './Login.css';
 
 const styles = theme => ({
-    root: {
-        width: '100%',
-        position: 'relative',
-        transform: 'translateY(50%)',
-        margin: '0'
-    },
+  root: {
+    width: '100%',
+    position: 'relative',
+    transform: 'translateY(50%)',
+    margin: '0'
+  },
 
-    subRoot: {
-        flex: 'inherit',
-        paddingLeft: '0 !important',
-        paddingRight: '0 !important'
-    }
+  subRoot: {
+    flex: 'inherit',
+    paddingLeft: '0 !important',
+    paddingRight: '0 !important'
+  }
 });
 
 class Login extends PureComponent {
-    static propTypes = {
-        classes: PropTypes.object
-    };
+  static propTypes = {
+    classes: PropTypes.object
+  };
 
-    _handleAuth = () => {
-        replaceTo('/api/auth');
-    };
+  _handleAuth = () => {
+    replaceTo('/api/auth');
+  };
 
-    render() {
-        const { classes } = this.props;
+  render() {
+    const { classes } = this.props;
 
-        return (
-            <Grid className={classes.root} container justify="center">
-                <Grid item className={classes.subRoot}>
-                    <Landing
-                        iconText="Start"
-                        title="Componofy"
-                        subTitle="Make a perfect playlist from a bunch of playlists"
-                        onAuth={this._handleAuth}
-                    >
-                        <FaSpotify />
-                    </Landing>
-                </Grid>
-            </Grid>
-        );
-    }
+    return (
+      <Grid className={classes.root} container justify="center">
+        <Grid item className={classes.subRoot}>
+          <Landing
+            iconText="Start"
+            title="Componofy"
+            subTitle="Make a perfect playlist from a bunch of playlists"
+            onAuth={this._handleAuth}
+          >
+            <FaSpotify />
+          </Landing>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
 export default withStyles(styles)(Login);
