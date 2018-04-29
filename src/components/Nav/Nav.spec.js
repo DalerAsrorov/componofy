@@ -57,6 +57,7 @@ describe('When Nav component is initialized', () => {
   it('Nav has three tabs', () => {
     let wrapper = mount(<Nav {...requiredProps} />);
 
+    expect(wrapper.find(Tabs)).toHaveLength(1);
     expect(wrapper.find(Tab)).toHaveLength(3);
   });
 
@@ -76,5 +77,13 @@ describe('When Nav component is initialized', () => {
     let badge = wrapper.find('.number-badge');
 
     expect(badge.exists()).toEqual(expected);
+  });
+
+  it('should initially have the tab index value of 0', () => {
+    let wrapper = mount(<Nav {...requiredProps} />);
+    let tabsWrapper = wrapper.find(Tabs);
+    let expected = 0;
+
+    expect(tabsWrapper.props().value).toBe(0);
   });
 });
