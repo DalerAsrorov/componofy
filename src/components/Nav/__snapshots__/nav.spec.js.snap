@@ -1,3 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When Nav component is initialized Nav renders properly 1`] = `[Function]`;
+exports[`When Nav component is initialized Nav renders properly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <WithStyles(Nav)
+    classes={
+      Object {
+        "root": "",
+        "tabContainer": "",
+      }
+    }
+    location={
+      Object {
+        "pathname": 0,
+      }
+    }
+    navigateTo={[Function]}
+    navigation={
+      Object {
+        "0": "route1",
+        "1": "route2",
+        "index": 0,
+        "routeToIndexMap": [Function],
+      }
+    }
+    numberOfFinalPlaylists={30}
+    setNavIndex={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "classes": Object {
+        "root": "Nav-root-1",
+        "tabContainer": "Nav-tabContainer-2",
+      },
+      "location": Object {
+        "pathname": 0,
+      },
+      "navigateTo": [Function],
+      "navigation": Object {
+        "0": "route1",
+        "1": "route2",
+        "index": 0,
+        "routeToIndexMap": [Function],
+      },
+      "numberOfFinalPlaylists": 30,
+      "setNavIndex": [Function],
+    },
+    "ref": null,
+    "rendered": null,
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "classes": Object {
+          "root": "Nav-root-1",
+          "tabContainer": "Nav-tabContainer-2",
+        },
+        "location": Object {
+          "pathname": 0,
+        },
+        "navigateTo": [Function],
+        "navigation": Object {
+          "0": "route1",
+          "1": "route2",
+          "index": 0,
+          "routeToIndexMap": [Function],
+        },
+        "numberOfFinalPlaylists": 30,
+        "setNavIndex": [Function],
+      },
+      "ref": null,
+      "rendered": null,
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
