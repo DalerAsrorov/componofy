@@ -1,0 +1,417 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`My Playlists renders with required props 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <WithStyles(MyPlaylists)
+    addErrorToApp={[Function]}
+    addPlaylistToFinal={[Function]}
+    classes={Object {}}
+    fetchMyPlaylists={[Function]}
+    generateSuggestedPlaylists={[Function]}
+    logOutUser={[Function]}
+    myPlaylists={
+      Object {
+        "areAllOpen": false,
+        "canLoadMore": false,
+        "currentOffset": 0,
+        "isFetching": false,
+        "isVisited": false,
+        "numberOfTracks": 3,
+        "playlists": Array [
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "8752",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "6547",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "4234",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+        ],
+        "playlistsRemaining": 0,
+      }
+    }
+    myPlaylistsHasOpenPlaylist={false}
+    navigation={
+      Object {
+        "currentPage": "/app",
+        "index": 0,
+        "indexToRouteMap": Object {
+          "0": "/app",
+          "1": "/app/public",
+          "2": "/app/componofy",
+        },
+        "nextIndex": 1,
+        "nextPage": "/app/public",
+        "numberOfPages": 3,
+        "routeToIndexMap": Object {
+          "/app": 0,
+          "/app/componofy": 2,
+          "/app/public": 1,
+        },
+      }
+    }
+    removePlaylistFromFinal={[Function]}
+    reorderPlaylistTracks={[Function]}
+    setMySearchTerm={[Function]}
+    setOpenStatusForAllPlaylists={[Function]}
+    setOpenStatusMyPlaylists={[Function]}
+    setPlaylistDragStatus={[Function]}
+    setPlaylistOpen={[Function]}
+    startPlaylistTracksReorderProcess={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "addErrorToApp": [Function],
+      "addPlaylistToFinal": [Function],
+      "classes": Object {
+        "footerPanel": "MyPlaylists-footerPanel-5",
+        "hotKeys": "MyPlaylists-hotKeys-3",
+        "loadmore": "MyPlaylists-loadmore-1",
+        "playlistRemaining": "MyPlaylists-playlistRemaining-4",
+        "searchAdortment": "MyPlaylists-searchAdortment-2",
+      },
+      "fetchMyPlaylists": [Function],
+      "generateSuggestedPlaylists": [Function],
+      "logOutUser": [Function],
+      "myPlaylists": Object {
+        "areAllOpen": false,
+        "canLoadMore": false,
+        "currentOffset": 0,
+        "isFetching": false,
+        "isVisited": false,
+        "numberOfTracks": 3,
+        "playlists": Array [
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "8752",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "6547",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+          Object {
+            "external_urls": Object {
+              "spotify": "test_external_url",
+            },
+            "href": "testLink",
+            "id": "4234",
+            "images": Array [
+              Object {
+                "height": 500,
+                "url": "test image url",
+                "width": 100,
+              },
+            ],
+            "isOpen": false,
+            "name": "Artist 1",
+            "owner": Object {
+              "id": "testOwner",
+              "type": "testType",
+            },
+            "public": true,
+            "tracks": Object {
+              "list": Array [],
+            },
+            "type": "testType",
+          },
+        ],
+        "playlistsRemaining": 0,
+      },
+      "myPlaylistsHasOpenPlaylist": false,
+      "navigation": Object {
+        "currentPage": "/app",
+        "index": 0,
+        "indexToRouteMap": Object {
+          "0": "/app",
+          "1": "/app/public",
+          "2": "/app/componofy",
+        },
+        "nextIndex": 1,
+        "nextPage": "/app/public",
+        "numberOfPages": 3,
+        "routeToIndexMap": Object {
+          "/app": 0,
+          "/app/componofy": 2,
+          "/app/public": 1,
+        },
+      },
+      "removePlaylistFromFinal": [Function],
+      "reorderPlaylistTracks": [Function],
+      "setMySearchTerm": [Function],
+      "setOpenStatusForAllPlaylists": [Function],
+      "setOpenStatusMyPlaylists": [Function],
+      "setPlaylistDragStatus": [Function],
+      "setPlaylistOpen": [Function],
+      "startPlaylistTracksReorderProcess": [Function],
+    },
+    "ref": null,
+    "rendered": null,
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "addErrorToApp": [Function],
+        "addPlaylistToFinal": [Function],
+        "classes": Object {
+          "footerPanel": "MyPlaylists-footerPanel-5",
+          "hotKeys": "MyPlaylists-hotKeys-3",
+          "loadmore": "MyPlaylists-loadmore-1",
+          "playlistRemaining": "MyPlaylists-playlistRemaining-4",
+          "searchAdortment": "MyPlaylists-searchAdortment-2",
+        },
+        "fetchMyPlaylists": [Function],
+        "generateSuggestedPlaylists": [Function],
+        "logOutUser": [Function],
+        "myPlaylists": Object {
+          "areAllOpen": false,
+          "canLoadMore": false,
+          "currentOffset": 0,
+          "isFetching": false,
+          "isVisited": false,
+          "numberOfTracks": 3,
+          "playlists": Array [
+            Object {
+              "external_urls": Object {
+                "spotify": "test_external_url",
+              },
+              "href": "testLink",
+              "id": "8752",
+              "images": Array [
+                Object {
+                  "height": 500,
+                  "url": "test image url",
+                  "width": 100,
+                },
+              ],
+              "isOpen": false,
+              "name": "Artist 1",
+              "owner": Object {
+                "id": "testOwner",
+                "type": "testType",
+              },
+              "public": true,
+              "tracks": Object {
+                "list": Array [],
+              },
+              "type": "testType",
+            },
+            Object {
+              "external_urls": Object {
+                "spotify": "test_external_url",
+              },
+              "href": "testLink",
+              "id": "6547",
+              "images": Array [
+                Object {
+                  "height": 500,
+                  "url": "test image url",
+                  "width": 100,
+                },
+              ],
+              "isOpen": false,
+              "name": "Artist 1",
+              "owner": Object {
+                "id": "testOwner",
+                "type": "testType",
+              },
+              "public": true,
+              "tracks": Object {
+                "list": Array [],
+              },
+              "type": "testType",
+            },
+            Object {
+              "external_urls": Object {
+                "spotify": "test_external_url",
+              },
+              "href": "testLink",
+              "id": "4234",
+              "images": Array [
+                Object {
+                  "height": 500,
+                  "url": "test image url",
+                  "width": 100,
+                },
+              ],
+              "isOpen": false,
+              "name": "Artist 1",
+              "owner": Object {
+                "id": "testOwner",
+                "type": "testType",
+              },
+              "public": true,
+              "tracks": Object {
+                "list": Array [],
+              },
+              "type": "testType",
+            },
+          ],
+          "playlistsRemaining": 0,
+        },
+        "myPlaylistsHasOpenPlaylist": false,
+        "navigation": Object {
+          "currentPage": "/app",
+          "index": 0,
+          "indexToRouteMap": Object {
+            "0": "/app",
+            "1": "/app/public",
+            "2": "/app/componofy",
+          },
+          "nextIndex": 1,
+          "nextPage": "/app/public",
+          "numberOfPages": 3,
+          "routeToIndexMap": Object {
+            "/app": 0,
+            "/app/componofy": 2,
+            "/app/public": 1,
+          },
+        },
+        "removePlaylistFromFinal": [Function],
+        "reorderPlaylistTracks": [Function],
+        "setMySearchTerm": [Function],
+        "setOpenStatusForAllPlaylists": [Function],
+        "setOpenStatusMyPlaylists": [Function],
+        "setPlaylistDragStatus": [Function],
+        "setPlaylistOpen": [Function],
+        "startPlaylistTracksReorderProcess": [Function],
+      },
+      "ref": null,
+      "rendered": null,
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+    "context": Object {},
+  },
+}
+`;
