@@ -8,12 +8,13 @@ import Nav from './';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-// props used throughout test
+// Classes required for Material UI theme
 const classes = {
   root: '',
   tabContainer: ''
 };
 
+// Required props for Material UI components context
 const requiredProps = {
   numberOfFinalPlaylists: 30,
   location: {
@@ -67,5 +68,13 @@ describe('When Nav component is initialized', () => {
     let badge = wrapper.find('.number-badge').at(0);
 
     expect(badge.props().badgeContent).toBe(expected);
+  });
+
+  it('should not show badge if number of playlists added is 0', () => {
+    let expected = false;
+    let wrapper = mount(<Nav {...requiredProps} numberOfFinalPlaylists={0} />);
+    let badge = wrapper.find('.number-badge');
+
+    expect(badge.exists()).toEqual(expected);
   });
 });
