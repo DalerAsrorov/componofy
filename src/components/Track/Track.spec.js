@@ -20,7 +20,7 @@ const requiredProps = {
 };
 
 /**
- * NOTE: Testing this causes a lot of errors
+ * NOTE: Testing this with mount causes a lot of errors
  * will need to re-visit on how to test this huge component
  * properly.
  */
