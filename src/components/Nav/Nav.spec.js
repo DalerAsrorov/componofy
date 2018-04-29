@@ -1,6 +1,8 @@
 import React from 'react';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Enzyme from 'enzyme';
-import { shallow } from 'enzyme';
+import { createShallow, createMount } from 'material-ui/test-utils';
+
 import Adapter from 'enzyme-adapter-react-16';
 import Nav from './';
 
@@ -29,24 +31,41 @@ const requiredProps = {
 };
 
 describe('When Nav component is initialized', () => {
-  it('Nav renders properly', () => {
-    let nav = shallow(<Nav {...requiredProps} />);
+  let mount, shallow;
 
-    expect(nav).toMatchSnapshot();
+  beforeEach(() => {
+    mount = createMount();
+    shallow = createShallow();
   });
 
-  it('Nav navigateTo prop is not being called on render', () => {
-    let nav = shallow(<Nav {...requiredProps} />);
+  it('Nav renders properly', () => {
+    let wrapper = createShallow(<Nav {...requiredProps} />);
 
-    expect(requiredProps.navigateTo.mock.calls.length).toBe(0);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('Nav has correct classes for styling', () => {
-    let nav = shallow(<Nav {...requiredProps} />);
-    let classNames = nav.prop('classes');
+    let wrapper = shallow(<Nav {...requiredProps} />);
+    let classNames = wrapper.prop('classes');
 
     Object.keys(classes).forEach(stylAttr => {
       expect(classNames).toHaveProperty(stylAttr);
     });
+  });
+
+  it('Nav has three tabs', () => {
+    let wrapper = mount(<Nav {...requiredProps} />);
+
+    expect(wrapper.find(Tab)).toHaveLength(3);
+  });
+
+  it('should show badge with the number of playlsits added', () => {
+    let expected = 10;
+    let wrapper = mount(
+      <Nav {...requiredProps} numberOfFinalPlaylists={expected} />
+    );
+    let badge = wrapper.find('.number-badge').at(0);
+
+    expect(badge.props().badgeContent).toBe(expected);
   });
 });
