@@ -1,9 +1,8 @@
 import React from 'react';
-import Tabs, { Tab } from 'material-ui/Tabs';
 import Enzyme from 'enzyme';
-import { createShallow, createMount } from 'material-ui/test-utils';
-
 import Adapter from 'enzyme-adapter-react-16';
+import { createShallow, createMount } from 'material-ui/test-utils';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Nav from './';
 
 Enzyme.configure({ adapter: new Adapter() });
