@@ -16,13 +16,12 @@ jobs:
 
     test:
       override:
-        - npm test -- -u --coverage
+        - CI=true npm test -u
       post:
         - npm install -g codeclimate-test-reporter
         - codeclimate-test-reporter < coverage/lcov.info
 
     steps:
       - checkout
-
-
       - run: yarn install
+      - run: yarn test
