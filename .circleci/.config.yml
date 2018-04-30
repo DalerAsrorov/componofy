@@ -16,7 +16,7 @@ jobs:
 
     test:
       override:
-        - npm test -- --coverage
+        - npm test -- -u --coverage
       post:
         - npm install -g codeclimate-test-reporter
         - codeclimate-test-reporter < coverage/lcov.info
