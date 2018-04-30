@@ -14,7 +14,12 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/componofy
+    test:
+      override:
+        - npm test -- --coverage
+      post:
+        - npm install -g codeclimate-test-reporter
+        - codeclimate-test-reporter < coverage/lcov.info
 
     steps:
       - checkout
@@ -32,11 +37,3 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      test:
-        override:
-          - npm test -- --coverage
-        post:
-          - npm install -g codeclimate-test-reporter
-          - codeclimate-test-reporter < coverage/lcov.info
