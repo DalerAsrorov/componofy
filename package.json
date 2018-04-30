@@ -4,7 +4,6 @@
   "description":
     "Web application that helps user merge the user's and public playlists.",
   "engines": {
-    "node": ">=8.9.3",
     "npm": ">=5.5.1",
     "yarn": ">=1.6.0"
   },
