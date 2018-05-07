@@ -21,7 +21,16 @@ This document describes the high level description of what the architecture of t
 ## Content
 
 ### App Flow
-<img src="./AppFlow/AppFlow.png" alt="App flow diagram image" width="470" height="500" />
+A tree where `Login` page is a root and the rest are children which form a connected graph.
+
+Login (root) => My
+My => Public
+My => Componfy
+Public => My
+Public => Componofy
+Componfy => My
+Componofy => Public
+
 
 #### General 
 The app architecture will follow the Authentication Code flow described in the official Spotify API. 
