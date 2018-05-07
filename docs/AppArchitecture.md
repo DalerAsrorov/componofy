@@ -21,7 +21,7 @@ This document describes the high level description of what the architecture of t
 ## Content
 
 ### App Flow
-A tree where `Login` page is a root and the rest are children which form a connected graph.
+A tree where `Login` is a root with children that form connected graph.
 
 Login (root) => My
 My => Public
