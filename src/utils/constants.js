@@ -104,6 +104,9 @@ export const MAX_IMAGE_SIZE_LIMIT = 256000;
 // make request for refresh token every minute
 export const REFRESH_TOKEN_UPDATE_TIME = 60 * 1000;
 
+// YouTube link to Demo
+export const DEMO_YOUTUBE_LINK = 'https://www.youtube.com/watch?v=lQnvfRADJMQ';
+
 export const LOAD_MORE_STATUS = {
   // There is no tracks to load
   0: 'All playlists loaded',

@@ -6,6 +6,7 @@ import Grid from 'material-ui/Grid';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import { DEMO_YOUTUBE_LINK } from '../../utils/constants';
 
 import './Landing.css';
 
@@ -13,11 +14,16 @@ const ELEVATION = 8;
 const XS = 12;
 
 const styles = theme => ({
+  demoLink: {
+    marginTop: theme.spacing.unit / 2,
+    padding: theme.spacing.unit,
+  },
+
   root: {
     margin: 0,
     width: '100%',
-    padding: `${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px
-        ${theme.spacing.unit * 8}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px
+        ${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px`,
     textAlign: 'center'
   },
 
@@ -87,6 +93,18 @@ class Landing extends PureComponent {
                 {iconText}
               </Typography>
             </Button>
+            <Typography
+              className={classes.demoLink}
+              color="textSecondary"
+              align="center"
+              variant="subheading"
+              component="a"
+              target="__blank"
+              href={DEMO_YOUTUBE_LINK}
+              gutterBottom
+            >
+              Watch Demo!
+            </Typography>
           </Grid>
         </Grid>
       </Paper>
