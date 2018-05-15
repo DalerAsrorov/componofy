@@ -1,49 +1,27 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import CustomMenu from '../CustomMenu';
 
-const styles = theme => ({
-    root: {},
+const Settings = props => (
+    <CustomMenu
+        onClickOptions={props.onClickOptions}
+        anchorEl={props.anchorEl}
+        onSelectItem={props.onSelectItem}
+        iconComponent={props.icon}
+        isOpen={props.isOpen}
+        menuItems={props.menuItems}
+        menuButtonStyle={props.menuButtonStyle}
+        wrapperStyle={props.settingsWrapperStyle}
+    />
+)
 
-    menu: {}
-});
-
-class Settings extends PureComponent {
-    static propTypes = {
-        onClickOptions: PropTypes.func.isRequired,
-        onSelectItem: PropTypes.func.isRequired,
-        menuItems: PropTypes.object.isRequired,
-        isOpen: PropTypes.bool.isRequired,
-        icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-        anchorEl: PropTypes.object
-    };
-
-    render() {
-        const {
-            settingsWrapperStyle,
-            menuButtonStyle,
-            onClickOptions,
-            onSelectItem,
-            menuItems,
-            anchorEl,
-            isOpen,
-            icon
-        } = this.props;
-
-        return (
-            <CustomMenu
-                onClickOptions={onClickOptions}
-                anchorEl={anchorEl}
-                onSelectItem={onSelectItem}
-                iconComponent={icon}
-                isOpen={isOpen}
-                menuItems={menuItems}
-                menuButtonStyle={menuButtonStyle}
-                wrapperStyle={settingsWrapperStyle}
-            />
-        );
-    }
+Settings.propTypes = {
+    onClickOptions: PropTypes.func.isRequired,
+    onSelectItem: PropTypes.func.isRequired,
+    menuItems: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    anchorEl: PropTypes.object
 }
 
-export default withStyles(styles)(Settings);
+export default Settings;
