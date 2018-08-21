@@ -1,5 +1,14 @@
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { connectStream } from '../connectPage';
+import { getTotalPlaylistsScehmaTracks } from '../utils/transforms';
 import ComponofyPlaylists from '../components/ComponofyPlaylists';
 
-export default connectStream(withRouter(ComponofyPlaylists));
+const mapStateToProps = ({ finalPlaylists } = {}, ownrProps) => ({
+  numberOfTracksInFinalPlaylist: getTotalPlaylistsScehmaTracks(finalPlaylists)
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  connectStream(ComponofyPlaylists)
+);
