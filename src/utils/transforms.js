@@ -23,3 +23,13 @@ export const getTotalPlaylistsScehmaTracks = playlistsSchema =>
   getTotalNumberOfTracksInPlaylistsEntity(
     getEntityFromSchema(playlistsSchema, 'playlists')
   );
+
+export const hasEntityOpenPlaylist = playlistSchema => {
+  const playlists = getEntityFromSchema(playlistSchema, 'playlists');
+  const isOpen = playlist => playlist.isOpen;
+
+  return R.pipe(R.values, R.any(isOpen))(playlists);
+};
+
+export const getPlaylistsSchemaLength = playlistSchema =>
+  R.length(R.keys(getEntityFromSchema(playlistSchema, 'playlists')));

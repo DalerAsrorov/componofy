@@ -99,7 +99,6 @@ const mapStateToProps = (state, ownProps) => ({
   publicPlaylists: state.publicPlaylists,
   myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
   publicPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.publicPlaylists),
-  finalPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.finalPlaylists),
   navigation: state.navigation,
   numberOfFinalPlaylists: R.length(
     R.keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))

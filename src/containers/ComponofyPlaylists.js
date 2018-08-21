@@ -1,10 +1,17 @@
 import { connect } from 'react-redux';
 import { connectStream } from '../connectPage';
-import { getTotalPlaylistsScehmaTracks } from '../utils/transforms';
+import { setOpenStatusForAllPlaylists } from '../actions';
+import {
+  getTotalPlaylistsScehmaTracks,
+  hasEntityOpenPlaylist,
+  getPlaylistsSchemaLength
+} from '../utils/transforms';
 import ComponofyPlaylists from '../components/ComponofyPlaylists';
 
 const mapStateToProps = ({ finalPlaylists } = {}, ownrProps) => ({
-  numberOfTracksInFinalPlaylist: getTotalPlaylistsScehmaTracks(finalPlaylists)
+  numberOfTracksInFinalPlaylist: getTotalPlaylistsScehmaTracks(finalPlaylists),
+  finalPlaylistsHasOpenPlaylist: hasEntityOpenPlaylist(finalPlaylists),
+  numberOfFinalPlaylists: getPlaylistsSchemaLength(finalPlaylists)
 });
 
 const mapDispatchToProps = dispatch => ({});
