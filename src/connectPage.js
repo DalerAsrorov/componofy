@@ -55,20 +55,6 @@ const playlistIsIn = (data, ownProps, key) => {
   return hasPlaylist;
 };
 
-const getNumberOfTracks = playlists => {
-  const calculateTotalLength = (accum, track) => {
-    return accum + track.list.length;
-  };
-
-  const result = R.pipe(
-    R.values,
-    R.map(R.prop('tracks')),
-    R.reduce(calculateTotalLength, 0)
-  )(playlists);
-
-  return result;
-};
-
 const hasOpenPlaylist = playlistState => {
   if (R.isEmpty(playlistState.playlists)) {
     return false;
@@ -108,18 +94,13 @@ const getNumberOfAddedTracksFromPlaylist = (finalPlaylists, ownProps) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  finalPlaylists: state.finalPlaylists,
   myPlaylists: state.myPlaylists,
   publicPlaylists: state.publicPlaylists,
   myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
   publicPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.publicPlaylists),
-  finalPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.finalPlaylists),
   navigation: state.navigation,
   numberOfFinalPlaylists: R.length(
     R.keys(getPlaylistsData(state.finalPlaylists.playlists, 'playlists'))
-  ),
-  numberOfTracksInFinalPlaylist: getNumberOfTracks(
-    getPlaylistsData(state.finalPlaylists.playlists, 'playlists')
   ),
   numberOfAddedTracksFromThisPlaylist: getNumberOfAddedTracksFromPlaylist(
     state.finalPlaylists.playlists,

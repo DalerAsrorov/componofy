@@ -89,18 +89,18 @@ class ComponofyPlaylists extends PureComponent {
 
   static propTypes = {
     numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
+    numberOfFinalPlaylists: PropTypes.number.isRequired,
     finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
+    finalPlaylists: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
     setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
     fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
     setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
     setComponoformOpenStatus: PropTypes.func.isRequired,
-    numberOfFinalPlaylists: PropTypes.number.isRequired,
     setFinalTracksShowStatus: PropTypes.func.isRequired,
     setFinalPlaylistOpen: PropTypes.func.isRequired,
     setFinalSearchTerm: PropTypes.func.isRequired,
-    finalPlaylists: PropTypes.object.isRequired,
     setComponofyMode: PropTypes.func.isRequired,
-    navigation: PropTypes.object.isRequired,
     setNavIndex: PropTypes.func.isRequired,
     logOutUser: PropTypes.func.isRequired,
     navigateTo: PropTypes.func.isRequired
@@ -234,10 +234,7 @@ class ComponofyPlaylists extends PureComponent {
   _handleSelectShowTracksOnly = () => {
     this._handleClickOption();
 
-    const {
-      setFinalTracksShowStatus,
-      finalPlaylists: { shouldShowOnlyTracks }
-    } = this.props;
+    const { setFinalTracksShowStatus, shouldShowOnlyTracks } = this.props;
 
     setFinalTracksShowStatus(!shouldShowOnlyTracks);
   };
@@ -260,13 +257,11 @@ class ComponofyPlaylists extends PureComponent {
 
   render() {
     const {
-      finalPlaylists: {
-        playlists: playlistsFinal,
-        shouldShowOnlyTracks,
-        searchTerm,
-        hasChosenNewCreate,
-        areAllOpen
-      },
+      playlists: playlistsFinal,
+      shouldShowOnlyTracks,
+      searchTerm,
+      hasChosenNewCreate,
+      areAllOpen,
       numberOfFinalPlaylists,
       numberOfTracksInFinalPlaylist,
       finalPlaylistsHasOpenPlaylist,
