@@ -12,7 +12,11 @@ const mapStateToProps = ({ finalPlaylists } = {}, ownrProps) => ({
   numberOfTracksInFinalPlaylist: getTotalPlaylistsScehmaTracks(finalPlaylists),
   finalPlaylistsHasOpenPlaylist: hasEntityOpenPlaylist(finalPlaylists),
   numberOfFinalPlaylists: getPlaylistsSchemaLength(finalPlaylists),
-  finalPlaylists
+  playlists: finalPlaylists.playlists,
+  shouldShowOnlyTracks: finalPlaylists.shouldShowOnlyTracks,
+  searchTerm: finalPlaylists.searchTerm,
+  hasChosenNewCreate: finalPlaylists.hasChosenNewCreate,
+  areAllOpen: finalPlaylists.areAllOpen
 });
 
 const mapDispatchToProps = dispatch => ({});

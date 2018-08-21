@@ -234,10 +234,7 @@ class ComponofyPlaylists extends PureComponent {
   _handleSelectShowTracksOnly = () => {
     this._handleClickOption();
 
-    const {
-      setFinalTracksShowStatus,
-      finalPlaylists: { shouldShowOnlyTracks }
-    } = this.props;
+    const { setFinalTracksShowStatus, shouldShowOnlyTracks } = this.props;
 
     setFinalTracksShowStatus(!shouldShowOnlyTracks);
   };
@@ -260,13 +257,11 @@ class ComponofyPlaylists extends PureComponent {
 
   render() {
     const {
-      finalPlaylists: {
-        playlists: playlistsFinal,
-        shouldShowOnlyTracks,
-        searchTerm,
-        hasChosenNewCreate,
-        areAllOpen
-      },
+      playlists: playlistsFinal,
+      shouldShowOnlyTracks,
+      searchTerm,
+      hasChosenNewCreate,
+      areAllOpen,
       numberOfFinalPlaylists,
       numberOfTracksInFinalPlaylist,
       finalPlaylistsHasOpenPlaylist,
