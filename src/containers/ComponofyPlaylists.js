@@ -11,7 +11,8 @@ import ComponofyPlaylists from '../components/ComponofyPlaylists';
 const mapStateToProps = ({ finalPlaylists } = {}, ownrProps) => ({
   numberOfTracksInFinalPlaylist: getTotalPlaylistsScehmaTracks(finalPlaylists),
   finalPlaylistsHasOpenPlaylist: hasEntityOpenPlaylist(finalPlaylists),
-  numberOfFinalPlaylists: getPlaylistsSchemaLength(finalPlaylists)
+  numberOfFinalPlaylists: getPlaylistsSchemaLength(finalPlaylists),
+  finalPlaylists
 });
 
 const mapDispatchToProps = dispatch => ({});

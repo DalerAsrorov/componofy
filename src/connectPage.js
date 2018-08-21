@@ -94,7 +94,6 @@ const getNumberOfAddedTracksFromPlaylist = (finalPlaylists, ownProps) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  finalPlaylists: state.finalPlaylists,
   myPlaylists: state.myPlaylists,
   publicPlaylists: state.publicPlaylists,
   myPlaylistsHasOpenPlaylist: hasOpenPlaylist(state.myPlaylists),
