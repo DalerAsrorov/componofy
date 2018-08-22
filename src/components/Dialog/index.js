@@ -278,8 +278,7 @@ class Dialog extends PureComponent {
       classes,
       isOpen,
       title,
-      onClickClose,
-      wasOpen
+      onClickClose
     } = this.props;
     let modeForm = (
       <CreateForm

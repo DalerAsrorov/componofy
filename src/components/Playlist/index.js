@@ -7,12 +7,7 @@ import Badge from 'material-ui/Badge';
 import { withStyles } from 'material-ui/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Element } from 'react-scroll';
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import {
   PlaylistAdd,
   PlaylistAddCheck,
@@ -32,7 +27,6 @@ import {
 import Expand from './Expand';
 import TrackList from './TrackList';
 import Loader from '../Loader';
-import List from '../List';
 
 import './Playlist.css';
 

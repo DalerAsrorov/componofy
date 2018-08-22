@@ -16,8 +16,7 @@ import {
   LIGHT_BLUE_COLOR,
   LIGHT_CYAN_COLOR,
   SCROLL_DURATION,
-  searchKeyMap,
-  menuButtonStyle
+  searchKeyMap
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
@@ -91,7 +90,6 @@ class ComponofyPlaylists extends PureComponent {
     numberOfTracksInFinalPlaylist: PropTypes.number.isRequired,
     numberOfFinalPlaylists: PropTypes.number.isRequired,
     finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
-    finalPlaylists: PropTypes.object.isRequired,
     navigation: PropTypes.object.isRequired,
     setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
     fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
@@ -276,7 +274,7 @@ class ComponofyPlaylists extends PureComponent {
       canScrollUp
     } = this.state;
     const isNotEmpty = numberOfFinalPlaylists > 0;
-    let playlistList, playlists, search, dialog;
+    let playlistList, playlists, search;
     let collapseExpandText = getExpandStatusText(finalPlaylistsHasOpenPlaylist);
 
     if (isNotEmpty) {
