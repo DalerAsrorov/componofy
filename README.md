@@ -14,6 +14,23 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 [Watch video](https://www.youtube.com/watch?v=lQnvfRADJMQ)
 
+## Features
+
+* _Reorder the tracks in your playlists just with drag and drop!_
+  ![As easy as drag and drop!](./docs/gifs/reorder_my_playlist_tracks_snippet.gif 'Reorder your playlist tracks!')
+
+* _Select all or specific tracks from the playlist to add to the queue_
+  ![Click on add playlist to add all tracks from that playlist!](./docs/gifs/add_all_playlist_tracks_to_queue_snippet.gif 'Add playlist tracks.')
+
+* _Search and add public playlist tracks created by Spotify users around the world. You can search by genre, artist, song, mood, and other categories._
+  ![Add all or selected public playlist tracks!](./docs/gifs/search_and_add_public_playlist_tracks.gif 'Search and add public playlist tracks.')
+
+* _Create a new playlist out of added personal and public playlist tracks. You can add a custom playlist cover image and set it as either private or public._
+  ![Add all or selected public playlist tracks!](./docs/gifs/create_new_playlist_out_of_playlist_tracks.gif 'Create new playlist.')
+
+* _Or... you can combine the added playlist tracks with the your existing playlist. Now your playlist is updated with the brand new songs! This is the idea of merging personal and/or public playlists with existing playlist owned by you, the user._
+  ![Merge queud playlist tracks with existing playlist!](./docs/gifs/merge_new_playlist_out_of_playlist_tracks.gif 'Merge playlist tracks with existing playlist.')
+
 ## New Feature Details
 
 * Each release has its own set of new features. You can find the details in
@@ -30,11 +47,11 @@ find the guide confusing, create an issue or [join chat](https://gitter.im/daler
 
 To run the project on your local machine:
 
-1. `git clone https://github.com/DalerAsrorov/componofy.git`
-1. `cd ./componofy`
-1. `yarn install`
-1. In `/componofy/src/utils/helpers.js` replace `DEV_SERVER_URL` with `HOST_URL`.
-1. Create an `.env` file with the following information:
+1.  `git clone https://github.com/DalerAsrorov/componofy.git`
+2.  `cd ./componofy`
+3.  `yarn install`
+4.  In `/componofy/src/utils/helpers.js` replace `DEV_SERVER_URL` with `HOST_URL`.
+5.  Create an `.env` file with the following information:
 
 ```
 APP_CLIENT_URL=http://localhost:3000
@@ -45,9 +62,9 @@ YAR_PASS=[any set of characters (without quotes)]
 DEV_MODE=true
 ```
 
-6. `yarn start:api` in one terminal (window/tab)
-1. `yarn start:dev` in another terminal (window/tab)
-1. Go to `localhost:3000` in your favorite browser
+6.  `yarn start:api` in one terminal (window/tab)
+1.  `yarn start:dev` in another terminal (window/tab)
+1.  Go to `localhost:3000` in your favorite browser
 
 Note: you can get spotify client app and secret keys in [Developer's](https://developer.spotify.com/) website section
 
