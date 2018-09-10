@@ -28,7 +28,7 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 * _Create a new playlist out of added personal and public playlist tracks. You can add a custom playlist cover image and set it as either private or public._
   ![Add all or selected public playlist tracks!](./docs/gifs/create_new_playlist_out_of_playlist_tracks.gif 'Create new playlist.')
 
-* _Or... you can combine the added playlist tracks with the your existing playlist. Now your playlist is updated with the brand new songs! This is the idea of merging personal and/or public playlists with existing playlist owned by you, the user._
+* _Or... you can combine the added playlist tracks with one of your existing playlists. Now your playlist is updated with the brand new songs! This is the idea of merging personal and/or public playlists with existing playlist owned by you, the user._
   ![Merge queud playlist tracks with existing playlist!](./docs/gifs/merge_new_playlist_out_of_playlist_tracks.gif 'Merge playlist tracks with existing playlist.')
 
 ## New Feature Details
