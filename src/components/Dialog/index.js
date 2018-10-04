@@ -146,14 +146,23 @@ class Dialog extends PureComponent {
   };
 
   _handlePlaylistSelect = selectedPlaylistId => {
-    const { setSelectedPlaylist } = this.props;
+    const {
+      componoform: { listOfMyPlaylists },
+      setSelectedPlaylist,
+      setFinalPlaylistImageURI
+    } = this.props;
 
-    if (!R.isEmpty(setSelectedPlaylist)) {
-      this.setState({
-        hasAddExistingError: false
+    // If one of my playlists was selelcted, set the original
+    // image url for the dropzone component image placeholder
+    if (!R.isEmpty(selectedPlaylistId)) {
+      listOfMyPlaylists.forEach(({ id, images }) => {
+        if (id === selectedPlaylistId && !R.isEmpty(images)) {
+          setFinalPlaylistImageURI(R.head(images).url);
+        }
       });
     }
 
+    // set the value of the selected playlist for options component
     setSelectedPlaylist(selectedPlaylistId);
   };
 
@@ -237,11 +246,7 @@ class Dialog extends PureComponent {
   _handleClickBack = event => {
     event.preventDefault();
 
-    const {
-      onReturnToMain,
-      setFinalPlaylistUrl,
-      clearComponoformData
-    } = this.props;
+    const { onReturnToMain, clearComponoformData } = this.props;
 
     clearComponoformData();
     onReturnToMain();
@@ -256,7 +261,6 @@ class Dialog extends PureComponent {
     const {
       setComponoformAddExistingStatus,
       setCurrentSelectionOffset,
-      setSelectedPlaylist,
       componoform: {
         finalPlaylistUrl,
         wasAddExistingOpen,
@@ -314,8 +318,7 @@ class Dialog extends PureComponent {
     const LoaderWrapper = props => (
       <div className={classes.loaderWrapper}>{props.children}</div>
     );
-
-    let playlistImage = imageUri ? (
+    const playlistImage = imageUri ? (
       <Avatar
         alt="New playlist image cover"
         src={imageUri}
