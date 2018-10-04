@@ -5,7 +5,6 @@ import MaterialList, { ListSubheader } from 'material-ui/List';
 import { is } from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
-import Track from '../../containers/Track';
 
 const styles = theme => ({
   root: {

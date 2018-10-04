@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { connectStream } from '../connectPage';
-import { setOpenStatusForAllPlaylists } from '../actions';
 import {
   getTotalPlaylistsScehmaTracks,
   hasEntityOpenPlaylist,

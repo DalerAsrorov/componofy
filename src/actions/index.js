@@ -192,6 +192,7 @@ export const setOpenStatusForAllPlaylists = isOpen => (dispatch, getState) => {
       break;
     case indexToRouteMap[2]:
       dispatch(setOpenStatusFinalPlaylists(isOpen));
+      break;
     default:
       break;
   }

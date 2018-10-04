@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import { head } from 'ramda';
 import { withStyles } from 'material-ui/styles';
-import { Divider } from 'material-ui';
 import Avatar from 'material-ui/Avatar';
-import TextField from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
 import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormControlLabel } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
+import { InputLabel } from 'material-ui/Input';
 import { LIGHT_CYAN_COLOR, PLAYLIST_OFFSET_LIMIT } from '../../utils/constants';
 
 const styles = theme => ({
@@ -53,14 +51,14 @@ class AddExistingForm extends PureComponent {
     totalNumberOfPlaylists: PropTypes.number.isRequired,
     selectedPlaylist: PropTypes.string.isRequired,
     wasAddExistingOpen: PropTypes.bool.isRequired,
+    wasDialogOpen: PropTypes.bool,
     onSetCurrentOffset: PropTypes.func.isRequired,
     isFetchingOptions: PropTypes.bool.isRequired,
     onSelectPlaylist: PropTypes.func.isRequired,
     playlistOptions: PropTypes.array.isRequired,
     currentOffset: PropTypes.number.isRequired,
-    classes: PropTypes.object.isRequired,
     error: PropTypes.bool.isRequired,
-    wasDialogOpen: PropTypes.bool
+    classes: PropTypes.object.isRequired
   };
 
   _handleSelectionFetch = () => {
@@ -101,13 +99,12 @@ class AddExistingForm extends PureComponent {
 
   render() {
     const {
+      selectedPlaylist: selectedPlaylistId,
       playlistOptions,
-      error,
-      classes,
-      wasAddExistingOpen,
       isFetchingOptions,
-      selectedPlaylist,
-      currentOffset
+      currentOffset,
+      classes,
+      error
     } = this.props;
     const playlistMenuOptions = playlistOptions.map(
       ({ id, name, images = [] }) => {
@@ -147,7 +144,7 @@ class AddExistingForm extends PureComponent {
         <FormControl className={classes.formControl} error={error}>
           <InputLabel htmlFor="playlist-choice">Choose Playlist</InputLabel>
           <Select
-            value={selectedPlaylist}
+            value={selectedPlaylistId}
             onChange={this._handlePlaylistSelect}
             name="playlist"
             classes={{
@@ -173,9 +170,9 @@ class AddExistingForm extends PureComponent {
     }
 
     return (
-      <div id="addExistingForm" className={classes.wrapper}>
+      <main id="addExistingForm" className={classes.wrapper}>
         {contentComponent}
-      </div>
+      </main>
     );
   }
 }
