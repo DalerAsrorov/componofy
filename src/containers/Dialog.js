@@ -3,11 +3,12 @@ import { connectStream } from '../connectPage';
 import Dialog from '../components/Dialog';
 
 const mapStateToProps = ({ finalPlaylists } = {}, ownProps) => ({
-  finalPlaylists
+  finalPlaylists,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  connectStream(Dialog)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(connectStream(Dialog));

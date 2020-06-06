@@ -9,7 +9,7 @@ export const user = (
     isAuthenticated: false,
     expiresIn: 0,
     lastVisit: 0,
-    tokenLastRefreshTime: 0
+    tokenLastRefreshTime: 0,
   },
   action
 ) => {
@@ -19,7 +19,7 @@ export const user = (
     case RECEIVE_NEW_API_ACCESS_TOKEN:
       return Object.assign({}, state, {
         accessToken: action.accessToken,
-        tokenLastRefreshTime: action.tokenLastRefreshTime
+        tokenLastRefreshTime: action.tokenLastRefreshTime,
       });
     default:
       return state;

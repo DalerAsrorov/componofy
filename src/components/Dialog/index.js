@@ -1,26 +1,28 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
-import CloseIcon from 'material-ui-icons/Close';
-import IconButton from 'material-ui/IconButton';
-import MaterialDialog from 'material-ui/Dialog';
-import Avatar from 'material-ui/Avatar';
-import Slide from 'material-ui/transitions/Slide';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import { LinearProgress } from 'material-ui/Progress';
-import { AddAPhoto, CheckCircle } from 'material-ui-icons';
+import CloseIcon from '@material-ui/icons/Close';
+import { AddAPhoto, CheckCircle } from '@material-ui/icons';
+import {
+  Avatar,
+  AppBar,
+  Button,
+  Grid,
+  IconButton,
+  LinearProgress,
+  Dialog as MaterialDialog,
+  Slide,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import FaRocket from 'react-icons/lib/fa/rocket';
 import Dropzone from 'react-dropzone';
 import * as R from 'ramda';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import {
   LIGHT_BLUE_COLOR,
   MOST_LIGHT_BLUE_COLOR,
   SUCCESS_COLOR,
-  MAX_IMAGE_SIZE_LIMIT
+  MAX_IMAGE_SIZE_LIMIT,
 } from '../../utils/constants';
 import Loader from '../Loader';
 import CreateForm from './CreateForm';
@@ -28,17 +30,17 @@ import AddExistingForm from './AddExistingForm';
 
 import './Dialog.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   appBar: {
-    position: 'relative'
+    position: 'relative',
   },
 
   descField: {
-    marginBottom: `${theme.spacing.unit}px`
+    marginBottom: `${theme.spacing.unit}px`,
   },
 
   dialogContainer: {
-    width: 'inherit'
+    width: 'inherit',
   },
 
   dropImageZone: {
@@ -46,52 +48,52 @@ const styles = theme => ({
     height: `${theme.spacing.unit * 18}px`,
     border: `${theme.spacing.unit / 2}px dotted ${theme.palette.grey[400]}`,
     cursor: 'pointer',
-    marginBottom: `${theme.spacing.unit}px`
+    marginBottom: `${theme.spacing.unit}px`,
   },
 
   dropImageZoneImg: {
     height: '100%',
-    width: 'auto'
+    width: 'auto',
   },
 
   flex: {
-    color: MOST_LIGHT_BLUE_COLOR
+    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   formContainer: {
     margin: '0',
-    padding: `${theme.spacing.unit}px`
+    padding: `${theme.spacing.unit}px`,
   },
 
   inputSection: {
-    display: 'flex'
+    display: 'flex',
   },
 
   loaderWrapper: {
     width: '80%',
     margin: '0 auto',
-    marginTop: '200px'
+    marginTop: '200px',
   },
 
   newPlaylistImage: {
     height: '100%',
     width: '50%',
     margin: '0 auto',
-    borderRadius: '0'
+    borderRadius: '0',
   },
 
   photoUploadIcon: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
 
   publicSwitch: {
-    color: 'green'
+    color: 'green',
   },
 
   rightIcon: {
     marginLeft: theme.spacing.unit,
-    fontSize: `${theme.spacing.unit * 3}px`
+    fontSize: `${theme.spacing.unit * 3}px`,
   },
 
   submitButton: {},
@@ -99,30 +101,30 @@ const styles = theme => ({
   successCheck: {
     width: '4.5em',
     height: '4.5em',
-    color: SUCCESS_COLOR
+    color: SUCCESS_COLOR,
   },
 
   succesButtons: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
 
   submitText: {},
 
   topSpace: {
-    marginTop: `${theme.spacing.unit * 4}px`
+    marginTop: `${theme.spacing.unit * 4}px`,
   },
 
   toolbar: {
-    background: LIGHT_BLUE_COLOR
-  }
+    background: LIGHT_BLUE_COLOR,
+  },
 });
 
-const Transition = props => <Slide direction="up" {...props} />;
+const Transition = (props) => <Slide direction="up" {...props} />;
 
 class Dialog extends PureComponent {
   state = {
     error: false,
-    hasAddExistingError: false
+    hasAddExistingError: false,
   };
 
   static propTypes = {
@@ -142,14 +144,14 @@ class Dialog extends PureComponent {
     isCreateMode: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    wasOpen: PropTypes.bool
+    wasOpen: PropTypes.bool,
   };
 
-  _handlePlaylistSelect = selectedPlaylistId => {
+  _handlePlaylistSelect = (selectedPlaylistId) => {
     const {
       componoform: { listOfMyPlaylists },
       setSelectedPlaylist,
-      setFinalPlaylistImageURI
+      setFinalPlaylistImageURI,
     } = this.props;
 
     // If one of my playlists was selelcted, set the original
@@ -166,22 +168,22 @@ class Dialog extends PureComponent {
     setSelectedPlaylist(selectedPlaylistId);
   };
 
-  _handlePlaylistNameChange = event => {
+  _handlePlaylistNameChange = (event) => {
     if (!R.isEmpty(this.playlistNameRef.value)) {
       this.setState({ error: false });
     }
   };
 
-  _handlePlaylistDescChange = event => {
+  _handlePlaylistDescChange = (event) => {
     this.props.setNewPlaylistDesc(event.target.value);
   };
 
-  _handlePublicSwitch = event => {
+  _handlePublicSwitch = (event) => {
     event.preventDefault();
 
     const {
       setFinalPlaylistPublic,
-      finalPlaylists: { isPublic }
+      finalPlaylists: { isPublic },
     } = this.props;
     setFinalPlaylistPublic(!isPublic);
   };
@@ -193,8 +195,9 @@ class Dialog extends PureComponent {
       const { name: fileName } = R.head(rejectedFiles);
 
       addErrorToApp(
-        `${fileName} is too large. Image shouldn't be more than ${MAX_IMAGE_SIZE_LIMIT /
-          1000}KB.`
+        `${fileName} is too large. Image shouldn't be more than ${
+          MAX_IMAGE_SIZE_LIMIT / 1000
+        }KB.`
       );
     } else if (!R.isEmpty(acceptedFiles)) {
       const file = R.head(acceptedFiles);
@@ -213,13 +216,13 @@ class Dialog extends PureComponent {
     }
   };
 
-  _handleClickSubmit = event => {
+  _handleClickSubmit = (event) => {
     event.preventDefault();
     const {
       launchPlaylistMerger,
       isCreateMode,
       addErrorToApp,
-      componoform: { selectedPlaylistId }
+      componoform: { selectedPlaylistId },
     } = this.props;
 
     if (isCreateMode) {
@@ -243,7 +246,7 @@ class Dialog extends PureComponent {
     addErrorToApp('Fix errors before submitting again.');
   };
 
-  _handleClickBack = event => {
+  _handleClickBack = (event) => {
     event.preventDefault();
 
     const { onReturnToMain, clearComponoformData } = this.props;
@@ -268,13 +271,13 @@ class Dialog extends PureComponent {
         isFetchingOptions,
         selectedPlaylistId,
         totalNumberOfPlaylists,
-        currentOffset
+        currentOffset,
       },
       finalPlaylists: {
         statusText: loaderText,
         status: shouldShowLoader,
         isPublic,
-        imageUri
+        imageUri,
       },
       isCreateMode,
       switchLabel,
@@ -282,7 +285,7 @@ class Dialog extends PureComponent {
       classes,
       isOpen,
       title,
-      onClickClose
+      onClickClose,
     } = this.props;
     let modeForm = (
       <CreateForm
@@ -291,7 +294,7 @@ class Dialog extends PureComponent {
         onPublicSwitchClick={this._handlePublicSwitch}
         isPublic={isPublic}
         switchLabel={switchLabel}
-        inputRef={input => {
+        inputRef={(input) => {
           this.playlistNameRef = input;
         }}
       />
@@ -315,7 +318,7 @@ class Dialog extends PureComponent {
       );
     }
 
-    const LoaderWrapper = props => (
+    const LoaderWrapper = (props) => (
       <div className={classes.loaderWrapper}>{props.children}</div>
     );
     const playlistImage = imageUri ? (
@@ -324,7 +327,7 @@ class Dialog extends PureComponent {
         src={imageUri}
         classes={{
           root: classes.newPlaylistImage,
-          img: classes.dropImageZoneImg
+          img: classes.dropImageZoneImg,
         }}
       />
     ) : (

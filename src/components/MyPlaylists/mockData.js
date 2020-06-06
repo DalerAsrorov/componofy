@@ -6,7 +6,7 @@ import {
   MOCK_IMAGE,
   MOCK_ARTIST,
   MOCK_NAVIGATION,
-  MOCK_PLAYLISTS
+  MOCK_PLAYLISTS,
 } from '../../utils/mocks';
 
 export const MOCK_MY_PLAYLISTS = {
@@ -17,5 +17,5 @@ export const MOCK_MY_PLAYLISTS = {
   playlistsRemaining: 0,
   areAllOpen: false,
   canLoadMore: false,
-  isVisited: false
+  isVisited: false,
 };

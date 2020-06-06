@@ -1,27 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Switch from 'material-ui/Switch';
-import TextField from 'material-ui/TextField';
-import { FormControlLabel } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import { FormControlLabel, TextField, Switch } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   textField: {
     flex: '1',
-    width: '100%'
+    width: '100%',
   },
 
   switchControl: {
-    flex: '0 100px'
+    flex: '0 100px',
   },
 
   wrapper: {
     display: 'flex',
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
-const CreateForm = props => {
+const CreateForm = (props) => {
   const {
     error,
     switchLabel,
@@ -68,7 +66,7 @@ CreateForm.propTypes = {
   error: PropTypes.bool.isRequired,
   isPublic: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
-  wrapperStyle: PropTypes.object
+  wrapperStyle: PropTypes.object,
 };
 
 export default withStyles(styles)(CreateForm);

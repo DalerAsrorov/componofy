@@ -14,7 +14,7 @@ const DEFAULT_STATE = {
   playlistsRemaining: 0,
   hasReceivedResponse: false,
   canLoadMore: true,
-  isVisited: false
+  isVisited: false,
 };
 
 export const publicPlaylists = (state = DEFAULT_STATE, action) => {
@@ -50,15 +50,15 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
         numberOfTracks,
         currentOffset,
         canLoadMore,
-        playlists
+        playlists,
       });
     case actions.REQUEST_SEARCHED_PLAYLISTS:
       return Object.assign({}, state, {
         isFetching: true,
-        hasReceivedResponse: false
+        hasReceivedResponse: false,
       });
     case actions.RECEIVED_PUBLIC_PLAYLIST_TRACKS:
-      playlists = state.playlists.map(playlist => {
+      playlists = state.playlists.map((playlist) => {
         if (playlist.id === action.playlistId) {
           playlist.tracks.list = removeDuplicates(action.tracks, 'id');
         }
@@ -66,14 +66,14 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
       });
 
       return Object.assign({}, state, {
-        playlists
+        playlists,
       });
     case actions.SET_PUBLIC_SEARCH_TERM:
       return Object.assign({}, state, { searchTerm: action.searchTerm });
     case actions.SET_PUBLIC_PLAYLISTS_VISITED:
       return Object.assign({}, state, { isVisited: action.isVisited });
     case actions.SET_PUBLIC_PLAYLIST_OPEN:
-      playlists = state.playlists.map(playlist => {
+      playlists = state.playlists.map((playlist) => {
         if (playlist.id === action.playlistId) {
           playlist.isOpen = action.isOpen;
         }
@@ -82,11 +82,11 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
       });
 
       return Object.assign({}, state, {
-        playlists
+        playlists,
       });
     case actions.SET_SEARCH_RESULTS_MESSAGE:
       return Object.assign({}, state, {
-        searchResultsMessage: action.message
+        searchResultsMessage: action.message,
       });
     case actions.CLEAN_PUBLIC_SEARCH_RESULTS:
       return Object.assign({}, state, {
@@ -96,17 +96,17 @@ export const publicPlaylists = (state = DEFAULT_STATE, action) => {
         playlistsRemaining: 0,
         lastUpdated: Date.now(),
         currentOffset: 0,
-        canLoadMore: true
+        canLoadMore: true,
       });
     case actions.SET_OPEN_STATUS_PUBLIC_PLAYLISTS:
-      playlists = state.playlists.map(playlist => {
+      playlists = state.playlists.map((playlist) => {
         playlist.isOpen = action.isOpen;
         return playlist;
       });
 
       return Object.assign({}, state, {
         areAllOpen: action.isOpen,
-        playlists
+        playlists,
       });
     case actions.CLEAR_PUBLIC_DATA:
       return Object.assign({}, state, DEFAULT_STATE);

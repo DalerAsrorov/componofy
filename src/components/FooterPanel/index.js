@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from 'material-ui/Button';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import { Settings as SettingsIcon } from 'material-ui-icons';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { Settings as SettingsIcon } from '@material-ui/icons';
 import Settings from '../../containers/Settings';
 import CustomMenu from '../CustomMenu';
 import { LIGHT_BLUE_COLOR } from '../../utils/constants';
@@ -14,29 +14,29 @@ import { LIGHT_BLUE_COLOR } from '../../utils/constants';
 import './FooterPanel.css';
 import '../common/common.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     paddingTop: `${theme.spacing.unit}px`,
     paddingBottom: `${theme.spacing.unit}px`,
     display: 'flex',
     zIndex: theme.zIndex.drawer,
-    background: LIGHT_BLUE_COLOR
+    background: LIGHT_BLUE_COLOR,
   },
 
   maintext: {},
 
   loadmore: {
-    flex: '1 60px'
+    flex: '1 60px',
   },
 
   secondaryBtn: {
     flex: '1',
-    textAlign: 'left'
+    textAlign: 'left',
   },
 
   settingsWrapper: {
     flex: '1',
-    float: 'right'
+    float: 'right',
   },
 
   settings: {},
@@ -44,15 +44,15 @@ const styles = theme => ({
   loaderSection: {
     flex: '1 100px',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   settingsSection: {
-    flex: '1'
-  }
+    flex: '1',
+  },
 });
 
-export const FooterPanel = props => {
+export const FooterPanel = (props) => {
   let circleTextIcon, leftSideComponent;
 
   if (props.shouldShowCircle) {
@@ -101,7 +101,7 @@ export const FooterPanel = props => {
     <Toolbar
       style={props.style}
       classes={{
-        root: classNames(props.classes.root, 'sticky-bottom')
+        root: classNames(props.classes.root, 'sticky-bottom'),
       }}
     >
       <section className={props.classes.loaderSection}>
@@ -139,7 +139,7 @@ FooterPanel.propTypes = {
   circleText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.object
+    PropTypes.object,
   ]),
   menuButtonStyle: PropTypes.object,
   customMenuAnchorEl: PropTypes.object,
@@ -149,7 +149,7 @@ FooterPanel.propTypes = {
   shouldShowCircle: PropTypes.bool,
   mainButtonStyle: PropTypes.object,
   buttonMenuStyle: PropTypes.object,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default withStyles(styles)(FooterPanel);

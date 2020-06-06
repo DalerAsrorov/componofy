@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Grow from 'material-ui/transitions/Grow';
-import Paper from 'material-ui/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Grow, Paper, ClickAwayListener } from '@material-ui/core';
 import { Manager, Target, Popper } from 'react-popper';
 import { DefaultWindow, MobileWindow } from '../common';
 
@@ -13,33 +10,33 @@ const styles = {
   customMenuPaper: {},
 
   fullWidthMenu: {
-    width: '100%'
+    width: '100%',
   },
 
   popperClose: {
-    pointerEvents: 'none'
+    pointerEvents: 'none',
   },
 
   settingsButton: {},
 
   buttonTarget: {
     width: '100%',
-    height: '100%'
-  }
+    height: '100%',
+  },
 };
 
-const DefaultButton = props => {
+const DefaultButton = (props) => {
   const { innerContent, ...restProps } = props;
 
   return <Button {...restProps}>{innerContent}</Button>;
 };
 
-const PopperFactory = props => (
+const PopperFactory = (props) => (
   <Popper
     eventsEnabled={props.isOpen}
     className={classNames({
       [props.classes.popperClose]: !props.isOpen,
-      [props.classes.fullWidthMenu]: props.hasFullWidthMenu
+      [props.classes.fullWidthMenu]: props.hasFullWidthMenu,
     })}
     placement="top-start"
   >
@@ -53,7 +50,7 @@ const PopperFactory = props => (
   </Popper>
 );
 
-const CustomMenu = props => {
+const CustomMenu = (props) => {
   const {
     iconComponent,
     customButton,
@@ -103,7 +100,7 @@ CustomMenu.propTypes = {
   wrapperStyle: PropTypes.object,
   menuButtonStyle: PropTypes.object,
   hasFullWidthMenu: PropTypes.bool,
-  anchorEl: PropTypes.object
+  anchorEl: PropTypes.object,
 };
 
 export default withStyles(styles)(CustomMenu);

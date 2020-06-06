@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
-import { lightBlue, cyan, green } from 'material-ui/colors';
+import { lightBlue, cyan, green } from '@material-ui/core/colors';
 
 export const EXTERNAL_URLS_PROPTYPE = PropTypes.shape({
-  spotify: PropTypes.string.isRequired
+  spotify: PropTypes.string.isRequired,
 });
 
 export const IMAGE_PROPTYPE = PropTypes.shape({
   url: PropTypes.string.isRequired,
   height: PropTypes.number,
-  width: PropTypes.number
+  width: PropTypes.number,
 });
 
 export const ARTIST_PROPTYPE = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  external_urls: EXTERNAL_URLS_PROPTYPE.isRequired
+  external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
 });
 
 export const ALBUM_PROPTYPE = PropTypes.shape({
@@ -22,7 +22,7 @@ export const ALBUM_PROPTYPE = PropTypes.shape({
   name: PropTypes.string.isRequired,
   external_urls: EXTERNAL_URLS_PROPTYPE.isRequired,
   album_type: PropTypes.string,
-  images: PropTypes.arrayOf(IMAGE_PROPTYPE)
+  images: PropTypes.arrayOf(IMAGE_PROPTYPE),
 });
 
 export const TRACK_PROPTYPE = PropTypes.shape({
@@ -33,7 +33,7 @@ export const TRACK_PROPTYPE = PropTypes.shape({
   popularity: PropTypes.number.isRequired,
   album: ALBUM_PROPTYPE.isRequired,
   id: PropTypes.string.isRequired,
-  preview_url: PropTypes.string
+  preview_url: PropTypes.string,
 });
 
 export const PLAYLIST_PROPTYPE = PropTypes.shape({
@@ -44,13 +44,13 @@ export const PLAYLIST_PROPTYPE = PropTypes.shape({
   tracks: PropTypes.shape({ list: PropTypes.array }).isRequired,
   owner: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
   }).isRequired,
   images: PropTypes.arrayOf(IMAGE_PROPTYPE),
   type: PropTypes.string,
   public: PropTypes.bool,
   // If true, the list of playlist tracks will be expanded
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool,
 });
 
 export const USER_PROPTYPE = PropTypes.shape({
@@ -59,7 +59,7 @@ export const USER_PROPTYPE = PropTypes.shape({
   accessToken: PropTypes.string.isRequired,
   sessionID: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
 });
 
 export const PLAYLISTS_PROPTYPE = PropTypes.shape({
@@ -72,19 +72,19 @@ export const PLAYLISTS_PROPTYPE = PropTypes.shape({
   canLoadMore: PropTypes.bool.isRequired,
   isVisited: PropTypes.bool.isRequired,
   suggestedPlaylist: PropTypes.array,
-  lastUpdated: PropTypes.number
+  lastUpdated: PropTypes.number,
 });
 
 export const ROUTER_PROPTYPE = PropTypes.shape({
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
-    hash: PropTypes.string
-  })
+    hash: PropTypes.string,
+  }),
 });
 
 export const searchKeyMap = {
-  focusSearch: 'ctrl+f'
+  focusSearch: 'ctrl+f',
 };
 
 export const MOST_LIGHT_BLUE_COLOR = lightBlue[50];
@@ -113,7 +113,7 @@ export const LOAD_MORE_STATUS = {
   // There is more tracks to load
   1: 'Load more',
   // Is true during data request
-  2: 'Loading...'
+  2: 'Loading...',
 };
 
 export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
@@ -123,12 +123,12 @@ export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
   name: 'Componofy Suggested Playlist <3',
   owner: {
     id: '',
-    type: ''
+    type: '',
   },
   tracks: {
-    list: [...tracks]
+    list: [...tracks],
   },
   external_urls: {
-    spotify: ''
-  }
+    spotify: '',
+  },
 });

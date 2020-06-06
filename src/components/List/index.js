@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import MaterialList, { ListSubheader } from 'material-ui/List';
+import { withStyles } from '@material-ui/core/styles';
+import { ListSubheader, List as MaterialList } from '@material-ui/core';
 import { is } from 'ramda';
 import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 import Playlist from '../../containers/Playlist';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
     padding: '0',
-    background: theme.palette.background.paper
+    background: theme.palette.background.paper,
   },
 
   listSubheader: {
-    background: '#ffffff'
-  }
+    background: '#ffffff',
+  },
 });
 
 class List extends PureComponent {
@@ -26,7 +26,7 @@ class List extends PureComponent {
       PropTypes.arrayOf(
         // TODO: https://github.com/DalerAsrorov/componofy/issues/18
         PropTypes.object
-      )
+      ),
     ]).isRequired,
     onDragAndDrop: PropTypes.func,
     onClickItem: PropTypes.func,
@@ -37,7 +37,7 @@ class List extends PureComponent {
     keyItem: PropTypes.object,
     collapseHasFixedHeight: PropTypes.bool,
     showSubItemsOnly: PropTypes.bool,
-    shouldShowTracksIncludedValue: PropTypes.bool
+    shouldShowTracksIncludedValue: PropTypes.bool,
   };
 
   render() {
@@ -64,7 +64,7 @@ class List extends PureComponent {
     ) : null;
 
     listOfItems = is(Array, items)
-      ? items.map(playlist => (
+      ? items.map((playlist) => (
           <Playlist
             onClickIcon={onClickMain}
             onClickPlaylist={onClickItem}

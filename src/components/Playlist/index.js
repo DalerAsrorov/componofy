@@ -1,28 +1,32 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
-import Avatar from 'material-ui/Avatar';
-import Badge from 'material-ui/Badge';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Element } from 'react-scroll';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import {
+  Avatar,
+  Badge,
+  CircularProgress,
+  Collapse,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Typography,
+} from '@material-ui/core';
 import {
   PlaylistAdd,
   PlaylistAddCheck,
   LibraryMusic,
   FavoriteBorder,
-  AccessTime
-} from 'material-ui-icons';
-import { CircularProgress } from 'material-ui/Progress';
+  AccessTime,
+} from '@material-ui/icons';
 import classNames from 'classnames';
 import * as R from 'ramda';
 import {
   PLAYLIST_PROPTYPE,
   LIGHT_CYAN_COLOR,
   SUCCESS_COLOR,
-  SUGGESTED_PLAYLIST_PLACEHOLDER
+  SUGGESTED_PLAYLIST_PLACEHOLDER,
 } from '../../utils/constants';
 import Expand from './Expand';
 import TrackList from './TrackList';
@@ -30,41 +34,41 @@ import Loader from '../Loader';
 
 import './Playlist.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   badgeSet: {},
 
   collapse: {
     maxHeight: '420px',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
 
   trackBadge: {
     color: theme.palette.background.paper,
     backgroundColor: theme.palette.secondary.light,
-    padding: theme.spacing.unit / 4
+    padding: theme.spacing.unit / 4,
   },
 
   includedTracksBadge: {
     color: SUCCESS_COLOR,
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit / 4,
-    border: `1px solid ${SUCCESS_COLOR}`
+    border: `1px solid ${SUCCESS_COLOR}`,
   },
 
   margin: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit * 2,
   },
 
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing.unit * 4,
   },
 
   playlistAvatar: {},
 
   progress: {
     margin: `0 ${theme.spacing.unit * 2}px`,
-    color: LIGHT_CYAN_COLOR
-  }
+    color: LIGHT_CYAN_COLOR,
+  },
 });
 
 class Playlist extends PureComponent {
@@ -78,11 +82,11 @@ class Playlist extends PureComponent {
     shouldShowTracksIncludedValue: PropTypes.bool,
     collapseHasFixedHeight: PropTypes.bool,
     onDragAndDrop: PropTypes.func,
-    showPlaylist: PropTypes.bool
+    showPlaylist: PropTypes.bool,
   };
 
   state = {
-    isExpanded: false
+    isExpanded: false,
   };
 
   componentDidMount = () => {
@@ -90,9 +94,9 @@ class Playlist extends PureComponent {
       playlist: {
         id: playlistID,
         owner: { id: userId },
-        isCustom
+        isCustom,
       },
-      fetchPlaylistTracks
+      fetchPlaylistTracks,
     } = this.props;
 
     if (!isCustom) {
@@ -100,25 +104,25 @@ class Playlist extends PureComponent {
     }
   };
 
-  _handleExpandMore = event => {
+  _handleExpandMore = (event) => {
     const { isExpanded } = this.state;
 
     this.setState({
-      isExpanded: !isExpanded
+      isExpanded: !isExpanded,
     });
   };
 
-  _handleClick = event => {
+  _handleClick = (event) => {
     event.preventDefault();
     const {
       onClickPlaylist,
-      playlist: { id, isOpen }
+      playlist: { id, isOpen },
     } = this.props;
 
     onClickPlaylist(id, isOpen);
   };
 
-  _handleIconClick = event => {
+  _handleIconClick = (event) => {
     event.stopPropagation();
 
     const { playlist, onClickIcon, containsThisPlaylist } = this.props;
@@ -128,7 +132,7 @@ class Playlist extends PureComponent {
     }
   };
 
-  _handleDragEnd = result => {
+  _handleDragEnd = (result) => {
     const { onDragAndDrop } = this.props;
 
     // don't do anything if position is the same
@@ -139,7 +143,7 @@ class Playlist extends PureComponent {
     const {
       droppableId: trackId,
       source: { droppableId: playlistId, index: startPos } = {},
-      destination: { index: endPos } = {}
+      destination: { index: endPos } = {},
     } = result;
 
     onDragAndDrop(playlistId, trackId, startPos, endPos);
@@ -154,12 +158,12 @@ class Playlist extends PureComponent {
       showTracksOnly,
       collapseHasFixedHeight,
       numberOfAddedTracksFromThisPlaylist,
-      shouldShowTracksIncludedValue
+      shouldShowTracksIncludedValue,
     } = this.props;
     const {
       tracks: { list: tracks },
       images: playlistImages,
-      isOpen: playlistIsOpen
+      isOpen: playlistIsOpen,
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
     let playlistClassName = classNames({ 'no-display': showTracksOnly });
@@ -199,7 +203,7 @@ class Playlist extends PureComponent {
           badgeContent={numberOfAddedTracksFromThisPlaylist}
           className={classes.margin}
           classes={{
-            badge: classes.includedTracksBadge
+            badge: classes.includedTracksBadge,
           }}
         >
           <span />
@@ -275,7 +279,7 @@ class Playlist extends PureComponent {
               badgeContent={nTracks}
               className={classes.margin}
               classes={{
-                badge: classes.trackBadge
+                badge: classes.trackBadge,
               }}
             >
               <span />
@@ -286,7 +290,7 @@ class Playlist extends PureComponent {
           in={isOpen}
           className={classNames({
             [classes.collapse]:
-              collapseHasFixedHeight && !isExpanded && !showTracksOnly
+              collapseHasFixedHeight && !isExpanded && !showTracksOnly,
           })}
           timeout="auto"
           unmountOnExit

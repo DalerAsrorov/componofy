@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
-import { MenuItem } from 'material-ui/Menu';
-import { Divider } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
-import { Search as SearchIcon } from 'material-ui-icons';
+import { Divider, MenuItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Search as SearchIcon } from '@material-ui/icons';
 import { isEmpty, trim } from 'ramda';
 import {
   PLAYLISTS_PROPTYPE,
@@ -15,40 +14,40 @@ import {
   searchKeyMap,
   menuButtonStyle,
   OFFSET_LIMIT,
-  LOAD_MORE_STATUS
+  LOAD_MORE_STATUS,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
   toTop,
-  getExpandStatusText
+  getExpandStatusText,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
 import Search from '../Search';
 
-const styles = theme => ({
+const styles = (theme) => ({
   loadmore: {
-    width: '100%'
+    width: '100%',
   },
 
   searchAdortment: {
     position: 'relative',
     top: `${theme.spacing.unit / 2}px`,
     marginRight: `${theme.spacing.unit}px`,
-    color: LIGHT_BLUE_COLOR
+    color: LIGHT_BLUE_COLOR,
   },
 
   hotKeys: {
-    outline: 'none'
+    outline: 'none',
   },
 
   playlistRemaining: {
     textAlign: 'left',
     paddingLeft: `${theme.spacing.unit}px`,
-    width: '100%'
+    width: '100%',
   },
 
-  footerPanel: {}
+  footerPanel: {},
 });
 
 let scroll = Scroll.animateScroll;
@@ -72,7 +71,7 @@ class MyPlaylists extends PureComponent {
     navigation: PropTypes.object.isRequired,
     logOutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    menuButtonStyle: PropTypes.object
+    menuButtonStyle: PropTypes.object,
   };
 
   state = {
@@ -80,37 +79,37 @@ class MyPlaylists extends PureComponent {
     shouldFilterList: false,
     status: LOAD_MORE_STATUS[1],
     canScrollUp: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
-  _handleLoadMore = event => {
+  _handleLoadMore = (event) => {
     event.preventDefault();
 
     const {
       fetchMyPlaylists,
-      myPlaylists: { currentOffset }
+      myPlaylists: { currentOffset },
     } = this.props;
 
     fetchMyPlaylists(currentOffset);
     scroll.scrollToBottom();
   };
 
-  _handleClickOptions = event => {
+  _handleClickOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
   _handleClickOption = () => {
     this.setState({
-      settingsIsOpen: false
+      settingsIsOpen: false,
     });
   };
 
-  _handleCanScrollUp = canScrollUp => {
+  _handleCanScrollUp = (canScrollUp) => {
     const {
-      myPlaylists: { playlists }
+      myPlaylists: { playlists },
     } = this.props;
     const nTracks = playlists.length;
 
@@ -119,7 +118,7 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      canScrollUp
+      canScrollUp,
     });
   };
 
@@ -139,7 +138,7 @@ class MyPlaylists extends PureComponent {
     this._handleClickOption();
 
     scroll.scrollToTop({
-      duration: SCROLL_DURATION
+      duration: SCROLL_DURATION,
     });
   };
 
@@ -147,7 +146,7 @@ class MyPlaylists extends PureComponent {
     const {
       setNavIndex,
       navigateTo,
-      navigation: { nextPage, nextIndex }
+      navigation: { nextPage, nextIndex },
     } = this.props;
 
     setNavIndex(nextIndex);
@@ -167,7 +166,7 @@ class MyPlaylists extends PureComponent {
     setOpenStatusMyPlaylists(!myPlaylistsHasOpenPlaylist);
   };
 
-  _handleInputChange = event => {
+  _handleInputChange = (event) => {
     let { value: inputValue } = event.target;
     let shouldFilterList = false;
 
@@ -178,11 +177,11 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      shouldFilterList
+      shouldFilterList,
     });
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
@@ -199,7 +198,7 @@ class MyPlaylists extends PureComponent {
       myPlaylists: { currentOffset, isVisited },
       generateSuggestedPlaylists,
       fetchMyPlaylists,
-      setMyPlaylistVisited
+      setMyPlaylistVisited,
     } = this.props;
 
     if (!isVisited) {
@@ -211,7 +210,7 @@ class MyPlaylists extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const {
-      myPlaylists: { canLoadMore, isFetching }
+      myPlaylists: { canLoadMore, isFetching },
     } = nextProps;
     let status = LOAD_MORE_STATUS[1];
 
@@ -222,7 +221,7 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      status
+      status,
     });
   }
 
@@ -232,7 +231,7 @@ class MyPlaylists extends PureComponent {
       settingsIsOpen,
       anchorEl,
       canScrollUp,
-      shouldFilterList
+      shouldFilterList,
     } = this.state;
     let {
       myPlaylists: {
@@ -241,10 +240,10 @@ class MyPlaylists extends PureComponent {
         areAllOpen,
         isFetching,
         searchTerm,
-        playlists
+        playlists,
       },
       myPlaylistsHasOpenPlaylist,
-      classes
+      classes,
     } = this.props;
     const loadMoreButtonIsEnabled =
       canLoadMore && !isFetching && !isEmpty(playlists);
@@ -272,7 +271,7 @@ class MyPlaylists extends PureComponent {
     );
 
     const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch
+      focusSearch: this._handleFocusOnSearch,
     };
 
     return (
@@ -293,7 +292,7 @@ class MyPlaylists extends PureComponent {
               />
             }
             placeholder="Search by artists, songs, albums..."
-            inputRef={input => {
+            inputRef={(input) => {
               this.searchInputRef = input;
             }}
             autoFocus

@@ -1,31 +1,31 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import FaSpotify from 'react-icons/lib/fa/spotify';
 import { replaceTo } from '../../utils/helpers';
 import Landing from '../Landing';
 
 import './Login.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
     position: 'relative',
     transform: 'translateY(50%)',
-    margin: '0'
+    margin: '0',
   },
 
   subRoot: {
     flex: 'inherit',
     paddingLeft: '0 !important',
-    paddingRight: '0 !important'
-  }
+    paddingRight: '0 !important',
+  },
 });
 
 class Login extends PureComponent {
   static propTypes = {
-    classes: PropTypes.object
+    classes: PropTypes.object,
   };
 
   _handleAuth = () => {

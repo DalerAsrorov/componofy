@@ -6,7 +6,7 @@ import {
   SET_COMPONOFORM_ADD_EXISTING_STATUS,
   SET_SELECTED_PLAYLIST,
   CLEAR_COMPONOFORM_DATA,
-  SET_CURRENT_SELECTION_OFFSET
+  SET_CURRENT_SELECTION_OFFSET,
 } from '../actions';
 
 const DEFAULT_STATE = {
@@ -17,7 +17,7 @@ const DEFAULT_STATE = {
   finalPlaylistUrl: '',
   selectedPlaylistId: '',
   totalNumberOfPlaylists: 0,
-  currentOffset: 0
+  currentOffset: 0,
 };
 
 export const componoform = (state = DEFAULT_STATE, action) => {
@@ -26,7 +26,7 @@ export const componoform = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_FINAL_PLAYLIST_URL:
       return Object.assign({}, state, {
-        finalPlaylistUrl: action.url
+        finalPlaylistUrl: action.url,
       });
     case REQUEST_MY_PLAYLISTS_FOR_SELECTION:
       return Object.assign({}, state, { isFetchingOptions: true });
@@ -36,17 +36,17 @@ export const componoform = (state = DEFAULT_STATE, action) => {
       return Object.assign({}, state, {
         listOfMyPlaylists,
         isFetchingOptions: false,
-        totalNumberOfPlaylists: action.totalNumberOfPlaylists
+        totalNumberOfPlaylists: action.totalNumberOfPlaylists,
       });
     case SET_COMPONOFORM_OPEN_STATUS:
       return Object.assign({}, state, { wasOpen: action.wasOpen });
     case SET_COMPONOFORM_ADD_EXISTING_STATUS:
       return Object.assign({}, state, {
-        wasAddExistingOpen: action.wasAddExistingOpen
+        wasAddExistingOpen: action.wasAddExistingOpen,
       });
     case SET_SELECTED_PLAYLIST:
       return Object.assign({}, state, {
-        selectedPlaylistId: action.playlistId
+        selectedPlaylistId: action.playlistId,
       });
     case CLEAR_COMPONOFORM_DATA:
       return Object.assign({}, state, DEFAULT_STATE);

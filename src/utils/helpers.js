@@ -4,17 +4,17 @@ const HOST_URL = window.location.origin;
 // eslint-disable-next-line no-unused-vars
 const DEV_SERVER_URL = 'http://localhost:3001';
 
-export const replaceTo = path => {
-  window.location.replace(`${HOST_URL}${path}`);
+export const replaceTo = (path) => {
+  window.location.replace(`${DEV_SERVER_URL}${path}`);
 };
 
-export const formatTracks = tracks => {
-  return tracks.map(trackObject => {
+export const formatTracks = (tracks) => {
+  return tracks.map((trackObject) => {
     const { track, ...rest } = trackObject;
 
     return {
       ...track,
-      ...rest
+      ...rest,
     };
   });
 };
@@ -35,13 +35,13 @@ export const filterSearchPlaylist = (searchTerm, playlists) => {
   const stringContains = (mainStr, compareToStr) =>
     R.toUpper(mainStr).indexOf(R.toUpper(compareToStr)) > -1;
 
-  const containsInfo = playlist => {
+  const containsInfo = (playlist) => {
     if (stringContains(playlist.name, searchTerm)) {
       return true;
     }
 
     return !!R.find(
-      R.propSatisfies(name => stringContains(name, searchTerm), 'name')
+      R.propSatisfies((name) => stringContains(name, searchTerm), 'name')
     )(playlist.tracks.list);
   };
 
@@ -53,21 +53,21 @@ export const formatPlaylistsData = (playlistsMap, tracksMap) => {
     R.toPairs,
     R.map(([playlistKey, playlistData]) => {
       let { list, ...restTrackProps } = playlistData.tracks;
-      list = playlistData.tracks.list.map(trackID => tracksMap[trackID]);
+      list = playlistData.tracks.list.map((trackID) => tracksMap[trackID]);
 
       return {
         ...playlistData,
         id: playlistKey,
         tracks: {
           list,
-          ...restTrackProps
-        }
+          ...restTrackProps,
+        },
       };
     })
   )(playlistsMap);
 };
 
-export const isDomElementInFocus = domElement =>
+export const isDomElementInFocus = (domElement) =>
   domElement === document.activeElement;
 
 export const safeString = (str = '') => str;
@@ -79,7 +79,7 @@ export const getAllPlaylistsTrackIds = (playlistsMap = {}) => {
     R.map(R.path(['tracks', 'list'])),
     R.flatten,
     // filter undefined and null values
-    R.filter(item => item)
+    R.filter((item) => item)
   )(playlistsMap);
 };
 
@@ -87,7 +87,7 @@ export const mergeTuples = (accum, tuple) => {
   let playlistId = tuple[1];
   let playlistTrackIds = tuple[0];
 
-  let newTuple = playlistTrackIds.map(trackId => [trackId, playlistId]);
+  let newTuple = playlistTrackIds.map((trackId) => [trackId, playlistId]);
 
   accum = accum.concat(newTuple);
   return accum;
@@ -95,9 +95,9 @@ export const mergeTuples = (accum, tuple) => {
 
 // returns a tuple with [trackId, playlistId]
 export const getAllPlaylistTracksTuple = (playlistMap = {}) => {
-  const getTrackPlaylistTuple = playlistObject => [
+  const getTrackPlaylistTuple = (playlistObject) => [
     playlistObject.tracks.list,
-    playlistObject.id
+    playlistObject.id,
   ];
 
   return R.pipe(
@@ -116,14 +116,14 @@ export const getAllPlaylistTracksFromMap = (
   }
 
   const {
-    entities: { playlists: playlistMap }
+    entities: { playlists: playlistMap },
   } = playlistsState;
   const {
-    entities: { tracks: tracksMap }
+    entities: { tracks: tracksMap },
   } = playlistsState;
 
   const trackPlaylistTuples = getAllPlaylistTracksTuple(playlistMap);
-  const allAddedTracks = trackPlaylistTuples.map(tuple => {
+  const allAddedTracks = trackPlaylistTuples.map((tuple) => {
     let track = tracksMap[tuple[0]];
 
     if (shouldAssignPlaylist) {

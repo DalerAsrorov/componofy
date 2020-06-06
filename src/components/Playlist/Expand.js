@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
-import { ExpandMore, ExpandLess } from 'material-ui-icons';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import { Link } from 'react-scroll';
 import classNames from 'classnames';
 import '../common/common.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing.unit,
   },
 
   linkTo: {
-    display: 'block'
+    display: 'block',
   },
 
   wrapper: {
     zIndex: theme.zIndex.drawer,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
-const Expand = props => {
+const Expand = (props) => {
   const {
     onClick,
     classes,
@@ -63,7 +63,7 @@ Expand.propTypes = {
   shouldSpy: PropTypes.bool.isRequired,
   showUpArrow: PropTypes.bool,
   isStickyBottom: PropTypes.bool,
-  isStickyTop: PropTypes.bool
+  isStickyTop: PropTypes.bool,
 };
 
 export default withStyles(styles)(Expand);

@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Chip from 'material-ui/Chip';
-import { purple, red } from 'material-ui/colors';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
+import { purple, red } from '@material-ui/core/colors';
 
 import './Track.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: theme.mixins.gutters({
     paddingTop: 6,
-    paddingBottom: 6
+    paddingBottom: 6,
   }),
 
   popularity: {
     // padding: `${theme.spacing.unit}px 0`
-    padding: '0'
+    padding: '0',
   },
 
   chip: {
@@ -23,8 +23,8 @@ const styles = theme => ({
     backgroundColor: purple['A200'],
     height: '20px',
     padding: '2px',
-    marginTop: '5px'
-  }
+    marginTop: '5px',
+  },
 });
 
 const createTypographyLink = (content, variant, href) => (
@@ -39,7 +39,7 @@ const createTypographyLink = (content, variant, href) => (
   </Typography>
 );
 
-const Info = props => {
+const Info = (props) => {
   let popularityChip;
 
   if (props.isPopular) {
@@ -72,7 +72,7 @@ Info.propTypes = {
   artistUrl: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
   albumUrl: PropTypes.string.isRequired,
-  isPopular: PropTypes.bool.isRequired
+  isPopular: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Info);

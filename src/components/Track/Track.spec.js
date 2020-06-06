@@ -1,8 +1,8 @@
 import React from 'react';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { createShallow, createMount } from 'material-ui/test-utils';
+import { createShallow, createMount } from '@material-ui/core/test-utils';
 import { MOCK_TRACK, MOCK_PLAYLIST, MOCK_NAVIGATION } from '../../utils/mocks';
 import Track from './';
 
@@ -16,7 +16,7 @@ const requiredProps = {
   index: 1,
   track: MOCK_TRACK,
   playlist: MOCK_PLAYLIST,
-  navigation: MOCK_NAVIGATION
+  navigation: MOCK_NAVIGATION,
 };
 
 /**

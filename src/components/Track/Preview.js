@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PlayPause from './PlayPause';
 import { Media, Player } from 'react-media-player';
 
-const styles = theme => ({
+const styles = (theme) => ({
   mediaPlayer: {
-    display: 'none'
+    display: 'none',
   },
 
   media: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
-const Preview = props => (
+const Preview = (props) => (
   <Media>
     <div className={props.classes.media}>
       <div className={props.classes.mediaPlayer}>
@@ -28,7 +28,7 @@ const Preview = props => (
 Preview.propTypes = {
   classes: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired,
-  playButtonColor: PropTypes.string
+  playButtonColor: PropTypes.string,
 };
 
 export default withStyles(styles)(Preview);

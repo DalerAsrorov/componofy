@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
-import Typography from 'material-ui/Typography';
-import { MenuItem } from 'material-ui/Menu';
-import { Divider } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
-import { Extension, Search as SearchIcon } from 'material-ui-icons';
+import {
+  CircularProgress,
+  Divider,
+  MenuItem,
+  Typography,
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Extension, Search as SearchIcon } from '@material-ui/icons';
 import * as R from 'ramda';
 import {
   PLAYLISTS_PROPTYPE,
@@ -18,7 +20,7 @@ import {
   SCROLL_DURATION,
   OFFSET_LIMIT,
   menuButtonStyle,
-  searchKeyMap
+  searchKeyMap,
 } from '../../utils/constants';
 import { getExpandStatusText } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
@@ -26,37 +28,37 @@ import List from '../List';
 import Search from '../Search';
 import Loader from '../Loader';
 
-const styles = theme => ({
+const styles = (theme) => ({
   hotKeys: {
-    outline: 'none'
+    outline: 'none',
   },
 
   loaderWrapper: {
-    display: 'flex'
+    display: 'flex',
   },
 
   notFoundIcon: {
     width: `${theme.spacing.unit * 10}px`,
     height: `${theme.spacing.unit * 15}px`,
-    color: `${LIGHT_CYAN_COLOR}`
+    color: `${LIGHT_CYAN_COLOR}`,
   },
 
   playlistRemaining: {
     textAlign: 'left',
     paddingLeft: `${theme.spacing.unit}px`,
-    width: '100%'
+    width: '100%',
   },
 
   searchAdortment: {
     position: 'relative',
     top: `${theme.spacing.unit / 2}px`,
     marginRight: `${theme.spacing.unit}px`,
-    color: LIGHT_BLUE_COLOR
+    color: LIGHT_BLUE_COLOR,
   },
 
   searchLoader: {
-    padding: `${theme.spacing.unit * 4}px`
-  }
+    padding: `${theme.spacing.unit * 4}px`,
+  },
 });
 
 let scroll = Scroll.animateScroll;
@@ -76,38 +78,38 @@ class PublicPlaylists extends PureComponent {
     addPlaylistToFinal: PropTypes.func.isRequired,
     logOutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    menuButtonStyle: PropTypes.object
+    menuButtonStyle: PropTypes.object,
   };
 
   state = {
     settingsIsOpen: false,
     status: LOAD_MORE_STATUS[1],
     canScrollUp: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
   _handleClickUp = () => {
     this._handleClickOption();
 
     scroll.scrollToTop({
-      duration: SCROLL_DURATION
+      duration: SCROLL_DURATION,
     });
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
 
-  _handleInputChange = event => {
+  _handleInputChange = (event) => {
     let { value: inputValue } = event.target;
 
     this.props.setPublicSearchTerm(inputValue);
   };
 
-  _handleSearchSubmit = event => {
+  _handleSearchSubmit = (event) => {
     const {
-      publicPlaylists: { searchTerm }
+      publicPlaylists: { searchTerm },
     } = this.props;
     event.preventDefault();
 
@@ -130,20 +132,20 @@ class PublicPlaylists extends PureComponent {
     return this.props.removePlaylistFromFinal(playlist);
   };
 
-  _handleClickOptions = event => {
+  _handleClickOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
   _handleClickOption = () => {
     this.setState({
-      settingsIsOpen: false
+      settingsIsOpen: false,
     });
   };
 
-  _handleLoadMore = event => {
+  _handleLoadMore = (event) => {
     event.preventDefault();
 
     const { searchPublicPlaylists } = this.props;
@@ -156,7 +158,7 @@ class PublicPlaylists extends PureComponent {
     const {
       setNavIndex,
       navigateTo,
-      navigation: { nextPage, nextIndex }
+      navigation: { nextPage, nextIndex },
     } = this.props;
 
     setNavIndex(nextIndex);
@@ -172,21 +174,21 @@ class PublicPlaylists extends PureComponent {
   _handleClickCollapse = () => {
     const {
       publicPlaylistsHasOpenPlaylist,
-      setOpenStatusPublicPlaylists
+      setOpenStatusPublicPlaylists,
     } = this.props;
 
     this._handleClickOption();
     setOpenStatusPublicPlaylists(!publicPlaylistsHasOpenPlaylist);
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
 
-  _handleCanScrollUp = canScrollUp => {
+  _handleCanScrollUp = (canScrollUp) => {
     const {
-      publicPlaylists: { playlists }
+      publicPlaylists: { playlists },
     } = this.props;
     const nPlaylists = playlists.length;
 
@@ -195,14 +197,14 @@ class PublicPlaylists extends PureComponent {
     }
 
     this.setState({
-      canScrollUp
+      canScrollUp,
     });
   };
 
   componentDidMount() {
     const {
       publicPlaylists: { isVisited },
-      setPublicPlaylistsVisited
+      setPublicPlaylistsVisited,
     } = this.props;
 
     if (!isVisited) {
@@ -212,7 +214,7 @@ class PublicPlaylists extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     let {
-      publicPlaylists: { canLoadMore, isFetching }
+      publicPlaylists: { canLoadMore, isFetching },
     } = nextProps;
     let status = LOAD_MORE_STATUS[1];
 
@@ -223,7 +225,7 @@ class PublicPlaylists extends PureComponent {
     }
 
     this.setState({
-      status
+      status,
     });
   }
 
@@ -238,10 +240,10 @@ class PublicPlaylists extends PureComponent {
         isFetching,
         playlistsRemaining,
         hasReceivedResponse,
-        areAllOpen
+        areAllOpen,
       },
       publicPlaylistsHasOpenPlaylist,
-      classes
+      classes,
     } = this.props;
     const loadMoreButtonIsEnabled =
       canLoadMore && !isFetching && !R.isEmpty(playlists);
@@ -313,7 +315,7 @@ class PublicPlaylists extends PureComponent {
     );
 
     const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch
+      focusSearch: this._handleFocusOnSearch,
     };
 
     return (
@@ -344,7 +346,7 @@ class PublicPlaylists extends PureComponent {
                 />
               }
               placeholder="Search public playlists by artists, type, mood..."
-              inputRef={input => {
+              inputRef={(input) => {
                 this.searchInputRef = input;
               }}
               autoComplete="off"

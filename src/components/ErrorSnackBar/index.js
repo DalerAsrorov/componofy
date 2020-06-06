@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
-const styles = theme => ({
+const styles = (theme) => ({
   close: {
     width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4
-  }
+    height: theme.spacing.unit * 4,
+  },
 });
 
 class ErrorSnackBar extends PureComponent {
@@ -18,18 +18,18 @@ class ErrorSnackBar extends PureComponent {
     autoHideDuration: PropTypes.number.isRequired,
     errorId: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
   };
 
   state = {
-    isOpen: true
+    isOpen: true,
   };
 
   _handleClose = () => {
     const { errorId, onClose } = this.props;
 
     this.setState({
-      isOpen: false
+      isOpen: false,
     });
 
     setTimeout(() => {
@@ -45,13 +45,13 @@ class ErrorSnackBar extends PureComponent {
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left'
+          horizontal: 'left',
         }}
         open={isOpen}
         autoHideDuration={autoHideDuration}
         onClose={this._handleClose}
         SnackbarContentProps={{
-          'aria-describedby': 'message-id'
+          'aria-describedby': 'message-id',
         }}
         message={<span id={`error-${errorId}`}>{message}</span>}
         action={[
@@ -63,7 +63,7 @@ class ErrorSnackBar extends PureComponent {
             onClick={this._handleClose}
           >
             <CloseIcon />
-          </IconButton>
+          </IconButton>,
         ]}
       />
     );

@@ -1,8 +1,7 @@
 import React from 'react';
-import Tabs, { Tab } from 'material-ui/Tabs';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { createShallow, createMount } from 'material-ui/test-utils';
+import { createShallow, createMount } from '@material-ui/core/test-utils';
 import MyPlaylsits from './';
 import { MOCK_MY_PLAYLISTS } from './mockData';
 import { MOCK_NAVIGATION } from '../../utils/mocks';
@@ -26,7 +25,7 @@ const requiredProps = {
   addErrorToApp: jest.fn(),
   navigation: MOCK_NAVIGATION,
   logOutUser: jest.fn(),
-  classes: {}
+  classes: {},
 };
 
 /**

@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import './Loader.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   loaderSection: {
-    marginTop: `${theme.spacing.unit * 2}px`
+    marginTop: `${theme.spacing.unit * 2}px`,
   },
 
   noShadow: {
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
 
   wrapper: {
     width: '100%',
     textAlign: 'center',
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
 
-const Loader = props => {
+const Loader = (props) => {
   const {
     wrapper,
     text,
@@ -36,8 +36,8 @@ const Loader = props => {
     <Paper
       classes={{
         root: classNames(classes.wrapper, {
-          [classes.noShadow]: !shouldShowShadows
-        })
+          [classes.noShadow]: !shouldShowShadows,
+        }),
       }}
       {...restProps}
     >
@@ -51,7 +51,7 @@ Loader.propTypes = {
   classes: PropTypes.object.isRequired,
   icon: PropTypes.any.isRequired,
   text: PropTypes.any.isRequired,
-  shouldShowShadows: PropTypes.bool
+  shouldShowShadows: PropTypes.bool,
 };
 
 export default withStyles(styles)(Loader);

@@ -1,11 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { DEMO_YOUTUBE_LINK } from '../../utils/constants';
 
 import './Landing.css';
@@ -13,7 +9,7 @@ import './Landing.css';
 const ELEVATION = 8;
 const XS = 12;
 
-const styles = theme => ({
+const styles = (theme) => ({
   demoLink: {
     marginTop: theme.spacing.unit / 2,
     padding: theme.spacing.unit,
@@ -24,24 +20,24 @@ const styles = theme => ({
     width: '100%',
     padding: `${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px
         ${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px`,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 
   subheader: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
 
   authBtn: {
-    marginTop: '25px'
+    marginTop: '25px',
   },
 
   icon: {
     color: '#7fc37f',
     fontSize: '2em',
-    marginRight: '5px'
+    marginRight: '5px',
   },
 
-  iconText: {}
+  iconText: {},
 });
 
 class Landing extends PureComponent {
@@ -51,7 +47,7 @@ class Landing extends PureComponent {
     subTitle: PropTypes.string.isRequired,
     children: PropTypes.object,
     iconText: PropTypes.string,
-    classes: PropTypes.object
+    classes: PropTypes.object,
   };
 
   _handleAuthentication = (event: SyntheticInputEvent) => {

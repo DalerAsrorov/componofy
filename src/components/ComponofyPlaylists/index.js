@@ -3,25 +3,23 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
-import Badge from 'material-ui/Badge';
-import { MenuItem } from 'material-ui/Menu';
-import { Divider } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
+import { Badge, Divider, MenuItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { PlaylistAddCheck, Audiotrack } from '@material-ui/icons';
 import Dialog from '../../containers/Dialog';
-import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
-import { Search as SearchIcon } from 'material-ui-icons';
+import { Search as SearchIcon } from '@material-ui/icons';
 import * as R from 'ramda';
 import {
   MOST_LIGHT_BLUE_COLOR,
   LIGHT_BLUE_COLOR,
   LIGHT_CYAN_COLOR,
   SCROLL_DURATION,
-  searchKeyMap
+  searchKeyMap,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
   formatPlaylistsData,
-  getExpandStatusText
+  getExpandStatusText,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -30,50 +28,50 @@ import Search from '../Search';
 const mainButtonStyle = {
   background: LIGHT_CYAN_COLOR,
   width: '100%',
-  height: '100%'
+  height: '100%',
 };
 
 const buttonMenuStyle = {
   flex: '1',
-  position: 'relative'
+  position: 'relative',
 };
 
 let scroll = Scroll.animateScroll;
 
-const styles = theme => ({
+const styles = (theme) => ({
   badgeCommon: {
     padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
-    color: MOST_LIGHT_BLUE_COLOR
+    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   loadmore: {
-    width: '100%'
+    width: '100%',
   },
 
   hotKeys: {
-    outline: 'none'
+    outline: 'none',
   },
 
   mainButtonText: {
-    color: MOST_LIGHT_BLUE_COLOR
+    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   searchAdortment: {
     position: 'relative',
     top: `${theme.spacing.unit / 2}px`,
     marginRight: `${theme.spacing.unit}px`,
-    color: LIGHT_BLUE_COLOR
+    color: LIGHT_BLUE_COLOR,
   },
 
   statsInfo: {
     width: '100%',
     lineHeight: '2.5',
-    paddingLeft: `${theme.spacing.unit}px`
+    paddingLeft: `${theme.spacing.unit}px`,
   },
 
   tracklistBox: {
-    margin: `${theme.spacing.unit}px 0`
-  }
+    margin: `${theme.spacing.unit}px 0`,
+  },
 });
 
 class ComponofyPlaylists extends PureComponent {
@@ -83,7 +81,7 @@ class ComponofyPlaylists extends PureComponent {
     isCustomMenuOpen: false,
     settingsIsOpen: false,
     canScrollUp: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
   static propTypes = {
@@ -101,7 +99,7 @@ class ComponofyPlaylists extends PureComponent {
     setComponofyMode: PropTypes.func.isRequired,
     setNavIndex: PropTypes.func.isRequired,
     logOutUser: PropTypes.func.isRequired,
-    navigateTo: PropTypes.func.isRequired
+    navigateTo: PropTypes.func.isRequired,
   };
 
   _handleRemovePlaylist = (playlist, containsPlaylist) => {
@@ -112,7 +110,7 @@ class ComponofyPlaylists extends PureComponent {
     this.props.setFinalPlaylistOpen(id, !isOpen);
   };
 
-  _handleInputChange = event => {
+  _handleInputChange = (event) => {
     let { value: inputValue } = event.target;
     let shouldFilterList = false;
 
@@ -123,7 +121,7 @@ class ComponofyPlaylists extends PureComponent {
     }
 
     this.setState({
-      shouldFilterList
+      shouldFilterList,
     });
   };
 
@@ -136,37 +134,37 @@ class ComponofyPlaylists extends PureComponent {
   _handleClickCollapse = () => {
     const {
       setOpenStatusFinalPlaylists,
-      finalPlaylistsHasOpenPlaylist
+      finalPlaylistsHasOpenPlaylist,
     } = this.props;
 
     this._handleClickOption();
     setOpenStatusFinalPlaylists(!finalPlaylistsHasOpenPlaylist);
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
 
-  _handleClickOptions = event => {
+  _handleClickOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
   _handleClickOption = () => {
     this.setState({
-      settingsIsOpen: false
+      settingsIsOpen: false,
     });
   };
 
-  _handleCanScrollUp = canScrollUp => {
+  _handleCanScrollUp = (canScrollUp) => {
     canScrollUp =
       this.props.numberOfTracksInFinalPlaylist <= 5 ? false : canScrollUp;
 
     this.setState({
-      canScrollUp
+      canScrollUp,
     });
   };
 
@@ -192,7 +190,7 @@ class ComponofyPlaylists extends PureComponent {
     this._handleClickOption();
 
     scroll.scrollToTop({
-      duration: SCROLL_DURATION
+      duration: SCROLL_DURATION,
     });
   };
 
@@ -202,30 +200,30 @@ class ComponofyPlaylists extends PureComponent {
 
   _handleReturnToMain = () => {
     this.setState({
-      isOpenModal: false
+      isOpenModal: false,
     });
 
     this.props.navigateTo('/app');
     this.props.setNavIndex(0);
   };
 
-  _handleClickCustomMenuOptions = event => {
+  _handleClickCustomMenuOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
   _handleSelectCustomMenuItem = () => {
     this.setState({
-      isCustomMenuOpen: false
+      isCustomMenuOpen: false,
     });
   };
 
-  _handleCustomMenuClick = event => {
+  _handleCustomMenuClick = (event) => {
     this.setState({
       isCustomMenuOpen: true,
-      customMenuAnchorEl: event.currentTarget
+      customMenuAnchorEl: event.currentTarget,
     });
   };
 
@@ -242,7 +240,7 @@ class ComponofyPlaylists extends PureComponent {
       navigateTo,
       setNavIndex,
       navigation,
-      numberOfFinalPlaylists
+      numberOfFinalPlaylists,
     } = this.props;
 
     if (numberOfFinalPlaylists === 0) {
@@ -263,7 +261,7 @@ class ComponofyPlaylists extends PureComponent {
       numberOfFinalPlaylists,
       numberOfTracksInFinalPlaylist,
       finalPlaylistsHasOpenPlaylist,
-      classes
+      classes,
     } = this.props;
     const {
       shouldFilterList,
@@ -271,7 +269,7 @@ class ComponofyPlaylists extends PureComponent {
       settingsIsOpen,
       isCustomMenuOpen,
       customMenuAnchorEl,
-      canScrollUp
+      canScrollUp,
     } = this.state;
     const isNotEmpty = numberOfFinalPlaylists > 0;
     let playlistList, playlists, search;
@@ -279,7 +277,7 @@ class ComponofyPlaylists extends PureComponent {
 
     if (isNotEmpty) {
       const {
-        entities: { playlists: playlistsMap, tracks: tracksMap }
+        entities: { playlists: playlistsMap, tracks: tracksMap },
       } = playlistsFinal;
 
       playlists = formatPlaylistsData(playlistsMap, tracksMap);
@@ -311,7 +309,7 @@ class ComponofyPlaylists extends PureComponent {
             />
           }
           placeholder="Search by artists, songs, albums..."
-          inputRef={input => {
+          inputRef={(input) => {
             this.searchInputRef = input;
           }}
           autoFocus
@@ -366,7 +364,7 @@ class ComponofyPlaylists extends PureComponent {
     const mainText = <span className={classes.mainButtonText}>Componofy</span>;
 
     const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch
+      focusSearch: this._handleFocusOnSearch,
     };
 
     return (

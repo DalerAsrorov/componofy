@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-export const getTotalNumberOfTracksInPlaylistsEntity = playlists => {
+export const getTotalNumberOfTracksInPlaylistsEntity = (playlists) => {
   const calculateTotalLength = (accum, track) => {
     return accum + track.list.length;
   };
@@ -19,17 +19,17 @@ export const getEntityFromSchema = (
   entity = ''
 ) => entities[entity];
 
-export const getTotalPlaylistsScehmaTracks = playlistsSchema =>
+export const getTotalPlaylistsScehmaTracks = (playlistsSchema) =>
   getTotalNumberOfTracksInPlaylistsEntity(
     getEntityFromSchema(playlistsSchema, 'playlists')
   );
 
-export const hasEntityOpenPlaylist = playlistSchema => {
+export const hasEntityOpenPlaylist = (playlistSchema) => {
   const playlists = getEntityFromSchema(playlistSchema, 'playlists');
-  const isOpen = playlist => playlist.isOpen;
+  const isOpen = (playlist) => playlist.isOpen;
 
   return R.pipe(R.values, R.any(isOpen))(playlists);
 };
 
-export const getPlaylistsSchemaLength = playlistSchema =>
+export const getPlaylistsSchemaLength = (playlistSchema) =>
   R.length(R.keys(getEntityFromSchema(playlistSchema, 'playlists')));
