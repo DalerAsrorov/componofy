@@ -44,7 +44,7 @@ const Info = (props) => {
 
   if (props.isPopular) {
     const labelComponent = (
-      <Typography variant="caption" color="default">
+      <Typography variant="caption" color="textPrimary">
         Popular
       </Typography>
     );
@@ -57,7 +57,7 @@ const Info = (props) => {
 
   return (
     <div className={props.classes.root}>
-      {createTypographyLink(props.trackName, 'subheading', props.trackUrl)}
+      {createTypographyLink(props.trackName, 'subtitle1', props.trackUrl)}
       {createTypographyLink(props.artistName, 'body1', props.artistUrl)}
       {createTypographyLink(props.albumName, 'caption', props.albumUrl)}
       {popularityChip}
