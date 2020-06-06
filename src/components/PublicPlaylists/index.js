@@ -1,8 +1,3 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
-import Scroll from 'react-scroll';
-import { HotKeys } from 'react-hotkeys';
 import {
   CircularProgress,
   Divider,
@@ -10,23 +5,27 @@ import {
   Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Extension, Search as SearchIcon } from '@material-ui/icons';
+import { Extension } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React, { Fragment, PureComponent } from 'react';
+import { HotKeys } from 'react-hotkeys';
+import Scroll from 'react-scroll';
+import Waypoint from 'react-waypoint';
 import {
-  PLAYLISTS_PROPTYPE,
-  LOAD_MORE_STATUS,
-  LIGHT_BLUE_COLOR,
   LIGHT_CYAN_COLOR,
-  SCROLL_DURATION,
-  OFFSET_LIMIT,
+  LOAD_MORE_STATUS,
   menuButtonStyle,
+  OFFSET_LIMIT,
+  PLAYLISTS_PROPTYPE,
+  SCROLL_DURATION,
   searchKeyMap,
 } from '../../utils/constants';
 import { getExpandStatusText } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
-import Search from '../Search';
 import Loader from '../Loader';
+import Search from '../Search';
 
 const styles = (theme) => ({
   hotKeys: {
@@ -47,13 +46,6 @@ const styles = (theme) => ({
     textAlign: 'left',
     paddingLeft: `${theme.spacing(1)}px`,
     width: '100%',
-  },
-
-  searchAdortment: {
-    position: 'relative',
-    top: `${theme.spacing(0.5)}px`,
-    marginRight: `${theme.spacing(1)}px`,
-    color: LIGHT_BLUE_COLOR,
   },
 
   searchLoader: {
@@ -268,7 +260,7 @@ class PublicPlaylists extends PureComponent {
         <div className={classes.loaderWrapper}>
           <Loader
             text={
-              <Typography variant="display1" color="textSecondary">
+              <Typography variant="h3" color="textSecondary">
                 Searching playlists...
               </Typography>
             }
@@ -339,12 +331,7 @@ class PublicPlaylists extends PureComponent {
               onChange={this._handleInputChange}
               inputId="publicPlaylistsSearch"
               value={searchTerm}
-              startAdornment={
-                <SearchIcon
-                  onClick={this._handleFocusOnSearch}
-                  className={classes.searchAdortment}
-                />
-              }
+              onSearchIconClick={this._handleFocusOnSearch}
               placeholder="Search public playlists by artists, type, mood..."
               inputRef={(input) => {
                 this.searchInputRef = input;

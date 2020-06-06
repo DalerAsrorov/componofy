@@ -1,25 +1,23 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
-import Scroll from 'react-scroll';
-import { HotKeys } from 'react-hotkeys';
 import { Divider, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Search as SearchIcon } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import { isEmpty, trim } from 'ramda';
+import React, { Fragment, PureComponent } from 'react';
+import { HotKeys } from 'react-hotkeys';
+import Scroll from 'react-scroll';
+import Waypoint from 'react-waypoint';
 import {
-  PLAYLISTS_PROPTYPE,
-  LIGHT_BLUE_COLOR,
-  SCROLL_DURATION,
-  searchKeyMap,
+  LOAD_MORE_STATUS,
   menuButtonStyle,
   OFFSET_LIMIT,
-  LOAD_MORE_STATUS,
+  PLAYLISTS_PROPTYPE,
+  SCROLL_DURATION,
+  searchKeyMap,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
-  toTop,
   getExpandStatusText,
+  toTop,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
 import List from '../List';
@@ -28,13 +26,6 @@ import Search from '../Search';
 const styles = (theme) => ({
   loadmore: {
     width: '100%',
-  },
-
-  searchAdortment: {
-    position: 'relative',
-    top: `${theme.spacing(0.5)}px`,
-    marginRight: `${theme.spacing(1)}px`,
-    color: LIGHT_BLUE_COLOR,
   },
 
   hotKeys: {
@@ -283,14 +274,9 @@ class MyPlaylists extends PureComponent {
         <div id="myPlaylists">
           <Search
             onChange={this._handleInputChange}
+            onSearchIconClick={this._handleFocusOnSearch}
             inputId="myPlaylistsSearch"
             value={searchTerm}
-            startAdornment={
-              <SearchIcon
-                onClick={this._handleFocusOnSearch}
-                className={classes.searchAdortment}
-              />
-            }
             placeholder="Search by artists, songs, albums..."
             inputRef={(input) => {
               this.searchInputRef = input;

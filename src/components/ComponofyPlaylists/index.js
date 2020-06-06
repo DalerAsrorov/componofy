@@ -1,18 +1,16 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
-import Scroll from 'react-scroll';
-import { HotKeys } from 'react-hotkeys';
-import { Badge, Divider, MenuItem, Typography } from '@material-ui/core';
+import { Badge, Divider, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { PlaylistAddCheck, Audiotrack } from '@material-ui/icons';
-import Dialog from '../../containers/Dialog';
-import { Search as SearchIcon } from '@material-ui/icons';
+import { Audiotrack, PlaylistAddCheck } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React, { Fragment, PureComponent } from 'react';
+import { HotKeys } from 'react-hotkeys';
+import Scroll from 'react-scroll';
+import Waypoint from 'react-waypoint';
+import Dialog from '../../containers/Dialog';
 import {
-  MOST_LIGHT_BLUE_COLOR,
-  LIGHT_BLUE_COLOR,
   LIGHT_CYAN_COLOR,
+  MOST_LIGHT_BLUE_COLOR,
   SCROLL_DURATION,
   searchKeyMap,
 } from '../../utils/constants';
@@ -53,13 +51,6 @@ const styles = (theme) => ({
 
   mainButtonText: {
     color: MOST_LIGHT_BLUE_COLOR,
-  },
-
-  searchAdortment: {
-    position: 'relative',
-    top: `${theme.spacing(0.5)}px`,
-    marginRight: `${theme.spacing(1)}px`,
-    color: LIGHT_BLUE_COLOR,
   },
 
   statsInfo: {
@@ -299,14 +290,9 @@ class ComponofyPlaylists extends PureComponent {
       search = (
         <Search
           onChange={this._handleInputChange}
+          onSearchIconClick={this._handleFocusOnSearch}
           inputId="myPlaylistsSearch"
           value={searchTerm}
-          startAdornment={
-            <SearchIcon
-              onClick={this._handleFocusOnSearch}
-              className={classes.searchAdortment}
-            />
-          }
           placeholder="Search by artists, songs, albums..."
           inputRef={(input) => {
             this.searchInputRef = input;

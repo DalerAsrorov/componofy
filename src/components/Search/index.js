@@ -1,5 +1,6 @@
 import { FormControl, Input, InputLabel } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { Search as SearchIcon } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
@@ -17,6 +18,10 @@ const styles = (theme) => ({
   searchInput: {
     padding: `${theme.spacing(1)}px`,
   },
+
+  searchInputIcon: {
+    padding: `${theme.spacing(1)}px`,
+  },
 });
 
 class Search extends PureComponent {
@@ -24,6 +29,7 @@ class Search extends PureComponent {
     inputId: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
+    onSearchIconClick: PropTypes.func.isRequired,
     inputLabel: PropTypes.string,
     value: PropTypes.string,
     style: PropTypes.object,
@@ -36,14 +42,11 @@ class Search extends PureComponent {
       inputId,
       value,
       onChange,
+      onSearchIconClick,
       adortment,
       style,
       ...rest
     } = this.props;
-
-    let inputLabelComponent = inputLabel ? (
-      <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>
-    ) : null;
 
     return (
       <FormControl
@@ -52,12 +55,19 @@ class Search extends PureComponent {
           root: classNames(classes.formControl, 'sticky-top'),
         }}
       >
-        {inputLabelComponent}
+        {inputLabel && <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>}
         <Input
           id={inputId}
           value={safeString(value)}
           onChange={onChange}
           className={classes.searchInput}
+          startAdornment={
+            <SearchIcon
+              color="action"
+              onClick={onSearchIconClick}
+              className={classes.searchInputIcon}
+            />
+          }
           {...rest}
         />
       </FormControl>
