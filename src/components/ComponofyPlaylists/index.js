@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Waypoint from 'react-waypoint';
 import Scroll from 'react-scroll';
 import { HotKeys } from 'react-hotkeys';
-import { Badge, Divider, MenuItem } from '@material-ui/core';
+import { Badge, Divider, MenuItem, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { PlaylistAddCheck, Audiotrack } from '@material-ui/icons';
 import Dialog from '../../containers/Dialog';
@@ -28,7 +28,6 @@ import Search from '../Search';
 const mainButtonStyle = {
   background: LIGHT_CYAN_COLOR,
   width: '100%',
-  height: '100%',
 };
 
 const buttonMenuStyle = {
@@ -361,8 +360,6 @@ class ComponofyPlaylists extends PureComponent {
       </div>
     );
 
-    const mainText = <span className={classes.mainButtonText}>Componofy</span>;
-
     const serachHandlers = {
       focusSearch: this._handleFocusOnSearch,
     };
@@ -397,9 +394,9 @@ class ComponofyPlaylists extends PureComponent {
             isCustomMenuOpen={isCustomMenuOpen}
             circleText={statsComponent}
             isOpen={settingsIsOpen}
-            menuItems={menuItems}
-            mainText={mainText}
+            mainText="Componofy"
             mainButtonStyle={mainButtonStyle}
+            menuItems={menuItems}
             buttonMenuStyle={buttonMenuStyle}
             hasFullWidthButtonMenu={true}
           />

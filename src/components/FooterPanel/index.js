@@ -23,8 +23,6 @@ const styles = (theme) => ({
     background: LIGHT_BLUE_COLOR,
   },
 
-  maintext: {},
-
   loadmore: {
     flex: '1 60px',
   },
@@ -76,7 +74,6 @@ export const FooterPanel = (props) => {
         color={props.mainButtonColor || 'secondary'}
         className={props.classes.loadmore}
         style={props.mainButtonStyle}
-        color="secondary"
         variant="contained"
       >
         <Typography variant="button">{props.mainText}</Typography>
