@@ -8,7 +8,7 @@ import './Loader.css';
 
 const styles = (theme) => ({
   loaderSection: {
-    marginTop: `${theme.spacing.unit * 2}px`,
+    marginTop: `${theme.spacing(2)}px`,
   },
 
   noShadow: {

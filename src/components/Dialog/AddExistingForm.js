@@ -28,18 +28,18 @@ const styles = (theme) => ({
 
   playlistName: {
     width: '100%',
-    paddingLeft: `${theme.spacing.unit}px`,
+    paddingLeft: `${theme.spacing(1)}px`,
   },
 
   progress: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
+    margin: `0 ${theme.spacing(2)}px`,
     color: LIGHT_CYAN_COLOR,
   },
 
   select: {
     display: 'flex',
     alignItems: 'center',
-    padding: `${theme.spacing.unit * 1.5}px`,
+    padding: `${theme.spacing(1.5)}px`,
   },
 
   wrapper: {

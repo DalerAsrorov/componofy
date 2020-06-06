@@ -15,7 +15,7 @@ const styles = (theme) => ({
   },
 
   searchInput: {
-    padding: `${theme.spacing.unit}px`,
+    padding: `${theme.spacing(1)}px`,
   },
 });
 

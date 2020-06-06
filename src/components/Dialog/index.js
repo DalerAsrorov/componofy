@@ -36,7 +36,7 @@ const styles = (theme) => ({
   },
 
   descField: {
-    marginBottom: `${theme.spacing.unit}px`,
+    marginBottom: `${theme.spacing(1)}px`,
   },
 
   dialogContainer: {
@@ -45,10 +45,10 @@ const styles = (theme) => ({
 
   dropImageZone: {
     color: LIGHT_BLUE_COLOR,
-    height: `${theme.spacing.unit * 18}px`,
-    border: `${theme.spacing.unit / 2}px dotted ${theme.palette.grey[400]}`,
+    height: `${theme.spacing(18)}px`,
+    border: `${theme.spacing(0.5)}px dotted ${theme.palette.grey[400]}`,
     cursor: 'pointer',
-    marginBottom: `${theme.spacing.unit}px`,
+    marginBottom: `${theme.spacing(1)}px`,
   },
 
   dropImageZoneImg: {
@@ -62,7 +62,7 @@ const styles = (theme) => ({
 
   formContainer: {
     margin: '0',
-    padding: `${theme.spacing.unit}px`,
+    padding: `${theme.spacing(1)}px`,
   },
 
   inputSection: {
@@ -92,8 +92,8 @@ const styles = (theme) => ({
   },
 
   rightIcon: {
-    marginLeft: theme.spacing.unit,
-    fontSize: `${theme.spacing.unit * 3}px`,
+    marginLeft: theme.spacing(1),
+    fontSize: `${theme.spacing(3)}px`,
   },
 
   submitButton: {},
@@ -105,13 +105,13 @@ const styles = (theme) => ({
   },
 
   succesButtons: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 
   submitText: {},
 
   topSpace: {
-    marginTop: `${theme.spacing.unit * 4}px`,
+    marginTop: `${theme.spacing(4)}px`,
   },
 
   toolbar: {
@@ -364,7 +364,7 @@ class Dialog extends PureComponent {
             onClick={this._handleClickSubmit}
             type="submit"
             className={classes.photoUploadIcon}
-            variant="raised"
+            variant="outlined"
             color="secondary"
           >
             <Typography
@@ -401,7 +401,7 @@ class Dialog extends PureComponent {
             text={
               <div>
                 <Button
-                  variant="raised"
+                  variant="outlined"
                   component="a"
                   color="secondary"
                   className={classes.succesButtons}
@@ -413,7 +413,7 @@ class Dialog extends PureComponent {
                   </Typography>
                 </Button>
                 <Button
-                  variant="raised"
+                  variant="outlined"
                   color="primary"
                   className={classes.succesButtons}
                   onClick={this._handleClickBack}

@@ -15,7 +15,7 @@ const styles = (theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    marginBottom: `${theme.spacing.unit}px`,
+    marginBottom: `${theme.spacing(1)}px`,
   },
 
   tabContainer: {},
@@ -77,7 +77,7 @@ class Nav extends PureComponent {
           onChange={this._handleChange}
           indicatorColor="secondary"
           value={currentTabIndex}
-          fullWidth
+          variant="fullWidth"
           centered
         >
           <Tab icon={<PersonPin />} label="My" />

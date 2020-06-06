@@ -45,28 +45,28 @@ const styles = (theme) => ({
   trackBadge: {
     color: theme.palette.background.paper,
     backgroundColor: theme.palette.secondary.light,
-    padding: theme.spacing.unit / 4,
+    padding: theme.spacing(0.25),
   },
 
   includedTracksBadge: {
     color: SUCCESS_COLOR,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing.unit / 4,
+    padding: theme.spacing(0.25),
     border: `1px solid ${SUCCESS_COLOR}`,
   },
 
   margin: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
 
   nested: {
-    paddingLeft: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing(4),
   },
 
   playlistAvatar: {},
 
   progress: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
+    margin: `0 ${theme.spacing(2)}px`,
     color: LIGHT_CYAN_COLOR,
   },
 });
@@ -192,7 +192,7 @@ class Playlist extends PureComponent {
           isStickyBottom={true}
           showUpArrow={isExpanded}
           onClick={this._handleExpandMore}
-          variant="raised"
+          variant="outlined"
         />
       );
     }
@@ -216,7 +216,7 @@ class Playlist extends PureComponent {
     ) : (
       <Loader
         text={
-          <Typography variant="subheading" color="textSecondary">
+          <Typography variant="h3" color="textSecondary">
             Loading tracks...
           </Typography>
         }

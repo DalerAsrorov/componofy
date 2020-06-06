@@ -40,7 +40,7 @@ let scroll = Scroll.animateScroll;
 
 const styles = (theme) => ({
   badgeCommon: {
-    padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
+    padding: `${theme.spacing(1)}px 0 0 ${theme.spacing(1)}px`,
     color: MOST_LIGHT_BLUE_COLOR,
   },
 
@@ -58,19 +58,19 @@ const styles = (theme) => ({
 
   searchAdortment: {
     position: 'relative',
-    top: `${theme.spacing.unit / 2}px`,
-    marginRight: `${theme.spacing.unit}px`,
+    top: `${theme.spacing(0.5)}px`,
+    marginRight: `${theme.spacing(1)}px`,
     color: LIGHT_BLUE_COLOR,
   },
 
   statsInfo: {
     width: '100%',
     lineHeight: '2.5',
-    paddingLeft: `${theme.spacing.unit}px`,
+    paddingLeft: `${theme.spacing(1)}px`,
   },
 
   tracklistBox: {
-    margin: `${theme.spacing.unit}px 0`,
+    margin: `${theme.spacing(1)}px 0`,
   },
 });
 

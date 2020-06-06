@@ -32,8 +32,8 @@ const styles = (theme) => ({
 
   searchAdortment: {
     position: 'relative',
-    top: `${theme.spacing.unit / 2}px`,
-    marginRight: `${theme.spacing.unit}px`,
+    top: `${theme.spacing(0.5)}px`,
+    marginRight: `${theme.spacing(1)}px`,
     color: LIGHT_BLUE_COLOR,
   },
 
@@ -43,7 +43,7 @@ const styles = (theme) => ({
 
   playlistRemaining: {
     textAlign: 'left',
-    paddingLeft: `${theme.spacing.unit}px`,
+    paddingLeft: `${theme.spacing(1)}px`,
     width: '100%',
   },
 

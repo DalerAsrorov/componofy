@@ -28,8 +28,6 @@ const NotFound = () => (
 );
 
 const App = () => {
-  console.log(Login, Main);
-
   return (
     <MuiThemeProvider theme={theme}>
       <Switch>

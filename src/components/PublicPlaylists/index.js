@@ -38,26 +38,26 @@ const styles = (theme) => ({
   },
 
   notFoundIcon: {
-    width: `${theme.spacing.unit * 10}px`,
-    height: `${theme.spacing.unit * 15}px`,
+    width: `${theme.spacing(10)}px`,
+    height: `${theme.spacing(15)}px`,
     color: `${LIGHT_CYAN_COLOR}`,
   },
 
   playlistRemaining: {
     textAlign: 'left',
-    paddingLeft: `${theme.spacing.unit}px`,
+    paddingLeft: `${theme.spacing(1)}px`,
     width: '100%',
   },
 
   searchAdortment: {
     position: 'relative',
-    top: `${theme.spacing.unit / 2}px`,
-    marginRight: `${theme.spacing.unit}px`,
+    top: `${theme.spacing(0.5)}px`,
+    marginRight: `${theme.spacing(1)}px`,
     color: LIGHT_BLUE_COLOR,
   },
 
   searchLoader: {
-    padding: `${theme.spacing.unit * 4}px`,
+    padding: `${theme.spacing(4)}px`,
   },
 });
 

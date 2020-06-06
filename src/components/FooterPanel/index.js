@@ -16,8 +16,8 @@ import '../common/common.css';
 
 const styles = (theme) => ({
   root: {
-    paddingTop: `${theme.spacing.unit}px`,
-    paddingBottom: `${theme.spacing.unit}px`,
+    paddingTop: `${theme.spacing(1)}px`,
+    paddingBottom: `${theme.spacing(1)}px`,
     display: 'flex',
     zIndex: theme.zIndex.drawer,
     background: LIGHT_BLUE_COLOR,
@@ -76,9 +76,10 @@ export const FooterPanel = (props) => {
         color={props.mainButtonColor || 'secondary'}
         className={props.classes.loadmore}
         style={props.mainButtonStyle}
-        variant="raised"
+        color="secondary"
+        variant="contained"
       >
-        <Typography variant="subheading">{props.mainText}</Typography>
+        <Typography variant="button">{props.mainText}</Typography>
       </Button>
     );
 

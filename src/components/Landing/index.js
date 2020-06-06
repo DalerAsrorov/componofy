@@ -11,15 +11,15 @@ const XS = 12;
 
 const styles = (theme) => ({
   demoLink: {
-    marginTop: theme.spacing.unit / 2,
-    padding: theme.spacing.unit,
+    marginTop: theme.spacing(0.5),
+    padding: theme.spacing(1),
   },
 
   root: {
     margin: 0,
     width: '100%',
-    padding: `${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px
-        ${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px`,
+    padding: `${theme.spacing(6)}px ${theme.spacing(2)}px
+        ${theme.spacing(6)}px ${theme.spacing(2)}px`,
     textAlign: 'center',
   },
 
@@ -50,7 +50,7 @@ class Landing extends PureComponent {
     classes: PropTypes.object,
   };
 
-  _handleAuthentication = (event: SyntheticInputEvent) => {
+  _handleAuthentication = (event) => {
     const { onAuth } = this.props;
 
     if (onAuth) {
@@ -69,7 +69,7 @@ class Landing extends PureComponent {
               {title}
             </Typography>
             <Typography
-              variant="subheading"
+              variant="h4"
               className={classes.subheader}
               color="textSecondary"
               component="p"
@@ -82,7 +82,7 @@ class Landing extends PureComponent {
             <Button
               onClick={this._handleAuthentication}
               color="primary"
-              variant="raised"
+              variant="outlined"
             >
               <span className={classes.icon}>{children}</span>
               <Typography variant="button" className={classes.iconText}>
@@ -93,7 +93,7 @@ class Landing extends PureComponent {
               className={classes.demoLink}
               color="textSecondary"
               align="center"
-              variant="subheading"
+              variant="h2"
               component="a"
               target="__blank"
               href={DEMO_YOUTUBE_LINK}

@@ -9,7 +9,7 @@ import '../common/common.css';
 
 const styles = (theme) => ({
   button: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
 
   linkTo: {

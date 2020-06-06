@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Grow, Paper, ClickAwayListener } from '@material-ui/core';
 import { Manager, Target, Popper } from 'react-popper';
@@ -23,12 +24,6 @@ const styles = {
     width: '100%',
     height: '100%',
   },
-};
-
-const DefaultButton = (props) => {
-  const { innerContent, ...restProps } = props;
-
-  return <Button {...restProps}>{innerContent}</Button>;
 };
 
 const PopperFactory = (props) => (
@@ -62,15 +57,16 @@ const CustomMenu = (props) => {
   let menuButton = customButton ? (
     customButton
   ) : (
-    <DefaultButton
-      innerContent={iconComponent}
+    <Fab
       color="primary"
-      className={props.classes.settingsButton}
+      variant="round"
       aria-haspopup="true"
       onClick={props.onClickOptions}
       style={menuButtonStyle}
-      variant="fab"
-    />
+      className={props.classes.settingsButton}
+    >
+      {iconComponent}
+    </Fab>
   );
 
   return (
