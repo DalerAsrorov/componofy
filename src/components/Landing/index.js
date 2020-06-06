@@ -10,6 +10,10 @@ const ELEVATION = 8;
 const XS = 12;
 
 const styles = (theme) => ({
+  demoLinkWrapper: {
+    marginTop: theme.spacing(2),
+  },
+
   demoLink: {
     marginTop: theme.spacing(0.5),
     padding: theme.spacing(1),
@@ -36,8 +40,6 @@ const styles = (theme) => ({
     fontSize: '2em',
     marginRight: '5px',
   },
-
-  iconText: {},
 });
 
 class Landing extends PureComponent {
@@ -65,14 +67,13 @@ class Landing extends PureComponent {
       <Paper elevation={ELEVATION}>
         <Grid container className={classes.root}>
           <Grid item xs={XS}>
-            <Typography variant="display2" color="secondary" component="h1">
+            <Typography variant="h2" color="secondary" component="h1">
               {title}
             </Typography>
             <Typography
-              variant="h4"
+              variant="subtitle1"
               className={classes.subheader}
               color="textSecondary"
-              component="p"
             >
               {subTitle}
             </Typography>
@@ -89,18 +90,20 @@ class Landing extends PureComponent {
                 {iconText}
               </Typography>
             </Button>
-            <Typography
-              className={classes.demoLink}
-              color="textSecondary"
-              align="center"
-              variant="h2"
-              component="a"
-              target="__blank"
-              href={DEMO_YOUTUBE_LINK}
-              gutterBottom
-            >
-              Watch Demo!
-            </Typography>
+            <div className={classes.demoLinkWrapper}>
+              <Typography
+                className={classes.demoLink}
+                color="textSecondary"
+                align="center"
+                variant="overline"
+                component="a"
+                target="__blank"
+                href={DEMO_YOUTUBE_LINK}
+                gutterBottom
+              >
+                Watch Demo!
+              </Typography>
+            </div>
           </Grid>
         </Grid>
       </Paper>
