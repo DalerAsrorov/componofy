@@ -12,9 +12,9 @@ import {
   LIGHT_CYAN_COLOR,
   MAX_NUMBER_OF_TRACKS_FOR_BADGE,
   MOST_LIGHT_BLUE_COLOR,
+  OFFSET_LIMIT,
   SCROLL_DURATION,
   searchKeyMap,
-  OFFSET_LIMIT,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
@@ -22,7 +22,7 @@ import {
   getExpandStatusText,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import List from '../List';
+import { List } from '../List';
 import Search from '../Search';
 
 const mainButtonStyle = {
@@ -360,15 +360,13 @@ class ComponofyPlaylists extends PureComponent {
       </div>
     );
 
-    const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch,
-    };
-
     return (
       <HotKeys
         id="componofyPlaylists"
         keyMap={searchKeyMap}
-        handlers={serachHandlers}
+        handlers={{
+          focusSearch: this._handleFocusOnSearch,
+        }}
         className={classes.hotKeys}
       >
         {search}

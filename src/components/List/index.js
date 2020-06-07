@@ -18,72 +18,67 @@ const styles = (theme) => ({
   },
 });
 
-class List extends PureComponent {
-  static propTypes = {
-    items: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.arrayOf(PLAYLIST_PROPTYPE),
-      PropTypes.arrayOf(
-        // TODO: https://github.com/DalerAsrorov/componofy/issues/18
-        PropTypes.object
-      ),
-    ]).isRequired,
-    onDragAndDrop: PropTypes.func,
-    onClickItem: PropTypes.func,
-    onCheckboxActive: PropTypes.func,
-    onClickMain: PropTypes.func,
-    subheader: PropTypes.string,
-    classes: PropTypes.object,
-    keyItem: PropTypes.object,
-    collapseHasFixedHeight: PropTypes.bool,
-    showSubItemsOnly: PropTypes.bool,
-    shouldShowTracksIncludedValue: PropTypes.bool,
-  };
+export const List = withStyles(styles)(
+  ({
+    items,
+    keyItem,
+    classes,
+    subheader,
+    showSubItemsOnly,
+    isPlaylist,
+    onClickMain,
+    onClickItem,
+    onDragAndDrop,
+    collapseHasFixedHeight,
+    shouldShowTracksIncludedValue,
+    ...restProps
+  }) => (
+    <MaterialList
+      className={classes.root}
+      subheader={
+        subheader && (
+          <ListSubheader className={classes.listSubheader}>
+            {subheader}
+          </ListSubheader>
+        )
+      }
+      {...restProps}
+    >
+      {is(Array, items)
+        ? items.map((playlist) => (
+            <Playlist
+              onClickIcon={onClickMain}
+              onClickPlaylist={onClickItem}
+              key={playlist.id}
+              playlist={playlist}
+              showTracksOnly={showSubItemsOnly}
+              onDragAndDrop={onDragAndDrop}
+              collapseHasFixedHeight={collapseHasFixedHeight}
+              shouldShowTracksIncludedValue={shouldShowTracksIncludedValue}
+            />
+          ))
+        : []}
+    </MaterialList>
+  )
+);
 
-  render() {
-    const {
-      items,
-      keyItem,
-      classes,
-      subheader,
-      showSubItemsOnly,
-      isPlaylist,
-      onClickMain,
-      onClickItem,
-      onDragAndDrop,
-      collapseHasFixedHeight,
-      shouldShowTracksIncludedValue,
-      ...restProps
-    } = this.props;
-    let listOfItems, listSub;
-
-    listSub = subheader ? (
-      <ListSubheader className={classes.listSubheader}>
-        {subheader}
-      </ListSubheader>
-    ) : null;
-
-    listOfItems = is(Array, items)
-      ? items.map((playlist) => (
-          <Playlist
-            onClickIcon={onClickMain}
-            onClickPlaylist={onClickItem}
-            key={playlist.id}
-            playlist={playlist}
-            showTracksOnly={showSubItemsOnly}
-            onDragAndDrop={onDragAndDrop}
-            collapseHasFixedHeight={collapseHasFixedHeight}
-            shouldShowTracksIncludedValue={shouldShowTracksIncludedValue}
-          />
-        ))
-      : [];
-
-    return (
-      <MaterialList className={classes.root} subheader={listSub} {...restProps}>
-        {listOfItems}
-      </MaterialList>
-    );
-  }
-}
-
-export default withStyles(styles)(List);
+List.propTypes = {
+  items: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PLAYLIST_PROPTYPE),
+    PropTypes.arrayOf(
+      // TODO: https://github.com/DalerAsrorov/componofy/issues/18
+      PropTypes.object
+    ),
+  ]).isRequired,
+  onDragAndDrop: PropTypes.func,
+  onClickItem: PropTypes.func,
+  onCheckboxActive: PropTypes.func,
+  onClickMain: PropTypes.func,
+  subheader: PropTypes.string,
+  classes: PropTypes.object,
+  keyItem: PropTypes.object,
+  collapseHasFixedHeight: PropTypes.bool,
+  showSubItemsOnly: PropTypes.bool,
+  shouldShowTracksIncludedValue: PropTypes.bool,
+};

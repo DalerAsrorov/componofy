@@ -41,8 +41,11 @@ const receivePlaylists = (json) => ({
   receivedAt: Date.now(),
 });
 
-export const fetchMyPlaylists = (offset) => (dispatch) => {
+export const fetchMyPlaylists = (offset) => (dispatch, getState) => {
   dispatch(requestPlaylists());
+
+  console.log(getState());
+
   return getMyPlaylists(offset).then((json) =>
     dispatch(receivePlaylists(json))
   );

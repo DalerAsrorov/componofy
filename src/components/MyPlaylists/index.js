@@ -19,7 +19,7 @@ import {
   toTop,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import List from '../List';
+import { List } from '../List';
 import Search from '../Search';
 
 const styles = (theme) => ({
@@ -175,7 +175,7 @@ class MyPlaylists extends PureComponent {
     startPlaylistTracksReorderProcess(playlistId, trackId, startPos, endPos);
   };
 
-  componentDidMount() {
+  componentWillMount() {
     toTop();
 
     const {
@@ -219,10 +219,10 @@ class MyPlaylists extends PureComponent {
     } = this.state;
     let {
       myPlaylists: {
+        isFetching: isFetchingPlaylists,
         playlistsRemaining,
         canLoadMore,
         areAllOpen,
-        isFetching,
         searchTerm,
         playlists,
       },
@@ -230,7 +230,7 @@ class MyPlaylists extends PureComponent {
       classes,
     } = this.props;
     const loadMoreButtonIsEnabled =
-      canLoadMore && !isFetching && !isEmpty(playlists);
+      canLoadMore && !isFetchingPlaylists && !isEmpty(playlists);
 
     let collapseText = getExpandStatusText(myPlaylistsHasOpenPlaylist);
 
@@ -249,19 +249,13 @@ class MyPlaylists extends PureComponent {
       </div>
     );
 
-    const playlistCounter = (
-      <div className={classes.playlistRemaining}>{playlistsRemaining}</div>
-    );
-
-    const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch,
-    };
-
     return (
       <HotKeys
         id="myPlaylists"
         keyMap={searchKeyMap}
-        handlers={serachHandlers}
+        handlers={{
+          focusSearch: this._handleFocusOnSearch,
+        }}
         className={classes.hotKeys}
       >
         <Search
@@ -300,7 +294,11 @@ class MyPlaylists extends PureComponent {
           onSelectItem={this._handleClickOption}
           onClickMainLeftSideButton={this._handleLoadMore}
           shouldShowCircle={loadMoreButtonIsEnabled}
-          circleText={playlistCounter}
+          circleText={
+            <div className={classes.playlistRemaining}>
+              {playlistsRemaining}
+            </div>
+          }
           isOpen={settingsIsOpen}
           leftSideButtonText={status}
           anchorEl={anchorEl}

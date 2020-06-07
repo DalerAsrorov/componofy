@@ -14,7 +14,7 @@ export default class PrivateRoute extends PureComponent {
     errors: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const { checkIfAuthenticated, generateRefreshToken } = this.props;
 
     checkIfAuthenticated();
@@ -35,6 +35,7 @@ export default class PrivateRoute extends PureComponent {
       component: Component,
       removeErrorFromApp,
       errors,
+      user,
       ...rest
     } = this.props;
     let globalErrors;

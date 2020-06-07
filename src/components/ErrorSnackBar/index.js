@@ -50,9 +50,6 @@ class ErrorSnackBar extends PureComponent {
         open={isOpen}
         autoHideDuration={autoHideDuration}
         onClose={this._handleClose}
-        SnackbarContentProps={{
-          'aria-describedby': 'message-id',
-        }}
         message={<span id={`error-${errorId}`}>{message}</span>}
         action={[
           <IconButton

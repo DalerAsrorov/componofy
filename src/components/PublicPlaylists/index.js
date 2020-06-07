@@ -22,7 +22,7 @@ import {
 } from '../../utils/constants';
 import { getExpandStatusText } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import List from '../List';
+import { List } from '../List';
 import Loader from '../Loader';
 import Search from '../Search';
 
@@ -103,9 +103,7 @@ class PublicPlaylists extends PureComponent {
     } = this.props;
     event.preventDefault();
 
-    if (R.isEmpty(searchTerm)) {
-      console.log('TODO::search featured/suggested playlists');
-    } else {
+    if (!R.isEmpty(searchTerm)) {
       this.props.searchPublicPlaylists();
     }
   };
@@ -298,15 +296,13 @@ class PublicPlaylists extends PureComponent {
       </div>
     );
 
-    const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch,
-    };
-
     return (
       <HotKeys
         id="publicPlaylists"
         keyMap={searchKeyMap}
-        handlers={serachHandlers}
+        handlers={{
+          focusSearch: this._handleFocusOnSearch,
+        }}
         className={classes.hotKeys}
       >
         <form
