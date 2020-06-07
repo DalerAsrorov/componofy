@@ -41,23 +41,26 @@ const styles = (theme) => ({
 export const Info = withStyles(styles)((props) => (
   <div className={props.classes.root}>
     <TypographyLink
+      href={props.trackUrl}
+      hasNoDecoration
       className={props.classes.infoLink}
       variant="h6"
-      href={props.trackUrl}
     >
       {props.trackName}
     </TypographyLink>
     <TypographyLink
-      className={props.classes.infoLink}
-      variant="body1"
       href={props.artistUrl}
+      hasNoDecoration
+      variant="body1"
+      className={props.classes.infoLink}
     >
       {props.artistName}
     </TypographyLink>
     <TypographyLink
-      className={props.classes.infoLink}
-      variant="subtitle2"
       href={props.albumUrl}
+      hasNoDecoration
+      variant="subtitle2"
+      className={props.classes.infoLink}
     >
       {props.albumName}
     </TypographyLink>

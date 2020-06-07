@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
-import { DEMO_YOUTUBE_LINK } from '../../utils/constants';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import { DEMO_YOUTUBE_LINK, GITHUB_REPO_LINK } from '../../utils/constants';
+import { TypographyLink } from '../common';
 
 import './Landing.css';
 
@@ -103,7 +104,6 @@ class Landing extends PureComponent {
               <Typography
                 className={classes.demoLink}
                 color="textPrimary"
-                align="center"
                 variant="overline"
                 component="a"
                 target="__blank"
@@ -112,9 +112,14 @@ class Landing extends PureComponent {
               >
                 Watch Demo!
               </Typography>
-              <Typography variant="caption" color="textSecondary">
+              <TypographyLink
+                hasNoDecoration
+                href={GITHUB_REPO_LINK}
+                variant="caption"
+                color="textSecondary"
+              >
                 {appVersion}
-              </Typography>
+              </TypographyLink>
             </div>
           </Grid>
         </Grid>

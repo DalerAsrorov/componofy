@@ -6,14 +6,21 @@ import { withStyles } from '@material-ui/core/styles';
 
 import './common.scss';
 
-export const TypographyLink = (props) => (
+export const TypographyLink = ({
+  children,
+  hasNoDecoration,
+  ...typographyProps
+}) => (
   <Typography
     className="typography-link"
     component="a"
     target="__blank"
-    {...props}
+    style={{
+      textDecoration: hasNoDecoration ? 'none' : 'underline',
+    }}
+    {...typographyProps}
   >
-    {props.children}
+    {children}
   </Typography>
 );
 

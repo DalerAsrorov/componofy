@@ -103,6 +103,7 @@ export const MAX_IMAGE_SIZE_LIMIT = 256000;
 export const REFRESH_TOKEN_UPDATE_TIME = 60 * 1000;
 
 // YouTube link to Demo
+export const GITHUB_REPO_LINK = 'https://github.com/DalerAsrorov/componofy';
 export const DEMO_YOUTUBE_LINK = 'https://www.youtube.com/watch?v=lQnvfRADJMQ';
 
 export const LOAD_MORE_STATUS = {
