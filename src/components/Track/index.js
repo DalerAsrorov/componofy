@@ -4,7 +4,11 @@ import { Draggable } from 'react-beautiful-dnd';
 import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { head } from 'ramda';
-import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
+import {
+  TRACK_PROPTYPE,
+  PLAYLIST_PROPTYPE,
+  MIN_POPULAR_SCORE,
+} from '../../utils/constants';
 import { CheckBox } from '../common';
 import Info from './Info';
 import Preview from './Preview';
@@ -31,7 +35,7 @@ const styles = (theme) => ({
 
 const TrackPlayer = (props) => (
   <div className={props.classes.trackInfoContainer}>
-    <div className={props.classes.trackInfo}>
+    <article className={props.classes.trackInfo}>
       <Info
         trackName={props.trackName}
         trackUrl={props.trackUrl}
@@ -41,7 +45,7 @@ const TrackPlayer = (props) => (
         albumUrl={props.albumUrl}
         isPopular={props.isPopular}
       />
-    </div>
+    </article>
     {props.previewComponent}
   </div>
 );
@@ -98,21 +102,10 @@ class Track extends PureComponent {
       name: artistName,
       external_urls: { spotify: artistUrl },
     } = head(artists);
-    let previewComponent;
-
-    const isPopular = popularity >= 70;
-
-    if (preview_url) {
-      previewComponent = (
-        <div className={classes.preview}>
-          <Preview url={preview_url} />
-        </div>
-      );
-    }
 
     return (
       <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
-        {(provided, snapshot) => (
+        {(provided) => (
           <div
             ref={provided.innerRef}
             style={provided.draggableStyle}
@@ -136,8 +129,14 @@ class Track extends PureComponent {
                     artistUrl={artistUrl}
                     albumName={albumName}
                     albumUrl={albumUrl}
-                    isPopular={isPopular}
-                    previewComponent={previewComponent}
+                    isPopular={popularity >= MIN_POPULAR_SCORE}
+                    previewComponent={
+                      !!preview_url && (
+                        <div className={classes.preview}>
+                          <Preview url={preview_url} />
+                        </div>
+                      )
+                    }
                   />
                 }
               />

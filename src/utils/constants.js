@@ -132,3 +132,5 @@ export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
     spotify: '',
   },
 });
+
+export const MIN_POPULAR_SCORE = 70;
