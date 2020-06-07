@@ -22,7 +22,7 @@ export const TrackListWithLoader = (props) =>
   );
 
 TrackListWithLoader.propTypes = {
-  tracks: PropTypes.arrayOf(TRACK_PROPTYPE).isRequired,
+  tracks: PropTypes.arrayOf(TRACK_PROPTYPE),
   playlist: PLAYLIST_PROPTYPE,
   classes: PropTypes.any,
 };
