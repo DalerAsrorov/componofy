@@ -11,7 +11,7 @@ import * as R from 'ramda';
 import React, { PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
-import Waypoint from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 import {
   LIGHT_CYAN_COLOR,
   LOAD_MORE_STATUS,

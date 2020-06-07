@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 import { head } from 'ramda';
 import { withStyles } from '@material-ui/core/styles';
 import {

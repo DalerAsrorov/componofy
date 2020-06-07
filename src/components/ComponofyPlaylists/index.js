@@ -6,7 +6,7 @@ import * as R from 'ramda';
 import React, { PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
-import Waypoint from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 import Dialog from '../../containers/Dialog';
 import {
   LIGHT_CYAN_COLOR,
@@ -14,6 +14,7 @@ import {
   MOST_LIGHT_BLUE_COLOR,
   SCROLL_DURATION,
   searchKeyMap,
+  OFFSET_LIMIT,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
@@ -157,8 +158,11 @@ class ComponofyPlaylists extends PureComponent {
   };
 
   _handleCanScrollUp = (canScrollUp) => {
-    canScrollUp =
-      this.props.numberOfTracksInFinalPlaylist <= 5 ? false : canScrollUp;
+    const nTracks = this.props.numberOfTracksInFinalPlaylist;
+
+    if (canScrollUp && nTracks < OFFSET_LIMIT) {
+      canScrollUp = false;
+    }
 
     this.setState({
       canScrollUp,

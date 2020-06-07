@@ -5,7 +5,7 @@ import { isEmpty, trim } from 'ramda';
 import React, { Fragment, PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
-import Waypoint from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 import {
   LOAD_MORE_STATUS,
   menuButtonStyle,
