@@ -7,6 +7,7 @@ import React from 'react';
 import { TypographyLink } from '../common';
 
 import './Track.css';
+import { LIGHT_BLUE_COLOR } from '../../utils/constants';
 
 const styles = (theme) => ({
   root: theme.mixins.gutters({
@@ -28,11 +29,16 @@ const styles = (theme) => ({
 
   infoLink: {
     display: 'block',
+    textDecoration: 'none',
     margin: `0 0 ${theme.spacing(0.7)}px 0`,
+
+    '&:hover': {
+      color: LIGHT_BLUE_COLOR,
+    },
   },
 });
 
-const Info = (props) => (
+export const Info = withStyles(styles)((props) => (
   <div className={props.classes.root}>
     <TypographyLink
       className={props.classes.infoLink}
@@ -66,7 +72,7 @@ const Info = (props) => (
       />
     )}
   </div>
-);
+));
 
 Info.propTypes = {
   trackName: PropTypes.string.isRequired,
@@ -77,5 +83,3 @@ Info.propTypes = {
   albumUrl: PropTypes.string.isRequired,
   isPopular: PropTypes.bool.isRequired,
 };
-
-export default withStyles(styles)(Info);

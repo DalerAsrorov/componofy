@@ -46,13 +46,7 @@ const PopperFactory = (props) => (
 );
 
 const CustomMenu = (props) => {
-  const {
-    iconComponent,
-    customButton,
-    wrapperStyle,
-    menuButtonStyle,
-    ...restProps
-  } = props;
+  const { iconComponent, customButton, wrapperStyle, ...restProps } = props;
 
   let menuButton = customButton ? (
     customButton
@@ -62,7 +56,6 @@ const CustomMenu = (props) => {
       variant="round"
       aria-haspopup="true"
       onClick={props.onClickOptions}
-      style={menuButtonStyle}
       className={props.classes.settingsButton}
     >
       {iconComponent}
@@ -94,7 +87,6 @@ CustomMenu.propTypes = {
   iconComponent: PropTypes.object,
   customButton: PropTypes.object,
   wrapperStyle: PropTypes.object,
-  menuButtonStyle: PropTypes.object,
   hasFullWidthMenu: PropTypes.bool,
   anchorEl: PropTypes.object,
 };

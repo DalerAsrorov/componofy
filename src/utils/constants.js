@@ -92,8 +92,6 @@ export const LIGHT_BLUE_COLOR = lightBlue[600];
 export const LIGHT_CYAN_COLOR = cyan[500];
 export const SUCCESS_COLOR = green[600];
 
-export const menuButtonStyle = {};
-
 export const SCROLL_DURATION = 500;
 export const OFFSET_LIMIT = 10;
 export const PLAYLIST_OFFSET_LIMIT = 20;

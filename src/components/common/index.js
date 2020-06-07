@@ -7,7 +7,12 @@ import { withStyles } from '@material-ui/core/styles';
 import './common.scss';
 
 export const TypographyLink = (props) => (
-  <Typography component="a" target="__blank" {...props}>
+  <Typography
+    className="typography-link"
+    component="a"
+    target="__blank"
+    {...props}
+  >
     {props.children}
   </Typography>
 );

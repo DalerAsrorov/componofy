@@ -10,8 +10,8 @@ import {
   MIN_POPULAR_SCORE,
 } from '../../utils/constants';
 import { CheckBox } from '../common';
-import Info from './Info';
 import Preview from './Preview';
+import { Info } from './Info';
 
 const styles = (theme) => ({
   trackInfoContainer: {

@@ -11,11 +11,12 @@ const XS = 12;
 
 const styles = (theme) => ({
   demoLinkWrapper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
   },
 
   demoLink: {
-    marginTop: theme.spacing(0.5),
+    display: 'block',
+    marginBottom: `${theme.spacing(0.5)}px`,
     padding: theme.spacing(1),
   },
 
@@ -45,6 +46,7 @@ const styles = (theme) => ({
 class Landing extends PureComponent {
   static propTypes = {
     onAuth: PropTypes.func.isRequired,
+    appVersion: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
     children: PropTypes.object,
@@ -61,7 +63,14 @@ class Landing extends PureComponent {
   };
 
   render() {
-    const { title, subTitle, children, iconText, classes } = this.props;
+    const {
+      appVersion,
+      title,
+      subTitle,
+      children,
+      iconText,
+      classes,
+    } = this.props;
 
     return (
       <Paper elevation={ELEVATION}>
@@ -93,7 +102,7 @@ class Landing extends PureComponent {
             <div className={classes.demoLinkWrapper}>
               <Typography
                 className={classes.demoLink}
-                color="textSecondary"
+                color="textPrimary"
                 align="center"
                 variant="overline"
                 component="a"
@@ -102,6 +111,9 @@ class Landing extends PureComponent {
                 gutterBottom
               >
                 Watch Demo!
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {appVersion}
               </Typography>
             </div>
           </Grid>

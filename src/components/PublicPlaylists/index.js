@@ -15,7 +15,6 @@ import { Waypoint } from 'react-waypoint';
 import {
   LIGHT_CYAN_COLOR,
   LOAD_MORE_STATUS,
-  menuButtonStyle,
   OFFSET_LIMIT,
   PLAYLISTS_PROPTYPE,
   SCROLL_DURATION,
@@ -70,7 +69,6 @@ class PublicPlaylists extends PureComponent {
     addPlaylistToFinal: PropTypes.func.isRequired,
     logOutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    menuButtonStyle: PropTypes.object,
   };
 
   state = {
@@ -355,7 +353,6 @@ class PublicPlaylists extends PureComponent {
             leftSideButtonText={status}
             anchorEl={anchorEl}
             menuItems={menuItems}
-            menuButtonStyle={menuButtonStyle}
           />
         </form>
       </HotKeys>

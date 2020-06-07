@@ -8,7 +8,6 @@ import Scroll from 'react-scroll';
 import { Waypoint } from 'react-waypoint';
 import {
   LOAD_MORE_STATUS,
-  menuButtonStyle,
   OFFSET_LIMIT,
   PLAYLISTS_PROPTYPE,
   SCROLL_DURATION,
@@ -62,7 +61,6 @@ class MyPlaylists extends PureComponent {
     navigation: PropTypes.object.isRequired,
     logOutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    menuButtonStyle: PropTypes.object,
   };
 
   state = {
@@ -307,7 +305,6 @@ class MyPlaylists extends PureComponent {
           leftSideButtonText={status}
           anchorEl={anchorEl}
           menuItems={menuItems}
-          menuButtonStyle={menuButtonStyle}
         />
       </HotKeys>
     );
