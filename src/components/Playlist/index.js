@@ -173,7 +173,7 @@ class Playlist extends PureComponent {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <ListItem
           onClick={this._handleClick}
           disabled={isEmpty(tracks)}
@@ -239,7 +239,7 @@ class Playlist extends PureComponent {
             />
           )}
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   }
 }
