@@ -22,7 +22,7 @@ const styles = (theme) => ({
   },
 
   loadmore: {
-    flex: '1 60px',
+    flex: `1 ${theme.spacing(8)}px`,
   },
 
   secondaryBtn: {
@@ -35,10 +35,8 @@ const styles = (theme) => ({
     float: 'right',
   },
 
-  settings: {},
-
   loaderSection: {
-    flex: '1 100px',
+    flex: `1 ${theme.spacing(13)}px`,
     display: 'flex',
     flexDirection: 'row',
   },
@@ -49,42 +47,40 @@ const styles = (theme) => ({
   },
 });
 
-export const FooterPanel = (props) => {
-  return (
-    <Toolbar
-      style={props.style}
-      classes={{
-        root: classNames(props.classes.root, 'sticky-bottom'),
-      }}
-    >
-      <section className={props.classes.loaderSection}>
-        <LeftSideControls {...props} />
-        {props.shouldShowCircle && (
-          <IconButton
-            color="primary"
-            disabled
-            aria-label="Playlists remaining"
-            className={props.classes.secondaryBtn}
-          >
-            {props.circleText}
-          </IconButton>
-        )}
-      </section>
-      <section className={props.classes.settingsSection}>
-        <Settings
-          onSelectItem={props.onSelectItem}
-          onCloseSettings={props.onCloseSettings}
-          onClickOptions={props.onClickOptions}
-          menuItems={props.menuItems}
-          anchorEl={props.anchorEl}
-          isOpen={props.isOpen}
-          className={props.classes.settings}
-          icon={<SettingsIcon />}
-        />
-      </section>
-    </Toolbar>
-  );
-};
+export const FooterPanel = (props) => (
+  <Toolbar
+    style={props.style}
+    classes={{
+      root: classNames(props.classes.root, 'sticky-bottom'),
+    }}
+  >
+    <section className={props.classes.loaderSection}>
+      <LeftSideControls {...props} />
+      {props.shouldShowCircle && (
+        <IconButton
+          color="primary"
+          disabled
+          aria-label="Playlists remaining"
+          className={props.classes.secondaryBtn}
+        >
+          {props.circleText}
+        </IconButton>
+      )}
+    </section>
+    <section className={props.classes.settingsSection}>
+      <Settings
+        onSelectItem={props.onSelectItem}
+        onCloseSettings={props.onCloseSettings}
+        onClickOptions={props.onClickOptions}
+        menuItems={props.menuItems}
+        anchorEl={props.anchorEl}
+        isOpen={props.isOpen}
+        className={props.classes.settings}
+        icon={<SettingsIcon />}
+      />
+    </section>
+  </Toolbar>
+);
 
 FooterPanel.propTypes = {
   onClickOptions: PropTypes.func.isRequired,
