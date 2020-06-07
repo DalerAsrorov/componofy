@@ -134,3 +134,4 @@ export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
 });
 
 export const MIN_POPULAR_SCORE = 70;
+export const MAX_NUMBER_OF_TRACKS_FOR_BADGE = 999;

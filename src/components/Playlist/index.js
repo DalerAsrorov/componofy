@@ -27,6 +27,7 @@ import {
   LIGHT_CYAN_COLOR,
   SUCCESS_COLOR,
   SUGGESTED_PLAYLIST_PLACEHOLDER,
+  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
 } from '../../utils/constants';
 import Expand from './Expand';
 import TrackList from './TrackList';
@@ -42,21 +43,21 @@ const styles = (theme) => ({
     overflowY: 'auto',
   },
 
-  trackBadge: {
+  customBadgeCl: {
+    margin: theme.spacing(2),
+  },
+
+  numberOfTracksBadge: {
     color: theme.palette.background.paper,
     backgroundColor: theme.palette.secondary.light,
-    padding: theme.spacing(0.25),
+    padding: theme.spacing(1),
   },
 
-  includedTracksBadge: {
+  addedTracksBadge: {
     color: SUCCESS_COLOR,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(0.25),
+    padding: theme.spacing(1),
     border: `1px solid ${SUCCESS_COLOR}`,
-  },
-
-  margin: {
-    margin: theme.spacing(2),
   },
 
   nested: {
@@ -166,6 +167,8 @@ class Playlist extends PureComponent {
       isOpen: playlistIsOpen,
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
+    const shouldShowExpandBtn =
+      collapseHasFixedHeight && tracks && tracks.length > 5 && !showTracksOnly;
     let playlistClassName = classNames({ 'no-display': showTracksOnly });
     let isOpen = showTracksOnly ? true : playlistIsOpen;
     let playlistIconComponent = containsThisPlaylist ? (
@@ -179,32 +182,15 @@ class Playlist extends PureComponent {
       playlistIconComponent = <AccessTime />;
     }
 
-    if (
-      collapseHasFixedHeight &&
-      tracks &&
-      tracks.length > 4 &&
-      !showTracksOnly
-    ) {
-      expandButton = (
-        <Expand
-          to={playlist.id}
-          shouldSpy={true}
-          isStickyBottom={true}
-          showUpArrow={isExpanded}
-          onClick={this._handleExpandMore}
-          variant="outlined"
-        />
-      );
-    }
-
     if (numberOfAddedTracksFromThisPlaylist && shouldShowTracksIncludedValue) {
       badgeForAddedTracks = (
         <Badge
           badgeContent={numberOfAddedTracksFromThisPlaylist}
-          className={classes.margin}
+          className={classes.customBadgeCl}
           classes={{
-            badge: classes.includedTracksBadge,
+            badge: classes.addedTracksBadge,
           }}
+          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
         >
           <span />
         </Badge>
@@ -277,10 +263,11 @@ class Playlist extends PureComponent {
             {badgeForAddedTracks}
             <Badge
               badgeContent={nTracks}
-              className={classes.margin}
+              className={classes.customBadgeCl}
               classes={{
-                badge: classes.trackBadge,
+                badge: classes.numberOfTracksBadge,
               }}
+              max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
             >
               <span />
             </Badge>
@@ -305,7 +292,16 @@ class Playlist extends PureComponent {
               )}
             </Droppable>
           </DragDropContext>
-          {expandButton}
+          {shouldShowExpandBtn && (
+            <Expand
+              to={playlist.id}
+              shouldSpy={true}
+              isStickyBottom={true}
+              showUpArrow={isExpanded}
+              onClick={this._handleExpandMore}
+              variant="outlined"
+            />
+          )}
         </Collapse>
       </div>
     );
