@@ -28,7 +28,7 @@ const styles = (theme) => ({
 
   infoLink: {
     display: 'block',
-    margin: `${theme.spacing(0.5)}px 0`,
+    margin: `0 0 ${theme.spacing(0.7)}px 0`,
   },
 });
 
