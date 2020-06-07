@@ -398,7 +398,7 @@ class ComponofyPlaylists extends PureComponent {
           mainButtonStyle={mainButtonStyle}
           menuItems={menuItems}
           buttonMenuStyle={buttonMenuStyle}
-          mainText="Componofy"
+          leftSideButtonText="Componofy"
           hasFullWidthButtonMenu={true}
         />
         <Dialog

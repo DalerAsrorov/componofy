@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import { ClickAwayListener, Grow, Paper } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Grow, Paper, ClickAwayListener } from '@material-ui/core';
-import { Manager, Target, Popper } from 'react-popper';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Manager, Popper, Target } from 'react-popper';
 import { DefaultWindow, MobileWindow } from '../common';
 
 const styles = {

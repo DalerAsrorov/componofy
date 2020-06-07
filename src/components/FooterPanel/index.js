@@ -77,7 +77,7 @@ export const FooterPanel = (props) => {
         style={props.mainButtonStyle}
         variant="contained"
       >
-        <Typography variant="button">{props.mainText}</Typography>
+        <Typography variant="button">{props.leftSideButtonText}</Typography>
       </Button>
     );
 
@@ -127,7 +127,7 @@ FooterPanel.propTypes = {
   onClickOptions: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
   menuItems: PropTypes.object.isRequired,
-  mainText: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  leftSideButtonText: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
     .isRequired,
   classes: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,

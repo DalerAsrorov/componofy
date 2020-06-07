@@ -1,4 +1,4 @@
-import { Button, Menu, IconButton } from '@material-ui/core';
+import { Button, Menu } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 

@@ -352,7 +352,7 @@ class PublicPlaylists extends PureComponent {
             onCloseSettings={this._handleCloseSettings}
             onClick={this._handleLoadMore}
             isOpen={settingsIsOpen}
-            mainText={status}
+            leftSideButtonText={status}
             anchorEl={anchorEl}
             menuItems={menuItems}
             menuButtonStyle={menuButtonStyle}

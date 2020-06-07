@@ -1,17 +1,15 @@
 import {
   Badge,
-  CircularProgress,
   Collapse,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { AccessTime, PlaylistAdd, PlaylistAddCheck } from '@material-ui/icons';
+import { AccessTime } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
+import { isEmpty } from 'ramda';
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Element } from 'react-scroll';
@@ -21,16 +19,13 @@ import {
   PLAYLIST_PROPTYPE,
   SUCCESS_COLOR,
 } from '../../utils/constants';
-import Loader from '../Loader';
-import { PlaylistThumbmailManager } from './PlaylistThumbmailManager';
 import Expand from './Expand';
-import TrackList from './TrackList';
-
 import './Playlist.css';
+import { PlaylistIcon } from './PlaylistIcon';
+import { PlaylistThumbmailManager } from './PlaylistThumbmailManager';
+import { TrackListWithLoader } from './TrackListWithLoader';
 
 const styles = (theme) => ({
-  badgeSet: {},
-
   collapse: {
     maxHeight: '420px',
     overflowY: 'auto',
@@ -154,24 +149,13 @@ class Playlist extends PureComponent {
     } = this.props;
     const {
       tracks: { list: tracks },
-      images: playlistImages,
       isOpen: playlistIsOpen,
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
     const shouldShowExpandBtn =
       collapseHasFixedHeight && tracks && tracks.length > 5 && !showTracksOnly;
-    let playlistClassName = classNames({ 'no-display': showTracksOnly });
-    let isOpen = showTracksOnly ? true : playlistIsOpen;
-    let playlistIconComponent = containsThisPlaylist ? (
-      <PlaylistAddCheck />
-    ) : (
-      <PlaylistAdd />
-    );
-    let badgeForAddedTracks, expandButton;
-
-    if (!tracks) {
-      playlistIconComponent = <AccessTime />;
-    }
+    const isOpen = showTracksOnly ? true : playlistIsOpen;
+    let badgeForAddedTracks;
 
     if (numberOfAddedTracksFromThisPlaylist && shouldShowTracksIncludedValue) {
       badgeForAddedTracks = (
@@ -188,25 +172,12 @@ class Playlist extends PureComponent {
       );
     }
 
-    let tracklist = tracks ? (
-      <TrackList tracks={tracks} playlist={playlist} />
-    ) : (
-      <Loader
-        text={
-          <Typography variant="h3" color="textSecondary">
-            Loading tracks...
-          </Typography>
-        }
-        icon={<CircularProgress thickness={7} className={classes.progress} />}
-      />
-    );
-
     return (
       <div>
         <ListItem
           onClick={this._handleClick}
-          disabled={R.isEmpty(tracks)}
-          className={playlistClassName}
+          disabled={isEmpty(tracks)}
+          className={classNames({ 'no-display': showTracksOnly })}
           button
           divider
         >
@@ -215,7 +186,7 @@ class Playlist extends PureComponent {
             onClick={this._handleIconClick}
           >
             <Element id={`element-playlist-${playlist.id}`} name={playlist.id}>
-              {playlistIconComponent}
+              <PlaylistIcon isIncluded={containsThisPlaylist} tracks={tracks} />
             </Element>
           </ListItemIcon>
           <PlaylistThumbmailManager playlist={playlist} />
@@ -247,7 +218,11 @@ class Playlist extends PureComponent {
             <Droppable droppableId={playlist.id}>
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
-                  {tracklist}
+                  <TrackListWithLoader
+                    classes={classes}
+                    playlist={playlist}
+                    tracks={tracks}
+                  />
                   {provided.placeholder}
                 </div>
               )}

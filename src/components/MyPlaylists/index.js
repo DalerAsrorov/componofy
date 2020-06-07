@@ -2,7 +2,7 @@ import { Divider, MenuItem } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { isEmpty, trim } from 'ramda';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
 import { Waypoint } from 'react-waypoint';
@@ -304,7 +304,7 @@ class MyPlaylists extends PureComponent {
           shouldShowCircle={loadMoreButtonIsEnabled}
           circleText={playlistCounter}
           isOpen={settingsIsOpen}
-          mainText={status}
+          leftSideButtonText={status}
           anchorEl={anchorEl}
           menuItems={menuItems}
           menuButtonStyle={menuButtonStyle}
