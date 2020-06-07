@@ -44,8 +44,6 @@ const receivePlaylists = (json) => ({
 export const fetchMyPlaylists = (offset) => (dispatch, getState) => {
   dispatch(requestPlaylists());
 
-  console.log(getState());
-
   return getMyPlaylists(offset).then((json) =>
     dispatch(receivePlaylists(json))
   );
