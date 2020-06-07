@@ -1,4 +1,9 @@
-import { Divider, MenuItem } from '@material-ui/core';
+import {
+  Divider,
+  MenuItem,
+  CircularProgress,
+  Typography,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { isEmpty, trim } from 'ramda';
@@ -21,6 +26,7 @@ import {
 import FooterPanel from '../FooterPanel';
 import { List } from '../List';
 import Search from '../Search';
+import Loader from '../Loader';
 
 const styles = (theme) => ({
   loadmore: {
@@ -232,22 +238,9 @@ class MyPlaylists extends PureComponent {
     const loadMoreButtonIsEnabled =
       canLoadMore && !isFetchingPlaylists && !isEmpty(playlists);
 
-    let collapseText = getExpandStatusText(myPlaylistsHasOpenPlaylist);
-
     if (shouldFilterList) {
       playlists = filterSearchPlaylist(searchTerm, playlists);
     }
-
-    const menuItems = (
-      <div>
-        <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
-          Up
-        </MenuItem>
-        <MenuItem onClick={this._handleClickCollapse}>{collapseText}</MenuItem>
-        <Divider />
-        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-      </div>
-    );
 
     return (
       <HotKeys
@@ -274,15 +267,27 @@ class MyPlaylists extends PureComponent {
             this._handleCanScrollUp(false);
           }}
         />
-        <List
-          onClickMain={this._handleAddPlaylist}
-          onClickItem={this._handleClickPlaylist}
-          items={playlists}
-          isPlaylist={true}
-          onDragAndDrop={this._handlePlaylistTracksReorder}
-          collapseHasFixedHeight={!areAllOpen}
-          shouldShowTracksIncludedValue={true}
-        />
+        {isFetchingPlaylists ? (
+          <Loader
+            text={
+              <Typography variant="h6" color="textSecondary">
+                Loading your playlists...
+              </Typography>
+            }
+            icon={<CircularProgress thickness={7} />}
+            square={true}
+          />
+        ) : (
+          <List
+            onClickMain={this._handleAddPlaylist}
+            onClickItem={this._handleClickPlaylist}
+            items={playlists}
+            isPlaylist={true}
+            onDragAndDrop={this._handlePlaylistTracksReorder}
+            collapseHasFixedHeight={!areAllOpen}
+            shouldShowTracksIncludedValue={true}
+          />
+        )}
         <Waypoint
           onEnter={() => {
             this._handleCanScrollUp(true);
@@ -302,7 +307,18 @@ class MyPlaylists extends PureComponent {
           isOpen={settingsIsOpen}
           leftSideButtonText={status}
           anchorEl={anchorEl}
-          menuItems={menuItems}
+          menuItems={
+            <div>
+              <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                Up
+              </MenuItem>
+              <MenuItem onClick={this._handleClickCollapse}>
+                {getExpandStatusText(myPlaylistsHasOpenPlaylist)}
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+            </div>
+          }
         />
       </HotKeys>
     );
