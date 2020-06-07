@@ -92,6 +92,12 @@ class MyPlaylists extends PureComponent {
     });
   };
 
+  _handleCloseSettings = () => {
+    this.setState({
+      settingsIsOpen: false,
+    });
+  };
+
   _handleClickOption = () => {
     this.setState({
       settingsIsOpen: false,
@@ -131,17 +137,6 @@ class MyPlaylists extends PureComponent {
     scroll.scrollToTop({
       duration: SCROLL_DURATION,
     });
-  };
-
-  _handleClickNext = () => {
-    const {
-      setNavIndex,
-      navigateTo,
-      navigation: { nextPage, nextIndex },
-    } = this.props;
-
-    setNavIndex(nextIndex);
-    navigateTo(nextPage);
   };
 
   _handleLogOut = () => {
@@ -246,15 +241,14 @@ class MyPlaylists extends PureComponent {
     }
 
     const menuItems = (
-      <Fragment>
+      <div>
         <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
           Up
         </MenuItem>
         <MenuItem onClick={this._handleClickCollapse}>{collapseText}</MenuItem>
-        <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
         <Divider />
         <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-      </Fragment>
+      </div>
     );
 
     const playlistCounter = (
@@ -267,54 +261,54 @@ class MyPlaylists extends PureComponent {
 
     return (
       <HotKeys
+        id="myPlaylists"
         keyMap={searchKeyMap}
         handlers={serachHandlers}
         className={classes.hotKeys}
       >
-        <div id="myPlaylists">
-          <Search
-            onChange={this._handleInputChange}
-            onSearchIconClick={this._handleFocusOnSearch}
-            inputId="myPlaylistsSearch"
-            value={searchTerm}
-            placeholder="Search by artists, songs, albums..."
-            inputRef={(input) => {
-              this.searchInputRef = input;
-            }}
-            autoFocus
-          />
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(false);
-            }}
-          />
-          <List
-            onClickMain={this._handleAddPlaylist}
-            onClickItem={this._handleClickPlaylist}
-            items={playlists}
-            isPlaylist={true}
-            onDragAndDrop={this._handlePlaylistTracksReorder}
-            collapseHasFixedHeight={!areAllOpen}
-            shouldShowTracksIncludedValue={true}
-          />
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(true);
-            }}
-          />
-          <FooterPanel
-            shouldShowCircle={loadMoreButtonIsEnabled}
-            onClickOptions={this._handleClickOptions}
-            onSelectItem={this._handleClickOption}
-            circleText={playlistCounter}
-            onClick={this._handleLoadMore}
-            isOpen={settingsIsOpen}
-            mainText={status}
-            anchorEl={anchorEl}
-            menuItems={menuItems}
-            menuButtonStyle={menuButtonStyle}
-          />
-        </div>
+        <Search
+          onChange={this._handleInputChange}
+          onSearchIconClick={this._handleFocusOnSearch}
+          inputId="myPlaylistsSearch"
+          value={searchTerm}
+          placeholder="Search by artists, songs, albums..."
+          inputRef={(input) => {
+            this.searchInputRef = input;
+          }}
+          autoFocus
+        />
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(false);
+          }}
+        />
+        <List
+          onClickMain={this._handleAddPlaylist}
+          onClickItem={this._handleClickPlaylist}
+          items={playlists}
+          isPlaylist={true}
+          onDragAndDrop={this._handlePlaylistTracksReorder}
+          collapseHasFixedHeight={!areAllOpen}
+          shouldShowTracksIncludedValue={true}
+        />
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(true);
+          }}
+        />
+        <FooterPanel
+          onClickOptions={this._handleClickOptions}
+          onCloseSettings={this._handleCloseSettings}
+          onSelectItem={this._handleClickOption}
+          onClick={this._handleLoadMore}
+          shouldShowCircle={loadMoreButtonIsEnabled}
+          circleText={playlistCounter}
+          isOpen={settingsIsOpen}
+          mainText={status}
+          anchorEl={anchorEl}
+          menuItems={menuItems}
+          menuButtonStyle={menuButtonStyle}
+        />
       </HotKeys>
     );
   }

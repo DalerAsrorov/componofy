@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Settings as SettingsIcon } from '@material-ui/icons';
-import Settings from '../../containers/Settings';
-import CustomMenu from '../CustomMenu';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { LIGHT_BLUE_COLOR } from '../../utils/constants';
+import '../common/common.css';
+import CustomMenu from '../CustomMenu';
+import Settings from '../Settings';
 
 import './FooterPanel.css';
-import '../common/common.css';
 
 const styles = (theme) => ({
   root: {
@@ -47,6 +47,7 @@ const styles = (theme) => ({
 
   settingsSection: {
     flex: '1',
+    textAlign: 'right',
   },
 });
 
@@ -109,13 +110,13 @@ export const FooterPanel = (props) => {
       <section className={props.classes.settingsSection}>
         <Settings
           onSelectItem={props.onSelectItem}
+          onCloseSettings={props.onCloseSettings}
           onClickOptions={props.onClickOptions}
           menuItems={props.menuItems}
           anchorEl={props.anchorEl}
           isOpen={props.isOpen}
           className={props.classes.settings}
           icon={<SettingsIcon />}
-          settingsWrapperStyle={{ float: 'right' }}
         />
       </section>
     </Toolbar>
@@ -142,6 +143,7 @@ FooterPanel.propTypes = {
   menuButtonStyle: PropTypes.object,
   customMenuAnchorEl: PropTypes.object,
   onClickCustomMenuOptions: PropTypes.func,
+  onCloseSettings: PropTypes.func.isRequired,
   hasFullWidthButtonMenu: PropTypes.bool,
   shouldShowMainButton: PropTypes.bool,
   shouldShowCircle: PropTypes.bool,

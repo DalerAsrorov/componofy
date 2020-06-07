@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Extension } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
 import Waypoint from 'react-waypoint';
@@ -131,6 +131,12 @@ class PublicPlaylists extends PureComponent {
     });
   };
 
+  _handleCloseSettings = () => {
+    this.setState({
+      settingsIsOpen: false,
+    });
+  };
+
   _handleClickOption = () => {
     this.setState({
       settingsIsOpen: false,
@@ -144,17 +150,6 @@ class PublicPlaylists extends PureComponent {
 
     searchPublicPlaylists(true);
     scroll.scrollToBottom();
-  };
-
-  _handleClickNext = () => {
-    const {
-      setNavIndex,
-      navigateTo,
-      navigation: { nextPage, nextIndex },
-    } = this.props;
-
-    setNavIndex(nextIndex);
-    navigateTo(nextPage);
   };
 
   _handleLogOut = () => {
@@ -295,15 +290,14 @@ class PublicPlaylists extends PureComponent {
     }
 
     const menuItems = (
-      <Fragment>
+      <div>
         <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
           Up
         </MenuItem>
         <MenuItem onClick={this._handleClickCollapse}>{collapseText}</MenuItem>
-        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
         <Divider />
-        <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
-      </Fragment>
+        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+      </div>
     );
 
     const serachHandlers = {
@@ -312,58 +306,58 @@ class PublicPlaylists extends PureComponent {
 
     return (
       <HotKeys
+        id="publicPlaylists"
         keyMap={searchKeyMap}
         handlers={serachHandlers}
         className={classes.hotKeys}
       >
-        <div id="publicPlaylists">
-          <form
-            onSubmit={this._handleSearchSubmit}
-            name="playlistsSearchForm"
-            className={classes.playlistsSearchForm}
-          >
-            <Waypoint
-              onEnter={() => {
-                this._handleCanScrollUp(false);
-              }}
-            />
-            <Search
-              onChange={this._handleInputChange}
-              inputId="publicPlaylistsSearch"
-              value={searchTerm}
-              onSearchIconClick={this._handleFocusOnSearch}
-              placeholder="Search public playlists by artists, type, mood..."
-              inputRef={(input) => {
-                this.searchInputRef = input;
-              }}
-              autoComplete="off"
-              autoFocus
-            />
-            {publicPlaylistsContent}
-            <Waypoint
-              onEnter={() => {
-                this._handleCanScrollUp(true);
-              }}
-            />
-            <FooterPanel
-              shouldHideShowButton={!hasPlaylists}
-              shouldShowCircle={loadMoreButtonIsEnabled}
-              onClickOptions={this._handleClickOptions}
-              onSelectItem={this._handleClickOption}
-              circleText={
-                <div className={classes.playlistRemaining}>
-                  {playlistsRemaining}
-                </div>
-              }
-              onClick={this._handleLoadMore}
-              isOpen={settingsIsOpen}
-              mainText={status}
-              anchorEl={anchorEl}
-              menuItems={menuItems}
-              menuButtonStyle={menuButtonStyle}
-            />
-          </form>
-        </div>
+        <form
+          onSubmit={this._handleSearchSubmit}
+          name="playlistsSearchForm"
+          className={classes.playlistsSearchForm}
+        >
+          <Waypoint
+            onEnter={() => {
+              this._handleCanScrollUp(false);
+            }}
+          />
+          <Search
+            onChange={this._handleInputChange}
+            inputId="publicPlaylistsSearch"
+            value={searchTerm}
+            onSearchIconClick={this._handleFocusOnSearch}
+            placeholder="Search public playlists by artists, type, mood..."
+            inputRef={(input) => {
+              this.searchInputRef = input;
+            }}
+            autoComplete="off"
+            autoFocus
+          />
+          {publicPlaylistsContent}
+          <Waypoint
+            onEnter={() => {
+              this._handleCanScrollUp(true);
+            }}
+          />
+          <FooterPanel
+            shouldHideShowButton={!hasPlaylists}
+            shouldShowCircle={loadMoreButtonIsEnabled}
+            onClickOptions={this._handleClickOptions}
+            onSelectItem={this._handleClickOption}
+            circleText={
+              <div className={classes.playlistRemaining}>
+                {playlistsRemaining}
+              </div>
+            }
+            onCloseSettings={this._handleCloseSettings}
+            onClick={this._handleLoadMore}
+            isOpen={settingsIsOpen}
+            mainText={status}
+            anchorEl={anchorEl}
+            menuItems={menuItems}
+            menuButtonStyle={menuButtonStyle}
+          />
+        </form>
       </HotKeys>
     );
   }

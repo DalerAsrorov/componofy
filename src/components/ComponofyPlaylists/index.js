@@ -3,17 +3,17 @@ import { withStyles } from '@material-ui/core/styles';
 import { Audiotrack, PlaylistAddCheck } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { HotKeys } from 'react-hotkeys';
 import Scroll from 'react-scroll';
 import Waypoint from 'react-waypoint';
 import Dialog from '../../containers/Dialog';
 import {
   LIGHT_CYAN_COLOR,
+  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
   MOST_LIGHT_BLUE_COLOR,
   SCROLL_DURATION,
   searchKeyMap,
-  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
@@ -150,6 +150,12 @@ class ComponofyPlaylists extends PureComponent {
     });
   };
 
+  _handleCloseSettings = () => {
+    this.setState({
+      settingsIsOpen: false,
+    });
+  };
+
   _handleCanScrollUp = (canScrollUp) => {
     canScrollUp =
       this.props.numberOfTracksInFinalPlaylist <= 5 ? false : canScrollUp;
@@ -255,6 +261,7 @@ class ComponofyPlaylists extends PureComponent {
       classes,
     } = this.props;
     const {
+      anchorEl,
       shouldFilterList,
       isOpenModal,
       settingsIsOpen,
@@ -320,14 +327,14 @@ class ComponofyPlaylists extends PureComponent {
     );
 
     const customLeftMenu = (
-      <Fragment>
+      <div>
         <MenuItem onClick={this._handleComponofyCreate}>
           Create New Playlist
         </MenuItem>
         <MenuItem onClick={this._handleComponofyExisting}>
           Add To Existing Playlist
         </MenuItem>
-      </Fragment>
+      </div>
     );
 
     const statsComponent = (
@@ -355,49 +362,49 @@ class ComponofyPlaylists extends PureComponent {
 
     return (
       <HotKeys
+        id="componofyPlaylists"
         keyMap={searchKeyMap}
         handlers={serachHandlers}
         className={classes.hotKeys}
       >
-        <div id="componofyPlaylists">
-          {search}
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(false);
-            }}
-          />
-          {playlistList}
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(true);
-            }}
-          />
-          <FooterPanel
-            shouldShowCircle={isNotEmpty}
-            onClickOptions={this._handleClickOptions}
-            onSelectItem={this._handleClickOption}
-            customButtonMenu={customLeftMenu}
-            onClick={this._handleCustomMenuClick}
-            onSelectCustomMenuItem={this._handleSelectCustomMenuItem}
-            customMenuAnchorEl={customMenuAnchorEl}
-            isCustomMenuOpen={isCustomMenuOpen}
-            circleText={statsComponent}
-            isOpen={settingsIsOpen}
-            mainText="Componofy"
-            mainButtonStyle={mainButtonStyle}
-            menuItems={menuItems}
-            buttonMenuStyle={buttonMenuStyle}
-            hasFullWidthButtonMenu={true}
-          />
-          <Dialog
-            onClickClose={this._handleClickCloseModal}
-            isOpen={isOpenModal}
-            switchLabel="Public"
-            title="New playlist info"
-            onReturnToMain={this._handleReturnToMain}
-            isCreateMode={hasChosenNewCreate}
-          />
-        </div>
+        {search}
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(false);
+          }}
+        />
+        {playlistList}
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(true);
+          }}
+        />
+        <FooterPanel
+          onClickOptions={this._handleClickOptions}
+          onCloseSettings={this._handleCloseSettings}
+          onSelectItem={this._handleClickOption}
+          onClick={this._handleCustomMenuClick}
+          anchorEl={anchorEl}
+          onSelectCustomMenuItem={this._handleSelectCustomMenuItem}
+          shouldShowCircle={isNotEmpty}
+          customMenuAnchorEl={customMenuAnchorEl}
+          isCustomMenuOpen={isCustomMenuOpen}
+          circleText={statsComponent}
+          isOpen={settingsIsOpen}
+          mainButtonStyle={mainButtonStyle}
+          menuItems={menuItems}
+          buttonMenuStyle={buttonMenuStyle}
+          mainText="Componofy"
+          hasFullWidthButtonMenu={true}
+        />
+        <Dialog
+          onClickClose={this._handleClickCloseModal}
+          isOpen={isOpenModal}
+          switchLabel="Public"
+          title="New Playlist Info"
+          onReturnToMain={this._handleReturnToMain}
+          isCreateMode={hasChosenNewCreate}
+        />
       </HotKeys>
     );
   }

@@ -50,13 +50,13 @@ const styles = (theme) => ({
   numberOfTracksBadge: {
     color: theme.palette.background.paper,
     backgroundColor: theme.palette.secondary.light,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.25),
   },
 
   addedTracksBadge: {
     color: SUCCESS_COLOR,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.25),
     border: `1px solid ${SUCCESS_COLOR}`,
   },
 
