@@ -13,6 +13,7 @@ import {
   MOST_LIGHT_BLUE_COLOR,
   SCROLL_DURATION,
   searchKeyMap,
+  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
@@ -334,12 +335,14 @@ class ComponofyPlaylists extends PureComponent {
         <Badge
           className={classes.badgeCommon}
           badgeContent={numberOfFinalPlaylists}
+          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
         >
           <PlaylistAddCheck />
         </Badge>
         <Badge
           className={classes.badgeCommon}
           badgeContent={numberOfTracksInFinalPlaylist}
+          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
         >
           <Audiotrack />
         </Badge>
