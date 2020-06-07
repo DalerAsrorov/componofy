@@ -344,13 +344,13 @@ class PublicPlaylists extends PureComponent {
             shouldShowCircle={loadMoreButtonIsEnabled}
             onClickOptions={this._handleClickOptions}
             onSelectItem={this._handleClickOption}
+            onClickMainLeftSideButton={this._handleLoadMore}
             circleText={
               <div className={classes.playlistRemaining}>
                 {playlistsRemaining}
               </div>
             }
             onCloseSettings={this._handleCloseSettings}
-            onClick={this._handleLoadMore}
             isOpen={settingsIsOpen}
             leftSideButtonText={status}
             anchorEl={anchorEl}

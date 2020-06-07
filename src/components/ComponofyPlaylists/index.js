@@ -387,7 +387,7 @@ class ComponofyPlaylists extends PureComponent {
           onClickOptions={this._handleClickOptions}
           onCloseSettings={this._handleCloseSettings}
           onSelectItem={this._handleClickOption}
-          onClick={this._handleCustomMenuClick}
+          onClickMainLeftSideButton={this._handleCustomMenuClick}
           anchorEl={anchorEl}
           onSelectCustomMenuItem={this._handleSelectCustomMenuItem}
           shouldShowCircle={isNotEmpty}

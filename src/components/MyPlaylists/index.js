@@ -300,7 +300,7 @@ class MyPlaylists extends PureComponent {
           onClickOptions={this._handleClickOptions}
           onCloseSettings={this._handleCloseSettings}
           onSelectItem={this._handleClickOption}
-          onClick={this._handleLoadMore}
+          onClickMainLeftSideButton={this._handleLoadMore}
           shouldShowCircle={loadMoreButtonIsEnabled}
           circleText={playlistCounter}
           isOpen={settingsIsOpen}

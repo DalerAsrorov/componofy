@@ -1,17 +1,15 @@
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { Settings as SettingsIcon } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { LIGHT_BLUE_COLOR } from '../../utils/constants';
-import '../common/common.css';
-import CustomMenu from '../CustomMenu';
 import Settings from '../Settings';
+import { LeftSideControls } from './LeftSideControls';
 
+import '../common/common.css';
 import './FooterPanel.css';
 
 const styles = (theme) => ({
@@ -52,50 +50,6 @@ const styles = (theme) => ({
 });
 
 export const FooterPanel = (props) => {
-  let circleTextIcon, leftSideComponent;
-
-  if (props.shouldShowCircle) {
-    circleTextIcon = (
-      <IconButton
-        color="primary"
-        disabled
-        aria-label="Playlists remaining"
-        className={props.classes.secondaryBtn}
-      >
-        {props.circleText}
-      </IconButton>
-    );
-  }
-
-  if (!props.shouldHideShowButton) {
-    leftSideComponent = (
-      <Button
-        onClick={props.onClick}
-        disabled={!props.shouldShowCircle}
-        color={props.mainButtonColor || 'secondary'}
-        className={props.classes.loadmore}
-        style={props.mainButtonStyle}
-        variant="contained"
-      >
-        <Typography variant="button">{props.leftSideButtonText}</Typography>
-      </Button>
-    );
-
-    if (props.customButtonMenu) {
-      leftSideComponent = (
-        <CustomMenu
-          anchorEl={props.customMenuAnchorEl}
-          onSelectItem={props.onSelectCustomMenuItem}
-          customButton={leftSideComponent}
-          isOpen={props.isCustomMenuOpen}
-          menuItems={props.customButtonMenu}
-          wrapperStyle={props.buttonMenuStyle}
-          hasFullWidthMenu={props.hasFullWidthButtonMenu}
-        />
-      );
-    }
-  }
-
   return (
     <Toolbar
       style={props.style}
@@ -104,8 +58,17 @@ export const FooterPanel = (props) => {
       }}
     >
       <section className={props.classes.loaderSection}>
-        {leftSideComponent}
-        {circleTextIcon}
+        <LeftSideControls {...props} />
+        {props.shouldShowCircle && (
+          <IconButton
+            color="primary"
+            disabled
+            aria-label="Playlists remaining"
+            className={props.classes.secondaryBtn}
+          >
+            {props.circleText}
+          </IconButton>
+        )}
       </section>
       <section className={props.classes.settingsSection}>
         <Settings
@@ -131,7 +94,7 @@ FooterPanel.propTypes = {
     .isRequired,
   classes: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClickMainLeftSideButton: PropTypes.func.isRequired,
   customButtonMenu: PropTypes.object,
   mainButtonColor: PropTypes.string,
   anchorEl: PropTypes.object,
@@ -144,8 +107,11 @@ FooterPanel.propTypes = {
   customMenuAnchorEl: PropTypes.object,
   onClickCustomMenuOptions: PropTypes.func,
   onCloseSettings: PropTypes.func.isRequired,
+  onSelectCustomMenuItem: PropTypes.func,
+  isCustomMenuOpen: PropTypes.bool,
   hasFullWidthButtonMenu: PropTypes.bool,
   shouldShowMainButton: PropTypes.bool,
+  shouldHideShowButton: PropTypes.bool,
   shouldShowCircle: PropTypes.bool,
   mainButtonStyle: PropTypes.object,
   buttonMenuStyle: PropTypes.object,
