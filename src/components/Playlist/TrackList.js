@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import MaterialList from '@material-ui/core/List';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Track from '../../containers/Track';
 
 import './Playlist.css';

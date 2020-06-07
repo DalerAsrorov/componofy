@@ -1,37 +1,30 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Element } from 'react-scroll';
 import {
-  Avatar,
   Badge,
   CircularProgress,
   Collapse,
   ListItem,
-  ListItemText,
   ListItemIcon,
+  ListItemText,
   Typography,
 } from '@material-ui/core';
-import {
-  PlaylistAdd,
-  PlaylistAddCheck,
-  LibraryMusic,
-  FavoriteBorder,
-  AccessTime,
-} from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import { AccessTime, PlaylistAdd, PlaylistAddCheck } from '@material-ui/icons';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React, { PureComponent } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Element } from 'react-scroll';
 import {
-  PLAYLIST_PROPTYPE,
   LIGHT_CYAN_COLOR,
-  SUCCESS_COLOR,
-  SUGGESTED_PLAYLIST_PLACEHOLDER,
   MAX_NUMBER_OF_TRACKS_FOR_BADGE,
+  PLAYLIST_PROPTYPE,
+  SUCCESS_COLOR,
 } from '../../utils/constants';
+import Loader from '../Loader';
+import { PlaylistThumbmailManager } from './PlaylistThumbmailManager';
 import Expand from './Expand';
 import TrackList from './TrackList';
-import Loader from '../Loader';
 
 import './Playlist.css';
 
@@ -63,8 +56,6 @@ const styles = (theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
-
-  playlistAvatar: {},
 
   progress: {
     margin: `0 ${theme.spacing(2)}px`,
@@ -210,36 +201,6 @@ class Playlist extends PureComponent {
       />
     );
 
-    let playlistImage = (
-      <Avatar
-        alt={`${playlist.name} playlist cover`}
-        className={classes.playlistAvatar}
-      >
-        <LibraryMusic />
-      </Avatar>
-    );
-
-    if (R.equals(playlist.id, SUGGESTED_PLAYLIST_PLACEHOLDER().id)) {
-      playlistImage = (
-        <Avatar
-          alt={`${playlist.name} playlist cover`}
-          style={{ backgroundColor: LIGHT_CYAN_COLOR }}
-          className={classes.playlistAvatar}
-        >
-          <FavoriteBorder />
-        </Avatar>
-      );
-    } else if (!R.isEmpty(playlistImages)) {
-      const avatar = R.head(playlistImages);
-      playlistImage = (
-        <Avatar
-          src={avatar.url}
-          alt={`${playlist.name} playlist cover`}
-          className={classes.playlistAvatar}
-        />
-      );
-    }
-
     return (
       <div>
         <ListItem
@@ -257,7 +218,7 @@ class Playlist extends PureComponent {
               {playlistIconComponent}
             </Element>
           </ListItemIcon>
-          {playlistImage}
+          <PlaylistThumbmailManager playlist={playlist} />
           <ListItemText inset primary={playlist.name} />
           <div className={classes.badgeSet}>
             {badgeForAddedTracks}
