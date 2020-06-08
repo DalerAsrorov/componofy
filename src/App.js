@@ -17,7 +17,7 @@ const theme = createMuiTheme();
 const NotFound = () => (
   <Loader
     text={
-      <Typography variant="display3" color="textSecondary">
+      <Typography variant="h4" color="textSecondary">
         This page does not exist
       </Typography>
     }

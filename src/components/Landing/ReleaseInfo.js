@@ -3,14 +3,13 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FaGithubAlt from 'react-icons/lib/fa/github-alt';
-import { GITHUB_REPO_LINK, DEMO_YOUTUBE_LINK } from '../../utils/constants';
+import { DEMO_YOUTUBE_LINK, GITHUB_REPO_LINK } from '../../utils/constants';
 import { TypographyLink } from '../common';
 
 export const ReleaseInfoDialog = (props) => (
