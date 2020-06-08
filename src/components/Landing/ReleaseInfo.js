@@ -83,7 +83,7 @@ export const ReleaseInfoDialog = (props) => (
               version.
             </li>
             <li>
-              You <b>can change the order of your personal playlist tracks</b>
+              You <b>can change the order of your personal playlist tracks</b>{' '}
               just by draging and dropping the track list item up or down!
             </li>
             <li>
