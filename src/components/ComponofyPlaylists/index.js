@@ -394,7 +394,7 @@ class ComponofyPlaylists extends PureComponent {
           title={
             hasChosenNewCreate
               ? 'Create New Playlist'
-              : 'Select Existing Playlist For New Songs'
+              : 'Select Existing Playlist For The New Songs'
           }
           onReturnToMain={this._handleReturnToMain}
           isCreateMode={hasChosenNewCreate}
