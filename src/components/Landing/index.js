@@ -2,8 +2,8 @@ import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { DEMO_YOUTUBE_LINK, GITHUB_REPO_LINK } from '../../utils/constants';
-import { TypographyLink } from '../common';
+import { DEMO_YOUTUBE_LINK } from '../../utils/constants';
+import { ReleaseInfoDialog } from './ReleaseInfo';
 
 import './Landing.css';
 
@@ -55,12 +55,22 @@ class Landing extends PureComponent {
     classes: PropTypes.object,
   };
 
+  state = {
+    isInfoDialogOpen: false,
+  };
+
   _handleAuthentication = (event) => {
     const { onAuth } = this.props;
 
     if (onAuth) {
       onAuth();
     }
+  };
+
+  _setInfoModalState = (shouldOpen) => {
+    this.setState({
+      isInfoDialogOpen: shouldOpen,
+    });
   };
 
   render() {
@@ -72,6 +82,7 @@ class Landing extends PureComponent {
       iconText,
       classes,
     } = this.props;
+    const { isInfoDialogOpen } = this.state;
 
     return (
       <Paper elevation={ELEVATION}>
@@ -110,16 +121,15 @@ class Landing extends PureComponent {
                 href={DEMO_YOUTUBE_LINK}
                 gutterBottom
               >
-                Watch Demo!
+                Watch demo on YouTube
               </Typography>
-              <TypographyLink
-                hasNoDecoration
-                href={GITHUB_REPO_LINK}
-                variant="caption"
-                color="textSecondary"
-              >
-                {appVersion}
-              </TypographyLink>
+              <ReleaseInfoDialog
+                releaseVersion={appVersion}
+                isOpen={isInfoDialogOpen}
+                onOpenInfoDialog={() => this._setInfoModalState(true)}
+                onCloseInfoDialog={() => this._setInfoModalState(false)}
+                title={`New Guide For Help - ${appVersion}`}
+              />
             </div>
           </Grid>
         </Grid>
