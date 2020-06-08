@@ -12,7 +12,7 @@ const styles = (theme) => ({
   root: {
     width: '100%',
     position: 'relative',
-    transform: 'translateY(50%)',
+    transform: 'translateY(30%)',
     margin: '0',
   },
 
