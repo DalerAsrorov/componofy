@@ -33,6 +33,10 @@ const styles = (theme) => ({
     position: 'relative',
   },
 
+  clearImageBtn: {
+    textAlign: 'center',
+  },
+
   descField: {
     marginBottom: `${theme.spacing(1)}px`,
   },
@@ -216,6 +220,10 @@ class Dialog extends PureComponent {
     }
   };
 
+  _handleClearImage = () => {
+    this.props.setFinalPlaylistImageURI('');
+  };
+
   _handleClickSubmit = (event) => {
     event.preventDefault();
     const {
@@ -337,6 +345,10 @@ class Dialog extends PureComponent {
         autoComplete="off"
       >
         <section id="dropImageZone">
+          <Typography align="center" color="textSecondary" variant="subtitle1">
+            Add playlist cover image - click on the squared placeholder below to
+            change image (optional)
+          </Typography>
           <Dropzone
             accept="image/jpeg"
             onDrop={this._handleImageUpload}
@@ -345,9 +357,18 @@ class Dialog extends PureComponent {
           >
             {playlistImage}
           </Dropzone>
-          <Typography align="center" color="textSecondary" variant="caption">
-            Add playlist cover image (optional)
-          </Typography>
+          {!R.isEmpty(imageUri) && (
+            <figure className={this.props.classes.clearImageBtn}>
+              <IconButton
+                size="medium"
+                color="secondary"
+                onClick={this._handleClearImage}
+                aria-label="Delete Cover Image"
+              >
+                <CloseIcon />
+              </IconButton>
+            </figure>
+          )}
         </section>
         <section
           className={classes.formControlContainer}
