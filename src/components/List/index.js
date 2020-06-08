@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { List as MaterialList, ListSubheader } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { ListSubheader, List as MaterialList } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { is } from 'ramda';
-import { PLAYLIST_PROPTYPE } from '../../utils/constants';
+import React from 'react';
 import Playlist from '../../containers/Playlist';
+import { PLAYLIST_PROPTYPE } from '../../utils/constants';
 
 const styles = (theme) => ({
   root: {

@@ -119,7 +119,7 @@ class AddExistingForm extends PureComponent {
             <ListItemText
               primary={
                 <Typography
-                  variant="title"
+                  variant="h4"
                   color="textSecondary"
                   component="p"
                   className={classes.playlistName}

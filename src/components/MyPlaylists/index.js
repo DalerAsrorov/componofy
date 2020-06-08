@@ -237,6 +237,7 @@ class MyPlaylists extends PureComponent {
     } = this.props;
     const loadMoreButtonIsEnabled =
       canLoadMore && !isFetchingPlaylists && !isEmpty(playlists);
+    const shouldShowLoader = isFetchingPlaylists && isEmpty(playlists);
 
     if (shouldFilterList) {
       playlists = filterSearchPlaylist(searchTerm, playlists);
@@ -267,7 +268,7 @@ class MyPlaylists extends PureComponent {
             this._handleCanScrollUp(false);
           }}
         />
-        {isFetchingPlaylists ? (
+        {shouldShowLoader ? (
           <Loader
             text={
               <Typography variant="h6" color="textSecondary">
@@ -299,7 +300,7 @@ class MyPlaylists extends PureComponent {
           onSelectItem={this._handleClickOption}
           onClickMainLeftSideButton={this._handleLoadMore}
           shouldShowCircle={loadMoreButtonIsEnabled}
-          circleText={
+          circleComponent={
             <div className={classes.playlistRemaining}>
               {playlistsRemaining}
             </div>

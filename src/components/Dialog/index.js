@@ -1,33 +1,31 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import CloseIcon from '@material-ui/icons/Close';
-import { AddAPhoto, CheckCircle } from '@material-ui/icons';
 import {
-  Avatar,
   AppBar,
+  Avatar,
   Button,
+  Dialog as MaterialDialog,
   Grid,
   IconButton,
   LinearProgress,
-  Dialog as MaterialDialog,
   Slide,
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import FaRocket from 'react-icons/lib/fa/rocket';
-import Dropzone from 'react-dropzone';
-import * as R from 'ramda';
 import { withStyles } from '@material-ui/core/styles';
+import { AddAPhoto, CheckCircle } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import PropTypes from 'prop-types';
+import * as R from 'ramda';
+import React, { PureComponent } from 'react';
+import Dropzone from 'react-dropzone';
+import FaRocket from 'react-icons/lib/fa/rocket';
 import {
   LIGHT_BLUE_COLOR,
-  MOST_LIGHT_BLUE_COLOR,
-  SUCCESS_COLOR,
   MAX_IMAGE_SIZE_LIMIT,
+  SUCCESS_COLOR,
 } from '../../utils/constants';
 import Loader from '../Loader';
-import CreateForm from './CreateForm';
 import AddExistingForm from './AddExistingForm';
-
+import CreateForm from './CreateForm';
 import './Dialog.css';
 
 const styles = (theme) => ({
@@ -54,10 +52,6 @@ const styles = (theme) => ({
   dropImageZoneImg: {
     height: '100%',
     width: 'auto',
-  },
-
-  flex: {
-    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   formContainer: {
@@ -119,7 +113,12 @@ const styles = (theme) => ({
   },
 });
 
-const Transition = (props) => <Slide direction="up" {...props} />;
+const LoaderWrapper = (props) => (
+  <div className={props.classes.loaderWrapper}>{props.children}</div>
+);
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 class Dialog extends PureComponent {
   state = {
@@ -318,9 +317,6 @@ class Dialog extends PureComponent {
       );
     }
 
-    const LoaderWrapper = (props) => (
-      <div className={classes.loaderWrapper}>{props.children}</div>
-    );
     const playlistImage = imageUri ? (
       <Avatar
         alt="New playlist image cover"
@@ -368,7 +364,7 @@ class Dialog extends PureComponent {
             color="secondary"
           >
             <Typography
-              variant="headline"
+              variant="h4"
               className={classes.submitText}
               color="inherit"
             >
@@ -382,11 +378,11 @@ class Dialog extends PureComponent {
 
     if (shouldShowLoader) {
       modalContent = (
-        <LoaderWrapper>
+        <LoaderWrapper classes={classes}>
           <Loader
             icon={<LinearProgress color="secondary" />}
             text={
-              <Typography variant="title" color="textSecondary">
+              <Typography variant="h3" color="textSecondary">
                 {loaderText}
               </Typography>
             }
@@ -395,7 +391,7 @@ class Dialog extends PureComponent {
       );
     } else if (!R.isEmpty(finalPlaylistUrl)) {
       modalContent = (
-        <LoaderWrapper>
+        <LoaderWrapper classes={classes}>
           <Loader
             icon={<CheckCircle className={classes.successCheck} />}
             text={
@@ -408,7 +404,7 @@ class Dialog extends PureComponent {
                   href={finalPlaylistUrl}
                   target="__blank"
                 >
-                  <Typography variant="headline" color="inherit">
+                  <Typography variant="h4" color="inherit">
                     See your playlist
                   </Typography>
                 </Button>
@@ -418,7 +414,7 @@ class Dialog extends PureComponent {
                   className={classes.succesButtons}
                   onClick={this._handleClickBack}
                 >
-                  <Typography variant="headline" color="inherit">
+                  <Typography variant="h4" color="inherit">
                     Back to app
                   </Typography>
                 </Button>
@@ -434,7 +430,7 @@ class Dialog extends PureComponent {
         fullScreen
         open={isOpen}
         onClose={onClickClose}
-        transition={Transition}
+        TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
@@ -445,9 +441,7 @@ class Dialog extends PureComponent {
             >
               <CloseIcon />
             </IconButton>
-            <Typography variant="title" className={classes.flex}>
-              {title}
-            </Typography>
+            <Typography variant="h5">{title}</Typography>
           </Toolbar>
         </AppBar>
         <Grid

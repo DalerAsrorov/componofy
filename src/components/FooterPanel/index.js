@@ -20,7 +20,6 @@ const styles = (theme) => ({
     zIndex: theme.zIndex.drawer,
     background: LIGHT_BLUE_COLOR,
   },
-
   loadmore: {
     flex: `1 ${theme.spacing(8)}px`,
   },
@@ -62,8 +61,11 @@ export const FooterPanel = (props) => (
           disabled
           aria-label="Playlists remaining"
           className={props.classes.secondaryBtn}
+          style={{
+            padding: props.customMenuItems ? 0 : 'auto',
+          }}
         >
-          {props.circleText}
+          {props.circleComponent}
         </IconButton>
       )}
     </section>
@@ -91,16 +93,15 @@ FooterPanel.propTypes = {
   classes: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClickMainLeftSideButton: PropTypes.func.isRequired,
-  customButtonMenu: PropTypes.object,
   mainButtonColor: PropTypes.string,
   anchorEl: PropTypes.object,
-  circleText: PropTypes.oneOfType([
+  circleComponent: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.object,
   ]),
+  custommenuItems: PropTypes.object,
   customMenuAnchorEl: PropTypes.object,
-  onClickCustomMenuOptions: PropTypes.func,
   onCloseSettings: PropTypes.func.isRequired,
   onSelectCustomMenuItem: PropTypes.func,
   isCustomMenuOpen: PropTypes.bool,

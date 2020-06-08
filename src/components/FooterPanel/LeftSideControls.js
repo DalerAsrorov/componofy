@@ -1,7 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@material-ui/core';
-import CustomMenu from '../CustomMenu';
+import { Button, Menu, Typography } from '@material-ui/core';
+
+const CustomMenu = (props) => (
+  <React.Fragment>
+    {props.button}
+    <Menu
+      id="leftSideMenuControls"
+      anchorEl={props.anchorEl}
+      onClose={props.onCloseMenu}
+      open={props.isOpen}
+      keepMounted
+    >
+      {props.menuItems}
+    </Menu>
+  </React.Fragment>
+);
 
 export const LeftSideControls = (props) => {
   let leftSideComponent = null;
@@ -9,27 +23,24 @@ export const LeftSideControls = (props) => {
   if (!props.shouldHideShowButton) {
     leftSideComponent = (
       <Button
+        variant="contained"
         onClick={props.onClickMainLeftSideButton}
         disabled={!props.shouldShowCircle}
         color={props.mainButtonColor || 'secondary'}
         className={props.classes.loadmore}
         style={props.mainButtonStyle}
-        variant="contained"
       >
         <Typography variant="button">{props.leftSideButtonText}</Typography>
       </Button>
     );
-
-    if (props.customButtonMenu) {
+    if (props.customMenuItems) {
       leftSideComponent = (
         <CustomMenu
+          button={leftSideComponent}
           anchorEl={props.customMenuAnchorEl}
-          onSelectItem={props.onSelectCustomMenuItem}
-          customButton={leftSideComponent}
+          onCloseMenu={props.onCloseCustomMenu}
           isOpen={props.isCustomMenuOpen}
-          menuItems={props.customButtonMenu}
-          wrapperStyle={props.buttonMenuStyle}
-          hasFullWidthMenu={props.hasFullWidthButtonMenu}
+          menuItems={props.customMenuItems}
         />
       );
     }
@@ -41,9 +52,9 @@ export const LeftSideControls = (props) => {
 LeftSideControls.propTypes = {
   onClickMainLeftSideButton: PropTypes.func.isRequired,
   leftSideButtonText: PropTypes.string.isRequired,
-  onSelectCustomMenuItem: PropTypes.func,
+  onCloseCustomMenu: PropTypes.func,
   customMenuAnchorEl: PropTypes.any,
-  customButtonMenu: PropTypes.any,
+  customMenuItems: PropTypes.any,
   isCustomMenuOpen: PropTypes.bool,
   shouldHideShowButton: PropTypes.bool,
   shouldShowCircle: PropTypes.bool,

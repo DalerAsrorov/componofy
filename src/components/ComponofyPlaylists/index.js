@@ -173,7 +173,7 @@ class ComponofyPlaylists extends PureComponent {
     const { setComponoformOpenStatus } = this.props;
 
     setComponoformOpenStatus(true);
-    this._handleSelectCustomMenuItem();
+    this._closeCustomMenu();
     this.setState({ isOpenModal: true });
   };
 
@@ -208,14 +208,7 @@ class ComponofyPlaylists extends PureComponent {
     this.props.setNavIndex(0);
   };
 
-  _handleClickCustomMenuOptions = (event) => {
-    this.setState({
-      settingsIsOpen: true,
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  _handleSelectCustomMenuItem = () => {
+  _closeCustomMenu = () => {
     this.setState({
       isCustomMenuOpen: false,
     });
@@ -314,52 +307,6 @@ class ComponofyPlaylists extends PureComponent {
       );
     }
 
-    const menuItems = (
-      <div>
-        <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
-          Up
-        </MenuItem>
-        <MenuItem onClick={this._handleClickCollapse}>
-          {collapseExpandText}
-        </MenuItem>
-        <MenuItem onClick={this._handleSelectShowTracksOnly}>
-          {shouldShowOnlyTracks ? 'Hide' : 'View'}
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-      </div>
-    );
-
-    const customLeftMenu = (
-      <div>
-        <MenuItem onClick={this._handleComponofyCreate}>
-          Create New Playlist
-        </MenuItem>
-        <MenuItem onClick={this._handleComponofyExisting}>
-          Add To Existing Playlist
-        </MenuItem>
-      </div>
-    );
-
-    const statsComponent = (
-      <div className={classes.statsInfo}>
-        <Badge
-          className={classes.badgeCommon}
-          badgeContent={numberOfFinalPlaylists}
-          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
-        >
-          <PlaylistAddCheck />
-        </Badge>
-        <Badge
-          className={classes.badgeCommon}
-          badgeContent={numberOfTracksInFinalPlaylist}
-          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
-        >
-          <Audiotrack />
-        </Badge>
-      </div>
-    );
-
     return (
       <HotKeys
         id="componofyPlaylists"
@@ -382,22 +329,63 @@ class ComponofyPlaylists extends PureComponent {
           }}
         />
         <FooterPanel
+          leftSideButtonText="Componofy"
           onClickOptions={this._handleClickOptions}
           onCloseSettings={this._handleCloseSettings}
           onSelectItem={this._handleClickOption}
-          onClickMainLeftSideButton={this._handleCustomMenuClick}
           anchorEl={anchorEl}
-          onSelectCustomMenuItem={this._handleSelectCustomMenuItem}
+          onClickMainLeftSideButton={this._handleCustomMenuClick}
+          onCloseCustomMenu={this._closeCustomMenu}
           shouldShowCircle={isNotEmpty}
           customMenuAnchorEl={customMenuAnchorEl}
           isCustomMenuOpen={isCustomMenuOpen}
-          circleText={statsComponent}
+          circleComponent={
+            <div id="componofyStatBadges" className={classes.statsInfo}>
+              <Badge
+                className={classes.badgeCommon}
+                badgeContent={numberOfFinalPlaylists}
+                max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
+              >
+                <PlaylistAddCheck />
+              </Badge>
+              <Badge
+                className={classes.badgeCommon}
+                badgeContent={numberOfTracksInFinalPlaylist}
+                max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
+              >
+                <Audiotrack />
+              </Badge>
+            </div>
+          }
           isOpen={settingsIsOpen}
           mainButtonStyle={mainButtonStyle}
-          menuItems={menuItems}
           buttonMenuStyle={buttonMenuStyle}
-          leftSideButtonText="Componofy"
           hasFullWidthButtonMenu={true}
+          menuItems={
+            <div id="settingsMenuContainer">
+              <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                Up
+              </MenuItem>
+              <MenuItem onClick={this._handleClickCollapse}>
+                {collapseExpandText}
+              </MenuItem>
+              <MenuItem onClick={this._handleSelectShowTracksOnly}>
+                {shouldShowOnlyTracks ? 'Hide' : 'View'}
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+            </div>
+          }
+          customMenuItems={
+            <div id="customSettingsMenuContainer">
+              <MenuItem onClick={this._handleComponofyCreate}>
+                Create New Playlist
+              </MenuItem>
+              <MenuItem onClick={this._handleComponofyExisting}>
+                Add To Existing Playlist
+              </MenuItem>
+            </div>
+          }
         />
         <Dialog
           onClickClose={this._handleClickCloseModal}

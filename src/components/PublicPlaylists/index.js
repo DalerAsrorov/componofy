@@ -272,7 +272,7 @@ class PublicPlaylists extends PureComponent {
         <section className={classes.loaderWrapper}>
           <Loader
             text={
-              <Typography variant="headline" color="textSecondary">
+              <Typography variant="h4" color="textSecondary">
                 No {searchResultsMessage} found. Try to search using a different
                 query.
               </Typography>
@@ -339,7 +339,7 @@ class PublicPlaylists extends PureComponent {
             onClickOptions={this._handleClickOptions}
             onSelectItem={this._handleClickOption}
             onClickMainLeftSideButton={this._handleLoadMore}
-            circleText={
+            circleComponent={
               <div className={classes.playlistRemaining}>
                 {playlistsRemaining}
               </div>
