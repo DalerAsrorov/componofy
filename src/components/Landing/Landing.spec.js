@@ -1,8 +1,7 @@
 import React from 'react';
-import Enzyme from 'enzyme';
+import { createMount, createShallow } from '@material-ui/core/test-utils';
 import Adapter from 'enzyme-adapter-react-16';
-import { createMount, createShallow } from 'material-ui/test-utils';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Enzyme from 'enzyme';
 import Lainding from './';
 
 Enzyme.configure({ adapter: new Adapter() });

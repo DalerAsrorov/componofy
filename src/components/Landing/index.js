@@ -1,60 +1,65 @@
-import React, { PureComponent } from 'react';
+import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import React, { PureComponent } from 'react';
 import { DEMO_YOUTUBE_LINK } from '../../utils/constants';
+import { ReleaseInfoDialog } from './ReleaseInfo';
 
 import './Landing.css';
 
 const ELEVATION = 8;
 const XS = 12;
 
-const styles = theme => ({
+const styles = (theme) => ({
+  demoLinkWrapper: {
+    marginTop: theme.spacing(1),
+  },
+
   demoLink: {
-    marginTop: theme.spacing.unit / 2,
-    padding: theme.spacing.unit,
+    display: 'block',
+    marginBottom: `${theme.spacing(0.5)}px`,
+    padding: theme.spacing(1),
   },
 
   root: {
     margin: 0,
     width: '100%',
-    padding: `${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px
-        ${theme.spacing.unit * 6}px ${theme.spacing.unit * 2}px`,
-    textAlign: 'center'
+    padding: `${theme.spacing(6)}px ${theme.spacing(2)}px
+        ${theme.spacing(6)}px ${theme.spacing(2)}px`,
+    textAlign: 'center',
   },
 
   subheader: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
 
   authBtn: {
-    marginTop: '25px'
+    marginTop: '25px',
   },
 
   icon: {
     color: '#7fc37f',
     fontSize: '2em',
-    marginRight: '5px'
+    marginRight: '5px',
   },
-
-  iconText: {}
 });
 
 class Landing extends PureComponent {
   static propTypes = {
     onAuth: PropTypes.func.isRequired,
+    appVersion: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     subTitle: PropTypes.string.isRequired,
     children: PropTypes.object,
     iconText: PropTypes.string,
-    classes: PropTypes.object
+    classes: PropTypes.object,
   };
 
-  _handleAuthentication = (event: SyntheticInputEvent) => {
+  state = {
+    isInfoDialogOpen: false,
+  };
+
+  _handleAuthentication = (event) => {
     const { onAuth } = this.props;
 
     if (onAuth) {
@@ -62,21 +67,34 @@ class Landing extends PureComponent {
     }
   };
 
+  _setInfoModalState = (shouldOpen) => {
+    this.setState({
+      isInfoDialogOpen: shouldOpen,
+    });
+  };
+
   render() {
-    const { title, subTitle, children, iconText, classes } = this.props;
+    const {
+      appVersion,
+      title,
+      subTitle,
+      children,
+      iconText,
+      classes,
+    } = this.props;
+    const { isInfoDialogOpen } = this.state;
 
     return (
       <Paper elevation={ELEVATION}>
         <Grid container className={classes.root}>
           <Grid item xs={XS}>
-            <Typography variant="display2" color="secondary" component="h1">
+            <Typography variant="h2" color="secondary" component="h1">
               {title}
             </Typography>
             <Typography
-              variant="subheading"
+              variant="subtitle1"
               className={classes.subheader}
               color="textSecondary"
-              component="p"
             >
               {subTitle}
             </Typography>
@@ -86,25 +104,33 @@ class Landing extends PureComponent {
             <Button
               onClick={this._handleAuthentication}
               color="primary"
-              variant="raised"
+              variant="outlined"
             >
               <span className={classes.icon}>{children}</span>
               <Typography variant="button" className={classes.iconText}>
                 {iconText}
               </Typography>
             </Button>
-            <Typography
-              className={classes.demoLink}
-              color="textSecondary"
-              align="center"
-              variant="subheading"
-              component="a"
-              target="__blank"
-              href={DEMO_YOUTUBE_LINK}
-              gutterBottom
-            >
-              Watch Demo!
-            </Typography>
+            <div className={classes.demoLinkWrapper}>
+              <Typography
+                className={classes.demoLink}
+                color="textPrimary"
+                variant="overline"
+                component="a"
+                target="__blank"
+                href={DEMO_YOUTUBE_LINK}
+                gutterBottom
+              >
+                Watch demo on YouTube
+              </Typography>
+              <ReleaseInfoDialog
+                releaseVersion={appVersion}
+                isOpen={isInfoDialogOpen}
+                onOpenInfoDialog={() => this._setInfoModalState(true)}
+                onCloseInfoDialog={() => this._setInfoModalState(false)}
+                title={`New Guide For Help - ${appVersion}`}
+              />
+            </div>
           </Grid>
         </Grid>
       </Paper>

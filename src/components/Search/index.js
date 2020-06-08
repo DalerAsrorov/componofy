@@ -1,24 +1,27 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, Input, InputLabel } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Search as SearchIcon } from '@material-ui/icons';
 import classNames from 'classnames';
-import { FormControl } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import { safeString } from '../../utils/helpers';
-
-import './Search.css';
 import '../common/common.css';
+import './Search.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   formControl: {
     background: `${theme.palette.common.white}`,
     zIndex: theme.zIndex.drawer,
-    display: 'flex'
+    display: 'flex',
   },
 
   searchInput: {
-    padding: `${theme.spacing.unit}px`
-  }
+    padding: `${theme.spacing(1)}px`,
+  },
+
+  searchInputIcon: {
+    padding: `${theme.spacing(1)}px`,
+  },
 });
 
 class Search extends PureComponent {
@@ -26,9 +29,10 @@ class Search extends PureComponent {
     inputId: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
+    onSearchIconClick: PropTypes.func.isRequired,
     inputLabel: PropTypes.string,
     value: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
   };
 
   render() {
@@ -38,28 +42,32 @@ class Search extends PureComponent {
       inputId,
       value,
       onChange,
+      onSearchIconClick,
       adortment,
       style,
       ...rest
     } = this.props;
 
-    let inputLabelComponent = inputLabel ? (
-      <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>
-    ) : null;
-
     return (
       <FormControl
         fullWidth
         classes={{
-          root: classNames(classes.formControl, 'sticky-top')
+          root: classNames(classes.formControl, 'sticky-top'),
         }}
       >
-        {inputLabelComponent}
+        {inputLabel && <InputLabel htmlFor={inputId}>{inputLabel}</InputLabel>}
         <Input
           id={inputId}
           value={safeString(value)}
           onChange={onChange}
           className={classes.searchInput}
+          startAdornment={
+            <SearchIcon
+              color="action"
+              onClick={onSearchIconClick}
+              className={classes.searchInputIcon}
+            />
+          }
           {...rest}
         />
       </FormControl>

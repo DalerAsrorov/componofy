@@ -12,7 +12,7 @@ export const errors = (state = {}, action) => {
       errors[errorId] = {
         message: action.message,
         timeout: action.timeout,
-        errorId
+        errorId,
       };
 
       return errors;

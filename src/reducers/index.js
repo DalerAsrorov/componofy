@@ -13,5 +13,5 @@ export {
   navigation,
   componoform,
   publicPlaylists,
-  errors
+  errors,
 };

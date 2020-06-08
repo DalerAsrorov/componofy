@@ -1,11 +1,11 @@
-import React from 'react';
+import MaterialList from '@material-ui/core/List';
 import PropTypes from 'prop-types';
-import MaterialList from 'material-ui/List';
+import React from 'react';
 import Track from '../../containers/Track';
 
 import './Playlist.css';
 
-const TrackList = props => (
+const TrackList = (props) => (
   <MaterialList>
     {props.tracks.map((track, index) => (
       <Track
@@ -20,7 +20,7 @@ const TrackList = props => (
 
 TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
-  playlist: PropTypes.object.isRequired
+  playlist: PropTypes.object.isRequired,
 };
 
 export default TrackList;

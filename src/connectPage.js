@@ -23,7 +23,7 @@ const trackIsIn = (data, ownProps, key) => {
   const { entities } = data;
   const [propsPlaylistID, propsTrackID] = [
     ownProps.playlist.id,
-    ownProps.track.id
+    ownProps.track.id,
   ];
   let playlist = entities.playlists[propsPlaylistID];
 
@@ -55,21 +55,23 @@ const playlistIsIn = (data, ownProps, key) => {
   return hasPlaylist;
 };
 
-const hasOpenPlaylist = playlistState => {
+const hasOpenPlaylist = (playlistState) => {
   if (R.isEmpty(playlistState.playlists)) {
     return false;
   }
 
   let { playlists } = playlistState;
-  const isOpen = playlist => playlist.isOpen;
+  const isOpen = (playlist) => playlist.isOpen;
 
   if (R.is(Array, playlists)) {
-    return playlists.some(playlist => isOpen(playlist));
+    return playlists.some((playlist) => isOpen(playlist));
   }
 
-  return R.pipe(R.path(['entities', 'playlists']), R.values, R.any(isOpen))(
-    playlists
-  );
+  return R.pipe(
+    R.path(['entities', 'playlists']),
+    R.values,
+    R.any(isOpen)
+  )(playlists);
 };
 
 const getNumberOfAddedTracksFromPlaylist = (finalPlaylists, ownProps) => {
@@ -78,14 +80,14 @@ const getNumberOfAddedTracksFromPlaylist = (finalPlaylists, ownProps) => {
   }
 
   const {
-    playlist: { id: playlistId }
+    playlist: { id: playlistId },
   } = ownProps;
   const { entities: { playlists } = {} } = finalPlaylists;
   let numberOfAddedTracks = 0;
 
   if (!R.isEmpty(playlists) && playlists[playlistId]) {
     let {
-      tracks: { list: tracklist }
+      tracks: { list: tracklist },
     } = playlists[playlistId];
     numberOfAddedTracks = tracklist.length;
   }
@@ -118,10 +120,10 @@ const mapStateToProps = (state, ownProps) => ({
     'track'
   ),
   user: state.user,
-  errors: state.errors
+  errors: state.errors,
 });
 
-export const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = (dispatch) => ({
   fetchMyPlaylists(offset) {
     dispatch(actions.fetchMyPlaylists(offset));
   },
@@ -309,8 +311,8 @@ export const mapDispatchToProps = dispatch => ({
 
   generateSuggestedPlaylists(nTracks) {
     dispatch(actions.generateSuggestedPlaylists(nTracks));
-  }
+  },
 });
 
-export const connectStream = ComponentClass =>
+export const connectStream = (ComponentClass) =>
   connect(mapStateToProps, mapDispatchToProps)(ComponentClass);

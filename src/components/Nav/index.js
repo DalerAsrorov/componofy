@@ -1,23 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Badge from 'material-ui/Badge';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import PersonPin from 'material-ui-icons/PersonPin';
-import Public from 'material-ui-icons/Public';
-import FlashOn from 'material-ui-icons/FlashOn';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Badge from '@material-ui/core/Badge';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import PersonPin from '@material-ui/icons/PersonPin';
+import Public from '@material-ui/icons/Public';
+import FlashOn from '@material-ui/icons/FlashOn';
 
 import './Nav.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-    marginBottom: `${theme.spacing.unit}px`
+    marginBottom: `${theme.spacing(1)}px`,
   },
 
-  tabContainer: {}
+  tabContainer: {},
 });
 
 class Nav extends PureComponent {
@@ -26,14 +27,14 @@ class Nav extends PureComponent {
     navigation: PropTypes.object.isRequired,
     setNavIndex: PropTypes.func.isRequired,
     navigateTo: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
     const {
       setNavIndex,
       location: { pathname },
-      navigation
+      navigation,
     } = this.props;
 
     setNavIndex(navigation.routeToIndexMap[pathname]);
@@ -51,7 +52,7 @@ class Nav extends PureComponent {
     const {
       classes,
       numberOfFinalPlaylists,
-      navigation: { index: currentTabIndex }
+      navigation: { index: currentTabIndex },
     } = this.props;
     const userAddedPlaylist = numberOfFinalPlaylists !== 0;
 
@@ -76,7 +77,7 @@ class Nav extends PureComponent {
           onChange={this._handleChange}
           indicatorColor="secondary"
           value={currentTabIndex}
-          fullWidth
+          variant="fullWidth"
           centered
         >
           <Tab icon={<PersonPin />} label="My" />

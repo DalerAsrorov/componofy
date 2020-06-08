@@ -3,7 +3,7 @@ import { connectStream } from '../connectPage';
 import {
   getTotalPlaylistsScehmaTracks,
   hasEntityOpenPlaylist,
-  getPlaylistsSchemaLength
+  getPlaylistsSchemaLength,
 } from '../utils/transforms';
 import ComponofyPlaylists from '../components/ComponofyPlaylists';
 
@@ -15,11 +15,12 @@ const mapStateToProps = ({ finalPlaylists } = {}, ownrProps) => ({
   shouldShowOnlyTracks: finalPlaylists.shouldShowOnlyTracks,
   searchTerm: finalPlaylists.searchTerm,
   hasChosenNewCreate: finalPlaylists.hasChosenNewCreate,
-  areAllOpen: finalPlaylists.areAllOpen
+  areAllOpen: finalPlaylists.areAllOpen,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  connectStream(ComponofyPlaylists)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(connectStream(ComponofyPlaylists));

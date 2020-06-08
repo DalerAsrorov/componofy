@@ -12,12 +12,12 @@ import {
   REORDER_PLAYLIST_TRACKS,
   SET_PLAYLIST_DRAG_STATUS,
   REQUEST_MY_TOP_TRACKS,
-  RECEIVED_MY_TOP_TRACKS
+  RECEIVED_MY_TOP_TRACKS,
 } from '../actions';
 import { removeDuplicates } from '../utils/helpers';
 import {
   OFFSET_LIMIT,
-  SUGGESTED_PLAYLIST_PLACEHOLDER
+  SUGGESTED_PLAYLIST_PLACEHOLDER,
 } from '../utils/constants';
 
 const DEFAULT_STATE = {
@@ -32,14 +32,14 @@ const DEFAULT_STATE = {
   areAllOpen: false,
   isFetching: false,
   isVisited: false,
-  isFetchingMyTopTracks: false
+  isFetchingMyTopTracks: false,
 };
 
 export const myPlaylists = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case REQUEST_PLAYLISTS:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: true,
       });
     case RECEIVE_PLAYLISTS:
       let playlists = [...state.playlists, ...action.playlists];
@@ -47,7 +47,7 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
         currentOffset,
         playlistsRemaining,
         numberOfTracks,
-        canLoadMore
+        canLoadMore,
       } = state;
 
       numberOfTracks = action.numberOfTracks;
@@ -75,10 +75,10 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
         playlistsRemaining,
         currentOffset,
         canLoadMore,
-        playlists
+        playlists,
       });
     case RECEIVED_PLAYLIST_TRACKS:
-      const updatedPlaylists = state.playlists.map(playlist => {
+      const updatedPlaylists = state.playlists.map((playlist) => {
         if (playlist.id === action.playlistID) {
           playlist.tracks.list = removeDuplicates(action.tracks, 'id');
         }
@@ -87,13 +87,13 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         playlists: updatedPlaylists,
-        tracksFetching: false
+        tracksFetching: false,
       });
     case SET_PLAYLIST_OPEN:
       const { playlistID, isOpen } = action;
       let myPlaylists = Array.from(state.playlists);
 
-      myPlaylists = myPlaylists.map(playlist => {
+      myPlaylists = myPlaylists.map((playlist) => {
         if (playlist.id === playlistID) {
           playlist.isOpen = isOpen;
         }
@@ -101,12 +101,12 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
       });
 
       return Object.assign({}, state, {
-        playlists: myPlaylists
+        playlists: myPlaylists,
       });
     case SET_PLAYLIST_DRAG_STATUS:
       myPlaylists = Array.from(state.playlists);
 
-      myPlaylists = myPlaylists.map(playlist => {
+      myPlaylists = myPlaylists.map((playlist) => {
         if (playlist.id === action.playlistId) {
           playlist.hasReorderRequest = action.hasReorderRequest;
         }
@@ -114,28 +114,28 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
       });
 
       return Object.assign({}, state, {
-        playlists: myPlaylists
+        playlists: myPlaylists,
       });
 
     case SET_MY_PLAYLIST_VISITED:
       return Object.assign({}, state, {
-        isVisited: action.isVisited
+        isVisited: action.isVisited,
       });
     case REQUEST_PLAYLIST_TRACKS:
       return Object.assign({}, state, {
-        tracksFetching: true
+        tracksFetching: true,
       });
     case SET_OPEN_STATUS_MY_PLAYLISTS:
       myPlaylists = Array.from(state.playlists);
 
-      myPlaylists = myPlaylists.map(playlist => {
+      myPlaylists = myPlaylists.map((playlist) => {
         playlist.isOpen = action.isOpen;
         return playlist;
       });
 
       return Object.assign({}, state, {
         areAllOpen: action.isOpen,
-        playlists: myPlaylists
+        playlists: myPlaylists,
       });
     case SET_MY_SEARCH_TERM:
       return Object.assign({}, state, { searchTerm: action.searchTerm });
@@ -144,7 +144,7 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
       playlists = Array.from(state.playlists);
 
       let {
-        tracks: { list: tracklist }
+        tracks: { list: tracklist },
       } = R.find(R.propEq('id', playlistId), playlists);
 
       const [removed] = tracklist.splice(startPosition, 1);
@@ -157,12 +157,12 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
       playlists = R.clone(state.playlists);
       playlists = [
         { ...SUGGESTED_PLAYLIST_PLACEHOLDER(action.tracks) },
-        ...playlists
+        ...playlists,
       ];
 
       return Object.assign({}, state, {
         isFetchingMyTopTracks: false,
-        playlists
+        playlists,
       });
     case CLEAR_MY_DATA:
       return Object.assign({}, state, DEFAULT_STATE);

@@ -1,70 +1,61 @@
-import React, { PureComponent } from 'react';
+import {
+  Badge,
+  Collapse,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { AccessTime } from '@material-ui/icons';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
-import Avatar from 'material-ui/Avatar';
-import Badge from 'material-ui/Badge';
-import { withStyles } from 'material-ui/styles';
+import { isEmpty } from 'ramda';
+import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Element } from 'react-scroll';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import {
-  PlaylistAdd,
-  PlaylistAddCheck,
-  LibraryMusic,
-  FavoriteBorder,
-  AccessTime
-} from 'material-ui-icons';
-import { CircularProgress } from 'material-ui/Progress';
-import classNames from 'classnames';
-import * as R from 'ramda';
-import {
-  PLAYLIST_PROPTYPE,
   LIGHT_CYAN_COLOR,
+  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
+  PLAYLIST_PROPTYPE,
   SUCCESS_COLOR,
-  SUGGESTED_PLAYLIST_PLACEHOLDER
 } from '../../utils/constants';
 import Expand from './Expand';
-import TrackList from './TrackList';
-import Loader from '../Loader';
-
 import './Playlist.css';
+import { PlaylistIcon } from './PlaylistIcon';
+import { PlaylistThumbmailManager } from './PlaylistThumbmailManager';
+import { TrackListWithLoader } from './TrackListWithLoader';
 
-const styles = theme => ({
-  badgeSet: {},
-
+const styles = (theme) => ({
   collapse: {
     maxHeight: '420px',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
 
-  trackBadge: {
+  customBadgeCl: {
+    margin: theme.spacing(2),
+  },
+
+  numberOfTracksBadge: {
     color: theme.palette.background.paper,
     backgroundColor: theme.palette.secondary.light,
-    padding: theme.spacing.unit / 4
+    padding: theme.spacing(0.25),
   },
 
-  includedTracksBadge: {
+  addedTracksBadge: {
     color: SUCCESS_COLOR,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing.unit / 4,
-    border: `1px solid ${SUCCESS_COLOR}`
-  },
-
-  margin: {
-    margin: theme.spacing.unit * 2
+    padding: theme.spacing(0.25),
+    border: `1px solid ${SUCCESS_COLOR}`,
   },
 
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing(4),
   },
 
-  playlistAvatar: {},
-
   progress: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
-    color: LIGHT_CYAN_COLOR
-  }
+    margin: `0 ${theme.spacing(2)}px`,
+    color: LIGHT_CYAN_COLOR,
+  },
 });
 
 class Playlist extends PureComponent {
@@ -78,11 +69,11 @@ class Playlist extends PureComponent {
     shouldShowTracksIncludedValue: PropTypes.bool,
     collapseHasFixedHeight: PropTypes.bool,
     onDragAndDrop: PropTypes.func,
-    showPlaylist: PropTypes.bool
+    showPlaylist: PropTypes.bool,
   };
 
   state = {
-    isExpanded: false
+    isExpanded: false,
   };
 
   componentDidMount = () => {
@@ -90,9 +81,9 @@ class Playlist extends PureComponent {
       playlist: {
         id: playlistID,
         owner: { id: userId },
-        isCustom
+        isCustom,
       },
-      fetchPlaylistTracks
+      fetchPlaylistTracks,
     } = this.props;
 
     if (!isCustom) {
@@ -100,25 +91,25 @@ class Playlist extends PureComponent {
     }
   };
 
-  _handleExpandMore = event => {
+  _handleExpandMore = (event) => {
     const { isExpanded } = this.state;
 
     this.setState({
-      isExpanded: !isExpanded
+      isExpanded: !isExpanded,
     });
   };
 
-  _handleClick = event => {
+  _handleClick = (event) => {
     event.preventDefault();
     const {
       onClickPlaylist,
-      playlist: { id, isOpen }
+      playlist: { id, isOpen },
     } = this.props;
 
     onClickPlaylist(id, isOpen);
   };
 
-  _handleIconClick = event => {
+  _handleIconClick = (event) => {
     event.stopPropagation();
 
     const { playlist, onClickIcon, containsThisPlaylist } = this.props;
@@ -128,7 +119,7 @@ class Playlist extends PureComponent {
     }
   };
 
-  _handleDragEnd = result => {
+  _handleDragEnd = (result) => {
     const { onDragAndDrop } = this.props;
 
     // don't do anything if position is the same
@@ -139,7 +130,7 @@ class Playlist extends PureComponent {
     const {
       droppableId: trackId,
       source: { droppableId: playlistId, index: startPos } = {},
-      destination: { index: endPos } = {}
+      destination: { index: endPos } = {},
     } = result;
 
     onDragAndDrop(playlistId, trackId, startPos, endPos);
@@ -154,108 +145,39 @@ class Playlist extends PureComponent {
       showTracksOnly,
       collapseHasFixedHeight,
       numberOfAddedTracksFromThisPlaylist,
-      shouldShowTracksIncludedValue
+      shouldShowTracksIncludedValue,
     } = this.props;
     const {
       tracks: { list: tracks },
-      images: playlistImages,
-      isOpen: playlistIsOpen
+      isOpen: playlistIsOpen,
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
-    let playlistClassName = classNames({ 'no-display': showTracksOnly });
-    let isOpen = showTracksOnly ? true : playlistIsOpen;
-    let playlistIconComponent = containsThisPlaylist ? (
-      <PlaylistAddCheck />
-    ) : (
-      <PlaylistAdd />
-    );
-    let badgeForAddedTracks, expandButton;
-
-    if (!tracks) {
-      playlistIconComponent = <AccessTime />;
-    }
-
-    if (
-      collapseHasFixedHeight &&
-      tracks &&
-      tracks.length > 4 &&
-      !showTracksOnly
-    ) {
-      expandButton = (
-        <Expand
-          to={playlist.id}
-          shouldSpy={true}
-          isStickyBottom={true}
-          showUpArrow={isExpanded}
-          onClick={this._handleExpandMore}
-          variant="raised"
-        />
-      );
-    }
+    const shouldShowExpandBtn =
+      collapseHasFixedHeight && tracks && tracks.length > 5 && !showTracksOnly;
+    const isOpen = showTracksOnly ? true : playlistIsOpen;
+    let badgeForAddedTracks;
 
     if (numberOfAddedTracksFromThisPlaylist && shouldShowTracksIncludedValue) {
       badgeForAddedTracks = (
         <Badge
           badgeContent={numberOfAddedTracksFromThisPlaylist}
-          className={classes.margin}
+          className={classes.customBadgeCl}
           classes={{
-            badge: classes.includedTracksBadge
+            badge: classes.addedTracksBadge,
           }}
+          max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
         >
           <span />
         </Badge>
       );
     }
 
-    let tracklist = tracks ? (
-      <TrackList tracks={tracks} playlist={playlist} />
-    ) : (
-      <Loader
-        text={
-          <Typography variant="subheading" color="textSecondary">
-            Loading tracks...
-          </Typography>
-        }
-        icon={<CircularProgress thickness={7} className={classes.progress} />}
-      />
-    );
-
-    let playlistImage = (
-      <Avatar
-        alt={`${playlist.name} playlist cover`}
-        className={classes.playlistAvatar}
-      >
-        <LibraryMusic />
-      </Avatar>
-    );
-
-    if (R.equals(playlist.id, SUGGESTED_PLAYLIST_PLACEHOLDER().id)) {
-      playlistImage = (
-        <Avatar
-          alt={`${playlist.name} playlist cover`}
-          style={{ backgroundColor: LIGHT_CYAN_COLOR }}
-          className={classes.playlistAvatar}
-        >
-          <FavoriteBorder />
-        </Avatar>
-      );
-    } else if (!R.isEmpty(playlistImages)) {
-      const avatar = R.head(playlistImages);
-      playlistImage = (
-        <Avatar
-          src={avatar.url}
-          alt={`${playlist.name} playlist cover`}
-          className={classes.playlistAvatar}
-        />
-      );
-    }
-
     return (
-      <div>
+      <React.Fragment>
         <ListItem
           onClick={this._handleClick}
-          disabled={R.isEmpty(tracks)}
-          className={playlistClassName}
+          disabled={isEmpty(tracks)}
+          className={classNames({ 'no-display': showTracksOnly })}
           button
           divider
         >
@@ -264,19 +186,20 @@ class Playlist extends PureComponent {
             onClick={this._handleIconClick}
           >
             <Element id={`element-playlist-${playlist.id}`} name={playlist.id}>
-              {playlistIconComponent}
+              <PlaylistIcon isIncluded={containsThisPlaylist} tracks={tracks} />
             </Element>
           </ListItemIcon>
-          {playlistImage}
+          <PlaylistThumbmailManager playlist={playlist} />
           <ListItemText inset primary={playlist.name} />
           <div className={classes.badgeSet}>
             {badgeForAddedTracks}
             <Badge
               badgeContent={nTracks}
-              className={classes.margin}
+              className={classes.customBadgeCl}
               classes={{
-                badge: classes.trackBadge
+                badge: classes.numberOfTracksBadge,
               }}
+              max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
             >
               <span />
             </Badge>
@@ -286,7 +209,7 @@ class Playlist extends PureComponent {
           in={isOpen}
           className={classNames({
             [classes.collapse]:
-              collapseHasFixedHeight && !isExpanded && !showTracksOnly
+              collapseHasFixedHeight && !isExpanded && !showTracksOnly,
           })}
           timeout="auto"
           unmountOnExit
@@ -295,15 +218,28 @@ class Playlist extends PureComponent {
             <Droppable droppableId={playlist.id}>
               {(provided, snapshot) => (
                 <div ref={provided.innerRef}>
-                  {tracklist}
+                  <TrackListWithLoader
+                    classes={classes}
+                    playlist={playlist}
+                    tracks={tracks}
+                  />
                   {provided.placeholder}
                 </div>
               )}
             </Droppable>
           </DragDropContext>
-          {expandButton}
+          {shouldShowExpandBtn && (
+            <Expand
+              to={playlist.id}
+              shouldSpy={true}
+              isStickyBottom={true}
+              showUpArrow={isExpanded}
+              onClick={this._handleExpandMore}
+              variant="outlined"
+            />
+          )}
         </Collapse>
-      </div>
+      </React.Fragment>
     );
   }
 }

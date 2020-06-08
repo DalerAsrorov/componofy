@@ -14,7 +14,7 @@ import {
   SET_FINAL_PLAYLIST_PUBLIC,
   SET_FINAL_PLAYLIST_IMAGE_URI,
   SET_COMPONOFY_MODE,
-  SET_FINAL_TRACKS_SHOW_STATUS
+  SET_FINAL_TRACKS_SHOW_STATUS,
 } from '../actions';
 import { playlist as playlistSchema } from '../utils/schemas';
 
@@ -30,7 +30,7 @@ const DEFAULT_STATE = {
   areAllOpen: false,
   imageUri: '',
   hasChosenNewCreate: true,
-  isPublic: true
+  isPublic: true,
 };
 
 export const finalPlaylists = (state = DEFAULT_STATE, action) => {
@@ -49,7 +49,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         lastUpdated: action.receivedAt,
-        playlists
+        playlists,
       });
     case ADD_PLAYLIST_TRACK_TO_FINAL:
       receivedAt = action.receivedAt;
@@ -65,7 +65,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
         playlists.entities.tracks[trackToAdd.id] = trackToAdd;
       } else {
         playlist.tracks.list = playlist.tracks.list.filter(
-          track => track.id === trackToAdd.id
+          (track) => track.id === trackToAdd.id
         );
         normalizedPlaylist = normalize(playlist, playlistSchema);
         playlists = mergeDeepLeft(state.playlists, normalizedPlaylist);
@@ -73,7 +73,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         lastUpdated: receivedAt,
-        playlists
+        playlists,
       });
     case REMOVE_PLAYLIST_FROM_FINAL:
       receivedAt = action.receivedAt;
@@ -84,7 +84,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         playlists: statePlaylists,
-        lastUpdated: receivedAt
+        lastUpdated: receivedAt,
       });
     case REMOVE_PLAYLIST_TRACK_FROM_FINAL:
       receivedAt = action.receivedAt;
@@ -98,7 +98,7 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         lastUpdated: receivedAt,
-        playlists: statePlaylists
+        playlists: statePlaylists,
       });
     case SET_FINAL_PLAYLIST_OPEN:
       playlists = clone(state.playlists);
@@ -107,11 +107,11 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
       playlists.entities.playlists[playlistID].isOpen = isOpen;
 
       return Object.assign({}, state, {
-        playlists
+        playlists,
       });
     case SET_FINAL_SEARCH_TERM:
       return Object.assign({}, state, {
-        searchTerm: action.searchTerm
+        searchTerm: action.searchTerm,
       });
     case SET_OPEN_STATUS_FINAL_PLAYLISTS:
       playlists = clone(state.playlists);
@@ -123,20 +123,20 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
 
       return Object.assign({}, state, {
         areAllOpen: action.isOpen,
-        playlists
+        playlists,
       });
     case SET_MERGER_STATUS:
       return Object.assign({}, state, {
         status: action.status,
-        statusText: action.statusText
+        statusText: action.statusText,
       });
     case SET_NEW_PLAYLIST_DESC:
       return Object.assign({}, state, {
-        playlistDesc: action.playlistDesc
+        playlistDesc: action.playlistDesc,
       });
     case SET_FINAL_PLAYLIST_PUBLIC:
       return Object.assign({}, state, {
-        isPublic: action.isPublic
+        isPublic: action.isPublic,
       });
     case SET_FINAL_PLAYLIST_IMAGE_URI:
       return Object.assign({}, state, { imageUri: action.imageUri });
@@ -146,11 +146,11 @@ export const finalPlaylists = (state = DEFAULT_STATE, action) => {
       return Object.assign({}, state, DEFAULT_STATE);
     case SET_COMPONOFY_MODE:
       return Object.assign({}, state, {
-        hasChosenNewCreate: action.hasChosenNewCreate
+        hasChosenNewCreate: action.hasChosenNewCreate,
       });
     case SET_FINAL_TRACKS_SHOW_STATUS:
       return Object.assign({}, state, {
-        shouldShowOnlyTracks: action.shouldShowOnlyTracks
+        shouldShowOnlyTracks: action.shouldShowOnlyTracks,
       });
     default:
       return state;

@@ -1,47 +1,50 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
+import { Waypoint } from 'react-waypoint';
 import { head } from 'ramda';
-import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import Select from 'material-ui/Select';
-import Typography from 'material-ui/Typography';
-import { CircularProgress } from 'material-ui/Progress';
-import { ListItemIcon, ListItemText } from 'material-ui/List';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import { InputLabel } from 'material-ui/Input';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  Avatar,
+  InputLabel,
+  CircularProgress,
+  FormControl,
+  ListItemText,
+  ListItemIcon,
+  MenuItem,
+  Select,
+  Typography,
+} from '@material-ui/core';
 import { LIGHT_CYAN_COLOR, PLAYLIST_OFFSET_LIMIT } from '../../utils/constants';
 
-const styles = theme => ({
+const styles = (theme) => ({
   formControl: {
-    width: '100%'
+    width: '100%',
   },
 
   loaderWrapper: {
     textAlign: 'center',
-    width: '100%'
+    width: '100%',
   },
 
   playlistName: {
     width: '100%',
-    paddingLeft: `${theme.spacing.unit}px`
+    paddingLeft: `${theme.spacing(1)}px`,
   },
 
   progress: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
-    color: LIGHT_CYAN_COLOR
+    margin: `0 ${theme.spacing(2)}px`,
+    color: LIGHT_CYAN_COLOR,
   },
 
   select: {
     display: 'flex',
     alignItems: 'center',
-    padding: `${theme.spacing.unit * 1.5}px`
+    padding: `${theme.spacing(1.5)}px`,
   },
 
   wrapper: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 class AddExistingForm extends PureComponent {
@@ -58,7 +61,7 @@ class AddExistingForm extends PureComponent {
     playlistOptions: PropTypes.array.isRequired,
     currentOffset: PropTypes.number.isRequired,
     error: PropTypes.bool.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   };
 
   _handleSelectionFetch = () => {
@@ -66,7 +69,7 @@ class AddExistingForm extends PureComponent {
       onSetCurrentOffset,
       onFetchPlaylistSelection,
       totalNumberOfPlaylists,
-      currentOffset
+      currentOffset,
     } = this.props;
 
     if (currentOffset < totalNumberOfPlaylists) {
@@ -81,7 +84,7 @@ class AddExistingForm extends PureComponent {
       onSetAddExistingOpenStatus,
       onSetCurrentOffset,
       wasAddExistingOpen,
-      currentOffset
+      currentOffset,
     } = this.props;
 
     if (!wasAddExistingOpen) {
@@ -91,7 +94,7 @@ class AddExistingForm extends PureComponent {
     }
   }
 
-  _handlePlaylistSelect = event => {
+  _handlePlaylistSelect = (event) => {
     const { onSelectPlaylist } = this.props;
 
     onSelectPlaylist(event.target.value);
@@ -104,31 +107,8 @@ class AddExistingForm extends PureComponent {
       isFetchingOptions,
       currentOffset,
       classes,
-      error
+      error,
     } = this.props;
-    const playlistMenuOptions = playlistOptions.map(
-      ({ id, name, images = [] }) => {
-        return (
-          <MenuItem key={id} value={id}>
-            <ListItemIcon className={classes.icon}>
-              <Avatar src={head(images).url} alt={`${name} cover image`} />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography
-                  variant="title"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.playlistName}
-                >
-                  {name}
-                </Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
-    );
 
     let contentComponent = (
       <div className={classes.loaderWrapper}>
@@ -148,17 +128,35 @@ class AddExistingForm extends PureComponent {
             onChange={this._handlePlaylistSelect}
             name="playlist"
             classes={{
-              select: classes.select
+              select: classes.select,
             }}
             MenuProps={{
               PaperProps: {
                 style: {
-                  maxHeight: 420
-                }
-              }
+                  maxHeight: 420,
+                },
+              },
             }}
           >
-            {playlistMenuOptions}
+            {playlistOptions.map(({ id, name, images = [] }) => (
+              <MenuItem key={id} value={id}>
+                <ListItemIcon className={classes.icon}>
+                  <Avatar src={head(images).url} alt={`${name} cover image`} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      component="p"
+                      className={classes.playlistName}
+                    >
+                      {name}
+                    </Typography>
+                  }
+                />
+              </MenuItem>
+            ))}
             <Waypoint
               onEnter={() => {
                 this._handleSelectionFetch();

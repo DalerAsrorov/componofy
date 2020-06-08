@@ -1,37 +1,41 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
+import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { head } from 'ramda';
-import { TRACK_PROPTYPE, PLAYLIST_PROPTYPE } from '../../utils/constants';
+import {
+  TRACK_PROPTYPE,
+  PLAYLIST_PROPTYPE,
+  MIN_POPULAR_SCORE,
+} from '../../utils/constants';
 import { CheckBox } from '../common';
-import Info from './Info';
 import Preview from './Preview';
+import { Info } from './Info';
 
-const styles = theme => ({
+const styles = (theme) => ({
   trackInfoContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   trackInfo: {
-    flex: '1'
+    flex: '1',
   },
 
   preview: {
-    flex: '1'
+    flex: '1',
   },
 
   mediaPlayer: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
-const TrackPlayer = props => (
+const TrackPlayer = (props) => (
   <div className={props.classes.trackInfoContainer}>
-    <div className={props.classes.trackInfo}>
+    <article className={props.classes.trackInfo}>
       <Info
         trackName={props.trackName}
         trackUrl={props.trackUrl}
@@ -41,7 +45,7 @@ const TrackPlayer = props => (
         albumUrl={props.albumUrl}
         isPopular={props.isPopular}
       />
-    </div>
+    </article>
     {props.previewComponent}
   </div>
 );
@@ -54,16 +58,16 @@ class Track extends PureComponent {
     addErrorToApp: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     track: TRACK_PROPTYPE.isRequired,
-    playlist: PLAYLIST_PROPTYPE
+    playlist: PLAYLIST_PROPTYPE,
   };
 
-  _handleChecked = event => {
+  _handleChecked = (event) => {
     const {
       track,
       playlist,
       addPlaylistTrackToFinal,
       removePlaylistTrackFromFinal,
-      playlistContainsThisTrack
+      playlistContainsThisTrack,
     } = this.props;
 
     if (playlist) {
@@ -88,31 +92,20 @@ class Track extends PureComponent {
       name: trackName,
       album: {
         name: albumName,
-        external_urls: { spotify: albumUrl }
+        external_urls: { spotify: albumUrl },
       },
       external_urls: { spotify: trackUrl },
       preview_url,
-      popularity
+      popularity,
     } = track;
     const {
       name: artistName,
-      external_urls: { spotify: artistUrl }
+      external_urls: { spotify: artistUrl },
     } = head(artists);
-    let previewComponent;
-
-    const isPopular = popularity >= 70;
-
-    if (preview_url) {
-      previewComponent = (
-        <div className={classes.preview}>
-          <Preview url={preview_url} />
-        </div>
-      );
-    }
 
     return (
       <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
-        {(provided, snapshot) => (
+        {(provided) => (
           <div
             ref={provided.innerRef}
             style={provided.draggableStyle}
@@ -136,8 +129,14 @@ class Track extends PureComponent {
                     artistUrl={artistUrl}
                     albumName={albumName}
                     albumUrl={albumUrl}
-                    isPopular={isPopular}
-                    previewComponent={previewComponent}
+                    isPopular={popularity >= MIN_POPULAR_SCORE}
+                    previewComponent={
+                      !!preview_url && (
+                        <div className={classes.preview}>
+                          <Preview url={preview_url} />
+                        </div>
+                      )
+                    }
                   />
                 }
               />

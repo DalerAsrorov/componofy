@@ -1,79 +1,69 @@
-import React, { PureComponent, Fragment } from 'react';
+import { Badge, Divider, MenuItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Audiotrack, PlaylistAddCheck } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
-import Scroll from 'react-scroll';
-import { HotKeys } from 'react-hotkeys';
-import Badge from 'material-ui/Badge';
-import { MenuItem } from 'material-ui/Menu';
-import { Divider } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
-import Dialog from '../../containers/Dialog';
-import { PlaylistAddCheck, Audiotrack } from 'material-ui-icons';
-import { Search as SearchIcon } from 'material-ui-icons';
 import * as R from 'ramda';
+import React, { PureComponent } from 'react';
+import { HotKeys } from 'react-hotkeys';
+import Scroll from 'react-scroll';
+import { Waypoint } from 'react-waypoint';
+import Dialog from '../../containers/Dialog';
 import {
-  MOST_LIGHT_BLUE_COLOR,
-  LIGHT_BLUE_COLOR,
   LIGHT_CYAN_COLOR,
+  MAX_NUMBER_OF_TRACKS_FOR_BADGE,
+  MOST_LIGHT_BLUE_COLOR,
+  OFFSET_LIMIT,
   SCROLL_DURATION,
-  searchKeyMap
+  searchKeyMap,
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
   formatPlaylistsData,
-  getExpandStatusText
+  getExpandStatusText,
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import List from '../List';
+import { List } from '../List';
 import Search from '../Search';
 
 const mainButtonStyle = {
   background: LIGHT_CYAN_COLOR,
   width: '100%',
-  height: '100%'
 };
 
 const buttonMenuStyle = {
   flex: '1',
-  position: 'relative'
+  position: 'relative',
 };
 
 let scroll = Scroll.animateScroll;
 
-const styles = theme => ({
+const styles = (theme) => ({
   badgeCommon: {
-    padding: `${theme.spacing.unit}px 0 0 ${theme.spacing.unit}px`,
-    color: MOST_LIGHT_BLUE_COLOR
+    padding: `${theme.spacing(1)}px 0 0 ${theme.spacing(1)}px`,
+    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   loadmore: {
-    width: '100%'
+    width: '100%',
   },
 
   hotKeys: {
-    outline: 'none'
+    outline: 'none',
   },
 
   mainButtonText: {
-    color: MOST_LIGHT_BLUE_COLOR
-  },
-
-  searchAdortment: {
-    position: 'relative',
-    top: `${theme.spacing.unit / 2}px`,
-    marginRight: `${theme.spacing.unit}px`,
-    color: LIGHT_BLUE_COLOR
+    color: MOST_LIGHT_BLUE_COLOR,
   },
 
   statsInfo: {
     width: '100%',
     lineHeight: '2.5',
-    paddingLeft: `${theme.spacing.unit}px`
+    paddingLeft: `${theme.spacing(1)}px`,
   },
 
   tracklistBox: {
-    margin: `${theme.spacing.unit}px 0`
-  }
+    margin: `${theme.spacing(1)}px 0`,
+  },
 });
 
 class ComponofyPlaylists extends PureComponent {
@@ -83,7 +73,7 @@ class ComponofyPlaylists extends PureComponent {
     isCustomMenuOpen: false,
     settingsIsOpen: false,
     canScrollUp: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
   static propTypes = {
@@ -92,6 +82,7 @@ class ComponofyPlaylists extends PureComponent {
     finalPlaylistsHasOpenPlaylist: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
     setOpenStatusForAllPlaylists: PropTypes.func.isRequired,
+    setFinalPlaylistImageURI: PropTypes.func.isRequired,
     fetchMyPlaylistsForSelection: PropTypes.func.isRequired,
     setOpenStatusFinalPlaylists: PropTypes.func.isRequired,
     setComponoformOpenStatus: PropTypes.func.isRequired,
@@ -101,7 +92,7 @@ class ComponofyPlaylists extends PureComponent {
     setComponofyMode: PropTypes.func.isRequired,
     setNavIndex: PropTypes.func.isRequired,
     logOutUser: PropTypes.func.isRequired,
-    navigateTo: PropTypes.func.isRequired
+    navigateTo: PropTypes.func.isRequired,
   };
 
   _handleRemovePlaylist = (playlist, containsPlaylist) => {
@@ -112,7 +103,7 @@ class ComponofyPlaylists extends PureComponent {
     this.props.setFinalPlaylistOpen(id, !isOpen);
   };
 
-  _handleInputChange = event => {
+  _handleInputChange = (event) => {
     let { value: inputValue } = event.target;
     let shouldFilterList = false;
 
@@ -123,7 +114,7 @@ class ComponofyPlaylists extends PureComponent {
     }
 
     this.setState({
-      shouldFilterList
+      shouldFilterList,
     });
   };
 
@@ -136,45 +127,55 @@ class ComponofyPlaylists extends PureComponent {
   _handleClickCollapse = () => {
     const {
       setOpenStatusFinalPlaylists,
-      finalPlaylistsHasOpenPlaylist
+      finalPlaylistsHasOpenPlaylist,
     } = this.props;
 
     this._handleClickOption();
     setOpenStatusFinalPlaylists(!finalPlaylistsHasOpenPlaylist);
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
 
-  _handleClickOptions = event => {
+  _handleClickOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
     });
   };
 
   _handleClickOption = () => {
     this.setState({
-      settingsIsOpen: false
+      settingsIsOpen: false,
     });
   };
 
-  _handleCanScrollUp = canScrollUp => {
-    canScrollUp =
-      this.props.numberOfTracksInFinalPlaylist <= 5 ? false : canScrollUp;
+  _handleCloseSettings = () => {
+    this.setState({
+      settingsIsOpen: false,
+    });
+  };
+
+  _handleCanScrollUp = (canScrollUp) => {
+    const nTracks = this.props.numberOfTracksInFinalPlaylist;
+
+    if (canScrollUp && nTracks < OFFSET_LIMIT) {
+      canScrollUp = false;
+    }
 
     this.setState({
-      canScrollUp
+      canScrollUp,
     });
   };
 
   _handleComponofy = () => {
-    const { setComponoformOpenStatus } = this.props;
+    const { setComponoformOpenStatus, setFinalPlaylistImageURI } = this.props;
 
     setComponoformOpenStatus(true);
-    this._handleSelectCustomMenuItem();
+    setFinalPlaylistImageURI('');
+    this._closeCustomMenu();
     this.setState({ isOpenModal: true });
   };
 
@@ -192,7 +193,7 @@ class ComponofyPlaylists extends PureComponent {
     this._handleClickOption();
 
     scroll.scrollToTop({
-      duration: SCROLL_DURATION
+      duration: SCROLL_DURATION,
     });
   };
 
@@ -202,30 +203,23 @@ class ComponofyPlaylists extends PureComponent {
 
   _handleReturnToMain = () => {
     this.setState({
-      isOpenModal: false
+      isOpenModal: false,
     });
 
     this.props.navigateTo('/app');
     this.props.setNavIndex(0);
   };
 
-  _handleClickCustomMenuOptions = event => {
+  _closeCustomMenu = () => {
     this.setState({
-      settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      isCustomMenuOpen: false,
     });
   };
 
-  _handleSelectCustomMenuItem = () => {
-    this.setState({
-      isCustomMenuOpen: false
-    });
-  };
-
-  _handleCustomMenuClick = event => {
+  _handleCustomMenuClick = (event) => {
     this.setState({
       isCustomMenuOpen: true,
-      customMenuAnchorEl: event.currentTarget
+      customMenuAnchorEl: event.currentTarget,
     });
   };
 
@@ -242,7 +236,7 @@ class ComponofyPlaylists extends PureComponent {
       navigateTo,
       setNavIndex,
       navigation,
-      numberOfFinalPlaylists
+      numberOfFinalPlaylists,
     } = this.props;
 
     if (numberOfFinalPlaylists === 0) {
@@ -263,15 +257,16 @@ class ComponofyPlaylists extends PureComponent {
       numberOfFinalPlaylists,
       numberOfTracksInFinalPlaylist,
       finalPlaylistsHasOpenPlaylist,
-      classes
+      classes,
     } = this.props;
     const {
+      anchorEl,
       shouldFilterList,
       isOpenModal,
       settingsIsOpen,
       isCustomMenuOpen,
       customMenuAnchorEl,
-      canScrollUp
+      canScrollUp,
     } = this.state;
     const isNotEmpty = numberOfFinalPlaylists > 0;
     let playlistList, playlists, search;
@@ -279,7 +274,7 @@ class ComponofyPlaylists extends PureComponent {
 
     if (isNotEmpty) {
       const {
-        entities: { playlists: playlistsMap, tracks: tracksMap }
+        entities: { playlists: playlistsMap, tracks: tracksMap },
       } = playlistsFinal;
 
       playlists = formatPlaylistsData(playlistsMap, tracksMap);
@@ -302,16 +297,11 @@ class ComponofyPlaylists extends PureComponent {
       search = (
         <Search
           onChange={this._handleInputChange}
+          onSearchIconClick={this._handleFocusOnSearch}
           inputId="myPlaylistsSearch"
           value={searchTerm}
-          startAdornment={
-            <SearchIcon
-              onClick={this._handleFocusOnSearch}
-              className={classes.searchAdortment}
-            />
-          }
           placeholder="Search by artists, songs, albums..."
-          inputRef={input => {
+          inputRef={(input) => {
             this.searchInputRef = input;
           }}
           autoFocus
@@ -319,101 +309,98 @@ class ComponofyPlaylists extends PureComponent {
       );
     }
 
-    const menuItems = (
-      <div>
-        <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
-          Up
-        </MenuItem>
-        <MenuItem onClick={this._handleClickCollapse}>
-          {collapseExpandText}
-        </MenuItem>
-        <MenuItem onClick={this._handleSelectShowTracksOnly}>
-          {shouldShowOnlyTracks ? 'Hide' : 'View'}
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-      </div>
-    );
-
-    const customLeftMenu = (
-      <Fragment>
-        <MenuItem onClick={this._handleComponofyCreate}>
-          Create New Playlist
-        </MenuItem>
-        <MenuItem onClick={this._handleComponofyExisting}>
-          Add To Existing Playlist
-        </MenuItem>
-      </Fragment>
-    );
-
-    const statsComponent = (
-      <div className={classes.statsInfo}>
-        <Badge
-          className={classes.badgeCommon}
-          badgeContent={numberOfFinalPlaylists}
-        >
-          <PlaylistAddCheck />
-        </Badge>
-        <Badge
-          className={classes.badgeCommon}
-          badgeContent={numberOfTracksInFinalPlaylist}
-        >
-          <Audiotrack />
-        </Badge>
-      </div>
-    );
-
-    const mainText = <span className={classes.mainButtonText}>Componofy</span>;
-
-    const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch
-    };
-
     return (
       <HotKeys
+        id="componofyPlaylists"
         keyMap={searchKeyMap}
-        handlers={serachHandlers}
+        handlers={{
+          focusSearch: this._handleFocusOnSearch,
+        }}
         className={classes.hotKeys}
       >
-        <div id="componofyPlaylists">
-          {search}
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(false);
-            }}
-          />
-          {playlistList}
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(true);
-            }}
-          />
-          <FooterPanel
-            shouldShowCircle={isNotEmpty}
-            onClickOptions={this._handleClickOptions}
-            onSelectItem={this._handleClickOption}
-            customButtonMenu={customLeftMenu}
-            onClick={this._handleCustomMenuClick}
-            onSelectCustomMenuItem={this._handleSelectCustomMenuItem}
-            customMenuAnchorEl={customMenuAnchorEl}
-            isCustomMenuOpen={isCustomMenuOpen}
-            circleText={statsComponent}
-            isOpen={settingsIsOpen}
-            menuItems={menuItems}
-            mainText={mainText}
-            mainButtonStyle={mainButtonStyle}
-            buttonMenuStyle={buttonMenuStyle}
-            hasFullWidthButtonMenu={true}
-          />
-          <Dialog
-            onClickClose={this._handleClickCloseModal}
-            isOpen={isOpenModal}
-            switchLabel="Public"
-            title="New playlist info"
-            onReturnToMain={this._handleReturnToMain}
-            isCreateMode={hasChosenNewCreate}
-          />
-        </div>
+        {search}
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(false);
+          }}
+        />
+        {playlistList}
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(true);
+          }}
+        />
+        <FooterPanel
+          leftSideButtonText="Componofy"
+          onClickOptions={this._handleClickOptions}
+          onCloseSettings={this._handleCloseSettings}
+          onSelectItem={this._handleClickOption}
+          anchorEl={anchorEl}
+          onClickMainLeftSideButton={this._handleCustomMenuClick}
+          onCloseCustomMenu={this._closeCustomMenu}
+          shouldShowCircle={isNotEmpty}
+          customMenuAnchorEl={customMenuAnchorEl}
+          isCustomMenuOpen={isCustomMenuOpen}
+          circleComponent={
+            <div id="componofyStatBadges" className={classes.statsInfo}>
+              <Badge
+                className={classes.badgeCommon}
+                badgeContent={numberOfFinalPlaylists}
+                max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
+              >
+                <PlaylistAddCheck />
+              </Badge>
+              <Badge
+                className={classes.badgeCommon}
+                badgeContent={numberOfTracksInFinalPlaylist}
+                max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
+              >
+                <Audiotrack />
+              </Badge>
+            </div>
+          }
+          isOpen={settingsIsOpen}
+          mainButtonStyle={mainButtonStyle}
+          buttonMenuStyle={buttonMenuStyle}
+          hasFullWidthButtonMenu={true}
+          menuItems={
+            <div id="settingsMenuContainer">
+              <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                Up
+              </MenuItem>
+              <MenuItem onClick={this._handleClickCollapse}>
+                {collapseExpandText}
+              </MenuItem>
+              <MenuItem onClick={this._handleSelectShowTracksOnly}>
+                {shouldShowOnlyTracks ? 'Hide' : 'View'}
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+            </div>
+          }
+          customMenuItems={
+            <div id="customSettingsMenuContainer">
+              <MenuItem onClick={this._handleComponofyCreate}>
+                Create New Playlist
+              </MenuItem>
+              <MenuItem onClick={this._handleComponofyExisting}>
+                Add To Existing Playlist
+              </MenuItem>
+            </div>
+          }
+        />
+        <Dialog
+          onClickClose={this._handleClickCloseModal}
+          isOpen={isOpenModal}
+          switchLabel="Public"
+          title={
+            hasChosenNewCreate
+              ? 'Create New Playlist'
+              : 'Select Existing Playlist For The New Songs'
+          }
+          onReturnToMain={this._handleReturnToMain}
+          isCreateMode={hasChosenNewCreate}
+        />
       </HotKeys>
     );
   }

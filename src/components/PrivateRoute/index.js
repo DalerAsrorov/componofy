@@ -11,10 +11,10 @@ export default class PrivateRoute extends PureComponent {
   static propTypes = {
     checkIfAuthenticated: PropTypes.func.isRequired,
     removeErrorFromApp: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     const { checkIfAuthenticated, generateRefreshToken } = this.props;
 
     checkIfAuthenticated();
@@ -35,12 +35,13 @@ export default class PrivateRoute extends PureComponent {
       component: Component,
       removeErrorFromApp,
       errors,
+      user,
       ...rest
     } = this.props;
     let globalErrors;
 
     if (!isEmpty(errors)) {
-      globalErrors = values(errors).map(errorItem => (
+      globalErrors = values(errors).map((errorItem) => (
         <ErrorSnackBar
           key={errorItem.errorId}
           message={errorItem.message}
@@ -54,7 +55,7 @@ export default class PrivateRoute extends PureComponent {
     return (
       <Route
         {...rest}
-        render={props => (
+        render={(props) => (
           <div id="privateRoute">
             <Component {...props} />
             {globalErrors}

@@ -1,54 +1,49 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Waypoint from 'react-waypoint';
-import Scroll from 'react-scroll';
-import { HotKeys } from 'react-hotkeys';
-import { MenuItem } from 'material-ui/Menu';
-import { Divider } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
-import { Search as SearchIcon } from 'material-ui-icons';
-import { isEmpty, trim } from 'ramda';
 import {
+  Divider,
+  MenuItem,
+  CircularProgress,
+  Typography,
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { isEmpty, trim } from 'ramda';
+import React, { PureComponent } from 'react';
+import { HotKeys } from 'react-hotkeys';
+import Scroll from 'react-scroll';
+import { Waypoint } from 'react-waypoint';
+import {
+  LOAD_MORE_STATUS,
+  OFFSET_LIMIT,
   PLAYLISTS_PROPTYPE,
-  LIGHT_BLUE_COLOR,
   SCROLL_DURATION,
   searchKeyMap,
-  menuButtonStyle,
-  OFFSET_LIMIT,
-  LOAD_MORE_STATUS
 } from '../../utils/constants';
 import {
   filterSearchPlaylist,
+  getExpandStatusText,
   toTop,
-  getExpandStatusText
 } from '../../utils/helpers';
 import FooterPanel from '../FooterPanel';
-import List from '../List';
+import { List } from '../List';
 import Search from '../Search';
+import Loader from '../Loader';
 
-const styles = theme => ({
+const styles = (theme) => ({
   loadmore: {
-    width: '100%'
-  },
-
-  searchAdortment: {
-    position: 'relative',
-    top: `${theme.spacing.unit / 2}px`,
-    marginRight: `${theme.spacing.unit}px`,
-    color: LIGHT_BLUE_COLOR
+    width: '100%',
   },
 
   hotKeys: {
-    outline: 'none'
+    outline: 'none',
   },
 
   playlistRemaining: {
     textAlign: 'left',
-    paddingLeft: `${theme.spacing.unit}px`,
-    width: '100%'
+    paddingLeft: `${theme.spacing(1)}px`,
+    width: '100%',
   },
 
-  footerPanel: {}
+  footerPanel: {},
 });
 
 let scroll = Scroll.animateScroll;
@@ -72,7 +67,6 @@ class MyPlaylists extends PureComponent {
     navigation: PropTypes.object.isRequired,
     logOutUser: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    menuButtonStyle: PropTypes.object
   };
 
   state = {
@@ -80,37 +74,43 @@ class MyPlaylists extends PureComponent {
     shouldFilterList: false,
     status: LOAD_MORE_STATUS[1],
     canScrollUp: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
-  _handleLoadMore = event => {
+  _handleLoadMore = (event) => {
     event.preventDefault();
 
     const {
       fetchMyPlaylists,
-      myPlaylists: { currentOffset }
+      myPlaylists: { currentOffset },
     } = this.props;
 
     fetchMyPlaylists(currentOffset);
     scroll.scrollToBottom();
   };
 
-  _handleClickOptions = event => {
+  _handleClickOptions = (event) => {
     this.setState({
       settingsIsOpen: true,
-      anchorEl: event.currentTarget
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  _handleCloseSettings = () => {
+    this.setState({
+      settingsIsOpen: false,
     });
   };
 
   _handleClickOption = () => {
     this.setState({
-      settingsIsOpen: false
+      settingsIsOpen: false,
     });
   };
 
-  _handleCanScrollUp = canScrollUp => {
+  _handleCanScrollUp = (canScrollUp) => {
     const {
-      myPlaylists: { playlists }
+      myPlaylists: { playlists },
     } = this.props;
     const nTracks = playlists.length;
 
@@ -119,7 +119,7 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      canScrollUp
+      canScrollUp,
     });
   };
 
@@ -139,19 +139,8 @@ class MyPlaylists extends PureComponent {
     this._handleClickOption();
 
     scroll.scrollToTop({
-      duration: SCROLL_DURATION
+      duration: SCROLL_DURATION,
     });
-  };
-
-  _handleClickNext = () => {
-    const {
-      setNavIndex,
-      navigateTo,
-      navigation: { nextPage, nextIndex }
-    } = this.props;
-
-    setNavIndex(nextIndex);
-    navigateTo(nextPage);
   };
 
   _handleLogOut = () => {
@@ -167,7 +156,7 @@ class MyPlaylists extends PureComponent {
     setOpenStatusMyPlaylists(!myPlaylistsHasOpenPlaylist);
   };
 
-  _handleInputChange = event => {
+  _handleInputChange = (event) => {
     let { value: inputValue } = event.target;
     let shouldFilterList = false;
 
@@ -178,11 +167,11 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      shouldFilterList
+      shouldFilterList,
     });
   };
 
-  _handleFocusOnSearch = event => {
+  _handleFocusOnSearch = (event) => {
     event.preventDefault();
     this.searchInputRef.focus();
   };
@@ -192,14 +181,14 @@ class MyPlaylists extends PureComponent {
     startPlaylistTracksReorderProcess(playlistId, trackId, startPos, endPos);
   };
 
-  componentDidMount() {
+  componentWillMount() {
     toTop();
 
     const {
       myPlaylists: { currentOffset, isVisited },
       generateSuggestedPlaylists,
       fetchMyPlaylists,
-      setMyPlaylistVisited
+      setMyPlaylistVisited,
     } = this.props;
 
     if (!isVisited) {
@@ -211,7 +200,7 @@ class MyPlaylists extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const {
-      myPlaylists: { canLoadMore, isFetching }
+      myPlaylists: { canLoadMore, isFetching },
     } = nextProps;
     let status = LOAD_MORE_STATUS[1];
 
@@ -222,7 +211,7 @@ class MyPlaylists extends PureComponent {
     }
 
     this.setState({
-      status
+      status,
     });
   }
 
@@ -232,77 +221,64 @@ class MyPlaylists extends PureComponent {
       settingsIsOpen,
       anchorEl,
       canScrollUp,
-      shouldFilterList
+      shouldFilterList,
     } = this.state;
     let {
       myPlaylists: {
+        isFetching: isFetchingPlaylists,
         playlistsRemaining,
         canLoadMore,
         areAllOpen,
-        isFetching,
         searchTerm,
-        playlists
+        playlists,
       },
       myPlaylistsHasOpenPlaylist,
-      classes
+      classes,
     } = this.props;
     const loadMoreButtonIsEnabled =
-      canLoadMore && !isFetching && !isEmpty(playlists);
-
-    let collapseText = getExpandStatusText(myPlaylistsHasOpenPlaylist);
+      canLoadMore && !isFetchingPlaylists && !isEmpty(playlists);
+    const shouldShowLoader = isFetchingPlaylists && isEmpty(playlists);
 
     if (shouldFilterList) {
       playlists = filterSearchPlaylist(searchTerm, playlists);
     }
 
-    const menuItems = (
-      <Fragment>
-        <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
-          Up
-        </MenuItem>
-        <MenuItem onClick={this._handleClickCollapse}>{collapseText}</MenuItem>
-        <MenuItem onClick={this._handleClickNext}>Next</MenuItem>
-        <Divider />
-        <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
-      </Fragment>
-    );
-
-    const playlistCounter = (
-      <div className={classes.playlistRemaining}>{playlistsRemaining}</div>
-    );
-
-    const serachHandlers = {
-      focusSearch: this._handleFocusOnSearch
-    };
-
     return (
       <HotKeys
+        id="myPlaylists"
         keyMap={searchKeyMap}
-        handlers={serachHandlers}
+        handlers={{
+          focusSearch: this._handleFocusOnSearch,
+        }}
         className={classes.hotKeys}
       >
-        <div id="myPlaylists">
-          <Search
-            onChange={this._handleInputChange}
-            inputId="myPlaylistsSearch"
-            value={searchTerm}
-            startAdornment={
-              <SearchIcon
-                onClick={this._handleFocusOnSearch}
-                className={classes.searchAdortment}
-              />
+        <Search
+          onChange={this._handleInputChange}
+          onSearchIconClick={this._handleFocusOnSearch}
+          inputId="myPlaylistsSearch"
+          value={searchTerm}
+          placeholder="Search by artists, songs, albums..."
+          inputRef={(input) => {
+            this.searchInputRef = input;
+          }}
+          autoFocus
+        />
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(false);
+          }}
+        />
+        {shouldShowLoader ? (
+          <Loader
+            text={
+              <Typography variant="h6" color="textSecondary">
+                Loading your playlists...
+              </Typography>
             }
-            placeholder="Search by artists, songs, albums..."
-            inputRef={input => {
-              this.searchInputRef = input;
-            }}
-            autoFocus
+            icon={<CircularProgress thickness={7} />}
+            square={true}
           />
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(false);
-            }}
-          />
+        ) : (
           <List
             onClickMain={this._handleAddPlaylist}
             onClickItem={this._handleClickPlaylist}
@@ -312,24 +288,39 @@ class MyPlaylists extends PureComponent {
             collapseHasFixedHeight={!areAllOpen}
             shouldShowTracksIncludedValue={true}
           />
-          <Waypoint
-            onEnter={() => {
-              this._handleCanScrollUp(true);
-            }}
-          />
-          <FooterPanel
-            shouldShowCircle={loadMoreButtonIsEnabled}
-            onClickOptions={this._handleClickOptions}
-            onSelectItem={this._handleClickOption}
-            circleText={playlistCounter}
-            onClick={this._handleLoadMore}
-            isOpen={settingsIsOpen}
-            mainText={status}
-            anchorEl={anchorEl}
-            menuItems={menuItems}
-            menuButtonStyle={menuButtonStyle}
-          />
-        </div>
+        )}
+        <Waypoint
+          onEnter={() => {
+            this._handleCanScrollUp(true);
+          }}
+        />
+        <FooterPanel
+          onClickOptions={this._handleClickOptions}
+          onCloseSettings={this._handleCloseSettings}
+          onSelectItem={this._handleClickOption}
+          onClickMainLeftSideButton={this._handleLoadMore}
+          shouldShowCircle={loadMoreButtonIsEnabled}
+          circleComponent={
+            <div className={classes.playlistRemaining}>
+              {playlistsRemaining}
+            </div>
+          }
+          isOpen={settingsIsOpen}
+          leftSideButtonText={status}
+          anchorEl={anchorEl}
+          menuItems={
+            <div>
+              <MenuItem disabled={!canScrollUp} onClick={this._handleClickUp}>
+                Up
+              </MenuItem>
+              <MenuItem onClick={this._handleClickCollapse}>
+                {getExpandStatusText(myPlaylistsHasOpenPlaylist)}
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={this._handleLogOut}>Log Out</MenuItem>
+            </div>
+          }
+        />
       </HotKeys>
     );
   }

@@ -1,16 +1,15 @@
-import thunkMiddleware from 'redux-thunk';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import * as reducers from './reducers';
 
-export const history = createHistory();
+export const history = createBrowserHistory();
 
 const routeMiddleware = routerMiddleware(history);
-
 const rootReducer = combineReducers({
   ...reducers,
-  router: routerReducer
+  router: routerReducer,
 });
 
 const configureStore = () => {

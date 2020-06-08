@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 // TODO: craete a custom theme in this file
 // import mainTheme from './themes/main.theme';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import PrivateRoute from './containers/PrivateRoute';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import Loader from './components/Loader';
-import { DoNotDisturb } from 'material-ui-icons';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import Main from './components/Main';
 import Login from './components/Login';
 
@@ -21,20 +21,22 @@ const NotFound = () => (
         This page does not exist
       </Typography>
     }
-    icon={<DoNotDisturb />}
+    icon={<NotInterestedIcon />}
     className="not-found-page"
     shouldShowShadows
   />
 );
 
-const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <PrivateRoute path="/app" component={Main} />
-      <Route component={NotFound} />
-    </Switch>
-  </MuiThemeProvider>
-);
+const App = () => {
+  return (
+    <MuiThemeProvider theme={theme}>
+      <Switch>
+        <Route exact path="/" component={(props) => <Login {...props} />} />
+        <PrivateRoute path="/app" component={(props) => <Main {...props} />} />
+        <Route component={NotFound} />
+      </Switch>
+    </MuiThemeProvider>
+  );
+};
 
 export default App;

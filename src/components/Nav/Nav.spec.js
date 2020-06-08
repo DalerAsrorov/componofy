@@ -1,8 +1,9 @@
 import React from 'react';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { createShallow, createMount } from 'material-ui/test-utils';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import { createShallow, createMount } from '@material-ui/core/test-utils';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Nav from './';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -10,24 +11,24 @@ Enzyme.configure({ adapter: new Adapter() });
 // Classes required for Material UI theme
 const classes = {
   root: '',
-  tabContainer: ''
+  tabContainer: '',
 };
 
 // Required props for Material UI components context
 const requiredProps = {
   numberOfFinalPlaylists: 30,
   location: {
-    pathname: 0
+    pathname: 0,
   },
   navigation: {
     0: 'route1',
     1: 'route2',
     routeToIndexMap: jest.fn(),
-    index: 0
+    index: 0,
   },
   setNavIndex: jest.fn(),
   navigateTo: jest.fn(),
-  classes
+  classes,
 };
 
 describe('When Nav component is initialized', () => {
@@ -48,7 +49,7 @@ describe('When Nav component is initialized', () => {
     let wrapper = shallow(<Nav {...requiredProps} />);
     let classNames = wrapper.prop('classes');
 
-    Object.keys(classes).forEach(stylAttr => {
+    Object.keys(classes).forEach((stylAttr) => {
       expect(classNames).toHaveProperty(stylAttr);
     });
   });
