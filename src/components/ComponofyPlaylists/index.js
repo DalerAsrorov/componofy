@@ -391,7 +391,11 @@ class ComponofyPlaylists extends PureComponent {
           onClickClose={this._handleClickCloseModal}
           isOpen={isOpenModal}
           switchLabel="Public"
-          title="New Playlist Info"
+          title={
+            hasChosenNewCreate
+              ? 'Create New Playlist'
+              : 'Select Existing Playlist For New Songs'
+          }
           onReturnToMain={this._handleReturnToMain}
           isCreateMode={hasChosenNewCreate}
         />

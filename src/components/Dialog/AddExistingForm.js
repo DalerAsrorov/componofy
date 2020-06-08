@@ -109,29 +109,6 @@ class AddExistingForm extends PureComponent {
       classes,
       error,
     } = this.props;
-    const playlistMenuOptions = playlistOptions.map(
-      ({ id, name, images = [] }) => {
-        return (
-          <MenuItem key={id} value={id}>
-            <ListItemIcon className={classes.icon}>
-              <Avatar src={head(images).url} alt={`${name} cover image`} />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography
-                  variant="h4"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.playlistName}
-                >
-                  {name}
-                </Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
-    );
 
     let contentComponent = (
       <div className={classes.loaderWrapper}>
@@ -161,7 +138,25 @@ class AddExistingForm extends PureComponent {
               },
             }}
           >
-            {playlistMenuOptions}
+            {playlistOptions.map(({ id, name, images = [] }) => (
+              <MenuItem key={id} value={id}>
+                <ListItemIcon className={classes.icon}>
+                  <Avatar src={head(images).url} alt={`${name} cover image`} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      component="p"
+                      className={classes.playlistName}
+                    >
+                      {name}
+                    </Typography>
+                  }
+                />
+              </MenuItem>
+            ))}
             <Waypoint
               onEnter={() => {
                 this._handleSelectionFetch();

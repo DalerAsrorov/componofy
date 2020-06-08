@@ -59,8 +59,9 @@ const styles = (theme) => ({
     padding: `${theme.spacing(1)}px`,
   },
 
-  inputSection: {
+  formControlContainer: {
     display: 'flex',
+    marginTop: `${theme.spacing(2)}px`,
   },
 
   loaderWrapper: {
@@ -349,7 +350,7 @@ class Dialog extends PureComponent {
           </Typography>
         </section>
         <section
-          className={classes.inputSection}
+          className={classes.formControlContainer}
           data-subform="componofy-inputs"
         >
           {modeForm}
