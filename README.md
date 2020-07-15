@@ -12,7 +12,9 @@ A web app that allows a Spotify user to merge multiple (personal, private, and p
 
 ## Demo
 
-[Watch video](https://www.youtube.com/watch?v=lQnvfRADJMQ)
+- Website: https://componofy.herokuapp.com/
+- Video tutorial: [Watch video](https://www.youtube.com/watch?v=lQnvfRADJMQ)
+- Please give project a star if you use or like the app! :star:
 
 ## Features
 
