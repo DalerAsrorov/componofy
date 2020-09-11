@@ -27,7 +27,7 @@
     "hapi": "^17.1",
     "history": "^4.7.2",
     "inert": "^5.0.1",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "node-sass-chokidar": "^1.2.2",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
