@@ -114,8 +114,10 @@ class Track extends PureComponent {
             divider
           >
             <ListItemIcon
+              onClick={this._handleChecked}
               style={{
                 color: playlistContainsThisTrack ? green[400] : null,
+                cursor: 'pointer',
               }}
             >
               <Badge
