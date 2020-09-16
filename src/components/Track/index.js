@@ -129,7 +129,7 @@ class Track extends PureComponent {
                 <Audiotrack />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary={trackName} />
+            <ListItemText primary={`${artistName} - ${trackName}`} />
             <ListItemSecondaryAction className={classes.secondaryAction}>
               {previewPlay}
             </ListItemSecondaryAction>
