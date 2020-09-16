@@ -6,7 +6,7 @@ import Track from '../../containers/Track';
 import './Playlist.css';
 
 const TrackList = (props) => (
-  <List dense>
+  <List>
     {props.tracks.map((track, index) => (
       <Track
         key={track.id}

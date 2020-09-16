@@ -59,6 +59,8 @@ const styles = (theme) => ({
   },
 });
 
+const MAX_EXPAND_TRACK_SIZE = 10;
+
 class Playlist extends PureComponent {
   static propTypes = {
     containsThisPlaylist: PropTypes.bool.isRequired,
@@ -154,7 +156,10 @@ class Playlist extends PureComponent {
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
     const shouldShowExpandBtn =
-      collapseHasFixedHeight && tracks && tracks.length > 5 && !showTracksOnly;
+      collapseHasFixedHeight &&
+      tracks &&
+      tracks.length > MAX_EXPAND_TRACK_SIZE &&
+      !showTracksOnly;
     const isOpen = showTracksOnly ? true : playlistIsOpen;
     let badgeForAddedTracks;
 
