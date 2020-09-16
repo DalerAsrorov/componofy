@@ -106,42 +106,41 @@ class Track extends PureComponent {
     return (
       <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
         {(provided) => (
-          <div
+          <ListItem
             ref={provided.innerRef}
             style={provided.draggableStyle}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            divider
           >
-            <ListItem divider>
-              <ListItemIcon>
-                <CheckBox
-                  onClick={this._handleChecked}
-                  checked={playlistContainsThisTrack}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <TrackPlayer
-                    classes={classes}
-                    trackName={trackName}
-                    trackUrl={trackUrl}
-                    artistName={artistName}
-                    artistUrl={artistUrl}
-                    albumName={albumName}
-                    albumUrl={albumUrl}
-                    isPopular={popularity >= MIN_POPULAR_SCORE}
-                    previewComponent={
-                      !!preview_url && (
-                        <div className={classes.preview}>
-                          <Preview url={preview_url} />
-                        </div>
-                      )
-                    }
-                  />
-                }
+            <ListItemIcon>
+              <CheckBox
+                onClick={this._handleChecked}
+                checked={playlistContainsThisTrack}
               />
-            </ListItem>
-          </div>
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <TrackPlayer
+                  classes={classes}
+                  trackName={trackName}
+                  trackUrl={trackUrl}
+                  artistName={artistName}
+                  artistUrl={artistUrl}
+                  albumName={albumName}
+                  albumUrl={albumUrl}
+                  isPopular={popularity >= MIN_POPULAR_SCORE}
+                  previewComponent={
+                    !!preview_url && (
+                      <div className={classes.preview}>
+                        <Preview url={preview_url} />
+                      </div>
+                    )
+                  }
+                />
+              }
+            />
+          </ListItem>
         )}
       </Draggable>
     );

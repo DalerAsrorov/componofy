@@ -1,4 +1,4 @@
-import MaterialList from '@material-ui/core/List';
+import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Track from '../../containers/Track';
@@ -6,7 +6,7 @@ import Track from '../../containers/Track';
 import './Playlist.css';
 
 const TrackList = (props) => (
-  <MaterialList>
+  <List dense>
     {props.tracks.map((track, index) => (
       <Track
         key={track.id}
@@ -15,7 +15,7 @@ const TrackList = (props) => (
         index={index}
       />
     ))}
-  </MaterialList>
+  </List>
 );
 
 TrackList.propTypes = {
