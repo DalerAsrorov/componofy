@@ -6,6 +6,7 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Tooltip,
+  Typography,
 } from '@material-ui/core';
 import { green, yellow } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
@@ -129,7 +130,18 @@ class Track extends PureComponent {
                 <Audiotrack />
               </Badge>
             </ListItemIcon>
-            <ListItemText primary={`${artistName} - ${trackName}`} />
+            <ListItemText
+              primary={
+                <div>
+                  <Typography variant="body1" display="block">
+                    {trackName}
+                  </Typography>
+                  <Typography variant="caption" display="block">
+                    {artistName}
+                  </Typography>
+                </div>
+              }
+            />
             <ListItemSecondaryAction className={classes.secondaryAction}>
               {previewPlay}
             </ListItemSecondaryAction>
