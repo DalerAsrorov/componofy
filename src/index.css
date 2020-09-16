@@ -1,6 +1,7 @@
 body {
   background-color: #2c3038;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  margin: 0.5rem 0; }
 
 /**
  * Correct `block` display not defined for any HTML5 element in IE 8/9.
