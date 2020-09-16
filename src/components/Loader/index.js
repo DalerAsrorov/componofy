@@ -16,7 +16,6 @@ const styles = (theme) => ({
   },
 
   wrapper: {
-    width: '100%',
     textAlign: 'center',
     padding: `${theme.spacing(2)}px`,
     height: '100%',

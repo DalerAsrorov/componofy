@@ -1,13 +1,14 @@
-import React from 'react';
-import { Route } from 'react-router';
-import PropTypes from 'prop-types';
+import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import PublicPlaylists from '../../containers/PublicPlaylists';
-import Nav from '../../containers/Nav';
-import MyPlaylists from '../../containers/MyPlaylists';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Route } from 'react-router';
 import ComponofyPlaylists from '../../containers/ComponofyPlaylists';
+import MyPlaylists from '../../containers/MyPlaylists';
+import Nav from '../../containers/Nav';
+import PublicPlaylists from '../../containers/PublicPlaylists';
 
 import './Main.css';
 
@@ -24,23 +25,25 @@ const Main = ({ classes, match: { url } }) => {
   let gridClasses = classNames(classes.root, 'main');
 
   return (
-    <Grid container direction="column" justify="center" className={gridClasses}>
-      <Grid item xs={12}>
-        <Nav />
+    <Container maxWidth="lg">
+      <Grid className={gridClasses}>
+        <Grid item xs={12}>
+          <Nav />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          style={{
+            paddingTop: '0',
+            paddingBottom: '0',
+          }}
+        >
+          <Route exact path={`${url}`} component={MyPlaylists} />
+          <Route path={`${url}/public`} component={PublicPlaylists} />
+          <Route path={`${url}/componofy`} component={ComponofyPlaylists} />
+        </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        style={{
-          paddingTop: '0',
-          paddingBottom: '0',
-        }}
-      >
-        <Route exact path={`${url}`} component={MyPlaylists} />
-        <Route path={`${url}/public`} component={PublicPlaylists} />
-        <Route path={`${url}/componofy`} component={ComponofyPlaylists} />
-      </Grid>
-    </Grid>
+    </Container>
   );
 };
 

@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
-import { PlayArrow, Pause } from '@material-ui/icons';
+import { Pause, PlayArrow } from '@material-ui/icons';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import { withMediaProps } from 'react-media-player';
 
 class PlayPause extends PureComponent {

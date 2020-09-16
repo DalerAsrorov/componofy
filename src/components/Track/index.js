@@ -1,17 +1,26 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Draggable } from 'react-beautiful-dnd';
-import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { head } from 'ramda';
 import {
-  TRACK_PROPTYPE,
-  PLAYLIST_PROPTYPE,
+  Badge,
+  Checkbox,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  Tooltip,
+} from '@material-ui/core';
+import { green, yellow } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import Audiotrack from '@material-ui/icons/Audiotrack';
+import Star from '@material-ui/icons/Star';
+import PropTypes from 'prop-types';
+import { head } from 'ramda';
+import React, { PureComponent } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import {
   MIN_POPULAR_SCORE,
+  PLAYLIST_PROPTYPE,
+  TRACK_PROPTYPE,
 } from '../../utils/constants';
-import { CheckBox } from '../common';
-import Preview from './Preview';
-import { Info } from './Info';
+import { Preview } from './Preview';
 
 const styles = (theme) => ({
   trackInfoContainer: {
@@ -19,36 +28,20 @@ const styles = (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
-
-  trackInfo: {
-    flex: '1',
-  },
-
-  preview: {
-    flex: '1',
-  },
-
-  mediaPlayer: {
-    display: 'none',
+  secondaryAction: {
+    marginRight: theme.spacing(2),
   },
 });
 
-const TrackPlayer = (props) => (
-  <div className={props.classes.trackInfoContainer}>
-    <article className={props.classes.trackInfo}>
-      <Info
-        trackName={props.trackName}
-        trackUrl={props.trackUrl}
-        artistName={props.artistName}
-        artistUrl={props.artistUrl}
-        albumName={props.albumName}
-        albumUrl={props.albumUrl}
-        isPopular={props.isPopular}
-      />
-    </article>
-    {props.previewComponent}
-  </div>
-);
+const AddCheckBox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[700],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 class Track extends PureComponent {
   static propTypes = {
@@ -102,46 +95,56 @@ class Track extends PureComponent {
       name: artistName,
       external_urls: { spotify: artistUrl },
     } = head(artists);
+    const previewPlay = !!preview_url ? (
+      <div className={classes.preview}>
+        <Preview url={preview_url} />
+      </div>
+    ) : null;
 
     return (
       <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
         {(provided) => (
-          <div
+          <ListItem
             ref={provided.innerRef}
             style={provided.draggableStyle}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            dense
+            divider
           >
-            <ListItem divider>
-              <ListItemIcon>
-                <CheckBox
-                  onClick={this._handleChecked}
-                  checked={playlistContainsThisTrack}
-                />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <TrackPlayer
-                    classes={classes}
-                    trackName={trackName}
-                    trackUrl={trackUrl}
-                    artistName={artistName}
-                    artistUrl={artistUrl}
-                    albumName={albumName}
-                    albumUrl={albumUrl}
-                    isPopular={popularity >= MIN_POPULAR_SCORE}
-                    previewComponent={
-                      !!preview_url && (
-                        <div className={classes.preview}>
-                          <Preview url={preview_url} />
-                        </div>
-                      )
-                    }
-                  />
+            <ListItemIcon
+              style={{
+                color: playlistContainsThisTrack ? green[400] : null,
+              }}
+            >
+              <Badge
+                badgeContent={
+                  MIN_POPULAR_SCORE <= popularity ? (
+                    <Tooltip title="popular">
+                      <Star style={{ color: yellow[700] }} />
+                    </Tooltip>
+                  ) : null
                 }
+              >
+                <Audiotrack />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary={`${artistName} - ${trackName}`} />
+            <ListItemSecondaryAction className={classes.secondaryAction}>
+              {previewPlay}
+            </ListItemSecondaryAction>
+            <ListItemSecondaryAction>
+              <AddCheckBox
+                edge="end"
+                onClick={this._handleChecked}
+                checked={playlistContainsThisTrack}
+                inputProps={{
+                  'aria-labelledby': trackId,
+                  'aria-label': 'add track checkbox',
+                }}
               />
-            </ListItem>
-          </div>
+            </ListItemSecondaryAction>
+          </ListItem>
         )}
       </Draggable>
     );
