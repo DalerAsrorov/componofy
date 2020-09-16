@@ -1,24 +1,26 @@
-import React, { PureComponent } from 'react';
+import {
+  Badge,
+  Checkbox,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  Tooltip,
+} from '@material-ui/core';
+import { green, yellow } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import Audiotrack from '@material-ui/icons/Audiotrack';
+import Star from '@material-ui/icons/Star';
 import PropTypes from 'prop-types';
+import { head } from 'ramda';
+import React, { PureComponent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import {
-  ListItemIcon,
-  ListItemText,
-  ListItem,
-  ListItemSecondaryAction,
-  Checkbox,
-} from '@material-ui/core';
-import Audiotrack from '@material-ui/icons/Audiotrack';
-
-import { withStyles } from '@material-ui/core/styles';
-import { head } from 'ramda';
-import {
-  TRACK_PROPTYPE,
-  PLAYLIST_PROPTYPE,
   MIN_POPULAR_SCORE,
+  PLAYLIST_PROPTYPE,
+  TRACK_PROPTYPE,
 } from '../../utils/constants';
 import { Preview } from './Preview';
-import { green } from '@material-ui/core/colors';
 
 const styles = (theme) => ({
   trackInfoContainer: {
@@ -115,7 +117,17 @@ class Track extends PureComponent {
                 color: playlistContainsThisTrack ? green[400] : null,
               }}
             >
-              <Audiotrack />
+              <Badge
+                badgeContent={
+                  MIN_POPULAR_SCORE <= popularity ? (
+                    <Tooltip title="popular">
+                      <Star style={{ color: yellow[700] }} />
+                    </Tooltip>
+                  ) : null
+                }
+              >
+                <Audiotrack />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary={trackName} />
             <ListItemSecondaryAction className={classes.secondaryAction}>
