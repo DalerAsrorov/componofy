@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Container,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { AccessTime } from '@material-ui/icons';
@@ -217,14 +218,14 @@ class Playlist extends PureComponent {
           <DragDropContext onDragEnd={this._handleDragEnd}>
             <Droppable droppableId={playlist.id}>
               {(provided, snapshot) => (
-                <div ref={provided.innerRef}>
+                <Container ref={provided.innerRef}>
                   <TrackListWithLoader
                     classes={classes}
                     playlist={playlist}
                     tracks={tracks}
                   />
                   {provided.placeholder}
-                </div>
+                </Container>
               )}
             </Droppable>
           </DragDropContext>

@@ -1,7 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
-import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import {
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  ListItemSecondaryAction,
+  Checkbox,
+} from '@material-ui/core';
+import Audiotrack from '@material-ui/icons/Audiotrack';
+
 import { withStyles } from '@material-ui/core/styles';
 import { head } from 'ramda';
 import {
@@ -9,9 +17,8 @@ import {
   PLAYLIST_PROPTYPE,
   MIN_POPULAR_SCORE,
 } from '../../utils/constants';
-import { CheckBox } from '../common';
-import Preview from './Preview';
-import { Info } from './Info';
+import { Preview } from './Preview';
+import { green } from '@material-ui/core/colors';
 
 const styles = (theme) => ({
   trackInfoContainer: {
@@ -19,36 +26,20 @@ const styles = (theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
-
-  trackInfo: {
-    flex: '1',
-  },
-
-  preview: {
-    flex: '1',
-  },
-
-  mediaPlayer: {
-    display: 'none',
+  secondaryAction: {
+    marginRight: theme.spacing(2),
   },
 });
 
-const TrackPlayer = (props) => (
-  <div className={props.classes.trackInfoContainer}>
-    <article className={props.classes.trackInfo}>
-      <Info
-        trackName={props.trackName}
-        trackUrl={props.trackUrl}
-        artistName={props.artistName}
-        artistUrl={props.artistUrl}
-        albumName={props.albumName}
-        albumUrl={props.albumUrl}
-        isPopular={props.isPopular}
-      />
-    </article>
-    {props.previewComponent}
-  </div>
-);
+const AddCheckBox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[700],
+    },
+  },
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 class Track extends PureComponent {
   static propTypes = {
@@ -102,6 +93,11 @@ class Track extends PureComponent {
       name: artistName,
       external_urls: { spotify: artistUrl },
     } = head(artists);
+    const previewPlay = !!preview_url ? (
+      <div className={classes.preview}>
+        <Preview url={preview_url} />
+      </div>
+    ) : null;
 
     return (
       <Draggable key={trackId} draggableId={`${trackId}`} index={index}>
@@ -111,35 +107,31 @@ class Track extends PureComponent {
             style={provided.draggableStyle}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            dense
             divider
           >
-            <ListItemIcon>
-              <CheckBox
+            <ListItemIcon
+              style={{
+                color: playlistContainsThisTrack ? green[400] : null,
+              }}
+            >
+              <Audiotrack />
+            </ListItemIcon>
+            <ListItemText primary={trackName} />
+            <ListItemSecondaryAction className={classes.secondaryAction}>
+              {previewPlay}
+            </ListItemSecondaryAction>
+            <ListItemSecondaryAction>
+              <AddCheckBox
+                edge="end"
                 onClick={this._handleChecked}
                 checked={playlistContainsThisTrack}
+                inputProps={{
+                  'aria-labelledby': trackId,
+                  'aria-label': 'add track checkbox',
+                }}
               />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <TrackPlayer
-                  classes={classes}
-                  trackName={trackName}
-                  trackUrl={trackUrl}
-                  artistName={artistName}
-                  artistUrl={artistUrl}
-                  albumName={albumName}
-                  albumUrl={albumUrl}
-                  isPopular={popularity >= MIN_POPULAR_SCORE}
-                  previewComponent={
-                    !!preview_url && (
-                      <div className={classes.preview}>
-                        <Preview url={preview_url} />
-                      </div>
-                    )
-                  }
-                />
-              }
-            />
+            </ListItemSecondaryAction>
           </ListItem>
         )}
       </Draggable>

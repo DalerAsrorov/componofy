@@ -1,34 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import PlayPause from './PlayPause';
+import React from 'react';
 import { Media, Player } from 'react-media-player';
+import PlayPause from './PlayPause';
 
-const styles = (theme) => ({
-  mediaPlayer: {
-    display: 'none',
-  },
-
-  media: {
-    textAlign: 'center',
-  },
-});
-
-const Preview = (props) => (
+export const Preview = (props) => (
   <Media>
-    <div className={props.classes.media}>
-      <div className={props.classes.mediaPlayer}>
-        <Player src={props.url} vendor="audio" />
-      </div>
+    <React.Fragment>
+      <Player src={props.url} vendor="audio" />
       <PlayPause color="secondary" />
-    </div>
+    </React.Fragment>
   </Media>
 );
 
 Preview.propTypes = {
-  classes: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired,
-  playButtonColor: PropTypes.string,
 };
-
-export default withStyles(styles)(Preview);
