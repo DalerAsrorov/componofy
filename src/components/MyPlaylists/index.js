@@ -269,15 +269,17 @@ class MyPlaylists extends PureComponent {
           }}
         />
         {shouldShowLoader ? (
-          <Loader
-            text={
-              <Typography variant="h6" color="textSecondary">
-                Loading your playlists...
-              </Typography>
-            }
-            icon={<CircularProgress thickness={7} />}
-            square={true}
-          />
+          <div style={{ display: 'flex' }}>
+            <Loader
+              text={
+                <Typography variant="h6" color="textSecondary">
+                  Loading your playlists...
+                </Typography>
+              }
+              icon={<CircularProgress thickness={7} />}
+              square={true}
+            />
+          </div>
         ) : (
           <List
             onClickMain={this._handleAddPlaylist}
