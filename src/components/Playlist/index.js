@@ -5,9 +5,10 @@ import {
   ListItemIcon,
   ListItemText,
   Container,
+  Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { AccessTime } from '@material-ui/icons';
+import { AccessTime, DeleteForever } from '@material-ui/icons';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'ramda';
@@ -70,6 +71,7 @@ class Playlist extends PureComponent {
     classes: PropTypes.object.isRequired,
     numberOfAddedTracksFromThisPlaylist: PropTypes.number,
     shouldShowTracksIncludedValue: PropTypes.bool,
+    isDeleteType: PropTypes.bool,
     collapseHasFixedHeight: PropTypes.bool,
     onDragAndDrop: PropTypes.func,
     showPlaylist: PropTypes.bool,
@@ -149,9 +151,10 @@ class Playlist extends PureComponent {
       collapseHasFixedHeight,
       numberOfAddedTracksFromThisPlaylist,
       shouldShowTracksIncludedValue,
+      isDeleteType,
     } = this.props;
     const {
-      tracks: { list: tracks },
+      tracks: { list: tracks, total: totalNumberOfTracks },
       isOpen: playlistIsOpen,
     } = playlist;
     const nTracks = tracks ? tracks.length : <AccessTime />;
@@ -161,7 +164,7 @@ class Playlist extends PureComponent {
       tracks.length > MAX_EXPAND_TRACK_SIZE &&
       !showTracksOnly;
     const isOpen = showTracksOnly ? true : playlistIsOpen;
-    let badgeForAddedTracks;
+    let badgeForAddedTracks = null;
 
     if (numberOfAddedTracksFromThisPlaylist && shouldShowTracksIncludedValue) {
       badgeForAddedTracks = (
@@ -192,23 +195,36 @@ class Playlist extends PureComponent {
             onClick={this._handleIconClick}
           >
             <Element id={`element-playlist-${playlist.id}`} name={playlist.id}>
-              <PlaylistIcon isIncluded={containsThisPlaylist} tracks={tracks} />
+              {isDeleteType ? (
+                <DeleteForever color="error" />
+              ) : (
+                <PlaylistIcon
+                  isIncluded={containsThisPlaylist}
+                  tracks={tracks}
+                />
+              )}
             </Element>
           </ListItemIcon>
           <PlaylistThumbmailManager playlist={playlist} />
           <ListItemText inset primary={playlist.name} />
           <div className={classes.badgeSet}>
             {badgeForAddedTracks}
-            <Badge
-              badgeContent={nTracks}
-              className={classes.customBadgeCl}
-              classes={{
-                badge: classes.numberOfTracksBadge,
-              }}
-              max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
-            >
-              <span />
-            </Badge>
+            {isDeleteType ? (
+              <Typography color="textSecondary" variant="body1">
+                {`${numberOfAddedTracksFromThisPlaylist} / ${totalNumberOfTracks}`}
+              </Typography>
+            ) : (
+              <Badge
+                badgeContent={nTracks}
+                className={classes.customBadgeCl}
+                classes={{
+                  badge: classes.numberOfTracksBadge,
+                }}
+                max={MAX_NUMBER_OF_TRACKS_FOR_BADGE}
+              >
+                <span />
+              </Badge>
+            )}
           </div>
         </ListItem>
         <Collapse
@@ -228,6 +244,7 @@ class Playlist extends PureComponent {
                     classes={classes}
                     playlist={playlist}
                     tracks={tracks}
+                    isDeleteType={isDeleteType}
                   />
                   {provided.placeholder}
                 </Container>

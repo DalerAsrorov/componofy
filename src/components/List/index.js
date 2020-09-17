@@ -31,6 +31,7 @@ export const List = withStyles(styles)(
     onDragAndDrop,
     collapseHasFixedHeight,
     shouldShowTracksIncludedValue,
+    isDeleteType,
     ...restProps
   }) => (
     <MaterialList
@@ -55,6 +56,7 @@ export const List = withStyles(styles)(
               onDragAndDrop={onDragAndDrop}
               collapseHasFixedHeight={collapseHasFixedHeight}
               shouldShowTracksIncludedValue={shouldShowTracksIncludedValue}
+              isDeleteType={isDeleteType}
             />
           ))
         : []}
@@ -79,6 +81,7 @@ List.propTypes = {
   classes: PropTypes.object,
   keyItem: PropTypes.object,
   collapseHasFixedHeight: PropTypes.bool,
+  isDeleteType: PropTypes.bool,
   showSubItemsOnly: PropTypes.bool,
   shouldShowTracksIncludedValue: PropTypes.bool,
 };

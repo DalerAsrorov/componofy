@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from '@material-ui/core';
-import { green, yellow, cyan } from '@material-ui/core/colors';
+import { green, yellow, cyan, red } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Audiotrack from '@material-ui/icons/Audiotrack';
 import Star from '@material-ui/icons/Star';
@@ -22,6 +22,7 @@ import {
   TRACK_PROPTYPE,
 } from '../../utils/constants';
 import { Preview } from './Preview';
+import { HighlightOff, Remove } from '@material-ui/icons';
 
 const styles = (theme) => ({
   trackInfoContainer: {
@@ -39,6 +40,19 @@ const styles = (theme) => ({
   },
 });
 
+const getTrackIconColor = (containsTrack, isDeleteType) => {
+  let chosenColor = null;
+
+  if (containsTrack) {
+    chosenColor = green[400];
+  }
+  if (isDeleteType) {
+    chosenColor = red[600];
+  }
+
+  return chosenColor;
+};
+
 const AddCheckBox = withStyles({
   root: {
     color: green[400],
@@ -48,6 +62,17 @@ const AddCheckBox = withStyles({
   },
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
+const DeleteCheckBox = withStyles({
+  root: {
+    color: red[400],
+    '&$checked': {
+      color: red[600],
+    },
+  },
+  checked: {},
+})((props) => (
+  <Checkbox checkedIcon={<HighlightOff />} color="default" {...props} />
+));
 
 class Track extends PureComponent {
   static propTypes = {
@@ -58,6 +83,7 @@ class Track extends PureComponent {
     index: PropTypes.number.isRequired,
     track: TRACK_PROPTYPE.isRequired,
     playlist: PLAYLIST_PROPTYPE,
+    isDeleteType: PropTypes.bool,
   };
 
   _handleChecked = (event) => {
@@ -79,7 +105,13 @@ class Track extends PureComponent {
   };
 
   render() {
-    const { track, classes, playlistContainsThisTrack, index } = this.props;
+    const {
+      track,
+      classes,
+      playlistContainsThisTrack,
+      index,
+      isDeleteType,
+    } = this.props;
 
     if (!track.id) {
       return null;
@@ -121,7 +153,10 @@ class Track extends PureComponent {
             <ListItemIcon
               onClick={this._handleChecked}
               style={{
-                color: playlistContainsThisTrack ? green[400] : null,
+                color: getTrackIconColor(
+                  playlistContainsThisTrack,
+                  isDeleteType
+                ),
                 cursor: 'pointer',
               }}
             >
@@ -134,7 +169,7 @@ class Track extends PureComponent {
                   ) : null
                 }
               >
-                <Audiotrack />
+                {isDeleteType ? <Remove /> : <Audiotrack />}
               </Badge>
             </ListItemIcon>
             <ListItemText
@@ -153,15 +188,27 @@ class Track extends PureComponent {
               {previewPlay}
             </ListItemSecondaryAction>
             <ListItemSecondaryAction>
-              <AddCheckBox
-                edge="end"
-                onClick={this._handleChecked}
-                checked={playlistContainsThisTrack}
-                inputProps={{
-                  'aria-labelledby': trackId,
-                  'aria-label': 'add track checkbox',
-                }}
-              />
+              {isDeleteType ? (
+                <DeleteCheckBox
+                  edge="end"
+                  onClick={this._handleChecked}
+                  checked={playlistContainsThisTrack}
+                  inputProps={{
+                    'aria-labelledby': trackId,
+                    'aria-label': 'delete track checkbox',
+                  }}
+                />
+              ) : (
+                <AddCheckBox
+                  edge="end"
+                  onClick={this._handleChecked}
+                  checked={playlistContainsThisTrack}
+                  inputProps={{
+                    'aria-labelledby': trackId,
+                    'aria-label': 'add track checkbox',
+                  }}
+                />
+              )}
             </ListItemSecondaryAction>
           </ListItem>
         )}

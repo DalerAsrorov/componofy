@@ -7,7 +7,11 @@ import TrackList from './TrackList';
 
 export const TrackListWithLoader = (props) =>
   props.tracks ? (
-    <TrackList tracks={props.tracks} playlist={props.playlist} />
+    <TrackList
+      tracks={props.tracks}
+      playlist={props.playlist}
+      isDeleteType={props.isDeleteType}
+    />
   ) : (
     <Loader
       text={
@@ -24,5 +28,6 @@ export const TrackListWithLoader = (props) =>
 TrackListWithLoader.propTypes = {
   tracks: PropTypes.arrayOf(TRACK_PROPTYPE),
   playlist: PLAYLIST_PROPTYPE,
+  isDeleteType: PropTypes.bool,
   classes: PropTypes.any,
 };

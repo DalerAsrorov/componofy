@@ -291,6 +291,7 @@ class ComponofyPlaylists extends PureComponent {
           showSubItemsOnly={shouldShowOnlyTracks}
           isPlaylist={true}
           collapseHasFixedHeight={!areAllOpen}
+          isDeleteType={true}
         />
       );
 

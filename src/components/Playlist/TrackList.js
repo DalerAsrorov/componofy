@@ -12,6 +12,7 @@ const TrackList = (props) => (
         key={track.id}
         track={track}
         playlist={props.playlist}
+        isDeleteType={props.isDeleteType}
         index={index}
       />
     ))}
@@ -21,6 +22,7 @@ const TrackList = (props) => (
 TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
   playlist: PropTypes.object.isRequired,
+  isDeleteType: PropTypes.bool,
 };
 
 export default TrackList;
