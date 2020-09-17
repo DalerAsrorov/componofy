@@ -5,7 +5,7 @@ import React from 'react';
 import {
   LIGHT_CYAN_COLOR,
   PLAYLIST_PROPTYPE,
-  SUGGESTED_PLAYLIST_PLACEHOLDER,
+  generateSugestedPlaylistTemplate,
 } from '../../utils/constants';
 
 export const PlaylistThumbmailManager = ({ playlist }) => {
@@ -15,7 +15,7 @@ export const PlaylistThumbmailManager = ({ playlist }) => {
     </Avatar>
   );
 
-  if (equals(playlist.id, SUGGESTED_PLAYLIST_PLACEHOLDER().id)) {
+  if (equals(playlist.id, generateSugestedPlaylistTemplate().id)) {
     playlistImage = (
       <Avatar
         alt={`${playlist.name} playlist cover`}

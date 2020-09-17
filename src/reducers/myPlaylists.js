@@ -17,7 +17,7 @@ import {
 import { removeDuplicates } from '../utils/helpers';
 import {
   OFFSET_LIMIT,
-  SUGGESTED_PLAYLIST_PLACEHOLDER,
+  generateSugestedPlaylistTemplate,
 } from '../utils/constants';
 
 const DEFAULT_STATE = {
@@ -156,7 +156,7 @@ export const myPlaylists = (state = DEFAULT_STATE, action) => {
     case RECEIVED_MY_TOP_TRACKS:
       playlists = R.clone(state.playlists);
       playlists = [
-        { ...SUGGESTED_PLAYLIST_PLACEHOLDER(action.tracks) },
+        generateSugestedPlaylistTemplate(action.tracks),
         ...playlists,
       ];
 

@@ -115,7 +115,7 @@ export const LOAD_MORE_STATUS = {
   2: 'Loading...',
 };
 
-export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
+export const generateSugestedPlaylistTemplate = (tracks = []) => ({
   id: 'suggestedPlaylist',
   href: '#suggestedPlaylist',
   isCustom: true,
@@ -126,6 +126,7 @@ export const SUGGESTED_PLAYLIST_PLACEHOLDER = (tracks = []) => ({
   },
   tracks: {
     list: [...tracks],
+    total: tracks.length,
   },
   external_urls: {
     spotify: '',
