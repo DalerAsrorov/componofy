@@ -9,6 +9,7 @@ import {
   Slide,
   Toolbar,
   Typography,
+  Container,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { AddAPhoto, CheckCircle } from '@material-ui/icons';
@@ -39,10 +40,6 @@ const styles = (theme) => ({
 
   descField: {
     marginBottom: `${theme.spacing(1)}px`,
-  },
-
-  dialogContainer: {
-    width: 'inherit',
   },
 
   dropImageZone: {
@@ -326,18 +323,6 @@ class Dialog extends PureComponent {
       );
     }
 
-    const playlistImage = imageUri ? (
-      <Avatar
-        alt="New playlist image cover"
-        src={imageUri}
-        classes={{
-          root: classes.newPlaylistImage,
-          img: classes.dropImageZoneImg,
-        }}
-      />
-    ) : (
-      <AddAPhoto className={classes.photoUploadIcon} />
-    );
     let modalContent = (
       <form
         className={classes.formContainer}
@@ -355,7 +340,18 @@ class Dialog extends PureComponent {
             className={classes.dropImageZone}
             maxSize={MAX_IMAGE_SIZE_LIMIT}
           >
-            {playlistImage}
+            {imageUri ? (
+              <Avatar
+                alt="New playlist image cover"
+                src={imageUri}
+                classes={{
+                  root: classes.newPlaylistImage,
+                  img: classes.dropImageZoneImg,
+                }}
+              />
+            ) : (
+              <AddAPhoto className={classes.photoUploadIcon} />
+            )}
           </Dropzone>
           {!R.isEmpty(imageUri) && (
             <figure className={this.props.classes.clearImageBtn}>
@@ -466,16 +462,7 @@ class Dialog extends PureComponent {
             <Typography variant="h5">{title}</Typography>
           </Toolbar>
         </AppBar>
-        <Grid
-          className={classes.dialogContainer}
-          container
-          justify="center"
-          spacing={8}
-        >
-          <Grid item lg={8} xs={12}>
-            {modalContent}
-          </Grid>
-        </Grid>
+        <Container maxWidth="md">{modalContent}</Container>
       </MaterialDialog>
     );
   }
