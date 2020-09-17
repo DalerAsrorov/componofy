@@ -39,7 +39,7 @@ class Login extends PureComponent {
       <Grid className={classes.root} container justify="center">
         <Grid item className={classes.subRoot}>
           <Landing
-            appVersion="v2.0.0"
+            appVersion="v2.1.0"
             iconText="Start"
             title="Componofy"
             subTitle="Make a perfect playlist from a bunch of playlists"
