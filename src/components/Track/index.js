@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from '@material-ui/core';
-import { green, yellow } from '@material-ui/core/colors';
+import { green, yellow, cyan } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import Audiotrack from '@material-ui/icons/Audiotrack';
 import Star from '@material-ui/icons/Star';
@@ -28,6 +28,11 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  trackContent: {
+    '&:hover': {
+      color: cyan[700],
+    },
   },
   secondaryAction: {
     marginRight: theme.spacing(2),
@@ -134,7 +139,7 @@ class Track extends PureComponent {
             </ListItemIcon>
             <ListItemText
               primary={
-                <div>
+                <div className={classes.trackContent}>
                   <Typography variant="body1" display="block">
                     {trackName}
                   </Typography>
