@@ -1,6 +1,6 @@
 import Avatar from '@material-ui/core/Avatar';
 import { FavoriteBorder, LibraryMusic } from '@material-ui/icons';
-import { equals, head, isEmpty } from 'ramda';
+import { equals, head } from 'ramda';
 import React from 'react';
 import {
   LIGHT_CYAN_COLOR,
@@ -24,7 +24,7 @@ export const PlaylistThumbmailManager = ({ playlist }) => {
         <FavoriteBorder />
       </Avatar>
     );
-  } else if (!isEmpty(playlist.images)) {
+  } else if (!!playlist.images) {
     // takle the first image available
     const avatar = head(playlist.images);
 
